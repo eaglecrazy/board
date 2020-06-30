@@ -28,7 +28,7 @@ services:
       - "DB_HOST=mysql"
       - "REDIS_PORT=6379"
       - "REDIS_HOST=redis"
-
+      - "PHP_IDE_CONFIG=serverName=docker_server"
 
   nginx:
     build:
