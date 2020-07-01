@@ -1,4 +1,7 @@
 sudo chmod 777 storage -R
+терминал от рута sudo -s
+
+
 ----------------------
 Первоначалальная настройка
 ----------------------
@@ -12,11 +15,6 @@ storage
 laravel plugin
 ide helper
 debugbar
-
-php artisan make auth
-миграции
-4-22 изменить редиректы
-
 
 
 
@@ -79,6 +77,12 @@ composer require barryvdh/laravel-debugbar --dev
 
 
 
+----------------------
+BREADCRUMBS
+-------------------
+https://github.com/davejamesmiller/laravel-breadcrumbs
+
+
 
 ----------------------
 GIT
@@ -119,8 +123,27 @@ $ git push
 ----------------------
 Docker
 ----------------------
-статья про настройку отладчика в phpstorm
+Статья про настройку отладчика в phpstorm
 https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
+
+Запуск скрипта из контейнера
+sudo docker exec app_php-cli_1 php artisan migrate
+
+Список контейнеров
+sudo docker container ls
+
+
+
+
+----------------------
+Подключение к удалённой БД
+----------------------
+mysql -uroot -psecret -h127.0.0.1 -P33061
+
+mysql -u {username} -p {password} \
+    -h {remote server ip or name} -P {port} \
+    -D {DB name}
+
 
 
 
@@ -142,3 +165,6 @@ ls /opt/
 
 ОБНОВЛЕНИЕ АВТОЛОАДА
 /opt/php72/bin/php /usr/local/bin/composer dump-autoload
+
+
+

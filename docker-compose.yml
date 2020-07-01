@@ -1,5 +1,3 @@
-#sudo docker-compose up --build
-
 version: '2'
 services:
 
@@ -23,12 +21,36 @@ services:
       dockerfile: docker/php-fpm.docker
     volumes:
       - ./:/var/www
+    links:
+      - mysql
+      - redis
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=mysql"
       - "REDIS_PORT=6379"
       - "REDIS_HOST=redis"
       - "PHP_IDE_CONFIG=serverName=docker_server"
+
+
+
+  php-cli:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+      - redis
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=mysql"
+      - "REDIS_PORT=6379"
+      - "REDIS_HOST=redis"
+
+
+
+
 
   nginx:
     build:
@@ -38,7 +60,7 @@ services:
       - ./:/var/www
       - ./docker/nginx/ssl:/etc/nginx/ssl
     ports:
-      - "8080:80"
+      - "8080:443"
     links:
       - php-fpm
 
@@ -47,3 +69,13 @@ services:
     image: redis:3.0
     ports:
       - "63791:6379"
+
+
+  node:
+    build:
+      context: ./
+      dockerfile: docker/node.docker
+    volumes:
+      - ./:/var/www
+    tty: true
+
