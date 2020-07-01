@@ -1,0 +1,135 @@
+Первоначалальная настройка
+2-59 - настройки шторма
+поставить плагин ларавел
+ide helper
+debugbar
+
+php artisan make auth
+миграции
+4-22 изменить редиректы
+
+
+
+
+----------------------
+IDE HELPER
+----------------------
+composer require --dev barryvdh/laravel-ide-helper
+
+(этот пункт я не делал)
+в config/app.php добавить
+Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+php artisan ide-helper:generate - PHPDoc generation for Laravel Facades
+php artisan ide-helper:models - PHPDocs for models
+php artisan ide-helper:meta - PhpStorm Meta file
+
+В composer.json нужно добавить, чтобы каждый раз после добавления запускался скрипт
+"scripts": {
+    "post-update-cmd": [
+        "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+        "@php artisan ide-helper:generate",
+        "@php artisan ide-helper:meta"
+    ]
+},
+
+
+----------------------
+COMPOSER
+----------------------
+-   запуск без ограничения памяти
+    php -d memory_limit=-1 /usr/local/bin/composer require --dev barryvdh/laravel-ide-helper
+-   убрать dev пакеты (или установить только пакеты для продакшена)
+    composer install --no-dev
+
+
+
+
+
+----------------------
+RESOURCE CONTROLLER
+----------------------
+Verb	    URI	                    Action	        Route Name
+GET	        /photos	                index	        photos.index
+GET	        /photos/create	        create	        photos.create
+POST	    /photos	                store	        photos.store
+GET	        /photos/{photo}	        show	        photos.show
+GET	        /photos/{photo}/edit	edit	        photos.edit
+PUT/PATCH	/photos/{photo}	        update	        photos.update
+DELETE	    /photos/{photo}	        destroy	        photos.destroy
+
+
+
+
+----------------------
+DEBUGBAR
+----------------------
+https://github.com/barryvdh/laravel-debugbar
+
+composer require barryvdh/laravel-debugbar --dev
+
+
+
+
+----------------------
+GIT
+----------------------
+git pull https://github.com/TeamOrange-GB/cats.git dev
+
+Вернуть к исходному до добавления
+git restore resources/js/bootstrap.js
+эту лучше не использовать git commit -- resources/js/bootstrap.js
+
+Вернуть файл к исходному после добавления
+git reset head resources/js/bootstrap.js
+
+Изменения, внесенные указанным коммитом.
+git show <коммит>
+
+Комментируем коммит прямо из командной строки
+git commit -m "commit comment"
+
+Откат к старому коммиту:
+Найдите конкретный коммит, к которому вы хотите вернуть все изменения:
+$ git log --oneline
+Откатите все изменения к старому коммиту:
+$ git checkout d217bb6 .
+Обратите Внимание: Точка (.) после имени ветки является обязательной.
+Добавьте изменения в staging и сделайте коммит:
+git add -A
+git commit -m "Revert commit: d217bb6"
+Сделав rollback локально, вы можете откатить изменения в удаленном репозитории, сделав push нового коммита, который уже содержит необходимые изменения:
+$ git push
+
+
+
+
+
+
+
+----------------------
+Docker
+----------------------
+статья про настройку отладчика в phpstorm
+https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
+
+
+
+
+----------------------
+SSH на хостинге
+----------------------
+доступные обработчики
+ls /opt/
+
+/opt/php72/bin/php script.php
+/opt/php72/bin/php artisan migrate:fresh --seed
+/opt/php72/bin/php artisan migrate:rollback
+/opt/php72/bin/php composer update
+
+КОМАНДА ДЛЯ ОБНОВЛЕНИЯ БЕЗ ЛИМИТА ПАМЯТИ
+/opt/php72/bin/php -d memory_limit=1024M /usr/local/bin/composer update
+/opt/php72/bin/php -d memory_limit=-1 /usr/local/bin/composer update
+
+ОБНОВЛЕНИЕ АВТОЛОАДА
+/opt/php72/bin/php /usr/local/bin/composer dump-autoload
