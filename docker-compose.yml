@@ -23,12 +23,36 @@ services:
       dockerfile: docker/php-fpm.docker
     volumes:
       - ./:/var/www
+    links:
+      - mysql
+      - redis
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=mysql"
       - "REDIS_PORT=6379"
       - "REDIS_HOST=redis"
       - "PHP_IDE_CONFIG=serverName=docker_server"
+
+
+
+  php-cli:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+      - redis
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=mysql"
+      - "REDIS_PORT=6379"
+      - "REDIS_HOST=redis"
+
+
+
+
 
   nginx:
     build:

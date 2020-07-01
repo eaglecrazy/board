@@ -115,10 +115,14 @@ $ git push
 ----------------------
 Docker
 ----------------------
-статья про настройку отладчика в phpstorm
+Статья про настройку отладчика в phpstorm
 https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
 
+Запуск скрипта из контейнера
+sudo docker exec app_php-cli_1 php artisan migrate
 
+Список контейнеров
+sudo docker container ls
 
 
 ----------------------
