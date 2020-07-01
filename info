@@ -1,6 +1,15 @@
+sudo chmod 777 storage -R
+----------------------
 Первоначалальная настройка
-2-59 - настройки шторма
-поставить плагин ларавел
+----------------------
+Директории пометить как excluded:
+storage
+idea
+bootstrap/cache
+storage
+
+Плагины:
+laravel plugin
 ide helper
 debugbar
 
