@@ -1,4 +1,5 @@
 sudo chmod 777 storage -R
+
 ----------------------
 Первоначалальная настройка
 ----------------------
@@ -12,11 +13,6 @@ storage
 laravel plugin
 ide helper
 debugbar
-
-php artisan make auth
-миграции
-4-22 изменить редиректы
-
 
 
 
