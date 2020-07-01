@@ -3,6 +3,11 @@ sudo chmod 777 storage -R
 
 
 
+extend selection - ctrl+q
+
+
+
+СДЕЛАТЬ ДОМА
 sudo apt remove cmdtest
 sudo apt remove yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -139,6 +144,21 @@ sudo docker exec app_php-cli_1 php artisan migrate
 sudo docker container ls
 
 
+
+
+----------------------
+Подключение к удалённой БД
+----------------------
+mysql -uroot -psecret -h127.0.0.1 -P33061
+
+mysql -u {username} -p {password} \
+    -h {remote server ip or name} -P {port} \
+    -D {DB name}
+
+
+
+
+
 ----------------------
 SSH на хостинге
 ----------------------
@@ -156,3 +176,6 @@ ls /opt/
 
 ОБНОВЛЕНИЕ АВТОЛОАДА
 /opt/php72/bin/php /usr/local/bin/composer dump-autoload
+
+
+
