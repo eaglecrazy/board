@@ -13,18 +13,29 @@ test:
 perm:
 	sudo -s chown ${USER}:${USER} bootstrap/cache -R
 	sudo -s chown ${USER}:${USER} storage -R
+	if [ -d "node_modules" ]; then sudo -s chown ${USER}:${USER} node_modules -R; fi
+	if [ -d "public/build" ]; then sudo -s chown ${USER}:${USER} public/build -R; fi
 
 assets-install:
-	docker-compose exec node yarn install
+	sudo -s docker exec app_node_1 yarn install
 
 assets-rebuild:
-	docker-compose exec node npm rebuild node-sass --force
+	sudo -s docker exec app_node_1 npm rebuild node-sass --force
 
 assets-dev:
-	docker-compose exec node yarn run dev
+	sudo -s docker exec app_node_1 yarn run dev
 
 assets-watch:
-	docker-compose exec node yarn run watch
+	sudo -s docker exec app_node_1 yarn run watch
+
+
+
+
+
+
+
+
+
 
 queue:
 	docker-compose exec php-cli php artisan queue:work
