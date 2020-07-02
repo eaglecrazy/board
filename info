@@ -77,6 +77,12 @@ composer require barryvdh/laravel-debugbar --dev
 
 
 
+----------------------
+BREADCRUMBS
+-------------------
+https://github.com/davejamesmiller/laravel-breadcrumbs
+
+
 
 ----------------------
 GIT
