@@ -79,9 +79,16 @@ composer require barryvdh/laravel-debugbar --dev
 
 ----------------------
 BREADCRUMBS
--------------------
+----------------------
 https://github.com/davejamesmiller/laravel-breadcrumbs
 
+
+----------------------
+Flash уведомления
+----------------------
+РАЗОБРАТЬСЯ КАК РАБОТАЕТ
+https://github.com/laracasts/flash
+composer require laracasts/flash
 
 
 ----------------------
