@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Entity;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 /**
- * App\User
+ * App\Entity\User
  *
  * @property int $id
  * @property string $name
@@ -19,22 +20,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property string $status
- * @property string|null $verify_token
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereVerifyToken($value)
  */
 class User extends Authenticatable
 {

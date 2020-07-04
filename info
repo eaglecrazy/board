@@ -122,9 +122,9 @@ git commit -m "Revert commit: d217bb6"
 $ git push
 
 УБРАТЬ ИЗ ОТСЛЕЖИВАНИЯ
-1. сделать git rm <название файла>, предворительно скопировав его, чтобы не потерять
-2. добавить файл в .gitignore
-3. закоммитить изменения
+git rm -rf --cached .
+git add .
+git commit -m "fix gitignore"
 
 
 
