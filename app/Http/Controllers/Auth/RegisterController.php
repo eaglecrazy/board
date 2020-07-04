@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\VerifyMail;
+use App\Mail\Auth\VerifyMail;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
