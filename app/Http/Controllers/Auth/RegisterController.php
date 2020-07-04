@@ -73,4 +73,26 @@ class RegisterController extends Controller
         $this->guard()->logout();
         return redirect()->route('login')->with('success', 'Check your email and click on the link to verify.');
     }
+
+    public function verify($token){
+        $user = User::where('verify_token', $token)->first();
+
+        if(!$user){
+            return redirect()->route('login')
+                ->with('error', 'Sorry, your link cannot be identified.');
+        }
+
+        if($user->status !== User::STATUS_WAIT){
+            return redirect()->route('login')
+                ->with('error', 'Your email is already verified.');
+        }
+
+        $user->status = User::STATUS_ACTIVE;
+        $user->verify_token = null;
+        $user->save();
+
+        return redirect()->route('login')
+            ->with('success', 'Your email is verified. You can now login');
+
+    }
 }
