@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Mail\Auth\VerifyMail;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -31,14 +32,8 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:1', 'confirmed'],
-        ]);
-
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
