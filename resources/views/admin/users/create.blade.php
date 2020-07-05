@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin.users._nav)
+    @include('admin.users._nav')
     <form method="POST" action="{{ route('admin.users.store') }}">
         @csrf
         <div class="form-group">
@@ -26,7 +26,28 @@
             @if($errors->has('email'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
             @endif
-            <label for="email" class="col-form-label">Email</label>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-form-label">Password</label>
+            <input id="password"
+                   class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                   name="password"
+                   required
+                   type="password">
+            @if($errors->has('password'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
+            @endif
+        </div>
+        <div class="form-group">
+            <label for="password_confirmation" class="col-form-label">Password confirmation</label>
+            <input id="password_confirmation"
+                   class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                   name="password_confirmation"
+                   required
+                   type="password">
+            @if($errors->has('password_confirmation'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('password_confirmation') }}</strong></span>
+            @endif
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>

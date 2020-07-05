@@ -42,22 +42,22 @@ Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $crumbs){
 
 
 //UsersController
-Breadcrumbs::register('admin.user.index', function (BreadcrumbsGenerator $crumbs){
+Breadcrumbs::register('admin.users.index', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.home');
     $crumbs->push('Users', route('admin.users.index'));
 });
 
-Breadcrumbs::register('admin.user.create', function (BreadcrumbsGenerator $crumbs){
-    $crumbs->parent('admin.user.index');
+Breadcrumbs::register('admin.users.create', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('admin.users.index');
     $crumbs->push('Create', route('admin.users.create'));
 });
 
-Breadcrumbs::register('admin.user.show', function (BreadcrumbsGenerator $crumbs, User $user){
-    $crumbs->parent('admin.user.index');
+Breadcrumbs::register('admin.users.show', function (BreadcrumbsGenerator $crumbs, User $user){
+    $crumbs->parent('admin.users.index');
     $crumbs->push($user->name, route('admin.users.show', $user));
 });
 
-Breadcrumbs::register('admin.user.edit', function (BreadcrumbsGenerator $crumbs, User $user){
-    $crumbs->parent('admin.user.index');
+Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $crumbs, User $user){
+    $crumbs->parent('admin.users.index');
     $crumbs->push('Edit', route('admin.users.edit', $user));
 });

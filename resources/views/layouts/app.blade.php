@@ -57,7 +57,7 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
-                            <a class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.home') }}">Admin</a>
                                 <a class="dropdown-item" href="{{ route('cabinet') }}">Cabinet</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -65,16 +65,17 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
                             </div>
-                        </li>
-                    @endguest
-                </ul>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
+                                @csrf
+                            </form>
             </div>
+            </li>
+            @endguest
+            </ul>
+        </div>
         </div>
     </nav>
 </header>

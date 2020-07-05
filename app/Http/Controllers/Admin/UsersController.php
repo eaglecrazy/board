@@ -26,11 +26,13 @@ class UsersController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
         ]);
 
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'password' => $request['password'],
             'status' => User::STATUS_ACTIVE,
         ]);
 
@@ -56,7 +58,8 @@ class UsersController extends Controller
     {
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
             'status' => ['required', 'string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])],
         ]);
         $user->update($data);

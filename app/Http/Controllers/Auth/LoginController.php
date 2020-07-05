@@ -62,4 +62,9 @@ class LoginController extends Controller
         $request->session()->invalidate();
         return redirect()->route('home');
     }
+
+    public function username()
+    {
+        return 'email';
+    }
 }
