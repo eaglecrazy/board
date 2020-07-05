@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 //use http\Client\Curl\User;
+use App\Http\Requests\Admin\Users\CreateRequest;
+use App\Http\Requests\Admin\Users\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entity\User;
@@ -21,14 +23,8 @@ class UsersController extends Controller
         return view('admin.users.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:1', 'confirmed'],
-        ]);
-
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -54,15 +50,9 @@ class UsersController extends Controller
         return view('admin.users.edit', compact('user', 'statuses'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
-        $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'password' => ['required', 'string', 'min:1', 'confirmed'],
-            'status' => ['required', 'string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])],
-        ]);
-        $user->update($data);
+        $user->update($request->only(['name', 'email', 'status']));
         return redirect()->route('admin.users.show', $user);
     }
 
