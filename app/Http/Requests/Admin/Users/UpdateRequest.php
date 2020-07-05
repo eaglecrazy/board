@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Admin\Users;
 
-use App\Entity\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -19,7 +17,6 @@ class UpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,id,' . $this->user->id],
             'password' => ['required', 'string', 'min:1', 'confirmed'],
-            'status' => ['required', 'string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])],
         ];
     }
 }

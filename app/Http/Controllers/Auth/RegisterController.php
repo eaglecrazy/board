@@ -49,14 +49,11 @@ class RegisterController extends Controller
                 ->with('error', 'Sorry, your link cannot be identified.');
         }
 
-        if (!$user->isWait()) {
-            return redirect()->route('login')
-                ->with('error', 'Your email is already verified.');
+        try {
+            $user->verify();
+            return redirect()->route('login')->with('success', 'Your email is verified. You can now login');
+        } catch (\DomainException $e){
+            return redirect()->route('login')->with('error', $e->getMessage());
         }
-        //тут нужно отловить DomainException
-        $user->verify();
-
-        return redirect()->route('login')
-            ->with('success', 'Your email is verified. You can now login');
     }
 }
