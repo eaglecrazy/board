@@ -25,13 +25,7 @@ class UsersController extends Controller
 
     public function store(CreateRequest $request)
     {
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => $request['password'],
-            'status' => User::STATUS_ACTIVE,
-        ]);
-
+        $user = User::new($request['name'], $request['email'], $request['password']);
         return redirect()->route('admin.users.show', ['id' => $user->id]);
     }
 
