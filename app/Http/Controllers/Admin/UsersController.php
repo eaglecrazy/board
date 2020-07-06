@@ -12,6 +12,13 @@ use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
+    private $service;
+
+    public function __construct(RegisterService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         $users = User::orderBy('id', 'desc')->paginate(20);
@@ -54,7 +61,7 @@ class UsersController extends Controller
 
     public function verify(User $user){
         try {
-            $user->verify();
+            $this->service->verify($user->id);
             return redirect()->route('admin.users.show', $user)->with('success', 'User ' . $user->name . ' is verified.');
         } catch (\DomainException $e){
             return redirect()->route('admin.users.show', $user)->with('error', $e->getMessage());
