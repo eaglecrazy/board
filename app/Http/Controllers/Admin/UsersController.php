@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entity\User;
 use Illuminate\Validation\Rule;
+use App\Usecases\Auth\RegisterService;
 
 class UsersController extends Controller
 {
