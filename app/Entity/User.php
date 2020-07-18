@@ -16,6 +16,7 @@ use phpDocumentor\Reflection\Types\This;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $role
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -46,11 +47,11 @@ class User extends Authenticatable
 
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
-    public const ROLE_USER = '';
-    public const ROLE_ADMIN = '';
+    public const ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admin';
 
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'verify_token'
+        'name', 'email', 'password', 'status', 'verify_token', 'role',
     ];
 
     protected $hidden = [
@@ -104,4 +105,18 @@ class User extends Authenticatable
         ]);
     }
 
+    public function changeRole($role) :void
+    {
+       if(!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)){
+           throw new \InvalidArgumentException('Undefined role "' . $role . '"');
+       }
+       if($this->role === $role){
+           throw new \DomainException('Role is already assigned');
+       }
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
 }
