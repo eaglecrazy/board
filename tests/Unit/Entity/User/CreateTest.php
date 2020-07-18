@@ -25,6 +25,6 @@ class CreateTest extends TestCase
         self::assertNotEmpty($user->password);
 
         self::assertTrue($user->isActive());
-//        self::assertFalse($user->isAdmin());
+        self::assertFalse($user->isAdmin());
     }
 }

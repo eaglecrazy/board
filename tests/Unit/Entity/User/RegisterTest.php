@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
+    //трейт перед тестом начинает транзакцию, после завершения откатывает
     use DatabaseTransactions;
 
     public function testRequest(): void
@@ -27,7 +28,7 @@ class RegisterTest extends TestCase
 
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
-//        self::assertFalse($user->isAdmin());
+        self::assertFalse($user->isAdmin());
     }
 
     public function testVerify(): void

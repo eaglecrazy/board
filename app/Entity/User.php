@@ -46,6 +46,8 @@ class User extends Authenticatable
 
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
+    public const ROLE_USER = '';
+    public const ROLE_ADMIN = '';
 
     protected $fillable = [
         'name', 'email', 'password', 'status', 'verify_token'
