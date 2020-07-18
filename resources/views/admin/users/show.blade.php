@@ -14,13 +14,6 @@
             @method('DELETE')
             <button class="btn btn-danger">Delete</button>
         </form>
-
-
-        {{--        <form method="POST" action="{{ route('admin.users.verify', $user) }}" class="mr-1">--}}
-        {{--            @csrf--}}
-        {{--            <button class="btn btn-danger">Verify</button>--}}
-        {{--        </form>--}}
-
     </div>
 
     <table class="table table-bordered table-striped">
@@ -45,6 +38,16 @@
                 @endif
                 @if($user->isActive())
                     <span class="badge badge-primary">Active</span>
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <th>Role</th>
+            <td>
+                @if($user->isAdmin())
+                    <span class="badge badge-danger">Admin</span>
+                @else
+                    <span class="badge badge-secondary">User</span>
                 @endif
             </td>
         </tr>

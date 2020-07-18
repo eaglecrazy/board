@@ -46,12 +46,16 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = [
+            User::ROLE_USER => 'User', User::ROLE_ADMIN => 'Admin'
+        ];
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(UpdateRequest $request, User $user)
     {
-        $user->update($request->only(['name', 'email', 'status']));
+        $user->update($request->only(['name', 'email', 'status', 'role']));
         return redirect()->route('admin.users.show', $user);
     }
 
