@@ -96,7 +96,5 @@ class UsersController extends Controller
         } catch (\DomainException $e){
             return redirect()->route('admin.users.show', $user)->with('error', $e->getMessage());
         }
-
-
     }
 }
