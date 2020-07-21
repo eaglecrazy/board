@@ -40,6 +40,7 @@ use phpDocumentor\Reflection\Types\This;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRole($value)
  */
 class User extends Authenticatable
 {
