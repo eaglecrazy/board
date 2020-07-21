@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-//use http\Client\Curl\User;
 use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use Illuminate\Http\Request;
