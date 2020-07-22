@@ -78,7 +78,10 @@ Breadcrumbs::register('admin.regions.create', function (BreadcrumbsGenerator $cr
 });
 
 Breadcrumbs::register('admin.regions.show', function (BreadcrumbsGenerator $crumbs, Region $region){
-    $crumbs->parent('admin.regions.index');
+    if($parent = $region->parent)
+        $crumbs->parent('admin.regions.show', $parent);
+    else
+        $crumbs->parent('admin.regions.index');
     $crumbs->push($region->name, route('admin.regions.show', $region));
 });
 
