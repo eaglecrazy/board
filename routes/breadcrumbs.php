@@ -4,6 +4,7 @@ use App\Entity\Region;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Entity\User;
+use Illuminate\Http\Request;
 
 Breadcrumbs::register('home', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Home', route('home'));
@@ -64,8 +65,6 @@ Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $crumbs
     $crumbs->push('Edit', route('admin.users.edit', $user));
 });
 
-
-
 //regionsController
 Breadcrumbs::register('admin.regions.index', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.home');
@@ -74,10 +73,15 @@ Breadcrumbs::register('admin.regions.index', function (BreadcrumbsGenerator $cru
 
 Breadcrumbs::register('admin.regions.create', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.regions.index');
-    $crumbs->push('Create', route('admin.regions.create'));
+    $crumbs->push('Create root region', route('admin.regions.create'));
 });
 
-Breadcrumbs::register('admin.regions.show', function (BreadcrumbsGenerator $crumbs, Region $region){
+Breadcrumbs::register('admin.regions.create-inner', function (BreadcrumbsGenerator $crumbs, Region $region){
+    $crumbs->parent('admin.regions.show', $region);
+    $crumbs->push('Create inner region', route('admin.regions.create'));
+});
+
+Breadcrumbs::register('admin.regions.show', function (BreadcrumbsGenerator $crumbs, $region){
     if($parent = $region->parent)
         $crumbs->parent('admin.regions.show', $parent);
     else
@@ -86,6 +90,6 @@ Breadcrumbs::register('admin.regions.show', function (BreadcrumbsGenerator $crum
 });
 
 Breadcrumbs::register('admin.regions.edit', function (BreadcrumbsGenerator $crumbs, Region $region){
-    $crumbs->parent('admin.regions.index');
+    $crumbs->parent('admin.regions.show', $region);
     $crumbs->push('Edit', route('admin.regions.edit', $region));
 });

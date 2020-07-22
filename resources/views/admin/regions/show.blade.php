@@ -34,6 +34,10 @@
             @endif
         </tbody>
     </table>
+    <div class="d-flex flex-row mb-3">
+        <a href="{{ route('admin.regions.create-inner', $region) }}" class="btn btn-primary mr-1">Create inner region</a>
+    </div>
+
     @if(count($region->children))
         @include('admin.regions._list', ['regions' => $regions])
     @endif

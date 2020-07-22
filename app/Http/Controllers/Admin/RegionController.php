@@ -12,19 +12,29 @@ class RegionController extends Controller
     public function index(Request $request)
     {
         $regions = Region::where('parent_id', null)->orderBy('name')->get();
-        return view('admin.regions.index', compact('regions'));
+        $region = null;
+        return view('admin.regions.index', compact('regions', 'region'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.regions.create');
+        $parent = null;
+        if($request->get('parent')){
+            $parent = Region::findOrFail($request->get('parent'));
+        }
+        return view('admin.regions.create', compact('parent'));
     }
+
+    public function create_inner(Region $region){
+        return view('admin.regions.create', ['parent' => $region]);
+    }
+
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
-            'parent' => 'optional|exists:regions,id',
+            'parent' => 'nullable|exists:regions,id',
         ]);
 
         $region = Region::create([

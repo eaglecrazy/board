@@ -24,7 +24,7 @@
                    value="{{ old('email') }}"
                    required>
             @if($errors->has('email'))
-                <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
+                <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span>
             @endif
         </div>
         <div class="form-group">
