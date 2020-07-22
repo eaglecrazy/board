@@ -83,6 +83,18 @@ BREADCRUMBS
 https://github.com/davejamesmiller/laravel-breadcrumbs
 
 
+
+----------------------
+Nested Set
+(компонент для получения данных из деревьев
+подойдёт для категорий)
+----------------------
+composer require kalnoy/nestedset
+
+
+
+
+
 ----------------------
 Flash уведомления
 ----------------------
