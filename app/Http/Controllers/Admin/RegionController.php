@@ -60,7 +60,7 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:regions,name,' . $region->id . 'id,parent_id,' . $region->parent_id
+            'name' => 'required|string|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
         ]);
 
         $region->update([
@@ -68,7 +68,7 @@ class RegionController extends Controller
             'slug' => Str::slug($name)
         ]);
 
-        return redirect()->route('admin.regions.show');
+        return redirect()->route('admin.regions.show', compact('region'));
     }
 
     public function destroy(Region $region)
