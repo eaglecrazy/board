@@ -13,7 +13,6 @@
             <th>Id</th>
             <th>Name</th>
             <th>Slug</th>
-            <th>Parent</th>
         </tr>
         </thead>
         <tbody>
@@ -22,10 +21,8 @@
                 <td>{{ $region->id }}</td>
                 <td><a href="{{ route('admin.regions.show', $region) }}">{{ $region->name }}</a></td>
                 <td>{{ $region->slug }}</td>
-                <td>{{ $region->parent ? $region->parent->name : '' }}</td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    {{ $regions->links() }}
 @endsection

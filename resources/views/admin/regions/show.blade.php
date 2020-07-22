@@ -14,23 +14,44 @@
 
     <table class="table table-bordered table-striped">
         <tbody>
-        <tr>
-            <th>ID</th>
-            <td>{{ $region->id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ $region->name }}</td>
-        </tr>
-        <tr>
-            <th>Slug</th>
-            <td>{{ $region->slug }}</td>
-        </tr>
-        <tr>
-            <th>Parent</th>
-            <td>{{ $region->parent ? $region->parent->name : '' }}</td>
-        </tr>
-
+            <tr>
+                <th>ID</th>
+                <td>{{ $region->id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ $region->name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ $region->slug }}</td>
+            </tr>
+            @if($region->parent)
+                <tr>
+                    <th>Parent</th>
+                    <td><a href="{{ route('admin.regions.show', $region->parent) }}">{{ $region->parent->name }}</a></td>
+                </tr>
+            @endif
         </tbody>
     </table>
+    @if(count($region->children))
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+             </tr>
+         </thead>
+    <tbody>
+    @foreach($regions as $region)
+        <tr>
+            <td>{{ $region->id }}</td>
+            <td><a href="{{ route('admin.regions.show', $region) }}">{{ $region->name }}</a></td>
+            <td>{{ $region->slug }}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+@endif
 @endsection
