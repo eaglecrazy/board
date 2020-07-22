@@ -69,7 +69,7 @@ Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $crumbs
 //regionsController
 Breadcrumbs::register('admin.regions.index', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.home');
-    $crumbs->push('regions', route('admin.regions.index'));
+    $crumbs->push('Regions', route('admin.regions.index'));
 });
 
 Breadcrumbs::register('admin.regions.create', function (BreadcrumbsGenerator $crumbs){
