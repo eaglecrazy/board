@@ -6,12 +6,17 @@ use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Entity\User;
 use Illuminate\Http\Request;
 
+
+//-------------------------------------------------------------------------
+//Home
+//-------------------------------------------------------------------------
 Breadcrumbs::register('home', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Home', route('home'));
 });
 
-
+//-------------------------------------------------------------------------
 //Аутентификация, регистрация, ЛК
+//-------------------------------------------------------------------------
 Breadcrumbs::register('login', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('home');
     $crumbs->push('Login', route('login'));
@@ -37,14 +42,17 @@ Breadcrumbs::register('password.reset', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Change', route('password.reset'));
 });
 
-//Админка
+//-------------------------------------------------------------------------
+//Admin
+//-------------------------------------------------------------------------
 Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('home');
     $crumbs->push('Admin', route('admin.home'));
 });
 
-
+//-------------------------------------------------------------------------
 //UsersController
+//-------------------------------------------------------------------------
 Breadcrumbs::register('admin.users.index', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.home');
     $crumbs->push('Users', route('admin.users.index'));
@@ -65,7 +73,10 @@ Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $crumbs
     $crumbs->push('Edit', route('admin.users.edit', $user));
 });
 
-//regionsController
+
+//-------------------------------------------------------------------------
+//RegionsController
+//-------------------------------------------------------------------------
 Breadcrumbs::register('admin.regions.index', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('admin.home');
     $crumbs->push('Regions', route('admin.regions.index'));
@@ -93,3 +104,35 @@ Breadcrumbs::register('admin.regions.edit', function (BreadcrumbsGenerator $crum
     $crumbs->parent('admin.regions.show', $region);
     $crumbs->push('Edit', route('admin.regions.edit', $region));
 });
+
+
+//-------------------------------------------------------------------------
+//CategoriesController
+//-------------------------------------------------------------------------
+Breadcrumbs::register('admin.adverts.categories.index', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('admin.home');
+    $crumbs->push('Categories', route('admin.adverts.categories.index'));
+});
+
+//Breadcrumbs::register('admin.categories.create', function (BreadcrumbsGenerator $crumbs){
+//    $crumbs->parent('admin.categories.index');
+//    $crumbs->push('Create root region', route('admin.categories.create'));
+//});
+//
+//Breadcrumbs::register('admin.categories.create-inner', function (BreadcrumbsGenerator $crumbs, Region $region){
+//    $crumbs->parent('admin.categories.show', $region);
+//    $crumbs->push('Create inner region', route('admin.categories.create'));
+//});
+//
+//Breadcrumbs::register('admin.categories.show', function (BreadcrumbsGenerator $crumbs, $region){
+//    if($parent = $region->parent)
+//        $crumbs->parent('admin.categories.show', $parent);
+//    else
+//        $crumbs->parent('admin.categories.index');
+//    $crumbs->push($region->name, route('admin.categories.show', $region));
+//});
+//
+//Breadcrumbs::register('admin.categories.edit', function (BreadcrumbsGenerator $crumbs, Region $region){
+//    $crumbs->parent('admin.categories.show', $region);
+//    $crumbs->push('Edit', route('admin.categories.edit', $region));
+//});
