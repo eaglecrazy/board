@@ -2,16 +2,12 @@
 
 @section('content')
     @include('admin.adverts.categories._nav')
-    @if($parent)
-        <h2>Creating an inland category for {{ $parent->name }}</h2>
-    @else
-        <h2>Creating an root category.</h2>
-    @endif
-    <form method="POST" action="{{ route('admin.adverts.categories.store', ['parent' => $parent ? $parent->id : null]) }}">
+
+    <form method="POST" action="{{ route('admin.adverts.categories.store') }}">
         @csrf
 
         <div class="form-group">
-            <label for="name" class="col-form-label">category name</label>
+            <label for="name" class="col-form-label">Name</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"
@@ -21,6 +17,25 @@
                 <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
             @endif
         </div>
+
+
+        <div class="form-group">
+            <label for="parent" class="col-form-label">Parent</label>
+            <select id="parent"
+                   class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
+                   name="parent">
+                <option value=""></option>
+                @foreach($parents as $parent)
+                    <option value="{{ $parent->id }}"{{ $parent->id == old('parent') || $parent->id === $current->id ? ' selected' : ''  }}>
+                        @for ($i = 0; $i < $parent->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor {{ $parent->name }}
+                    </option>
+                @endforeach
+            </select>
+            @if($errors->has('parent'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('parent') }}</strong></span>
+            @endif
+        </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

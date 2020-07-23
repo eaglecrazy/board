@@ -38,6 +38,9 @@ Route::group([
 
     ], function () {
         Route::resource('categories', 'CategoryController');
+        //роут нужен для правильной генерации хлебных крошек в дочерних категориях
+        Route::get('categories/create/{category}', 'CategoryController@create_inner')->name('categories.create-inner');
+
     }
     );
 });

@@ -17,7 +17,7 @@
         @foreach($categories as $category)
             <tr>
                 <td>
-                    @for($i = 0; $i < $category->depth; $i++) &mdash; @endfor
+                    @for($i = 0; $i < $category->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor
                     <a href="{{ route('admin.adverts.categories.show', $category) }}">{{ $category->name }}</a></td>
                 <td>{{ $category->slug }}</td>
             </tr>

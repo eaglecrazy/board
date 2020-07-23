@@ -34,11 +34,11 @@
             @endif
         </tbody>
     </table>
+
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('admin.adverts.categories.create-inner', $category) }}" class="btn btn-primary mr-1">Create inner category</a>
     </div>
-
     @if(count($category->children))
-        @include('admin.adverts.categories._list', ['categories' => $categories])
+        @include('admin.adverts.categories._list', ['categories' => $category->children])
     @endif
 @endsection
