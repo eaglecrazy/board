@@ -11,6 +11,7 @@
         <tr>
             <th>Name</th>
             <th>Slug</th>
+            <th>Manage</th>
         </tr>
         </thead>
         <tbody>
@@ -20,6 +21,39 @@
                     @for($i = 0; $i < $category->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor
                     <a href="{{ route('admin.adverts.categories.show', $category) }}">{{ $category->name }}</a></td>
                 <td>{{ $category->slug }}</td>
+                <td>
+                    <div class="d-flex flex-row justify-content-center">
+                        <form
+                            class="mr-2"
+                            method="POST"
+                            action="{{ route('admin.adverts.categories.first', $category) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary">First</button>
+                        </form>
+                        <form
+                            class="mr-2"
+                            method="POST"
+                            action="{{ route('admin.adverts.categories.up', $category) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary">&uarr;</button>
+                        </form>
+                        <form
+                            class="mr-2"
+                            method="POST"
+                            action="{{ route('admin.adverts.categories.down', $category) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary">&darr;</button>
+                        </form>
+                        <form
+                            class="mr-2"
+                            method="POST"
+                            action="{{ route('admin.adverts.categories.last', $category) }}">
+                            @csrf
+                            <button class="btn btn-sm btn-outline-primary">Last</button>
+                        </form>
+
+                    </div>
+                </td>
             </tr>
         @endforeach
         </tbody>
