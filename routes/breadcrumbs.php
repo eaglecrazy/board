@@ -134,7 +134,7 @@ Breadcrumbs::register('admin.adverts.categories.show', function (BreadcrumbsGene
     $crumbs->push($category->name, route('admin.adverts.categories.show', $category));
 });
 
-//Breadcrumbs::register('admin.categories.edit', function (BreadcrumbsGenerator $crumbs, Region $region){
-//    $crumbs->parent('admin.categories.show', $region);
-//    $crumbs->push('Edit', route('admin.categories.edit', $region));
-//});
+Breadcrumbs::register('admin.adverts.categories.edit', function (BreadcrumbsGenerator $crumbs, Category $category){
+    $crumbs->parent('admin.adverts.categories.show', $category);
+    $crumbs->push('Edit', route('admin.adverts.categories.edit', $category));
+});

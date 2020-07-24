@@ -49,18 +49,32 @@ class CategoryController extends Controller
         return view('admin.adverts.categories.show', compact('category'));
     }
 
-    public function edit(Category $category)
+    public function edit(Request $request, Category $category)
     {
-        //
+        $current = $category;
+        $categories = Category::defaultOrder()->withDepth()->get();
+        return view('admin.adverts.categories.edit', compact('categories', 'current'));
     }
 
     public function update(Request $request, Category $category)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'parent' => 'nullable|integer|exists:advert_categories,id',
+        ]);
+
+        $category->update([
+            'name' => $name = $request['name'],
+            'slug' => Str::slug($name),
+            'parent_id' => $request['parent'],
+        ]);
+
+        return redirect()->route('admin.adverts.categories.show', compact('category'));
     }
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admin.adverts.categories.index');
     }
 }

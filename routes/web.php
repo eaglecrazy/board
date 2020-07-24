@@ -29,7 +29,7 @@ Route::group([
     Route::get('regions/create/{region}', 'RegionController@create_inner')->name('regions.create-inner');
 
     //---------
-    //Categories
+    //Adverts
     //---------
     Route::group([
         'prefix' => 'adverts',
@@ -37,6 +37,9 @@ Route::group([
         'namespace' => 'Adverts',
 
     ], function () {
+        //---------
+        //Categories
+        //---------
         Route::resource('categories', 'CategoryController');
         //роут нужен для правильной генерации хлебных крошек в дочерних категориях
         Route::get('categories/create/{category}', 'CategoryController@create_inner')->name('categories.create-inner');
