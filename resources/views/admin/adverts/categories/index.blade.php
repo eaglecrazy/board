@@ -28,28 +28,28 @@
                             method="POST"
                             action="{{ route('admin.adverts.categories.first', $category) }}">
                             @csrf
-                            <button class="btn btn-sm btn-outline-primary">First</button>
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-up"></span></button>
                         </form>
                         <form
                             class="mr-2"
                             method="POST"
                             action="{{ route('admin.adverts.categories.up', $category) }}">
                             @csrf
-                            <button class="btn btn-sm btn-outline-primary">&uarr;</button>
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-up"></span></button>
                         </form>
                         <form
                             class="mr-2"
                             method="POST"
                             action="{{ route('admin.adverts.categories.down', $category) }}">
                             @csrf
-                            <button class="btn btn-sm btn-outline-primary">&darr;</button>
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-down"></span></button>
                         </form>
                         <form
                             class="mr-2"
                             method="POST"
                             action="{{ route('admin.adverts.categories.last', $category) }}">
                             @csrf
-                            <button class="btn btn-sm btn-outline-primary">Last</button>
+                            <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-down"></span></button>
                         </form>
 
                     </div>
