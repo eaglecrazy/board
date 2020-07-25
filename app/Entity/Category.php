@@ -31,6 +31,8 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereRgt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereSlug($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Attribute[] $attributes
+ * @property-read int|null $attributes_count
  */
 class Category extends Model
 {
@@ -40,4 +42,8 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'slug', 'parent_id'];
+
+    public function attributes(){
+        return $this->hasMany(Attribute::class, 'category_id', 'id');
+    }
 }
