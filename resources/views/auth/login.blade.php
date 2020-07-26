@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@dump(session('error'))
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">

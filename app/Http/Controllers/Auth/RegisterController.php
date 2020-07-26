@@ -50,7 +50,7 @@ class RegisterController extends Controller
 
         try {
             $this->service->verify($user->id);
-            return redirect()->route('login')->with('success', 'Your email is verified. You can now login');
+            return redirect()->route('login')->with('success', 'Your email is verified. You can now login.');
         } catch (\DomainException $e){
             return redirect()->route('login')->with('error', $e->getMessage());
         }
