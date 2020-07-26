@@ -126,7 +126,6 @@ Breadcrumbs::register('admin.adverts.categories.create-inner', function (Breadcr
     $crumbs->push('Create inner category');
 });
 
-
 Breadcrumbs::register('admin.adverts.categories.show', function (BreadcrumbsGenerator $crumbs, Category $category){
     if($parent = $category->parent)
         $crumbs->parent('admin.adverts.categories.show', $parent);

@@ -38,8 +38,38 @@
         </table>
     </div>
 
+    @if($parentAttributes)
+        <div class="card p-3  mb-3">
+        <h2>Parent attributes</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Sort</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($parentAttributes as $attribute)
+                <tr>
+                    <td>{{ $attribute->id }}</td>
+                    <td>{{ $attribute->sort }}</td>
+                    <td>
+                        <a href="{{ route('admin.adverts.categories.attributes.show', [$category, $attribute]) }}">{{ $attribute->name }}</a>
+                    </td>
+                    <td>{{ $attribute->type }}</td>
+                    <td>{{ $attribute->required ? 'Yes' : '' }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
+
     <div class="card p-3  mb-3">
-        <h2>Attributes</h2>
+        <h2>Own attributes</h2>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.categories.attributes.create', $category) }}" class="btn btn-primary mr-1">Create
                 atribute</a>

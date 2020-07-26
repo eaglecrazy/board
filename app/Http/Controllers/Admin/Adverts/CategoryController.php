@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Category;
 use App\Entity\Region;
+use App\Http\Requests\Adverts\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -28,13 +29,8 @@ class CategoryController extends Controller
         return view('admin.adverts.categories.create', compact('parents', 'current'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'parent' => 'nullable|integer|exists:advert_categories,id',
-        ]);
-
         $category = Category::create([
             'name' => $name = $request['name'],
             'slug' => Str::slug($name),
@@ -46,8 +42,9 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
+        $parentAttributes = $category->parentAttributes();
         $attributes = $category->attributes()->orderBy('sort')->get();
-        return view('admin.adverts.categories.show', compact('category', 'attributes'));
+        return view('admin.adverts.categories.show', compact('category', 'attributes', 'parentAttributes'));
     }
 
     public function edit(Request $request, Category $category)
@@ -57,13 +54,8 @@ class CategoryController extends Controller
         return view('admin.adverts.categories.edit', compact('categories', 'current'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'parent' => 'nullable|integer|exists:advert_categories,id',
-        ]);
-
         $category->update([
             'name' => $name = $request['name'],
             'slug' => Str::slug($name),
@@ -83,7 +75,6 @@ class CategoryController extends Controller
         if($first = $category->siblings()->defaultOrder()->first()){
             $category->insertBeforeNode($first);
         }
-//        dd($category);
         return redirect()->route('admin.adverts.categories.index');
     }
 
