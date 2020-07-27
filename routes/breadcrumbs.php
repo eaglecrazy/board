@@ -29,11 +29,6 @@ Breadcrumbs::register('register', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Register', route('register'));
 });
 
-Breadcrumbs::register('cabinet', function (BreadcrumbsGenerator $crumbs){
-    $crumbs->parent('home');
-    $crumbs->push('Cabinet', route('cabinet'));
-});
-
 Breadcrumbs::register('password.request', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('login');
     $crumbs->push('Input email', route('password.request'));
@@ -155,4 +150,23 @@ Breadcrumbs::register('admin.adverts.categories.attributes.show', function (Brea
 Breadcrumbs::register('admin.adverts.categories.attributes.edit', function (BreadcrumbsGenerator $crumbs, Category $category, Attribute $attribute){
     $crumbs->parent('admin.adverts.categories.attributes.show', $category, $attribute);
     $crumbs->push('Edit');
+});
+
+
+//-------------------------------------------------------------------------
+// Cabinet
+//-------------------------------------------------------------------------
+Breadcrumbs::register('cabinet.home', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('home');
+    $crumbs->push('Cabinet', route('cabinet.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.home', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Profile', route('cabinet.profile.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.edit', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Edit', route('cabinet.profile.edit'));
 });

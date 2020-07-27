@@ -15,6 +15,7 @@ use phpDocumentor\Reflection\Types\This;
  *
  * @property int $id
  * @property string $name
+ * @property string $last_name
  * @property string $email
  * @property string $role
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -68,7 +69,7 @@ class User extends Authenticatable
     }
 
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'verify_token', 'role',
+        'name', 'last_name', 'email', 'password', 'status', 'verify_token', 'role',
     ];
 
     protected $hidden = [
