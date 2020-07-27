@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,6 +43,15 @@ use phpDocumentor\Reflection\Types\This;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRole($value)
+ * @property string|null $phone
+ * @property bool $phone_verified
+ * @property string|null $phone_verify_token
+ * @property \Illuminate\Support\Carbon|null $phone_verify_token_expire
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyTokenExpire($value)
  */
 class User extends Authenticatable
 {
@@ -69,7 +79,17 @@ class User extends Authenticatable
     }
 
     protected $fillable = [
-        'name', 'last_name', 'email', 'password', 'status', 'verify_token', 'role',
+        'name',
+        'last_name',
+        'email',
+        'password',
+        'status',
+        'verify_token',
+        'role',
+        'phone',
+        'phone_verified',
+        'phone_verify_token',
+        'phone_verify_token_expire'
     ];
 
     protected $hidden = [
@@ -78,7 +98,13 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified' => 'boolean',
+        'phone_verify_token_expire' => 'datetime',
     ];
+
+    //------------------
+    // Register + Add
+    //------------------
 
     public static function register(string $name, string $email, string $password): self
     {
@@ -123,6 +149,10 @@ class User extends Authenticatable
         ]);
     }
 
+    //------------------
+    // Roles
+    //------------------
+
     public function changeRole($role) :void
     {
        if(!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)){
@@ -138,4 +168,55 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_ADMIN;
     }
+
+    //------------------
+    // Phone
+    //------------------
+    public function unverifyPhone() : void {
+        $this->phone_verified = false;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->saveOrFail();
+    }
+
+    public function requestPhoneVerification(Carbon $now) : string
+    {
+        //если нет телефона
+        if(empty($this->phone)){
+            throw new \DomainException('Phone number is empty.' . $this->phone . '111');
+        }
+        //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
+        //то есть токен отправили и получить другой ещё нельзя
+        if(!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)){
+            throw new \DomainException('Token is already requested.');
+        }
+
+        $this->phone_verified = false;
+        $this->phone_verify_token = (string)random_int(10000, 99999);
+        $this->phone_verify_token_expire = $now->copy()->addSeconds(300);
+        $this->saveOrFail();
+
+        return $this->phone_verify_token;
+    }
+
+    public function verifyPhone($token, Carbon $now) : void
+    {
+        if($token !== $this->phone_verify_token){
+            throw new \DomainException('Incorrect verify token.');
+        }
+        if($this->phone_verify_token_expire->lt($now)){
+            throw new \DomainException('Token is expired.');
+        }
+
+        $this->phone_verified = true;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->saveOrFail();
+    }
+
+    public function isPhoneVerified() : bool
+    {
+        return $this->phone_verified;
+    }
+
 }
