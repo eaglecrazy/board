@@ -170,6 +170,15 @@ mysql -u {username} -p {password} \
 
 
 
+----------------------
+Отправка запросов из кода
+----------------------
+https://github.com/guzzle/guzzle
+guzzlehttp/guzzle
+
+
+
+
 
 ----------------------
 SSH на хостинге
