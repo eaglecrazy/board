@@ -170,3 +170,8 @@ Breadcrumbs::register('cabinet.profile.edit', function (BreadcrumbsGenerator $cr
     $crumbs->parent('cabinet.profile.home');
     $crumbs->push('Edit', route('cabinet.profile.edit'));
 });
+
+Breadcrumbs::register('cabinet.profile.phone', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Edit', route('cabinet.profile.phone'));
+});

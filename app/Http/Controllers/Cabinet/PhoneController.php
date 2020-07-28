@@ -34,8 +34,9 @@ class PhoneController extends Controller
             $user->verifyPhone($request['token'], Carbon::now());
         } catch (\DomainException $e) {
             $request->session()->flash('error', $e->getMessage());
+            return redirect()->route('cabinet.profile.home');
         }
-        return redirect()->route('cabinet.profile.home');
+        return redirect()->route('cabinet.profile.home')->with('success', 'Phone verified success.');
     }
 }
 

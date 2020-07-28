@@ -61,6 +61,7 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = 'active';
     public const ROLE_USER = 'user';
     public const ROLE_ADMIN = 'admin';
+    public const PHONE_VERIFY_TIME = 300;
 
     public static function rolesList(): array
     {
@@ -183,17 +184,17 @@ class User extends Authenticatable
     {
         //если нет телефона
         if(empty($this->phone)){
-            throw new \DomainException('Phone number is empty.' . $this->phone . '111');
+            throw new \DomainException('Phone number is empty.');
         }
         //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
         //то есть токен отправили и получить другой ещё нельзя
         if(!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)){
-            throw new \DomainException('Token is already requested.');
+            throw new \DomainException('Token is already requested. The new token will be available in ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' seconds.');
         }
 
         $this->phone_verified = false;
         $this->phone_verify_token = (string)random_int(10000, 99999);
-        $this->phone_verify_token_expire = $now->copy()->addSeconds(300);
+        $this->phone_verify_token_expire = $now->copy()->addSeconds(static::PHONE_VERIFY_TIME);
         $this->saveOrFail();
 
         return $this->phone_verify_token;
