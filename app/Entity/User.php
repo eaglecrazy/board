@@ -62,6 +62,7 @@ class User extends Authenticatable
     public const ROLE_USER = 'user';
     public const ROLE_ADMIN = 'admin';
     public const PHONE_VERIFY_TIME = 300;
+
 //    public const PHONE_VERIFY_TIME = 5;
 
     public static function rolesList(): array
@@ -91,7 +92,8 @@ class User extends Authenticatable
         'phone',
         'phone_verified',
         'phone_verify_token',
-        'phone_verify_token_expire'
+        'phone_verify_token_expire',
+        'phone_auth',
     ];
 
     protected $hidden = [
@@ -101,6 +103,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified' => 'boolean',
+        'phone_auth' => 'boolean',
         'phone_verify_token_expire' => 'datetime',
     ];
 
@@ -155,18 +158,18 @@ class User extends Authenticatable
     // Roles
     //------------------
 
-    public function changeRole($role) :void
+    public function changeRole($role): void
     {
-       if(!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)){
-           throw new \InvalidArgumentException('Undefined role "' . $role . '"');
-       }
-       if($this->role === $role){
-           throw new \DomainException('Role is already assigned');
-       }
+        if (!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)) {
+            throw new \InvalidArgumentException('Undefined role "' . $role . '"');
+        }
+        if ($this->role === $role) {
+            throw new \DomainException('Role is already assigned');
+        }
         $this->update(['role' => $role]);
     }
 
-    public function isAdmin() : bool
+    public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
     }
@@ -174,22 +177,23 @@ class User extends Authenticatable
     //------------------
     // Phone
     //------------------
-    public function unverifyPhone() : void {
+    public function unverifyPhone(): void
+    {
         $this->phone_verified = false;
         $this->phone_verify_token = null;
         $this->phone_verify_token_expire = null;
         $this->saveOrFail();
     }
 
-    public function requestPhoneVerification(Carbon $now) : string
+    public function requestPhoneVerification(Carbon $now): string
     {
         //если нет телефона
-        if(empty($this->phone)){
+        if (empty($this->phone)) {
             throw new \DomainException('Phone number is empty.');
         }
         //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
         //то есть токен отправили и получить другой ещё нельзя
-        if(!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)){
+        if (!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
             throw new \DomainException('Token is already requested. The new token will be available in ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' seconds.');
         }
 
@@ -201,12 +205,12 @@ class User extends Authenticatable
         return $this->phone_verify_token;
     }
 
-    public function verifyPhone($token, Carbon $now) : void
+    public function verifyPhone($token, Carbon $now): void
     {
-        if($token !== $this->phone_verify_token){
+        if ($token !== $this->phone_verify_token) {
             throw new \DomainException('Incorrect verify token.');
         }
-        if($this->phone_verify_token_expire->lt($now)){
+        if ($this->phone_verify_token_expire->lt($now)) {
             throw new \DomainException('Token is expired.');
         }
 
@@ -216,9 +220,14 @@ class User extends Authenticatable
         $this->saveOrFail();
     }
 
-    public function isPhoneVerified() : bool
+    public function isPhoneVerified(): bool
     {
         return $this->phone_verified;
+    }
+
+    public function isPhoneAuthEnabled(): bool
+    {
+        return $this->phone_auth;
     }
 
 }
