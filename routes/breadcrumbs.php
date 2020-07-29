@@ -166,6 +166,10 @@ Breadcrumbs::register('cabinet.home', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Cabinet', route('cabinet.home'));
 });
 
+//-------------------------------------------------------------------------
+// Cabinet - Profile
+//-------------------------------------------------------------------------
+
 Breadcrumbs::register('cabinet.profile.home', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('cabinet.home');
     $crumbs->push('Profile', route('cabinet.profile.home'));
@@ -179,4 +183,12 @@ Breadcrumbs::register('cabinet.profile.edit', function (BreadcrumbsGenerator $cr
 Breadcrumbs::register('cabinet.profile.phone', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('cabinet.profile.home');
     $crumbs->push('Edit', route('cabinet.profile.phone'));
+});
+
+//-------------------------------------------------------------------------
+// Cabinet - Adverts
+//-------------------------------------------------------------------------
+Breadcrumbs::register('cabinet.adverts.index', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Adverts', route('cabinet.adverts.index'));
 });

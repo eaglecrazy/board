@@ -62,7 +62,7 @@ class LoginController extends Controller
                     'token' => $token,
                     'remember' => $request->filled('remember'),
                 ]);
-                $this->sms->send($user->phone, ('Login code: ' . $token));
+                $this->sms->send($user->phone, ('Your auth token: ' . $token));
                 return redirect()->route('login.phone');
             }
 

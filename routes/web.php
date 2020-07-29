@@ -37,7 +37,10 @@ Route::group([
         Route::put('/phone', 'PhoneController@verify')->name('phone.verify');
         Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
     });
-
+    //---------
+    // Adverts
+    //---------
+    Route::resource('adverts', 'Adverts\AdvertsController');
 
 });
 
