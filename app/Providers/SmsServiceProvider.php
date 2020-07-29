@@ -19,11 +19,11 @@ class SmsServiceProvider extends ServiceProvider
             $config = $app->make('config')->get('sms');
             switch ($config['driver']){
                 case 'sms.ru' :
-                    $params = $config['driver']['sms.ru'];
-                    if(!empty($cparams['url'])){
-                        return new SmsRu($params['api_id'], $params['url']);
+                    $params = $config['drivers']['sms.ru'];
+                    if(!empty($params['url'])){
+                        return new SmsRu($params['app_id'], $params['url']);
                     }
-                    return new SmsRu($params['api_id']);
+                    return new SmsRu($params['app_id']);
                 case 'array' :
                     return new FakeSender();
                 default :

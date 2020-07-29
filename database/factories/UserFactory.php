@@ -18,7 +18,7 @@ $factory->define(User::class, function (Faker $faker) {
         'phone' => $faker->unique()->phoneNumber,
         'phone_verified' => $phoneActive,
         'phone_verify_token' => $phoneActive ? null : (string)random_int(10000, 99999),
-        'phone_verify_token_expire' =>  $phoneActive ? null : Carbon::now()->addSeconds(300),
+        'phone_verify_token_expire' =>  $phoneActive ? null : Carbon::now()->addSeconds(User::PHONE_VERIFY_TIME),
 //        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'password' => '$2y$10$JB9ek7frDjM3sPmb8uEsf.dUtDRs1ePCpJ1E6B7WCXfhwZwI54P3G', // 123
         'remember_token' => Str::random(10),

@@ -62,6 +62,7 @@ class User extends Authenticatable
     public const ROLE_USER = 'user';
     public const ROLE_ADMIN = 'admin';
     public const PHONE_VERIFY_TIME = 300;
+//    public const PHONE_VERIFY_TIME = 5;
 
     public static function rolesList(): array
     {
