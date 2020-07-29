@@ -50,6 +50,12 @@ class PhoneController extends Controller
         }
         return redirect()->route('cabinet.profile.home')->with('success', 'Phone verified success.');
     }
+
+    public function auth(){
+        $user = Auth::user();
+        $user->update(['phone_auth' => !$user->phone_auth]);
+        return redirect()->route('cabinet.profile.home');
+    }
 }
 
 

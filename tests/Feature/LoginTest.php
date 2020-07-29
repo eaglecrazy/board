@@ -36,15 +36,13 @@ class LoginTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => '123',
         ]);
-
-        $q = session('error');
 
         $response
             ->assertStatus(302)
             ->assertRedirect('/')
-            ->assertSessionHas('error', 'You need to confirm your account. Please check your email');
+            ->assertSessionHas('error', 'You need to confirm your account. Please check your email.');
     }
 
     public function testActive(): void
@@ -53,7 +51,7 @@ class LoginTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => '123',
         ]);
 
         $response

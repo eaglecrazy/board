@@ -5,22 +5,26 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Entity\User;
+use App\Services\Sms\SmsSender;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class LoginController extends Controller
 {
     use ThrottlesLogins;
 
 //    protected $redirectTo = '/cabinet';
+    private $sms;
 
-    public function __construct()
+    public function __construct(SmsSender $sms)
     {
         $this->middleware('guest')->except('logout');
+        $this->sms = $sms;
     }
 
     public function showLoginForm()
@@ -46,8 +50,22 @@ class LoginController extends Controller
             $user = Auth::user();
             if ($user->status !== User::STATUS_ACTIVE) {
                 Auth::logout();
-                return back()->with('error', 'You need to confirm your account. Please check your email');
+                return back()->with('error', 'You need to confirm your account. Please check your email.');
             }
+
+            //если есть двухфакторная аутентификация
+            if($user->isPhoneAuthEnabled()){
+                Auth::logout();
+                $token = (string)random_int(10000, 99999);
+                $request->session()->put('auth', [
+                    'id' => $user->id,
+                    'token' => $token,
+                    'remember' => $request->filled('remember'),
+                ]);
+                $this->sms->send($user->phone, ('Login code: ' . $token));
+                return redirect()->route('login.phone');
+            }
+
             return redirect()->intended(route('cabinet.home'));
         }
 
@@ -66,5 +84,35 @@ class LoginController extends Controller
     public function username()
     {
         return 'email';
+    }
+
+    public function phone(){
+        return view('auth.phone');
+    }
+
+    public function verify(Request $request){
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            $this->sendLockoutResponse($request);
+        }
+
+        $this->validate($request, [
+            'token' => 'required|string'
+        ]);
+
+        if(!$session = $request->session()->get('auth')){
+            throw new BadRequestHttpException('Missing token info');
+        }
+
+        $user = User::findOrFail($session['id']);
+        if($request['token'] === $session['token']){
+            $request->session()->flush();
+            $this->clearLoginAttempts($request);
+            Auth::login($user, $session['remember']);
+            return redirect()->intended(route('cabinet.home'));
+        }
+
+        $this->incrementLoginAttempts();
+        throw ValidationException::withMessages(['token' => ['Invalid auth token']]);
     }
 }

@@ -35,7 +35,7 @@
                 @endif
             </td>
         </tr>
-        @if ($user->phone)
+        @if ($user->phone && $user->phone_verified)
             <tr>
                 <th>Two Factor Auth</th><td>
                     <form method="POST" action="{{ route('cabinet.profile.phone.auth') }}">

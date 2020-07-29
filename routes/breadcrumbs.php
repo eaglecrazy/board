@@ -24,6 +24,11 @@ Breadcrumbs::register('login', function (BreadcrumbsGenerator $crumbs){
     $crumbs->push('Login', route('login'));
 });
 
+Breadcrumbs::register('login.phone', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('home');
+    $crumbs->push('Enter auth token', route('login.phone'));
+});
+
 Breadcrumbs::register('register', function (BreadcrumbsGenerator $crumbs){
     $crumbs->parent('home');
     $crumbs->push('Register', route('register'));
