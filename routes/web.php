@@ -11,6 +11,14 @@ Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.
 Route::get('/login/phone', 'Auth\LoginController@phone')->name('login.phone');
 Route::post('/login/phone', 'Auth\LoginController@verify');
 
+
+//---------
+// Ajax
+//---------
+Route::get('/ajax/regions', 'Ajax\RegionController@get')->name('ajax.regions');
+
+
+
 //---------
 // Cabinet
 //---------

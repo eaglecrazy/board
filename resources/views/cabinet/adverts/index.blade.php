@@ -12,4 +12,15 @@
     </ul>
 
     <h2>Adverts</h2>
+
+    <div class="region-selector"
+         data-selected="{{ json_encode((array)old('regions')) }}"
+         data-source="{{ route('ajax.regions') }}">
+        <div class="form-group">
+            <select class="form-control region-select" data-level="1">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
 @endsection
