@@ -26,8 +26,8 @@ if (root.length > 0) {
             });
         });
     //повесим событие
-    root.change(function () {
-        changeRegionSelect(1, root.val(), url, block);
+    root.change(function (e) {
+        changeRegionSelect(e.target, root.val(), url, block);
     });
 }
 
@@ -39,22 +39,27 @@ function deleteChildSelects(parentLevel) {
     });
 }
 
-function changeRegionSelect(parentLevel, parentValue, url, block) {
+function changeRegionSelect(parent, parentValue, url, block) {
+
+    let parentLevel = parseInt($(parent).attr('data-level'));
 
     //удаляем все селекты уровнем больше parentValue
     deleteChildSelects(parentLevel);
 
+    //был выбран пустой пункт
+    if($(parent).val() === '')
+        return;
+
     //делаем запрос
     axios.get(url, {params: {parent: parentValue}})
         .then(function (response) {
-
+            // console.log(response.data);
             //если пришли данные, то добавляем ещё один селект
             if (response.data.length > 0) {
 
                 //добавим элементы
-                const currentLevel = parentLevel + 1;
                 let group = $('<div class="form-group">');
-                let select = $(`<select class="form-control region-select" data-level='${currentLevel}'>`);
+                let select = $(`<select class="form-control region-select" data-level='${ parentLevel + 1 }'>`);
                 select.append($('<option value=""></option>'));
                 group.append(select);
                 block.append(group);
@@ -70,8 +75,8 @@ function changeRegionSelect(parentLevel, parentValue, url, block) {
                 });
 
                 //повесим событие
-                select.change(function () {
-                    changeRegionSelect(currentLevel, select.val(), url, block);
+                select.change(function (e) {
+                    changeRegionSelect(e.target, select.val(), url, block);
                 });
             }
         });

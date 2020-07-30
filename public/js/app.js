@@ -37249,37 +37249,37 @@ if (root.length > 0) {
     });
   }); //повесим событие
 
-  root.change(function () {
-    changeRegionSelect(1, root.val(), url, block);
+  root.change(function (e) {
+    changeRegionSelect(e.target, root.val(), url, block);
   });
 }
 
 function deleteChildSelects(parentLevel) {
   $('.region-select').each(function () {
-    console.log(this);
-    console.log($(this).attr('data-level'));
-
     if ($(this).attr('data-level') > parentLevel) {
       $(this).remove();
     }
   });
 }
 
-function changeRegionSelect(parentLevel, parentValue, url, block) {
-  //удаляем все селекты уровнем больше parentValue
-  deleteChildSelects(parentLevel); //делаем запрос
+function changeRegionSelect(parent, parentValue, url, block) {
+  var parentLevel = parseInt($(parent).attr('data-level')); //удаляем все селекты уровнем больше parentValue
+
+  deleteChildSelects(parentLevel); //был выбран пустой пункт
+
+  if ($(parent).val() === '') return; //делаем запрос
 
   axios.get(url, {
     params: {
       parent: parentValue
     }
   }).then(function (response) {
+    // console.log(response.data);
     //если пришли данные, то добавляем ещё один селект
     if (response.data.length > 0) {
       //добавим элементы
-      var currentLevel = parentLevel + 1;
       var group = $('<div class="form-group">');
-      var select = $("<select class=\"form-control region-select\" data-level='".concat(currentLevel, "'>"));
+      var select = $("<select class=\"form-control region-select\" data-level='".concat(parentLevel + 1, "'>"));
       select.append($('<option value=""></option>'));
       group.append(select);
       block.append(group); //добавление option в select
@@ -37288,8 +37288,8 @@ function changeRegionSelect(parentLevel, parentValue, url, block) {
         select.append($("<option>").attr('name', 'regions[]').attr('value', region.id).text(region.name));
       }); //повесим событие
 
-      select.change(function () {
-        changeRegionSelect(currentLevel, select.val(), url, block);
+      select.change(function (e) {
+        changeRegionSelect(e.target, select.val(), url, block);
       });
     }
   });
