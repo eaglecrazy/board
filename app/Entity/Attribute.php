@@ -54,7 +54,7 @@ class Attribute extends Model
         return $this->type === self::TYPE_STRING;
     }
 
-    public function isInteger(): bool
+    public function isNumber(): bool
     {
         return $this->type === self::TYPE_INTEGER;
     }
@@ -66,6 +66,6 @@ class Attribute extends Model
 
     public function isSelect(): bool
     {
-        return count($this->variants) > 0;
+        return count($this->variants) > 1;
     }
 }

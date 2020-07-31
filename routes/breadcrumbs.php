@@ -204,3 +204,8 @@ Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGene
     $crumbs->parent('cabinet.adverts.index');
     $crumbs->push('Create advert', route('cabinet.adverts.create.region', $category, $region));
 });
+
+Breadcrumbs::register('cabinet.adverts.create.advert', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null){
+    $crumbs->parent('cabinet.adverts.index');
+    $crumbs->push('Create advert', route('cabinet.adverts.create.advert', $category, $region));
+});

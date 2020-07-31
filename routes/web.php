@@ -59,6 +59,7 @@ Route::group([
         Route::get('/create/category', 'CreateController@category')->name('create.category');
         Route::get('/create/region/{category}/{region?}', 'CreateController@region')->name('create.region');
         Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
+        Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
     });
 
 //    Route::resource('adverts', 'Adverts\AdvertsController');
