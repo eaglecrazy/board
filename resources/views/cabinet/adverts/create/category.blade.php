@@ -11,19 +11,6 @@
         {{--    <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>--}}
     </ul>
 
-    <h2>Adverts</h2>
-
-    <a class="nav-link " href="{{ route('cabinet.adverts.create.category') }}">Create</a>
-
-{{--    эта заготовка для JS --}}
-{{--    <div class="region-selector"--}}
-{{--         data-selected="{{ json_encode((array)old('regions')) }}"--}}
-{{--         data-source="{{ route('ajax.regions') }}">--}}
-{{--        <div class="form-group">--}}
-{{--            <select class="form-control region-select" data-level="1">--}}
-{{--                <option value=""></option>--}}
-{{--            </select>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
+    <p>Choose category</p>
+    @include('cabinet.adverts.create._categories', ['categories' => $categories])
 @endsection

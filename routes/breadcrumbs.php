@@ -192,3 +192,15 @@ Breadcrumbs::register('cabinet.adverts.index', function (BreadcrumbsGenerator $c
     $crumbs->parent('cabinet.home');
     $crumbs->push('Adverts', route('cabinet.adverts.index'));
 });
+
+
+Breadcrumbs::register('cabinet.adverts.create.category', function (BreadcrumbsGenerator $crumbs){
+    $crumbs->parent('cabinet.adverts.index');
+    $crumbs->push('Create advert', route('cabinet.adverts.create.category'));
+});
+
+
+Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null){
+    $crumbs->parent('cabinet.adverts.index');
+    $crumbs->push('Create advert', route('cabinet.adverts.create.region', $category, $region));
+});

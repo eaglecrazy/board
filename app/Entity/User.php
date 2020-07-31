@@ -52,6 +52,8 @@ use phpDocumentor\Reflection\Types\This;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyTokenExpire($value)
+ * @property bool $phone_auth
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneAuth($value)
  */
 class User extends Authenticatable
 {

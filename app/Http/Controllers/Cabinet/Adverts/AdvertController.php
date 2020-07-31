@@ -6,7 +6,7 @@ use App\Http\Middleware\FilledProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdvertsController extends Controller
+class AdvertController extends Controller
 {
     public function __construct()
     {

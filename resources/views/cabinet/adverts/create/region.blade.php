@@ -11,19 +11,23 @@
         {{--    <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>--}}
     </ul>
 
-    <h2>Adverts</h2>
+    <p>Choose region</p>
+    @if($region)
+        <p><a href="{{ route('cabinet.adverts.create.advert', [$category, $region]) }}" class="btn btn-success">Add
+                advert for {{ $region->name }}</a></p>
+    @else
+        <p><a href="{{ route('cabinet.adverts.create.advert', [$category]) }}" class="btn btn-success">Add advert for
+                all regions</a></p>
+    @endif
 
-    <a class="nav-link " href="{{ route('cabinet.adverts.create.category') }}">Create</a>
-
-{{--    эта заготовка для JS --}}
-{{--    <div class="region-selector"--}}
-{{--         data-selected="{{ json_encode((array)old('regions')) }}"--}}
-{{--         data-source="{{ route('ajax.regions') }}">--}}
-{{--        <div class="form-group">--}}
-{{--            <select class="form-control region-select" data-level="1">--}}
-{{--                <option value=""></option>--}}
-{{--            </select>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
+    @if($regions->count())
+        <p>Or choose nested region</p>
+        <ul>
+            @foreach($regions as $current_region)
+                <li>
+                    <a href="{{ route('cabinet.adverts.create.region', [$category, $current_region]) }}">{{ $current_region->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+    @endif
 @endsection

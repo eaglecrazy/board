@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\FilledProfile;
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -48,8 +49,19 @@ Route::group([
     //---------
     // Adverts
     //---------
-    Route::resource('adverts', 'Adverts\AdvertsController');
+    Route::group([
+        'prefix' => 'adverts',
+        'as' => 'adverts.',
+        'namespace' => 'Adverts',
+        'middleware' => [FilledProfile::class],
+    ], function () {
+        Route::get('/', 'AdvertController@index')->name('index');
+        Route::get('/create/category', 'CreateController@category')->name('create.category');
+        Route::get('/create/region/{category}/{region?}', 'CreateController@region')->name('create.region');
+        Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
+    });
 
+//    Route::resource('adverts', 'Adverts\AdvertsController');
 });
 
 
