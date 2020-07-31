@@ -15,7 +15,7 @@ Route::post('/login/phone', 'Auth\LoginController@verify');
 //---------
 // Ajax
 //---------
-Route::get('/ajax/regions', 'Ajax\RegionController@get')->name('ajax.regions');
+//Route::get('/ajax/regions', 'Ajax\RegionController@get')->name('ajax.regions');
 
 
 

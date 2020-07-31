@@ -61,17 +61,12 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = 'active';
     public const ROLE_USER = 'user';
     public const ROLE_ADMIN = 'admin';
+    public const ROLE_MODERATOR = 'moderator';
     public const PHONE_VERIFY_TIME = 300;
 
 //    public const PHONE_VERIFY_TIME = 5;
 
-    public static function rolesList(): array
-    {
-        return [
-            self::ROLE_USER => 'User',
-            self::ROLE_ADMIN => 'Admin',
-        ];
-    }
+
 
     public static function statusesList(): array
     {
@@ -160,7 +155,7 @@ class User extends Authenticatable
 
     public function changeRole($role): void
     {
-        if (!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)) {
+        if (!in_array($role, self::rolesList(), true)) {
             throw new \InvalidArgumentException('Undefined role "' . $role . '"');
         }
         if ($this->role === $role) {
@@ -172,6 +167,15 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public static function rolesList(): array
+    {
+        return [
+            self::ROLE_USER => 'User',
+            self::ROLE_ADMIN => 'Admin',
+            self::ROLE_MODERATOR => 'Moderator',
+        ];
     }
 
     //------------------

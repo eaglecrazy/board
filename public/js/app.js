@@ -37231,9 +37231,10 @@ module.exports = function(module) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //начальное заполнение
+// let root = $('.region-select');
 
 
-var root = $('.region-select');
+var root = [];
 
 if (root.length > 0) {
   var block = $('.region-selector');

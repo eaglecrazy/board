@@ -8,7 +8,8 @@ require('./bootstrap');
 
 
 //начальное заполнение
-let root = $('.region-select');
+// let root = $('.region-select');
+let root = [];
 if (root.length > 0) {
     const block = $('.region-selector');
     const url = block.data('source');
