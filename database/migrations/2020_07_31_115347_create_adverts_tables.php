@@ -12,10 +12,10 @@ class CreateAdvertsTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->integer('category_id')->references('id')->on('advert_categories');
-            $table->integer('region_id')->references('id')->on('advert_regions');
+            $table->integer('region_id')->nullable()->default(null)->references('id')->on('advert_regions');
             $table->string('title', 255);
             $table->integer('price');
-            $table->text('address');
+            $table->text('address')->nullable()->default(null);
             $table->text('content');
             $table->string('status', 16);
             $table->text('reject_reason')->nullable();

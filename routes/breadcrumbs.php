@@ -1,8 +1,8 @@
 <?php
 
-use App\Entity\Attribute;
+use App\Entity\Adverts\Attribute;
 use App\Entity\Region;
-use App\Entity\Category;
+use App\Entity\Adverts\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Entity\User;
@@ -136,7 +136,7 @@ Breadcrumbs::register('admin.adverts.categories.show', function (BreadcrumbsGene
 
 Breadcrumbs::register('admin.adverts.categories.edit', function (BreadcrumbsGenerator $crumbs, Category $category){
     $crumbs->parent('admin.adverts.categories.show', $category);
-    $crumbs->push('Edit', route('admin.adverts.categories.edit', $category));
+    $crumbs->push('Edit category', route('admin.adverts.categories.edit', $category));
 });
 
 //-------------------------------------------------------------------------
@@ -154,7 +154,7 @@ Breadcrumbs::register('admin.adverts.categories.attributes.show', function (Brea
 
 Breadcrumbs::register('admin.adverts.categories.attributes.edit', function (BreadcrumbsGenerator $crumbs, Category $category, Attribute $attribute){
     $crumbs->parent('admin.adverts.categories.attributes.show', $category, $attribute);
-    $crumbs->push('Edit');
+    $crumbs->push('Edit attribute');
 });
 
 

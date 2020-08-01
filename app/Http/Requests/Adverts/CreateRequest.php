@@ -3,9 +3,10 @@
 namespace App\Http\Requests\Adverts;
 
 
-use App\Entity\Category;
+use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 
 /**
@@ -19,7 +20,7 @@ class CreateRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
+    public function rules(Request $request): array
     {
         $items = [];
 
@@ -34,6 +35,7 @@ class CreateRequest extends FormRequest
             } else {
                 $rules[] = 'string';
                 $rules[] = 'max:255';
+                $rules[] = 'min:3';
             }
             if ($attribute->isSelect()) {
                 $rules[] = Rule::in($attribute->variants);
@@ -42,10 +44,10 @@ class CreateRequest extends FormRequest
         }
 
         return array_merge([
-            'title' => 'required|string',
-            'content' => 'required|string',
+            'title' => 'required|string|min:3',
+            'content' => 'required|string|min:3',
             'price' => 'required|integer',
-            'address' => 'required|string',
+            'address' => 'string',
         ], $items);
     }
 }

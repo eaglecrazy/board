@@ -2,7 +2,7 @@
 
 @section('content')
     @include('cabinet._nav')
-
+@dump($errors)
     <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}">
         @csrf
 
@@ -35,6 +35,7 @@
                     </div>
                 </div>
 
+                @if($region)
                 <div class="form-group">
                     <label for="address" class="col-form-label">Address</label>
                     <div class="row">
@@ -52,6 +53,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div class="form-group">
                     <label for="content" class="col-form-label">Content</label>
@@ -85,30 +87,31 @@
                                     </option>
                                 @endforeach
                             </select>
-
-                        @elseif ($attribute->isNumber())
-
+                        @elseif ($attribute->isInteger())
                             <input id="attribute_{{ $attribute->id }}" type="number"
                                    class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
                                    name="attributes[{{ $attribute->id }}]"
                                    value="{{ old('attributes.' . $attribute->id) }}">
 
                         @else
-
                             <input id="attribute_{{ $attribute->id }}" type="text"
-                                   class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
+                                   class="form-control{{ $errors->has('attribute.' . $attribute->id) ? ' is-invalid' : '' }}"
                                    name="attributes[{{ $attribute->id }}]"
                                    value="{{ old('attributes.' . $attribute->id) }}">
-
                         @endif
 
-                        @if ($errors->has('parent'))
-                            <span
-                                class="invalid-feedback"><strong>{{ $errors->first('attributes.' . $attribute->id) }}</strong></span>
+
+
+@dump($errors->has('attribute.' . $attribute->id))
+{{--@dump($errors->first('attribute.' . $attribute->id))--}}
+                        @if ($errors->has('attribute.' . $attribute->id))
+                            <span class="invalid-feedback">ХУЙ</span>
+                            <span class="invalid-feedback"><strong>{{ $errors->first('attribute.' . $attribute->id) }}</strong></span>
                         @endif
                     </div>
-
                 @endforeach
+
+
             </div>
         </div>
 

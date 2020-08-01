@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Adverts;
+
 
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
+
 /**
- * App\Entity\Category
+ * App\Entity\Adverts\Category
  *
  * @property int $id
  * @property string $name
@@ -15,24 +17,24 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $_lft
  * @property int $_rgt
  * @property int|null $parent_id
- * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Category[] $children
- * @property-read int|null $children_count
- * @property-read \App\Entity\Category|null $parent
- * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category d()
- * @method static \Kalnoy\Nestedset\Collection|static[] get($columns = ['*'])
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Category newModelQuery()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Category newQuery()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Category query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereLft($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereRgt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Category whereSlug($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Attribute[] $attributes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Attribute[] $attributes
  * @property-read int|null $attributes_count
+ * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Adverts\Category[] $children
+ * @property-read int|null $children_count
+ * @property-read \App\Entity\Adverts\Category|null $parent
+ * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category d()
+ * @method static \Kalnoy\Nestedset\Collection|static[] get($columns = ['*'])
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category newModelQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category newQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereLft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereRgt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereSlug($value)
+ * @mixin \Eloquent
  */
 class Category extends Model
 {

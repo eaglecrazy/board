@@ -57,7 +57,7 @@
                     <td>{{ $attribute->id }}</td>
                     <td>{{ $attribute->sort }}</td>
                     <td>
-                        <a href="{{ route('admin.adverts.categories.attributes.show', [$category, $attribute]) }}">{{ $attribute->name }}</a>
+                        <a href="{{ route('admin.adverts.categories.attributes.show', [$attribute->category, $attribute]) }}">{{ $attribute->name }}</a>
                     </td>
                     <td>{{ $attribute->type }}</td>
                     <td>{{ $attribute->required ? 'Yes' : '' }}</td>

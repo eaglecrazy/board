@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Adverts;
 
-use App\Entity\Attribute;
+use App\Entity\Adverts\Attribute;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

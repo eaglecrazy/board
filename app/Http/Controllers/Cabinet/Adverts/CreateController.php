@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Cabinet\Adverts;
 
-use App\Entity\Category;
+use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Http\Middleware\FilledProfile;
-use App\Http\Requests\Admin\Users\CreateRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Adverts\CreateRequest;
+use App\Usecases\Adverts\AdvertService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,9 +44,9 @@ class CreateController extends Controller
     {
         try {
             $advert = $this->service->create(
-                Auth::id(),
-                $category->id,
-                $region ? $region->id : null,
+                Auth::user(),
+                $category,
+                $region,
                 $request
             );
         } catch (\DomainException $e) {
