@@ -71,47 +71,7 @@
                 Characteristics
             </div>
             <div class="card-body pb-2">
-                @foreach ($category->allAttributes() as $attribute)
-
-                    <div class="form-group">
-                        <label for=attribute_{{ $attribute->id }}" class="col-form-label">{{ $attribute->name }}</label>
-                        @if ($attribute->isSelect())
-                            <select id="attribute_{{ $attribute->id }}"
-                                    class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
-                                    name="attributes[{{ $attribute->id }}]">
-                                <option value=""></option>
-                                @foreach ($attribute->variants as $variant)
-                                    <option
-                                        value="{{ $variant }}"{{ $variant == old('attributes.' . $attribute->id) ? ' selected' : '' }}>
-                                        {{ $variant }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        @elseif ($attribute->isInteger())
-                            <input id="attribute_{{ $attribute->id }}" type="number"
-                                   class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
-                                   name="attributes[{{ $attribute->id }}]"
-                                   value="{{ old('attributes.' . $attribute->id) }}">
-
-                        @else
-                            <input id="attribute_{{ $attribute->id }}" type="text"
-                                   class="form-control{{ $errors->has('attribute.' . $attribute->id) ? ' is-invalid' : '' }}"
-                                   name="attributes[{{ $attribute->id }}]"
-                                   value="{{ old('attributes.' . $attribute->id) }}">
-                        @endif
-
-
-
-@dump($errors->has('attribute.' . $attribute->id))
-{{--@dump($errors->first('attribute.' . $attribute->id))--}}
-                        @if ($errors->has('attribute.' . $attribute->id))
-                            <span class="invalid-feedback">ХУЙ</span>
-                            <span class="invalid-feedback"><strong>{{ $errors->first('attribute.' . $attribute->id) }}</strong></span>
-                        @endif
-                    </div>
-                @endforeach
-
-
+                @include('cabinet.adverts.create._attributes')
             </div>
         </div>
 

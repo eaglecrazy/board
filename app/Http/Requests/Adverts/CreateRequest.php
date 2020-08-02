@@ -40,7 +40,7 @@ class CreateRequest extends FormRequest
             if ($attribute->isSelect()) {
                 $rules[] = Rule::in($attribute->variants);
             }
-            $items['attribute.' . $attribute->id] = $rules;
+            $items['attributes.' . $attribute->id] = $rules;
         }
 
         return array_merge([
