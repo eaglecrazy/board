@@ -46,6 +46,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereUserId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $photos
+ * @property-read int|null $photos_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
+ * @property-read int|null $values_count
  */
 class Advert extends Model
 {
@@ -96,6 +100,14 @@ class Advert extends Model
 
     public function region(){
         return $this->belongsTo(Region::class, 'region_id', 'id');
+    }
+
+    public function values(){
+        return $this->hasMany(Value::class, 'advert_id', 'id');
+    }
+
+    public function photos(){
+        return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
 }

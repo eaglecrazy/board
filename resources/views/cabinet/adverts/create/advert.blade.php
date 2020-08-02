@@ -2,10 +2,8 @@
 
 @section('content')
     @include('cabinet._nav')
-@dump($errors)
     <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}">
         @csrf
-
         <div class="card mb-3">
             <div class="card-header">
                 Common
@@ -36,23 +34,25 @@
                 </div>
 
                 @if($region)
-                <div class="form-group">
-                    <label for="address" class="col-form-label">Address</label>
-                    <div class="row">
-                        <div class="col-md-11">
-                            <input id="address" type="text"
-                                   class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address"
-                                   value="{{ old('address', $region->getAddress()) }}" required>
-                            @if ($errors->has('address'))
-                                <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
-                            @endif
-                        </div>
-                        <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="address" class="col-form-label">Address</label>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <input id="address" type="text"
+                                       class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                       name="address"
+                                       value="{{ old('address', $region->getAddress()) }}" required>
+                                @if ($errors->has('address'))
+                                    <span
+                                        class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="col-md-1">
                             <span class="btn btn-primary btn-block location-button" data-target="#address"><span
                                     class="fa fa-location-arrow"></span></span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="form-group">

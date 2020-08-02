@@ -1,7 +1,7 @@
 @foreach ($category->allAttributes() as $attribute)
 
     <div class="form-group">
-        <label for=attribute_{{ $attribute->id }}" class="col-form-label">{{ 'id = ' . $attribute->id . ', name = ' . $attribute->name }}</label>
+        <label for=attribute_{{ $attribute->id }}" class="col-form-label">{{ $attribute->name }}</label>
 
         {{--SELECT--}}
         @if ($attribute->isSelect())
