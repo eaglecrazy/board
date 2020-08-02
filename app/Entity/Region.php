@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Entity\Region
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Region whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Region whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Region roots()
  */
 class Region extends Model
 {
@@ -44,5 +46,9 @@ class Region extends Model
     public function getAddress(): string
     {
         return ($this->parent ? $this->parent->getAddress() . ', ' : '') . $this->name;
+    }
+
+    public function scopeRoots(Builder $query){
+        return $query->where('parent_id', null);
     }
 }

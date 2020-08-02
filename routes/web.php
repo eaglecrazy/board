@@ -19,6 +19,24 @@ Route::post('/login/phone', 'Auth\LoginController@verify');
 //Route::get('/ajax/regions', 'Ajax\RegionController@get')->name('ajax.regions');
 
 
+//---------
+// Adverts
+//-------
+Route::group([
+    'prefix' => 'adverts',
+    'as' => 'adverts.',
+    'namespace' => 'Adverts',
+], function () {
+//    Route::get('/show/{advert}', 'AdvertController@show')->name('show');
+//    Route::post('/show/{advert}/phone', 'AdvertController@phone')->name('phone');
+//    Route::post('/show/{advert}/favorites', 'FavoriteController@add')->name('favorites');
+//    Route::delete('/show/{advert}/favorites', 'FavoriteController@remove');
+
+    Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
+});
+
+
+
 
 //---------
 // Cabinet
@@ -32,7 +50,7 @@ Route::group([
     Route::get('/', 'HomeController@index')->name('home');
 
     //---------
-    // Profile
+    // Cabinet Profile
     //---------
     Route::group([
         'prefix' => 'profile',
@@ -47,7 +65,7 @@ Route::group([
         Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
     });
     //---------
-    // Adverts
+    // Cabinet Adverts
     //---------
     Route::group([
         'prefix' => 'adverts',
@@ -62,7 +80,6 @@ Route::group([
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
     });
 
-//    Route::resource('adverts', 'Adverts\AdvertsController');
 });
 
 
