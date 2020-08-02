@@ -1,6 +1,7 @@
 <?php
 
 use App\Entity\Adverts\Attribute;
+use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Region;
 use App\Entity\Adverts\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
@@ -208,4 +209,27 @@ Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGene
 Breadcrumbs::register('cabinet.adverts.create.advert', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null){
     $crumbs->parent('cabinet.adverts.index');
     $crumbs->push('Create advert', route('cabinet.adverts.create.advert', $category, $region));
+});
+
+
+//-------------------------------------------------------------------------
+// Adverts
+//-------------------------------------------------------------------------
+Breadcrumbs::register('adverts.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Adverts', route('adverts.index'));
+});
+
+
+Breadcrumbs::register('adverts.show', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push($advert->title, route('adverts.show', $advert));
+});
+Breadcrumbs::register('cabinet.adverts.edit', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push('Edit: ' . $advert->title, route('cabinet.adverts.edit', $advert));
+});
+Breadcrumbs::register('cabinet.adverts.photos', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
 });

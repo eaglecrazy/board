@@ -67,6 +67,10 @@ class Advert extends Model
         'expires_at' => 'datetime',
     ];
 
+
+//    --------------------
+//    Статусы
+//    --------------------
     public function isDraft(): bool
     {
         return $this->status === self::STATUS_DRAFT;
@@ -90,24 +94,43 @@ class Advert extends Model
 //    --------------------
 //    Связи
 //    --------------------
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function region(){
+    public function region()
+    {
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-    public function values(){
+    public function values()
+    {
         return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
-    public function photos(){
+    public function photos()
+    {
         return $this->hasMany(Value::class, 'advert_id', 'id');
+    }
+
+    //------------
+
+    public function getValue($id)
+    {
+        foreach ($this->values as $value) {
+            if ($value->attribute_id === $id) {
+                return $value->value;
+            }
+        }
+        return null;
+//        return $this->values()->findOrFail($id);
     }
 
 }
+

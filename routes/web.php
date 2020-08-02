@@ -27,12 +27,15 @@ Route::group([
     'as' => 'adverts.',
     'namespace' => 'Adverts',
 ], function () {
-//    Route::get('/show/{advert}', 'AdvertController@show')->name('show');
+    //этот роут нужно будет поменять
+    Route::get('/', 'AdvertController@index')->name('index');
+
+    Route::get('/show/{advert}', 'AdvertController@show')->name('show');
 //    Route::post('/show/{advert}/phone', 'AdvertController@phone')->name('phone');
 //    Route::post('/show/{advert}/favorites', 'FavoriteController@add')->name('favorites');
 //    Route::delete('/show/{advert}/favorites', 'FavoriteController@remove');
 
-    Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
+//    Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
 });
 
 
@@ -73,11 +76,15 @@ Route::group([
         'namespace' => 'Adverts',
         'middleware' => [FilledProfile::class],
     ], function () {
+        //создание объявления
         Route::get('/', 'AdvertController@index')->name('index');
         Route::get('/create/category', 'CreateController@category')->name('create.category');
         Route::get('/create/region/{category}/{region?}', 'CreateController@region')->name('create.region');
         Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
+        //добавление фото
+        Route::get('/{advert}/photos', 'ManageController@photosForm')->name('photos');
+        Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
     });
 
 });

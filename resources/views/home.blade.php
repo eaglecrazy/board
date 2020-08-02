@@ -29,6 +29,8 @@
         <hr>
     @endauth
 
+    <a href="{{ route('adverts.index') }}">All adverts</a>
+
     <div class="card card-default mb-3">
         <div class="card-header">
             All Categories

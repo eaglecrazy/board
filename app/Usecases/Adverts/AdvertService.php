@@ -40,4 +40,6 @@ class AdvertService
             return $advert;
         });
     }
+
+//    public function addPhotos()
 }
