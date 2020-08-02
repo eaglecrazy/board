@@ -121,15 +121,14 @@ class Advert extends Model
 
     //------------
 
-    public function getValue($id)
+    public function getValue($attributeId)
     {
+        $result = null;
         foreach ($this->values as $value) {
-            if ($value->attribute_id === $id) {
+            if ($value->attribute_id === $attributeId) {
                 return $value->value;
             }
         }
-        return null;
-//        return $this->values()->findOrFail($id);
     }
 
 }
