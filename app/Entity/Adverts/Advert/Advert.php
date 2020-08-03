@@ -3,9 +3,11 @@
 namespace App\Entity\Adverts\Advert;
 
 use App\Entity\Adverts\Category;
+use App\Entity\Adverts\Advert\Photo;
 use App\Entity\Region;
 use App\Entity\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 
 /**
@@ -68,6 +70,16 @@ class Advert extends Model
     ];
 
 
+    public function getValue($attributeId)
+    {
+        $result = null;
+        foreach ($this->values as $value) {
+            if ($value->attribute_id === $attributeId) {
+                return $value->value;
+            }
+        }
+    }
+
 //    --------------------
 //    Статусы
 //    --------------------
@@ -116,20 +128,47 @@ class Advert extends Model
 
     public function photos()
     {
-        return $this->hasMany(Value::class, 'advert_id', 'id');
+        return $this->hasMany(Photo::class, 'advert_id', 'id');
     }
 
-    //------------
 
-    public function getValue($attributeId)
+//    --------------------
+//    Модерация
+//    --------------------
+
+    public function sendToModeration(): void
     {
-        $result = null;
-        foreach ($this->values as $value) {
-            if ($value->attribute_id === $attributeId) {
-                return $value->value;
-            }
+        if (!$this->isDraft()) {
+            throw new \DomainException('Advert is not draft.');
         }
+
+        if (!$this->photos()->count) {
+            throw new \DomainException('You need to upload photos.');
+        }
+        //
+        $this->update([
+            'status' => self::STATUS_MODERATION,
+        ]);
     }
 
+    public function moderate(Carbon $date): void
+    {
+        if ($this->status !== self::STATUS_MODERATION) {
+            throw new \DomainException('Advert is not sent to moderation.');
+        }
+        $this->update([
+            'status' => self::STATUS_MODERATION,
+            'published_at' => $date,
+            'expires_at' => $date->copy()->addMonth(1),
+        ]);
+    }
+
+    public function reject($reason):void
+    {
+        $this->update(
+            ['status' => self::STATUS_DRAFT,
+                'reject_reason' => $reason
+            ]);
+    }
 }
 
