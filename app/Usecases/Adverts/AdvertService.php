@@ -74,9 +74,10 @@ class AdvertService
     public function editAttributes(Advert $advert, AttributesRequest $request): void
     {
         DB::transaction(function () use ($request, $advert){
-           foreach ($advert->values as $value){
-               $value->delete();
-           }
+//           foreach ($advert->values as $value){
+//               $value->delete();
+//           }
+           $this->values()->delete();
             foreach ($advert->category()->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
                 if (!empty($value)) {

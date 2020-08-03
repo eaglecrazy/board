@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Cabinet\Adverts;
+namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Region;
@@ -11,7 +11,6 @@ use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ManageController extends Controller
 {
@@ -20,18 +19,16 @@ class ManageController extends Controller
     public function __construct(AdvertService $service)
     {
         $this->service = $service;
-        $this->middleware(['auth', FilledProfile::class]);
     }
 
     public function photosForm(Advert $advert)
     {
-        $this->checkAccess($advert);
         return view('adverts.edit.photos', compact('advert'));
     }
 
     public function photos(PhotosRequest $request, Advert $advert)
     {
-        $this->checkAccess($advert);
+//        $this->checkAccess($advert);
         try {
             $this->service->addPhotos($advert, $request);
         } catch (\DomainException $e) {
@@ -68,7 +65,7 @@ class ManageController extends Controller
 
     public function attributesForm(Advert $advert)
     {
-        $this->checkAccess($advert);
+//        $this->checkAccess($advert);
         return view('adverts.edit.attributes', compact('advert'));
     }
 
@@ -80,7 +77,7 @@ class ManageController extends Controller
 
     public function attributes(AttributesRequest $request, Advert $advert)
     {
-        $this->checkAccess($advert);
+//        $this->checkAccess($advert);
         try {
             $this->service->editAttributes($advert, $request);
         } catch (\DomainException $e) {
@@ -124,7 +121,7 @@ class ManageController extends Controller
 //
     public function destroy(Advert $advert)
     {
-        $this->checkAccess($advert);
+//        $this->checkAccess($advert);
         try {
             $this->service->remove($advert);
         } catch (\DomainException $e) {
@@ -133,17 +130,17 @@ class ManageController extends Controller
 
         return redirect()->route('cabinet.adverts.index');
     }
-
-
-
-
-
-    private function checkAccess(Advert $advert): void
-    {
-        if (!Gate::allows('manage-own-advert', $advert)) {
-            abort(403);
-        }
-    }
+//
+//
+//
+//
+//
+//    private function checkAccess(Advert $advert): void
+//    {
+//        if (!Gate::allows('manage-own-advert', $advert)) {
+//            abort(403);
+//        }
+//    }
 
 
 

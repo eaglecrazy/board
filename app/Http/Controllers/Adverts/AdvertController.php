@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,9 +17,9 @@ class AdvertController extends Controller
         return view('adverts.show', compact('advert', 'user'));
     }
 
-    public function index()
+    public function index(Region $region = null, Category $category = null)
     {
-        $adverts = Advert::all();
+        $adverts =
         return view('adverts.index', compact('adverts'));
     }
 

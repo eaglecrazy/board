@@ -8,6 +8,7 @@ use App\Entity\Region;
 use App\Entity\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 
 /**
@@ -52,6 +53,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $photos_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
  * @property-read int|null $values_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
  */
 class Advert extends Model
 {
@@ -68,6 +70,11 @@ class Advert extends Model
         'published_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
+
+    public static function scopeForUser(Builder $query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
 
 
     public function getValue($attributeId)
