@@ -5,61 +5,62 @@
 {{--@endsection--}}
 
 @section('content')
-{{--    @if ($categories)--}}
-{{--        <div class="card card-default mb-3">--}}
-{{--            <div class="card-header">--}}
-{{--                @if ($category)--}}
-{{--                    Categories of {{ $category->name }}--}}
-{{--                @else--}}
-{{--                    Categories--}}
-{{--                @endif--}}
-{{--            </div>--}}
-{{--            <div class="card-body pb-0" style="color: #aaa">--}}
-{{--                <div class="row">--}}
-{{--                    @foreach (array_chunk($categories, 3) as $chunk)--}}
-{{--                        <div class="col-md-3">--}}
-{{--                            <ul class="list-unstyled">--}}
-{{--                                @foreach ($chunk as $current)--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($region, $current)], request()->all())) }}">{{ $current->name }}</a>--}}
-{{--                                        ({{ $categoriesCounts[$current->id] ?? 0 }})--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    @endif--}}
 
-{{--    @if ($regions)--}}
-{{--        <div class="card card-default mb-3">--}}
-{{--            <div class="card-header">--}}
-{{--                @if ($region)--}}
-{{--                    Regions of {{ $region->name }}--}}
-{{--                @else--}}
-{{--                    Regions--}}
-{{--                @endif--}}
-{{--            </div>--}}
-{{--            <div class="card-body pb-0" style="color: #aaa">--}}
-{{--                <div class="row">--}}
-{{--                    @foreach (array_chunk($regions, 3) as $chunk)--}}
-{{--                        <div class="col-md-3">--}}
-{{--                            <ul class="list-unstyled">--}}
-{{--                                @foreach ($chunk as $current)--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($current, $category)], request()->all())) }}">{{ $current->name }}</a>--}}
-{{--                                        ({{ $regionsCounts[$current->id] ?? 0 }})--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    @endif--}}
+    <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success">Add Advert</a></p>
+
+    @if ($categories)
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                @if ($category)
+                    Categories of {{ $category->name }}
+                @else
+                    Categories
+                @endif
+            </div>
+            <div class="card-body pb-0" style="color: #aaa">
+                <div class="row">
+                    @foreach (array_chunk($categories, 3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach ($chunk as $current)
+                                    <li>
+                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($regions)
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                @if ($region)
+                    Regions of {{ $region->name }}
+                @else
+                    Regions
+                @endif
+            </div>
+            <div class="card-body pb-0" style="color: #aaa">
+                <div class="row">
+                    @foreach (array_chunk($regions, 3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach ($chunk as $current)
+                                    <li>
+                                        <a href="{{ route('adverts.index', [$current, $category]) }}">{{ $current->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-9">
@@ -83,7 +84,7 @@
                 @endforeach
             </div>
 
-{{--            {{ $adverts->links() }}--}}
+            {{ $adverts->links() }}
         </div>
 {{--        <div class="col-md-3">--}}
 {{--            <div--}}

@@ -11,16 +11,38 @@ use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {
-    public function show(Advert $advert)
-    {
-        $user = Auth::user();
-        return view('adverts.show', compact('advert', 'user'));
-    }
-
     public function index(Region $region = null, Category $category = null)
     {
-        $adverts =
-        return view('adverts.index', compact('adverts'));
+        //получим и отфильтруем объявления
+        $query = Advert::with('category', 'region')->orderByDesc('id');
+        if($category){
+            $query->forCategory($category);
+        }
+        if($region){
+            $query->forRegion($region);
+        }
+        $adverts = $query->paginate(20);
+
+        //получим дочение регионы и категории
+        $regions = $region
+            ? $region->children()->orderBy('name')->getModels()
+            : Region::roots()->orderBy('name')->getModels();
+        $categories = $category
+        ? $category->children->defaultOrder()->getModels()
+        : Category::whereIsRoot()->defaultOrder()->getModels();
+
+        return view('adverts.index', compact('adverts', 'category', 'region', 'regions', 'categories'));
     }
+
+    public function show(Advert $advert)
+    {
+        if(!$advert->isAllowToShow()){
+            abort(403);
+        }
+
+        return view('adverts.show', compact('advert'));
+    }
+
+
 
 }

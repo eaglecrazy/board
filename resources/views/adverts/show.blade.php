@@ -12,32 +12,32 @@
             </div>
         @endif
     @endif
+!!! 4-23
+        @can ('moderate-advert')
+            <div class="d-flex flex-row mb-3">
+                <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
+                <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
 
-    {{--    @can ('manage-adverts')--}}
-{{--            <div class="d-flex flex-row mb-3">--}}
-{{--                <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>--}}
-{{--                <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>--}}
+{{--                @if ($advert->isOnModeration())--}}
+{{--                    <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">--}}
+{{--                        @csrf--}}
+{{--                        <button class="btn btn-success">Moderate</button>--}}
+{{--                    </form>--}}
+{{--                @endif--}}
 
-    {{--            @if ($advert->isOnModeration())--}}
-    {{--                <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">--}}
-    {{--                    @csrf--}}
-    {{--                    <button class="btn btn-success">Moderate</button>--}}
-    {{--                </form>--}}
-    {{--            @endif--}}
+{{--                @if ($advert->isOnModeration() || $advert->isActive())--}}
+{{--                    <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>--}}
+{{--                @endif--}}
 
-    {{--            @if ($advert->isOnModeration() || $advert->isActive())--}}
-    {{--                <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>--}}
-    {{--            @endif--}}
+                <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-1">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        @endcan
 
-    {{--            <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-1">--}}
-    {{--                @csrf--}}
-    {{--                @method('DELETE')--}}
-    {{--                <button class="btn btn-danger">Delete</button>--}}
-    {{--            </form>--}}
-{{--            </div>--}}
-    {{--    @endcan--}}
-
-    {{--    @can ('manage-own-advert', $advert)--}}
+        @can ('edit-own-advert', $advert)
                 <div class="d-flex flex-row mb-3">
                     <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
                     <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
@@ -55,13 +55,13 @@
     {{--                    </form>--}}
     {{--                @endif--}}
 
-    {{--                <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-1">--}}
-    {{--                    @csrf--}}
-    {{--                    @method('DELETE')--}}
-    {{--                    <button class="btn btn-danger">Delete</button>--}}
-    {{--                </form>--}}
+                    <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-1">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
-    {{--    @endcan--}}
+        @endcan
 
     <div class="row">
         <div class="col-md-9">
@@ -169,7 +169,7 @@
 {{--                <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>--}}
 {{--                <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>--}}
 {{--            </div>--}}
-{{--        </div>--}}
+        </div>
 @endsection
 
 {{--@section('scripts')--}}

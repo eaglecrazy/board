@@ -45,10 +45,10 @@ class AdvertService
         });
     }
 
-    public function addPhotos(Advert $advert, PhotosRequest $request) : void
+    public function addPhotos(Advert $advert, PhotosRequest $request): void
     {
-        DB::transaction(function () use ($request, $advert){
-            foreach ($request['files'] as $file){
+        DB::transaction(function () use ($request, $advert) {
+            foreach ($request['files'] as $file) {
                 $advert->photos()->create([
                     'file' => $file->store('adverts')
                 ]);
@@ -56,7 +56,7 @@ class AdvertService
         });
     }
 
-    public function sendToModeration(Advert $advert) : void
+    public function sendToModeration(Advert $advert): void
     {
         $advert->sendToModeration();
     }
@@ -66,18 +66,15 @@ class AdvertService
         $advert->moderate(Carbon::now());
     }
 
-    public function reject(Advert $advert, RejectRequest $request):void
+    public function reject(Advert $advert, RejectRequest $request): void
     {
         $advert->reject($request['reason']);
     }
 
     public function editAttributes(Advert $advert, AttributesRequest $request): void
     {
-        DB::transaction(function () use ($request, $advert){
-//           foreach ($advert->values as $value){
-//               $value->delete();
-//           }
-           $this->values()->delete();
+        DB::transaction(function () use ($request, $advert) {
+            $this->values()->delete();
             foreach ($advert->category()->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
                 if (!empty($value)) {
@@ -87,11 +84,11 @@ class AdvertService
                     ]);
                 }
             }
-
         });
     }
 
-    public function remove(Advert $advert){
+    public function remove(Advert $advert)
+    {
         $advert->delete();
     }
 }

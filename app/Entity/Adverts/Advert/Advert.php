@@ -9,6 +9,7 @@ use App\Entity\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 
 
 /**
@@ -54,6 +55,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
  * @property-read int|null $values_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(\App\Entity\Region $region)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forcategory(\App\Entity\Adverts\Category $category)
  */
 class Advert extends Model
 {
@@ -71,12 +74,6 @@ class Advert extends Model
         'expires_at' => 'datetime',
     ];
 
-    public static function scopeForUser(Builder $query, User $user)
-    {
-        return $query->where('user_id', $user->id);
-    }
-
-
     public function getValue($attributeId)
     {
         $result = null;
@@ -86,6 +83,38 @@ class Advert extends Model
             }
         }
     }
+
+//    --------------------
+//    Ограничения
+//    --------------------
+
+    public static function scopeForUser(Builder $query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    public static function scopeForRegion(Builder $query, Region $region)
+    {
+        $ids = [$region->id];
+        $childrenIds = $ids;
+        die('totest');
+        while($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()){
+            $ids = array_merge($ids, $childrenIds);
+        }
+
+        return $query->where('region_id', $ids);
+    }
+
+    public static function scopeForcategory(Builder $query, Category $category)
+    {
+        return $query->where('category_id', array_merge(
+            [$category->id],
+            //получаем всех потомков, и только столбец id, и из него делаем массив
+            $category->descendants()->pluck('id')->toArray()
+        ));
+    }
+
+
 
 //    --------------------
 //    Статусы
@@ -176,6 +205,11 @@ class Advert extends Model
             ['status' => self::STATUS_DRAFT,
                 'reject_reason' => $reason
             ]);
+    }
+
+    public function isAllowToShow()
+    {
+        return $this->isActive() || Gate::allows('show-advert', $this);
     }
 }
 

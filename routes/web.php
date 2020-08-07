@@ -29,7 +29,6 @@ Route::group([
 ], function () {
     //этот роут нужно будет поменять
     Route::get('/', 'AdvertController@index')->name('index');
-
     Route::get('/show/{advert}', 'AdvertController@show')->name('show');
 //    Route::post('/show/{advert}/phone', 'AdvertController@phone')->name('phone');
 //    Route::post('/show/{advert}/favorites', 'FavoriteController@add')->name('favorites');
@@ -86,6 +85,8 @@ Route::group([
         Route::post('/{advert}/photos', 'ManageController@photos');
         Route::get('/{advert}/photos', 'ManageController@photosForm')->name('photos');
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
+        //удаление
+        Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
     });
 
 });

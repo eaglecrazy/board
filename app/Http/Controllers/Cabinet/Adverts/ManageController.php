@@ -144,7 +144,4 @@ class ManageController extends Controller
             abort(403);
         }
     }
-
-
-
 }
