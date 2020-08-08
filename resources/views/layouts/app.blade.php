@@ -80,6 +80,7 @@
         @yield('breadcrumbs')
         @include('layouts.partials.flash')
         @yield('content')
+        @yield('scripts')
     </div>
 </main>
 
@@ -90,6 +91,8 @@
         </div>
     </div>
 </footer>
+
+
 
 </body>
 </html>

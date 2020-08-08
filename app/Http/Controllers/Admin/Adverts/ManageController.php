@@ -143,5 +143,17 @@ class ManageController extends Controller
 //    }
 
 
+    public function moderate(Advert $advert)
+    {
+        try {
+            $this->service->moderate($advert);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back();
+    }
+
+
 
 }

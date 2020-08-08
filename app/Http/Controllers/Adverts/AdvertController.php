@@ -15,10 +15,10 @@ class AdvertController extends Controller
     {
         //получим и отфильтруем объявления
         $query = Advert::with('category', 'region')->orderByDesc('id');
-        if($category){
+        if ($category) {
             $query->forCategory($category);
         }
-        if($region){
+        if ($region) {
             $query->forRegion($region);
         }
         $adverts = $query->paginate(20);
@@ -28,21 +28,18 @@ class AdvertController extends Controller
             ? $region->children()->orderBy('name')->getModels()
             : Region::roots()->orderBy('name')->getModels();
         $categories = $category
-        ? $category->children->defaultOrder()->getModels()
-        : Category::whereIsRoot()->defaultOrder()->getModels();
+            ? $category->children->defaultOrder()->getModels()
+            : Category::whereIsRoot()->defaultOrder()->getModels();
 
         return view('adverts.index', compact('adverts', 'category', 'region', 'regions', 'categories'));
     }
 
     public function show(Advert $advert)
     {
-        if(!$advert->isAllowToShow()){
+        if (!$advert->isAllowToShow()) {
             abort(403);
         }
 
         return view('adverts.show', compact('advert'));
     }
-
-
-
 }

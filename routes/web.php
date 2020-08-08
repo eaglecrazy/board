@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Middleware\FilledProfile;
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -30,14 +31,12 @@ Route::group([
     //этот роут нужно будет поменять
     Route::get('/', 'AdvertController@index')->name('index');
     Route::get('/show/{advert}', 'AdvertController@show')->name('show');
-//    Route::post('/show/{advert}/phone', 'AdvertController@phone')->name('phone');
+    Route::post('/show/{advert}/phone', 'AdvertController@phone')->name('phone');
 //    Route::post('/show/{advert}/favorites', 'FavoriteController@add')->name('favorites');
 //    Route::delete('/show/{advert}/favorites', 'FavoriteController@remove');
 
 //    Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
 });
-
-
 
 
 //---------
@@ -87,6 +86,8 @@ Route::group([
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
         //удаление
         Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
+
+        Route::post('/{advert}/send', 'ManageController@send')->name('send');
     });
 
 });
@@ -143,6 +144,20 @@ Route::group([
             //---------
             Route::resource('attributes', 'AttributeController')->except('index');
         });
+        //---------
+        //Adverts
+        //---------
+        Route::group([
+            'prefix' => 'adverts',
+            'as' => 'adverts.'
+        ], function () {
+            Route::get('/{advert}/edit', 'AdvertController@editForm')->name('edit');
+            Route::get('/{advert}/photos', 'AdvertController@photosForm')->name('photos');
+            Route::delete('/{advert}/destroy', 'AdvertController@destroy')->name('destroy');
+            Route::post('/{advert}/moderate', 'AdvertController@moderate')->name('moderate');
+            Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');
+        });
+
     }
     );
 });
