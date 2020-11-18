@@ -26,7 +26,7 @@
                    name="parent">
                 <option value=""></option>
                 @foreach($parents as $parent)
-                    <option value="{{ $parent->id }}"{{ $parent->id == old('parent') || $parent->id === $current->id ? ' selected' : ''  }}>
+                    <option value="{{ $parent->id }}"{{ $parent->id == old('parent') ? ' selected' : ''  }}>
                         @for ($i = 0; $i < $parent->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor {{ $parent->name }}
                     </option>
                 @endforeach

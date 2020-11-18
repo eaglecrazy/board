@@ -73,6 +73,7 @@ class AdvertService
 
     public function editAttributes(Advert $advert, AttributesRequest $request): void
     {
+
         DB::transaction(function () use ($request, $advert) {
             $this->values()->delete();
             foreach ($advert->category()->allAttributes() as $attribute) {
@@ -90,5 +91,6 @@ class AdvertService
     public function remove(Advert $advert)
     {
         $advert->delete();
+        //тут нужно ещё фоточки удалить
     }
 }

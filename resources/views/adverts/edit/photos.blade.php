@@ -15,8 +15,8 @@
         @csrf
 
         <div class="form-group">
-            <label for="photos" class="col-form-label">Title</label>
-            <input id="photos" type="file" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="files[]" multiple required>
+            <label for="photos" class="col-form-label">Добавление фотографий для {{ $advert->title }}</label>
+            <input id="photos" type="file" class="form-control h-25 {{ $errors->has('title') ? ' is-invalid' : '' }}" name="files[]" multiple required>
         </div>
 
         <div class="form-group">

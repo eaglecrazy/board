@@ -1,5 +1,7 @@
 <?php
 
+ОСТАНОВКА НА 3.45
+
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
@@ -47,6 +49,41 @@ class ManageController extends Controller
         return view('adverts.edit.advert', compact('advert'));
     }
 
+    public function attributesForm(Advert $advert)
+    {
+        $this->checkAccess($advert);
+        return view('adverts.edit.attributes', compact('advert'));
+    }
+
+    public function attributes(AttributesRequest $request, Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->editAttributes($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('adverts.show', $advert);
+    }
+
+    public function destroy(Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->remove($advert);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.adverts.index');
+    }
+
+    private function checkAccess(Advert $advert): void
+    {
+        if (!Gate::allows('manage-own-advert', $advert)) {
+            abort(403);
+        }
+    }
 
 
 //    public function edit(EditRequest $request, Advert $advert)
@@ -60,36 +97,7 @@ class ManageController extends Controller
 //
 //        return redirect()->route('adverts.show', $advert);
 //    }
-
-
-
-
-
-
-    public function attributesForm(Advert $advert)
-    {
-        $this->checkAccess($advert);
-        return view('adverts.edit.attributes', compact('advert'));
-    }
-
-
-
-
-
-
-
-    public function attributes(AttributesRequest $request, Advert $advert)
-    {
-        $this->checkAccess($advert);
-        try {
-            $this->service->editAttributes($advert, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-        return redirect()->route('adverts.show', $advert);
-    }
-
-
+//
 //    public function send(Advert $advert)
 //    {
 //        $this->checkAccess($advert);
@@ -117,31 +125,5 @@ class ManageController extends Controller
 //
 //        return redirect()->route('adverts.show', $advert);
 //    }
-//
-//
-//
-//
-//
-    public function destroy(Advert $advert)
-    {
-        $this->checkAccess($advert);
-        try {
-            $this->service->remove($advert);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
 
-        return redirect()->route('cabinet.adverts.index');
-    }
-
-
-
-
-
-    private function checkAccess(Advert $advert): void
-    {
-        if (!Gate::allows('manage-own-advert', $advert)) {
-            abort(403);
-        }
-    }
 }

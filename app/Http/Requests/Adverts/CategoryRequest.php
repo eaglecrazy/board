@@ -14,7 +14,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|min:3',
             'parent' => 'nullable|integer|exists:advert_categories,id',
         ];
     }

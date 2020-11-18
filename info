@@ -2,6 +2,8 @@
 
 
 https://github.com/MuxauJI/phpstorm_trialreset - сброс триала
+https://raw.githubusercontent.com/MuxauJI/phpstorm_trialreset/master/phpstorm_trialreset.sh | bash
+
 
 sudo chmod 777 storage -R
 терминал от рута sudo -s
