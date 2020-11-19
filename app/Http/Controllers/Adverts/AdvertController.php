@@ -11,27 +11,29 @@ use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {
-    public function index(Region $region = null, Category $category = null)
+    public function index(Region $currentRegion = null, Category $currentCategory = null)
     {
         //получим и отфильтруем объявления
+        //фильтр по категории и дочерним категориям
         $query = Advert::with('category', 'region')->orderByDesc('id');
-        if ($category) {
-            $query->forCategory($category);
+        if ($currentCategory) {
+            $query->forCategory($currentCategory);
         }
-        if ($region) {
-            $query->forRegion($region);
+        //фильтр по этому региону и дочерним регионам
+        if ($currentRegion) {
+            $query->forRegion($currentRegion);
         }
         $adverts = $query->paginate(20);
 
         //получим дочение регионы и категории
-        $regions = $region
-            ? $region->children()->orderBy('name')->getModels()
+        $childernRegions = $currentRegion
+            ? $currentRegion->children()->orderBy('name')->getModels()
             : Region::roots()->orderBy('name')->getModels();
-        $categories = $category
-            ? $category->children->defaultOrder()->getModels()
+        $childernCategories = $currentCategory
+            ? $currentCategory->children->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
-        return view('adverts.index', compact('adverts', 'category', 'region', 'regions', 'categories'));
+        return view('adverts.index', compact('adverts', 'currentCategory', 'currentRegion', 'childernRegions', 'childernCategories'));
     }
 
     public function show(Advert $advert)

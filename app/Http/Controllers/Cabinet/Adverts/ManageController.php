@@ -1,7 +1,5 @@
 <?php
 
-ОСТАНОВКА НА 3.45
-
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
@@ -22,16 +20,16 @@ class ManageController extends Controller
     public function __construct(AdvertService $service)
     {
         $this->service = $service;
-        $this->middleware(['auth', FilledProfile::class]);
+        $this->middleware([FilledProfile::class]);
     }
 
-    public function photosForm(Advert $advert)
+    public function photos(Advert $advert)
     {
         $this->checkAccess($advert);
         return view('adverts.edit.photos', compact('advert'));
     }
 
-    public function photos(PhotosRequest $request, Advert $advert)
+    public function updatePhotos(PhotosRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
@@ -45,17 +43,17 @@ class ManageController extends Controller
 
     public function editForm(Advert $advert)
     {
-//        $this->checkAccess($advert);
+        $this->checkAccess($advert);
         return view('adverts.edit.advert', compact('advert'));
     }
 
-    public function attributesForm(Advert $advert)
+    public function attributes(Advert $advert)
     {
         $this->checkAccess($advert);
         return view('adverts.edit.attributes', compact('advert'));
     }
 
-    public function attributes(AttributesRequest $request, Advert $advert)
+    public function updateAttributes(AttributesRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {

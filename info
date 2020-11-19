@@ -1,8 +1,4 @@
-4-36-37
-
-
-https://github.com/MuxauJI/phpstorm_trialreset - сброс триала
-https://raw.githubusercontent.com/MuxauJI/phpstorm_trialreset/master/phpstorm_trialreset.sh | bash
+https://127.0.0.1:8080/adverts - не выводить черновики, проверить вывод дочерних категорий и регионов
 
 
 sudo chmod 777 storage -R

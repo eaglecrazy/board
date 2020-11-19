@@ -98,10 +98,16 @@ class Advert extends Model
     {
         $ids = [$region->id];
         $childrenIds = $ids;
-        die('totest');
+
         while($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()){
+            asort($childrenIds);
+            var_dump($childrenIds);
             $ids = array_merge($ids, $childrenIds);
         }
+        asort($ids);
+        echo 'rez = ' . var_dump($ids);
+
+
 
         return $query->where('region_id', $ids);
     }

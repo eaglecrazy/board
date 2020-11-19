@@ -2,6 +2,11 @@
 
 @section('content')
 
+    <b>ТУТ НУЖНО ПОДКЛЮЧИТЬ ЯНДЕКС КАРТЫ (время в видео 4-31-21) </b>
+    <b>ТУТ НУЖНО ПОДКЛЮЧИТЬ ОТКРЫТИЕ КНОПКИ С НОМЕРОМ ТЕЛЕФОНА (время в видео 4-33-15) </b>
+    <b>ТУТ НУЖНО ДОБАВИТЬ ПОХОЖИЕ ОБЪЯВЛЕНИЯ (4-37-45) </b>
+    <b>КОНЕЦ (4-38) </b>
+
     @if ($advert->isDraft())
         <div class="alert alert-danger">
             It is a draft.
@@ -71,9 +76,7 @@
             <p class="float-right" style="font-size: 36px;">{{ $advert->price }}</p>
             <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
             <p>
-                {{--                @if ($advert->expires_at)--}}
-                Date: {{ $advert->created_at }} &nbsp;
-                {{--                @endif--}}
+                Created date: {{ $advert->created_at }} &nbsp;
                 @if ($advert->expires_at)
                     Expires: {{ $advert->expires_at }}
                 @endif
@@ -94,7 +97,8 @@
                 </div>
             </div>
 
-            <p>ТУТ НУЖНО РАЗОБРАТЬСЯ С ФУНКЦИЯМИ nl2br и e </p>
+            {{--            e вызывает внутри себя экранирование через html special chars--}}
+            {{--            Если вы не хотите экранировать данные, используйте такой синтаксис: {!! !!} --}}
             <p>{!! nl2br(e($advert->content)) !!}</p>
 
             <table class="table table-bordered">
@@ -117,7 +121,7 @@
             <p style="margin-bottom: 20px">Seller: {{ $advert->user->name }}</p>
 
             <div class="d-flex flex-row mb-3">
-                {{--                            <span class="btn btn-success mr-1"><span class="fa fa-envelope"></span> Send Message</span>--}}
+                <span class="btn btn-success mr-1"><span class="fa fa-envelope"></span> Send Message</span>
                 <span class="btn btn-primary phone-button mr-1"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Show Phone Number</span></span>
@@ -137,77 +141,89 @@
 
             {{--            <hr/>--}}
 
-            {{--            <div class="h3">Similar adverts</div>--}}
+            <div class="h3">Similar adverts</div>
 
-            {{--            <div class="row">--}}
-            {{--                <div class="col-sm-6 col-md-4">--}}
-            {{--                    <div class="card">--}}
-            {{--                        <img class="card-img-top" src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt=""/>--}}
-            {{--                        <div class="card-body">--}}
-            {{--                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>--}}
-            {{--                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--                <div class="col-sm-6 col-md-4">--}}
-            {{--                    <div class="card">--}}
-            {{--                        <img class="card-img-top" src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt=""/>--}}
-            {{--                        <div class="card-body">--}}
-            {{--                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>--}}
-            {{--                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--                <div class="col-sm-6 col-md-4">--}}
-            {{--                    <div class="card">--}}
-            {{--                        <img class="card-img-top" src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt=""/>--}}
-            {{--                        <div class="card-body">--}}
-            {{--                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>--}}
-            {{--                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
+                             alt=""/>
+                        <div class="card-body">
+                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
+                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
+                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+                                ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
+                             alt=""/>
+                        <div class="card-body">
+                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
+                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
+                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+                                ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
+                             alt=""/>
+                        <div class="card-body">
+                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
+                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
+                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+                                ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            {{--        </div>--}}
-            {{--            <div class="col-md-3">--}}
-            {{--                <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>--}}
-            {{--                <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>--}}
-            {{--            </div>--}}
         </div>
-        @endsection
+        <div class="col-md-3">
+            <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>
+            <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>
+        </div>
+    </div>
+@endsection
 
-        @section('scripts')
-            <b>ТУТ НУЖНО ПОДКЛЮЧИТЬ ЯНДЕКС КАРТЫ (время в видео 4-31-21) </b>
-            <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU"
-                    type="text/javascript"></script>
+@section('scripts')
 
-            <script type='text/javascript'>
-                ymaps.ready(init);
+    <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU"
+            type="text/javascript"></script>
 
-                function init() {
-                    var geocoder = new ymaps.geocode(
-                        '{{ $advert->address }}',
-                        {results: 1}
-                    );
-                    geocoder.then(
-                        function (res) {
-                            var coord = res.geoObjects.get(0).geometry.getCoordinates();
-                            var map = new ymaps.Map('map', {
-                                center: coord,
-                                zoom: 7,
-                                behaviors: ['default', 'scrollZoom'],
-                                controls: ['mapTools']
-                            });
-                            map.geoObjects.add(res.geoObjects.get(0));
-                            map.zoomRange.get(coord).then(function (range) {
-                                map.setCenter(coord, range[1] - 1)
-                            });
-                            map.controls.add('mapTools')
-                                .add('zoomControl')
-                                .add('typeSelector');
-                        }
-                    );
+    <script type='text/javascript'>
+        ymaps.ready(init);
+
+        function init() {
+            var geocoder = new ymaps.geocode(
+                '{{ $advert->address }}',
+                {results: 1}
+            );
+            geocoder.then(
+                function (res) {
+                    var coord = res.geoObjects.get(0).geometry.getCoordinates();
+                    var map = new ymaps.Map('map', {
+                        center: coord,
+                        zoom: 7,
+                        behaviors: ['default', 'scrollZoom'],
+                        controls: ['mapTools']
+                    });
+                    map.geoObjects.add(res.geoObjects.get(0));
+                    map.zoomRange.get(coord).then(function (range) {
+                        map.setCenter(coord, range[1] - 1)
+                    });
+                    map.controls.add('mapTools')
+                        .add('zoomControl')
+                        .add('typeSelector');
                 }
-            </script>
+            );
+        }
+    </script>
 @endsection
