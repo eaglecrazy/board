@@ -93,9 +93,11 @@ Route::group([
 ], function () {
     //этот роут нужно будет поменять
     Route::get('show/{advert}', 'AdvertController@show')->name('show');
+    Route::post('show/{advert}/phone', 'AdvertController@phone')->name('phone');
+    Route::get('all/{category?}', 'AdvertController@index')->name('index.all');
     Route::get('{region?}/{category?}', 'AdvertController@index')->name('index');
 
-    Route::post('show/{advert}/phone', 'AdvertController@phone')->name('phone');
+
 //    Route::post('show/{advert}/favorites', 'FavoriteController@add')->name('favorites');
 //    Route::delete('show/{advert}/favorites', 'FavoriteController@remove');
 
@@ -159,11 +161,13 @@ Route::group([
         //добавление фото
         Route::post('/{advert}/photos', 'ManageController@photos');
         Route::get('/{advert}/photos', 'ManageController@photosForm')->name('photos');
+        //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
+        Route::put('/{advert}/edit', 'ManageController@update')->name('update');
+        //отправка на модерацию
+        Route::post('/{advert}/send', 'ManageController@send')->name('send');
         //удаление
         Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
-
-        Route::post('/{advert}/send', 'ManageController@send')->name('send');
     });
 
 });

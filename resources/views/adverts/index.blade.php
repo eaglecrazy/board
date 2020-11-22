@@ -40,9 +40,6 @@
         </div>
     @endif
 
-{{--    @dump($currentRegion)--}}
-{{--    @dump($childernRegions)--}}
-
     @if ($childernRegions)
         <div class="card card-default mb-3">
             <div class="card-header">

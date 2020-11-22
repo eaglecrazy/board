@@ -96,17 +96,16 @@ class ManageController extends Controller
 //        return redirect()->route('adverts.show', $advert);
 //    }
 //
-//    public function send(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->sendToModeration($advert->id);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
+    public function send(Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->sendToModeration($advert);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('adverts.show', $advert);
+    }
 //
 //
 //

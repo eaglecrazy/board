@@ -37230,17 +37230,20 @@ module.exports = function(module) {
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //скрипт открытия телефона в странице просмотра объявления
+//нужно предусмотреть защиту от парсинга телефонных номеров
+//например при помощи csrf токена
+
 
 $(document).on('click', '.phone-button', function () {
   var button = $(this);
-  axios.post(button.data('source')).then(function (response) {
+  var link = button.data('source');
+  axios.post(link).then(function (response) {
     alert('ok');
     alert(response.data);
     button.find('.number').html(response.data);
   })["catch"](function (error) {
-    alert('error');
-    alert(response.data); // console.error(error);
+    console.error(error);
   });
 }); //начальное заполнение
 // let root = $('.region-select');

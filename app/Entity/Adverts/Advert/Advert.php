@@ -55,6 +55,7 @@ use Illuminate\Support\Facades\Auth;
  * @property-read int|null $photos_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
  * @property-read int|null $values_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forActive()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(\App\Entity\Region $region)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forcategory(\App\Entity\Adverts\Category $category)
@@ -121,6 +122,10 @@ class Advert extends Model
         ));
     }
 
+    public static function scopeActive(Builder $query)
+    {
+        return $query->where('status', static::STATUS_ACTIVE);
+    }
 
 
 //    --------------------
@@ -184,11 +189,11 @@ class Advert extends Model
         if (!$this->isDraft()) {
             throw new \DomainException('Advert is not draft.');
         }
+//TODO Эту проверку нужно вернуть, когда будут фотки
+//        if (!$this->photos()->count()) {
+//            throw new \DomainException('You need to upload photos.');
+//        }
 
-        if (!$this->photos()->count) {
-            throw new \DomainException('You need to upload photos.');
-        }
-        //
         $this->update([
             'status' => self::STATUS_MODERATION,
         ]);

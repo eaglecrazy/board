@@ -1,3 +1,5 @@
+ЗАКОНЧИЛ НА 5.23
+
 <?php
 
 namespace App\Http\Controllers\Adverts;
@@ -15,7 +17,7 @@ class AdvertController extends Controller
     {
         //получим и отфильтруем объявления
         //фильтр по категории и дочерним категориям
-        $query = Advert::with('category', 'region')->orderByDesc('id');
+        $query = Advert::active()->with('category', 'region')->orderByDesc('id');
         if ($currentCategory) {
             $query->forCategory($currentCategory);
         }
@@ -43,5 +45,15 @@ class AdvertController extends Controller
         }
 
         return view('adverts.show', compact('advert'));
+    }
+
+    public function phone(Advert $advert) : string
+    {
+        die('phone');
+        if (!$advert->isAllowToShow()) {
+            abort(403);
+        }
+
+        return $advert->user->phone;
     }
 }

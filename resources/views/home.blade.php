@@ -27,8 +27,9 @@
             {{--    <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>--}}
         </ul>
         <hr>
+        <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success">Add Advert</a></p>
+        <hr>
     @endauth
-
     <a href="{{ route('adverts.index') }}">All adverts</a>
 
     <div class="card card-default mb-3">
@@ -42,7 +43,7 @@
                         <ul class="list-unstyled">
                             @foreach ($chunk as $current)
                                 <li>
-                                    <a href="{{ route('adverts.index', [null, $current]) }}">{{ $current->name }}</a>
+                                  <a href="{{ route('adverts.index.all', $current) }}">{{ $current->name }}</a>
                                 </li>
                             @endforeach
                         </ul>

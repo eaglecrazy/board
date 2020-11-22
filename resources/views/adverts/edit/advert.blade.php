@@ -11,8 +11,10 @@
             </ul>
         </div>
     @endif
-
-    <form method="POST" action="?">
+{{--? это тот же самый адрес --}}
+{{-- но чтобы не гадать я лучше напишу роут--}}
+{{--    <form method="POST" action="?">--}}
+    <form method="POST" action="{{ route('cabinet.adverts.update', $advert) }}">
         @csrf
         @method('PUT')
 

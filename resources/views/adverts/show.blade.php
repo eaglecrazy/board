@@ -1,12 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <b>ТУТ НУЖНО ПОДКЛЮЧИТЬ ЯНДЕКС КАРТЫ (время в видео 4-31-21) </b>
-    <b>ТУТ НУЖНО ПОДКЛЮЧИТЬ ОТКРЫТИЕ КНОПКИ С НОМЕРОМ ТЕЛЕФОНА (время в видео 4-33-15) </b>
     <b>ТУТ НУЖНО ДОБАВИТЬ ПОХОЖИЕ ОБЪЯВЛЕНИЯ (4-37-45) </b>
-    <b>КОНЕЦ (4-38) </b>
-
     @if ($advert->isDraft())
         <div class="alert alert-danger">
             It is a draft.
@@ -49,12 +44,12 @@
             <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
 
-            {{--                @if ($advert->isDraft())--}}
-            <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
-                @csrf
-                <button class="btn btn-success">Publish</button>
-            </form>
-            {{--                @endif--}}
+            @if ($advert->isDraft())
+                <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
+                    @csrf
+                    <button class="btn btn-success">Publish</button>
+                </form>
+            @endif
             {{--                @if ($advert->isActive())--}}
             {{--                    <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-1">--}}
             {{--                        @csrf--}}
@@ -115,7 +110,7 @@
             <p>Address: {{ $advert->address }}</p>
 
             <div style="margin: 20px 0; border: 1px solid #ddd">
-                <div id="map" style="width: 100%; height: 250px"></div>
+                <div id="map" style="width: 100%; height: 350px"></div>
             </div>
 
             <p style="margin-bottom: 20px">Seller: {{ $advert->user->name }}</p>
@@ -194,36 +189,35 @@
 @endsection
 
 @section('scripts')
-
-    <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU"
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=418aa256-e41b-4893-aa9f-5530867df1a5"
             type="text/javascript"></script>
 
     <script type='text/javascript'>
-        ymaps.ready(init);
 
-        function init() {
-            var geocoder = new ymaps.geocode(
-                '{{ $advert->address }}',
-                {results: 1}
-            );
-            geocoder.then(
-                function (res) {
-                    var coord = res.geoObjects.get(0).geometry.getCoordinates();
-                    var map = new ymaps.Map('map', {
-                        center: coord,
-                        zoom: 7,
-                        behaviors: ['default', 'scrollZoom'],
-                        controls: ['mapTools']
-                    });
-                    map.geoObjects.add(res.geoObjects.get(0));
-                    map.zoomRange.get(coord).then(function (range) {
-                        map.setCenter(coord, range[1] - 1)
-                    });
-                    map.controls.add('mapTools')
-                        .add('zoomControl')
-                        .add('typeSelector');
-                }
-            );
-        }
+        var myMap;
+
+        ymaps.ready(function () {
+            var map;
+            ymaps.geolocation.get().then(function (res) {
+                var mapContainer = $('#map'),
+                    bounds = res.geoObjects.get(0).properties.get('boundedBy'),
+                    // Рассчитываем видимую область для текущей положения пользователя.
+                    mapState = ymaps.util.bounds.getCenterAndZoom(
+                        bounds,
+                        [mapContainer.width(), mapContainer.height()]
+                    );
+                createMap(mapState);
+            }, function (e) {
+                // Если местоположение невозможно получить, то просто создаем карту.
+                createMap({
+                    center: [55.751574, 37.573856],
+                    zoom: 2
+                });
+            });
+
+            function createMap(state) {
+                map = new ymaps.Map('map', state);
+            }
+        });
     </script>
 @endsection
