@@ -24,7 +24,7 @@ class ManageController extends Controller
         $this->middleware([FilledProfile::class]);
     }
 
-    public function photos(Advert $advert)
+    public function editPhotosForm(Advert $advert)
     {
         $this->checkAccess($advert);
         return view('adverts.edit.photos', compact('advert'));

@@ -150,7 +150,8 @@
                                     <div class="card-title h4 mt-0" style="margin: 10px 0"><a
                                             href="#">{{ $similar_item->title }}</a></div>
                                     <p class="card-text" style="color: #666"><b>{{ $similar_item->price }} руб.</b></p>
-                                    <p class="card-text" style="color: #666">{{ Str::limit($similar_item->content, 100) }}</p>
+                                    <p class="card-text"
+                                       style="color: #666">{{ Str::limit($similar_item->content, 100) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -175,30 +176,51 @@
 
     <script type='text/javascript'>
 
-        var myMap;
+        ymaps.ready(init);
 
-        ymaps.ready(function () {
-            var map;
-            ymaps.geolocation.get().then(function (res) {
-                var mapContainer = $('#map'),
-                    bounds = res.geoObjects.get(0).properties.get('boundedBy'),
-                    // Рассчитываем видимую область для текущей положения пользователя.
-                    mapState = ymaps.util.bounds.getCenterAndZoom(
-                        bounds,
-                        [mapContainer.width(), mapContainer.height()]
-                    );
-                createMap(mapState);
-            }, function (e) {
-                // Если местоположение невозможно получить, то просто создаем карту.
-                createMap({
-                    center: [55.751574, 37.573856],
-                    zoom: 2
-                });
-            });
+        function init() {
+            var geocoder = new ymaps.geocode(
+                // Строка с адресом, который нужно геокодировать
+                '{{ $advert->address }}',
+                // 'Абакан, ул.Некрасова, 23',
+                // требуемое количество результатов
+                {results: 1}
+            );
+            // После того, как поиск вернул результат, вызывается callback-функция
+            geocoder.then(
+                function (res) {
+                    console.log(res);
+                    if (res.metaData.geocoder.found === 0) {
+                        // Если местоположение невозможно получить, то просто создаем карту.
+                        map = new ymaps.Map('map', { center: [55.751574, 37.573856], zoom: 7 });
+                        return;
+                    }
 
-            function createMap(state) {
-                map = new ymaps.Map('map', state);
-            }
-        });
+                    // координаты объекта
+                    var coord = res.geoObjects.get(0).geometry.getCoordinates();
+                    var map = new ymaps.Map('map', {
+                        // Центр карты - координаты первого элемента
+                        center: coord,
+                        // Коэффициент масштабирования
+                        zoom: 13,
+                        // включаем масштабирование карты колесом
+                        behaviors: ['default', 'scrollZoom'],
+                        controls: ['mapTools']
+                    });
+                    // Добавление метки на карту
+                    map.geoObjects.add(res.geoObjects.get(0));
+                    // устанавливаем максимально возможный коэффициент масштабирования - 1
+                    map.zoomRange.get(coord).then(function (range) {
+                        map.setCenter(coord, range[1] - 1)
+                    });
+                    // Добавление стандартного набора кнопок
+                    map.controls.add('mapTools')
+                        // Добавление кнопки изменения масштаба
+                        .add('zoomControl')
+                        // Добавление списка типов карты
+                        .add('typeSelector');
+                }
+            );
+        }
     </script>
 @endsection
