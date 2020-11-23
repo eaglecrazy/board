@@ -17,13 +17,12 @@
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
-
-            {{--                @if ($advert->isOnModeration())--}}
-            <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">
-                @csrf
-                <button class="btn btn-success">Moderate</button>
-            </form>
-            {{--                @endif--}}
+            @if ($advert->isModeration())
+                <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">
+                    @csrf
+                    <button class="btn btn-success">Moderate</button>
+                </form>
+            @endif
 
             {{--                @if ($advert->isOnModeration() || $advert->isActive())--}}
             <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>
@@ -191,7 +190,7 @@
                     console.log(res);
                     if (res.metaData.geocoder.found === 0) {
                         // Если местоположение невозможно получить, то просто создаем карту.
-                        map = new ymaps.Map('map', { center: [55.751574, 37.573856], zoom: 7 });
+                        map = new ymaps.Map('map', {center: [55.751574, 37.573856], zoom: 7});
                         return;
                     }
 

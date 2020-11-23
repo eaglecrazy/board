@@ -205,7 +205,7 @@ class Advert extends Model
             throw new \DomainException('Advert is not sent to moderation.');
         }
         $this->update([
-            'status' => self::STATUS_MODERATION,
+            'status' => self::STATUS_ACTIVE,
             'published_at' => $date,
             'expires_at' => $date->copy()->addMonth(1),
         ]);
