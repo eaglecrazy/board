@@ -37237,10 +37237,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //скр�
 
 $(document).on('click', '.phone-button', function () {
   var button = $(this);
-  var link = button.data('source');
-  axios.post(link).then(function (response) {
-    alert('ok');
-    alert(response.data);
+  var url = button.data('source');
+  axios.post(url).then(function (response) {
     button.find('.number').html(response.data);
   })["catch"](function (error) {
     console.error(error);

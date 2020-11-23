@@ -9,6 +9,7 @@ use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -91,5 +92,15 @@ class AdvertService
     {
         $advert->delete();
         //тут нужно ещё фоточки удалить
+    }
+
+    public function getSimilar(Advert $advert) : Collection
+    {
+        return Advert::where('region_id', $advert->region->id)
+            ->where('category_id', $advert->category->id)
+            ->where('id', '!=', $advert->id)
+            ->get()
+            ->shuffle()
+            ->take(3);
     }
 }

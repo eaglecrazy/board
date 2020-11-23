@@ -94,6 +94,7 @@ Route::group([
     //этот роут нужно будет поменять
     Route::get('show/{advert}', 'AdvertController@show')->name('show');
     Route::post('show/{advert}/phone', 'AdvertController@phone')->name('phone');
+    Route::post('show/{advert}/phone', 'AdvertController@phone')->name('phone');
     Route::get('all/{category?}', 'AdvertController@index')->name('index.all');
     Route::get('{region?}/{category?}', 'AdvertController@index')->name('index');
 

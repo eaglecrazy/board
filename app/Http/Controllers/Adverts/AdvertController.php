@@ -1,5 +1,3 @@
-ЗАКОНЧИЛ НА 5.23
-
 <?php
 
 namespace App\Http\Controllers\Adverts;
@@ -7,6 +5,8 @@ namespace App\Http\Controllers\Adverts;
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
+use App\Services\PhoneFormatter;
+use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -44,16 +44,18 @@ class AdvertController extends Controller
             abort(403);
         }
 
-        return view('adverts.show', compact('advert'));
+        $service = new AdvertService();
+        $similar = $service->getSimilar($advert);
+        return view('adverts.show', compact('advert', 'similar'));
     }
 
     public function phone(Advert $advert) : string
     {
-        die('phone');
         if (!$advert->isAllowToShow()) {
             abort(403);
         }
 
-        return $advert->user->phone;
+        $formatter = new PhoneFormatter();
+        return $formatter->phone_format($advert->user->phone);
     }
 }

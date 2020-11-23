@@ -136,54 +136,35 @@
 
             {{--            <hr/>--}}
 
-            <div class="h3">Similar adverts</div>
+            @if($similar->count())
+                <div class="h3">Similar adverts</div>
+                <div class="row">
 
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <div class="card">
-                        <img class="card-img-top"
-                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
-                             alt=""/>
-                        <div class="card-body">
-                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
-                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
-                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
-                                ultricies vehicula ut id elit.</p>
+                    @foreach($similar as $similar_item)
+                        <div class="col-sm-6 col-md-4">
+                            <div class="card">
+                                <img class="card-img-top"
+                                     src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
+                                     alt=""/>
+                                <div class="card-body">
+                                    <div class="card-title h4 mt-0" style="margin: 10px 0"><a
+                                            href="#">{{ $similar_item->title }}</a></div>
+                                    <p class="card-text" style="color: #666"><b>{{ $similar_item->price }} руб.</b></p>
+                                    <p class="card-text" style="color: #666">{{ Str::limit($similar_item->content, 100) }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card">
-                        <img class="card-img-top"
-                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
-                             alt=""/>
-                        <div class="card-body">
-                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
-                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
-                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
-                                ultricies vehicula ut id elit.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card">
-                        <img class="card-img-top"
-                             src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
-                             alt=""/>
-                        <div class="card-body">
-                            <div class="card-title h4 mt-0" style="margin: 10px 0"><a href="#">The First Thing</a></div>
-                            <p class="card-text" style="color: #666">Cras justo odio, dapibus ac facilisis in, egestas
-                                eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
-                                ultricies vehicula ut id elit.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            @endif
         </div>
         <div class="col-md-3">
-            <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>
-            <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px"></div>
+            <div
+                style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px">баннер 1
+            </div>
+            <div
+                style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px">баннер 2
+            </div>
         </div>
     </div>
 @endsection
