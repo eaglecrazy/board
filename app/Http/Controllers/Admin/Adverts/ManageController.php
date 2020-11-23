@@ -22,7 +22,7 @@ class ManageController extends Controller
         $this->service = $service;
     }
 
-    public function photos(Advert $advert)
+    public function photosForm(Advert $advert)
     {
         $this->checkAccess($advert);
         return view('adverts.edit.photos', compact('advert'));

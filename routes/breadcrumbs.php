@@ -93,9 +93,16 @@ Breadcrumbs::register('admin.adverts.categories.attributes.edit', function (Brea
 // Admin.Adverts.ManageController
 //-------------------------------------------------------------------------
 
+//admin.adverts.adverts.edit
 Breadcrumbs::register('admin.adverts.adverts.edit', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.show', $advert);
-    $crumbs->push('Edit');
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push('Edit: ' . $advert->title, route('cabinet.adverts.edit', $advert));
+});
+
+//cabinet.adverts.photos
+Breadcrumbs::register('admin.adverts.adverts.photos', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
 });
 
 
