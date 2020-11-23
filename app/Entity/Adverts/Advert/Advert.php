@@ -100,14 +100,13 @@ class Advert extends Model
         $ids = [$region->id];
         $childrenIds = $ids;
 
-        while($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()){
+        while ($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
             asort($childrenIds);
             var_dump($childrenIds);
             $ids = array_merge($ids, $childrenIds);
         }
         asort($ids);
         echo 'rez = ' . var_dump($ids);
-
 
 
         return $query->where('region_id', $ids);
@@ -181,7 +180,7 @@ class Advert extends Model
 
 
 //    --------------------
-//    Модерация
+//    Изменения статусов
 //    --------------------
 
     public function sendToModeration(): void
@@ -211,13 +210,26 @@ class Advert extends Model
         ]);
     }
 
-    public function reject($reason):void
+    public function reject($reason): void
     {
         $this->update(
             ['status' => self::STATUS_DRAFT,
                 'reject_reason' => $reason
             ]);
     }
+
+    public function expire(): void
+    {
+        $this->update(
+            ['status' => self::STATUS_CLOSED]);
+    }
+
+
+
+
+//    --------------------
+//    Другое
+//    --------------------
 
     public function isAllowToShow()
     {

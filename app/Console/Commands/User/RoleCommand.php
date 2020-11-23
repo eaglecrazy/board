@@ -9,7 +9,7 @@ class RoleCommand extends Command
 {
     protected $signature = 'user:role {email} {role}';
 
-    protected $description = 'Ser role for user';
+    protected $description = 'Set role for user';
 
     public function handle() : bool
     {

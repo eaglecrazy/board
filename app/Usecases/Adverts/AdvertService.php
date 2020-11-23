@@ -105,7 +105,7 @@ class AdvertService
             ->take(3);
     }
 
-public function edit(Advert $advert, EditRequest $request): void
+    public function edit(Advert $advert, EditRequest $request): void
     {
         $advert->update($request->only([
             'title',
@@ -113,5 +113,9 @@ public function edit(Advert $advert, EditRequest $request): void
             'price',
             'address',
         ]));
+    }
+
+    public function expire(Advert $advert): void{
+        $advert->expire();
     }
 }
