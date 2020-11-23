@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Adverts\EditRequest;
 
 class ManageController extends Controller
 {
@@ -83,19 +84,18 @@ class ManageController extends Controller
         }
     }
 
+    public function update(EditRequest $request, Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->edit($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
 
-//    public function edit(EditRequest $request, Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->edit($advert->id, $request);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
-//
+        return redirect()->route('adverts.show', $advert);
+    }
+
     public function send(Advert $advert)
     {
         $this->checkAccess($advert);

@@ -7,6 +7,7 @@ namespace App\Usecases\Adverts;
 use App\Entity\Adverts\Advert\Advert;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
+use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use Illuminate\Database\Eloquent\Collection;
@@ -102,5 +103,15 @@ class AdvertService
             ->get()
             ->shuffle()
             ->take(3);
+    }
+
+public function edit(Advert $advert, EditRequest $request): void
+    {
+        $advert->update($request->only([
+            'title',
+            'content',
+            'price',
+            'address',
+        ]));
     }
 }

@@ -50,7 +50,7 @@
 
                 <div class="form-group">
                     <label for="address" class="col-form-label">Address</label>
-                    <input id="address" type="number"
+                    <input id="address" type="text"
                            class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address"
                            value="{{ old('address', $advert->address) }}" required>
                     @if ($errors->has('address'))
