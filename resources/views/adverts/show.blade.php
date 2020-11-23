@@ -3,11 +3,11 @@
 @section('content')
     @if ($advert->isDraft())
         <div class="alert alert-danger">
-            It is a draft.
+            Advert status: draft
         </div>
         @if ($advert->reject_reason)
             <div class="alert alert-danger">
-                {{ $advert->reject_reason }}
+                Reject reason: {{ $advert->reject_reason }}
             </div>
         @endif
     @endif
@@ -24,9 +24,9 @@
                 </form>
             @endif
 
-            {{--                @if ($advert->isOnModeration() || $advert->isActive())--}}
-            <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>
-            {{--                @endif--}}
+            @if ($advert->isModeration() || $advert->isActive())
+                <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>
+            @endif
 
             <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-1">
                 @csrf

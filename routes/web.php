@@ -64,6 +64,8 @@ Route::group([
             Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
             Route::post('{advert}/moderate', 'ManageController@moderate')->name('moderate');
             Route::get('/{advert}/reject', 'ManageController@rejectForm')->name('reject');
+            Route::post('/{advert}/reject', 'ManageController@reject')->name('refuse');
+            Route::put('/{advert}/edit', 'ManageController@update')->name('update');
         });
     });
 

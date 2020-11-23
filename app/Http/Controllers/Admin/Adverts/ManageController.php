@@ -6,12 +6,15 @@ use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Region;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
+use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
+use App\Http\Requests\Adverts\RejectRequest;
 use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Entity\User;
 
 class ManageController extends Controller
 {
@@ -89,37 +92,38 @@ class ManageController extends Controller
 
     private function checkAccess(Advert $advert): void
     {
-        if (!Gate::allows('manage-own-advert', $advert)) {
+        if (!Gate::allows('moderate-advert')) {
             abort(403);
         }
     }
 
+    public function update(EditRequest $request, Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->edit($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('adverts.show', $advert);
+    }
 
-//    public function edit(EditRequest $request, Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->edit($advert->id, $request);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
-//
-//    public function send(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->sendToModeration($advert->id);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
-//
-//
+    public function rejectForm(Advert $advert)
+    {
+        return view('admin.adverts.reject', compact('advert'));
+    }
+
+    public function reject(RejectRequest $request, Advert $advert)
+    {
+        try {
+            $this->service->reject($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('adverts.show', $advert);
+    }
+
 //
 //
 //

@@ -11,10 +11,7 @@
             </ul>
         </div>
     @endif
-{{--? это тот же самый адрес --}}
-{{-- но чтобы не гадать я лучше напишу роут--}}
-{{--    <form method="POST" action="?">--}}
-    <form method="POST" action="{{ route('cabinet.adverts.update', $advert) }}">
+    <form method="POST" action="{{ Auth::user()->role === App\Entity\User::ROLE_ADMIN ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update', $advert) }}">
         @csrf
         @method('PUT')
 

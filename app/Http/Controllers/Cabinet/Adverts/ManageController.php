@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Region;
+use App\Entity\User;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\PhotosRequest;

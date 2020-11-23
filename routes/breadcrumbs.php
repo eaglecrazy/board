@@ -99,10 +99,16 @@ Breadcrumbs::register('admin.adverts.adverts.edit', function (BreadcrumbsGenerat
     $crumbs->push('Edit: ' . $advert->title, route('cabinet.adverts.edit', $advert));
 });
 
-//cabinet.adverts.photos
+//admin.adverts.adverts.photos
 Breadcrumbs::register('admin.adverts.adverts.photos', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
     $crumbs->parent('adverts.index', $advert->region, $advert->category);
     $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
+});
+
+//admin.adverts.adverts.reject
+Breadcrumbs::register('admin.adverts.adverts.reject', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
+    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->push('Reason for rejection : ' . $advert->title, route('admin.adverts.adverts.reject', $advert));
 });
 
 
