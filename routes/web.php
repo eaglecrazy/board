@@ -2,9 +2,11 @@
 
 use App\Http\Middleware\FilledProfile;
 
+//---------
+// Home
+//---------
+
 Route::get('/', 'HomeController@index')->name('home');
-
-
 
 
 //---------
@@ -16,22 +18,14 @@ Route::group([
     'namespace' => 'Admin',
     'middleware' => ['auth', 'can:admin-panel'],
 ], function () {
+
+    //---------
+    // Admin.Home
+    //---------
     Route::get('/', 'HomeController@index')->name('home');
-    //---------
-    // Users
-    //---------
-    Route::get('users/verify/{user}', 'UsersController@verify')->name('users.verify');
-    Route::resource('users', 'UsersController');
 
     //---------
-    // Regions
-    //---------
-    Route::resource('regions', 'RegionController');
-    //роут нужен для правильной генерации хлебных крошек в дочерних регионах
-    Route::get('regions/create/{region}', 'RegionController@create_inner')->name('regions.create-inner');
-
-    //---------
-    //Adverts
+    // Admin.Adverts
     //---------
     Route::group([
         'prefix' => 'adverts',
@@ -40,7 +34,7 @@ Route::group([
 
     ], function () {
         //---------
-        //Categories
+        // Admin.Adverts.Categories
         //---------
         Route::resource('categories', 'CategoryController');
         //роут нужен для правильной генерации хлебных крошек в дочерних категориях
@@ -54,12 +48,12 @@ Route::group([
             Route::post('/up', 'CategoryController@up')->name('up');
             Route::post('/down', 'CategoryController@down')->name('down');
             //---------
-            //Attributes
+            // Admin.Adverts.Attributes
             //---------
             Route::resource('attributes', 'AttributeController')->except('index');
         });
         //---------
-        //Adverts
+        // Admin.Adverts.Adverts
         //---------
         Route::group([
             'prefix' => 'adverts',
@@ -71,9 +65,22 @@ Route::group([
             Route::post('{advert}/moderate', 'ManageController@moderate')->name('moderate');
             Route::get('/{advert}/reject', 'ManageController@rejectForm')->name('reject');
         });
+    });
 
-    }
-    );
+    //---------
+    // Admin.Users
+    //---------
+    Route::get('users/verify/{user}', 'UsersController@verify')->name('users.verify');
+    Route::resource('users', 'UsersController');
+
+    //---------
+    // Admin.Regions
+    //---------
+    Route::resource('regions', 'RegionController');
+    //роут нужен для правильной генерации хлебных крошек в дочерних регионах
+    Route::get('regions/create/{region}', 'RegionController@create_inner')->name('regions.create-inner');
+
+
 });
 
 
@@ -106,7 +113,6 @@ Route::group([
 });
 
 
-
 //---------
 // Auth
 //---------
@@ -114,8 +120,6 @@ Auth::routes();
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.verify');
 Route::get('/login/phone', 'Auth\LoginController@phone')->name('login.phone');
 Route::post('/login/phone', 'Auth\LoginController@verify');
-
-
 
 
 //---------
@@ -130,7 +134,7 @@ Route::group([
     Route::get('/', 'HomeController@index')->name('home');
 
     //---------
-    // Cabinet Profile
+    // Cabinet.Profile
     //---------
     Route::group([
         'prefix' => 'profile',
@@ -145,7 +149,7 @@ Route::group([
         Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
     });
     //---------
-    // Cabinet Adverts
+    // Cabinet.Adverts
     //---------
     Route::group([
         'prefix' => 'adverts',

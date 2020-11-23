@@ -42,7 +42,7 @@ class ManageController extends Controller
 
     public function editForm(Advert $advert)
     {
-//        $this->checkAccess($advert);
+        $this->checkAccess($advert);
         return view('adverts.edit.advert', compact('advert'));
     }
 

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <b>ТУТ НУЖНО ДОБАВИТЬ ПОХОЖИЕ ОБЪЯВЛЕНИЯ (4-37-45) </b>
     @if ($advert->isDraft())
         <div class="alert alert-danger">
             It is a draft.
