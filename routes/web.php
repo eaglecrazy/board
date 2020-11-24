@@ -66,7 +66,7 @@ Route::group([
             Route::post('{advert}/moderate', 'AdvertController@moderate')->name('moderate');
             Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');
             Route::post('/{advert}/reject', 'AdvertController@reject')->name('refuse');
-            Route::put('/{advert}/edit', 'AdvertController@update')->name('update');
+            Route::put('/{advert}/edit', 'AdvertController@edit')->name('update');
         });
     });
 
@@ -104,8 +104,9 @@ Route::group([
     //этот роут нужно будет поменять
     Route::get('show/{advert}', 'AdvertController@show')->name('show');
     Route::post('show/{advert}/phone', 'AdvertController@phone')->name('phone');
-    Route::get('all/{category?}', 'AdvertController@index')->name('index.all');
-    Route::get('{region?}/{category?}', 'AdvertController@index')->name('index');
+//    Route::get('all/{category?}', 'AdvertController@index')->name('index.all');
+//    Route::get('{region?}/{category?}', 'AdvertController@index')->name('index');
+      Route::get('{adverts_path?}', 'AdvertController@path')->name('index')->where('adverts_path', '.+');
 
 
 //    Route::post('show/{advert}/favorites', 'FavoriteController@add')->name('favorites');

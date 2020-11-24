@@ -31,8 +31,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Gate::define('edit-own-advert', function (User $user, Advert $advert){
-            return $advert->user_id === $user->id;
+        Gate::define('manage-adverts', function (User $user) {
+            return $user->isAdmin() || $user->isModerator();
         });
 
         Gate::define('show-advert', function (User $user, Advert $advert) {
@@ -43,9 +43,11 @@ class AuthServiceProvider extends ServiceProvider
             return $advert->user_id === $user->id;
         });
 
-        Gate::define('moderate-advert', function (User $user) {
-            return $user->isAdmin() || $user->isModerator();
-        });
+
+
+
+
+
 
 
 //        Gate::define('horizon', function (User $user) {

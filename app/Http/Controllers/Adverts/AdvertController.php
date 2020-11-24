@@ -10,11 +10,14 @@ use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Router\AdvertsPath;
 
 class AdvertController extends Controller
 {
-    public function index(Region $currentRegion = null, Category $currentCategory = null)
+//    public function index(Region $currentRegion = null, Category $currentCategory = null)
+    public function path(AdvertsPath $path)
     {
+        dd($path);
         //получим и отфильтруем объявления
         //фильтр по категории и дочерним категориям
         $query = Advert::active()->with('category', 'region')->orderByDesc('published_at');

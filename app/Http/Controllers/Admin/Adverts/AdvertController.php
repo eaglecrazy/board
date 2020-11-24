@@ -60,13 +60,11 @@ class AdvertController extends Controller
 
     public function photosForm(Advert $advert)
     {
-        $this->checkAccess($advert);
         return view('adverts.edit.photos', compact('advert'));
     }
 
     public function updatePhotos(PhotosRequest $request, Advert $advert)
     {
-        $this->checkAccess($advert);
         try {
             $this->service->addPhotos($advert, $request);
         } catch (\DomainException $e) {
@@ -78,19 +76,16 @@ class AdvertController extends Controller
 
     public function editForm(Advert $advert)
     {
-        $this->checkAccess($advert);
         return view('adverts.edit.advert', compact('advert'));
     }
 
-    public function attributes(Advert $advert)
+    public function attributesForm(Advert $advert)
     {
-        $this->checkAccess($advert);
         return view('adverts.edit.attributes', compact('advert'));
     }
 
     public function updateAttributes(AttributesRequest $request, Advert $advert)
     {
-        $this->checkAccess($advert);
         try {
             $this->service->editAttributes($advert, $request);
         } catch (\DomainException $e) {
@@ -101,38 +96,28 @@ class AdvertController extends Controller
 
     public function destroy(Advert $advert)
     {
-        $this->checkAccess($advert);
         try {
             $this->service->remove($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.adverts.index');
+        return redirect()->route('admin.adverts.adverts.index');
     }
 
     public function moderate(Advert $advert)
     {
-        $this->checkAccess($advert);
         try {
             $this->service->moderate($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
-        return back();
+        return redirect()->route('adverts.show', $advert);
     }
 
-    private function checkAccess(Advert $advert): void
+    public function edit(EditRequest $request, Advert $advert)
     {
-        if (!Gate::allows('moderate-advert')) {
-            abort(403);
-        }
-    }
-
-    public function update(EditRequest $request, Advert $advert)
-    {
-        $this->checkAccess($advert);
         try {
             $this->service->edit($advert, $request);
         } catch (\DomainException $e) {

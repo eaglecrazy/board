@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    @can ('moderate-advert', $advert)
+    @can ('manage-adverts', $advert)
         <h3>Moderation access</h3>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
@@ -40,7 +40,7 @@
         </div>
     @endcan
 
-    @can ('edit-own-advert', $advert)
+    @can ('manage-own-advert', $advert)
         <h3>Advert owner access</h3>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
