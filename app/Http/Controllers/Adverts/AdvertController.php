@@ -17,7 +17,7 @@ class AdvertController extends Controller
     {
         //получим и отфильтруем объявления
         //фильтр по категории и дочерним категориям
-        $query = Advert::active()->with('category', 'region')->orderByDesc('id');
+        $query = Advert::active()->with('category', 'region')->orderByDesc('published_at');
         if ($currentCategory) {
             $query->forCategory($currentCategory);
         }

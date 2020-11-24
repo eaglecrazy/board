@@ -118,4 +118,8 @@ class AdvertService
     public function expire(Advert $advert): void{
         $advert->expire();
     }
+
+    public function close(Advert $advert): void{
+        $advert->close();
+    }
 }

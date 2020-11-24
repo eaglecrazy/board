@@ -67,6 +67,14 @@ Breadcrumbs::register('admin.home', function (BreadcrumbsGenerator $crumbs) {
 
 
 //-------------------------------------------------------------------------
+// Admin.Adverts.AdvertController
+//-------------------------------------------------------------------------
+Breadcrumbs::register('admin.adverts.adverts.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Adverts', route('admin.adverts.adverts.index'));
+});
+
+//-------------------------------------------------------------------------
 // Admin.Adverts.AttributeController
 //-------------------------------------------------------------------------
 

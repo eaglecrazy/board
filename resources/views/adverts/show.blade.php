@@ -10,6 +10,10 @@
                 Reject reason: {{ $advert->reject_reason }}
             </div>
         @endif
+    @elseif($advert->isClosed())
+        <div class="alert alert-danger">
+            Advert status: closed
+        </div>
     @endif
 
     @can ('moderate-advert', $advert)
@@ -42,18 +46,18 @@
             <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
 
-            @if ($advert->isDraft())
+            @if ($advert->isDraft() || $advert->isClosed())
                 <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
                     @csrf
                     <button class="btn btn-success">Publish</button>
                 </form>
             @endif
-            {{--                @if ($advert->isActive())--}}
-            {{--                    <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-1">--}}
-            {{--                        @csrf--}}
-            {{--                        <button class="btn btn-success">Close</button>--}}
-            {{--                    </form>--}}
-            {{--                @endif--}}
+            @if ($advert->isActive())
+                <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-1">
+                    @csrf
+                    <button class="btn btn-success">Close</button>
+                </form>
+            @endif
 
             <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-1">
                 @csrf

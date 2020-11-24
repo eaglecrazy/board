@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Region;
-use App\Http\Middleware\FilledProfile;
+use App\Entity\Adverts\Attribute;
+use App\Entity\Adverts\Category;
+use App\Entity\User;
+use App\Http\Requests\Adverts\AttributeRequest;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
@@ -12,17 +14,48 @@ use App\Http\Requests\Adverts\RejectRequest;
 use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Entity\User;
+use Illuminate\Validation\Rule;
 
-class ManageController extends Controller
+class AdvertController extends Controller
 {
     private $service;
-
-    public function __construct(AdvertService $service)
-    {
+    public function __construct(AdvertService $service){
         $this->service = $service;
+    }
+
+    public function index(Request $request){
+        $query = Advert::orderByDesc('updated_at');
+
+        if(!empty($value = $request->get('id'))){
+            $query->where('id', $value);
+        }
+
+        if(!empty($value = $request->get('title'))){
+            $query->where('title', 'like', '%' . $value . '%');
+        }
+
+        if(!empty($value = $request->get('user'))){
+            $query->where('user_id', $value);
+        }
+
+        if(!empty($value = $request->get('region'))){
+            $query->where('region_id', $value);
+        }
+
+        if(!empty($value = $request->get('category'))){
+            $query->where('category_id', $value);
+        }
+
+        if(!empty($value = $request->get('status'))){
+            $query->where('status_id', $value);
+        }
+
+        $adverts = $query->paginate(20);
+        $statuses = Advert::statusesList();
+        $roles = User::rolesList();
+
+        return view('admin.adverts.adverts.index', compact('adverts', 'statuses', 'roles'));
     }
 
     public function photosForm(Advert $advert)
@@ -124,19 +157,5 @@ class ManageController extends Controller
         return redirect()->route('adverts.show', $advert);
     }
 
-//
-//
-//
-//    public function close(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->close($advert->id);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
 
 }

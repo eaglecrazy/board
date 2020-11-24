@@ -59,13 +59,14 @@ Route::group([
             'prefix' => 'adverts',
             'as' => 'adverts.'
         ], function () {
-            Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
-            Route::get('/{advert}/photos', 'ManageController@photosForm')->name('photos');
-            Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
-            Route::post('{advert}/moderate', 'ManageController@moderate')->name('moderate');
-            Route::get('/{advert}/reject', 'ManageController@rejectForm')->name('reject');
-            Route::post('/{advert}/reject', 'ManageController@reject')->name('refuse');
-            Route::put('/{advert}/edit', 'ManageController@update')->name('update');
+            Route::get('/', 'AdvertController@index')->name('index');
+            Route::get('/{advert}/edit', 'AdvertController@editForm')->name('edit');
+            Route::get('/{advert}/photos', 'AdvertController@photosForm')->name('photos');
+            Route::delete('/{advert}/destroy', 'AdvertController@destroy')->name('destroy');
+            Route::post('{advert}/moderate', 'AdvertController@moderate')->name('moderate');
+            Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');
+            Route::post('/{advert}/reject', 'AdvertController@reject')->name('refuse');
+            Route::put('/{advert}/edit', 'AdvertController@update')->name('update');
         });
     });
 
@@ -168,11 +169,14 @@ Route::group([
         Route::get('/{advert}/photos', 'ManageController@editPhotosForm')->name('photos');
         //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
-        Route::put('/{advert}/edit', 'ManageController@update')->name('update');
+        Route::put('/{advert}/edit', 'ManageController@edit')->name('update');
         //отправка на модерацию
         Route::post('/{advert}/send', 'ManageController@send')->name('send');
+        //закрытие
+        Route::post('/{advert}/close', 'ManageController@close')->name('close');
         //удаление
         Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
+        //
     });
 
 });

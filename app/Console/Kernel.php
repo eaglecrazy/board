@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('advert:expire')
                   ->hourly();
+//        $schedule->command('advert:expire')
+//            ->everyMinute();
     }
 
     /**

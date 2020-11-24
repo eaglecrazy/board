@@ -85,7 +85,7 @@ class ManageController extends Controller
         }
     }
 
-    public function update(EditRequest $request, Advert $advert)
+    public function edit(EditRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
@@ -107,21 +107,15 @@ class ManageController extends Controller
         }
         return redirect()->route('adverts.show', $advert);
     }
-//
-//
-//
-//
-//
-//    public function close(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        try {
-//            $this->service->close($advert->id);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('adverts.show', $advert);
-//    }
 
+    public function close(Advert $advert)
+    {
+        $this->checkAccess($advert);
+        try {
+            $this->service->close($advert);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('adverts.show', $advert);
+    }
 }

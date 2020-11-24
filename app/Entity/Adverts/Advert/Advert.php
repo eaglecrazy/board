@@ -100,7 +100,7 @@ class Advert extends Model
         $ids = [$region->id];
         $childrenIds = $ids;
 
-        while ($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
+        while ($childrenIds = Region::whereIn(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
             asort($childrenIds);
             var_dump($childrenIds);
             $ids = array_merge($ids, $childrenIds);
@@ -114,7 +114,7 @@ class Advert extends Model
 
     public static function scopeForcategory(Builder $query, Category $category)
     {
-        return $query->where('category_id', array_merge(
+        return $query->whereIn('category_id', array_merge(
             [$category->id],
             //получаем всех потомков, и только столбец id, и из него делаем массив
             $category->descendants()->pluck('id')->toArray()
@@ -130,6 +130,16 @@ class Advert extends Model
 //    --------------------
 //    Статусы
 //    --------------------
+    public static function statusesList(): array
+    {
+        return [
+            self::STATUS_DRAFT => 'Draft',
+            self::STATUS_MODERATION => 'On Moderation',
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_CLOSED => 'Closed',
+        ];
+    }
+
     public function isDraft(): bool
     {
         return $this->status === self::STATUS_DRAFT;
@@ -185,7 +195,7 @@ class Advert extends Model
 
     public function sendToModeration(): void
     {
-        if (!$this->isDraft()) {
+        if (!($this->isDraft() || $this->isClosed())) {
             throw new \DomainException('Advert is not draft.');
         }
 //TODO Эту проверку нужно вернуть, когда будут фотки
@@ -222,6 +232,13 @@ class Advert extends Model
     {
         $this->update(
             ['status' => self::STATUS_CLOSED]);
+    }
+
+    public function close(): void
+    {
+        $this->update([
+            'status' => self::STATUS_CLOSED,
+        ]);
     }
 
 
