@@ -13,20 +13,19 @@ class AdvertsPath implements UrlRoutable
     public $region;
     public $category;
 
-    public function withRegion(?Region $region): self
+    public function withRegion(Region $region): self
     {
         $clone = clone $this;
         $clone->region = $region;
         return $clone;
     }
 
-    public function withCategory(?Category $category): self
+    public function withCategory(Category $category): self
     {
         $clone = clone $this;
         $clone->category = $category;
         return $clone;
     }
-
 
     public function getRouteKey()
     {
@@ -68,6 +67,7 @@ class AdvertsPath implements UrlRoutable
         $category = null;
         do {
             $slug = reset($chunks);
+
             if ($slug &&
                 $next = Category::where('slug', $slug)
                     ->where('parent_id', $category ? $category->id : null)

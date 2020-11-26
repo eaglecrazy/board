@@ -55,6 +55,7 @@ class AdvertService
                     'file' => $file->store('adverts')
                 ]);
             }
+            $advert->update();
         });
     }
 
@@ -86,6 +87,7 @@ class AdvertService
                     ]);
                 }
             }
+            $advert->update();
         });
     }
 

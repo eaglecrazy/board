@@ -8,6 +8,7 @@ use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Entity\User;
 use Illuminate\Http\Request;
+use App\Http\Router\AdvertsPath;
 
 
 //-------------------------------------------------------------------------
@@ -231,38 +232,39 @@ Breadcrumbs::register('admin.users.edit', function (BreadcrumbsGenerator $crumbs
 //-------------------------------------------------------------------------
 
 //adverts.index
-Breadcrumbs::register('adverts.index', function (BreadcrumbsGenerator $crumbs, Region $region = null, Category $category = null) {
-    $crumbs->parent('adverts.inner_category', $region, $category);
+Breadcrumbs::register('adverts.index', function (BreadcrumbsGenerator $crumbs, AdvertsPath $path = null) {
+    $path = $path ?: new AdvertsPath();
+    $crumbs->parent('adverts.inner_category', $path, $path);
 });
 
 //adverts.inner_category
-Breadcrumbs::register('adverts.inner_category', function (BreadcrumbsGenerator $crumbs, Region $region = null, Category $category = null) {
-    if ($category && $parent = $category->parent) {
-        $crumbs->parent('adverts.inner_category', $region, $parent);
+Breadcrumbs::register('adverts.inner_category', function (BreadcrumbsGenerator $crumbs, AdvertsPath $path, AdvertsPath $orig) {
+    if ($path->category && $parent = $path->category->parent) {
+        $crumbs->parent('adverts.inner_category', $path->withCategory($path->category->parent), $orig);
     } else {
-        $crumbs->parent('adverts.inner_region', $region, $category);
+        $crumbs->parent('adverts.inner_region', $orig);
     }
-    if ($category) {
-        $crumbs->push($category->name, route('adverts.index', $region, $category));
+    if ($path->category) {
+        $crumbs->push($path->category->name, route('adverts.index', $path));
     }
 });
 
 //adverts.inner_region
-Breadcrumbs::register('adverts.inner_region', function (BreadcrumbsGenerator $crumbs, Region $region = null, Category $category = null) {
-    if ($region && $parent = $region->parent) {
-        $crumbs->parent('adverts.inner_region', $parent, $category);
+Breadcrumbs::register('adverts.inner_region', function (BreadcrumbsGenerator $crumbs, AdvertsPath $path) {
+    if ($path->region && $parent = $path->region->parent) {
+        $crumbs->parent('adverts.inner_region', $path->withRegion($parent));
     } else {
         $crumbs->parent('home');
         $crumbs->push('Adverts', route('adverts.index'));
     }
-    if ($region) {
-        $crumbs->push($region->name, route('adverts.index', $region, $category));
+    if ($path->region) {
+        $crumbs->push($path->region->name, route('adverts.index', $path));
     }
 });
 
 //adverts.show
 Breadcrumbs::register('adverts.show', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->parent('adverts.index', adPath($advert));
     $crumbs->push($advert->title, route('adverts.show', $advert));
 });
 

@@ -71,4 +71,9 @@ class Category extends Model
         uasort($result, $sort);
         return $result;
     }
+
+    public function getPath(): string
+    {
+        return implode('/', array_merge($this->ancestors()->defaultOrder()->pluck('slug')->toArray(), [$this->slug]));
+    }
 }

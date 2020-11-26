@@ -14,18 +14,17 @@ use App\Http\Router\AdvertsPath;
 
 class AdvertController extends Controller
 {
-//    public function index(Region $currentRegion = null, Category $currentCategory = null)
+//    public function index(Region $region = null, Category $category = null)
     public function path(AdvertsPath $path)
     {
-        dd($path);
         //получим и отфильтруем объявления
         //фильтр по категории и дочерним категориям
         $query = Advert::active()->with('category', 'region')->orderByDesc('published_at');
-        if ($currentCategory) {
+        if ($currentCategory = $path->category) {
             $query->forCategory($currentCategory);
         }
         //фильтр по этому региону и дочерним регионам
-        if ($currentRegion) {
+        if ($currentRegion = $path->region) {
             $query->forRegion($currentRegion);
         }
         $adverts = $query->paginate(20);
@@ -34,11 +33,13 @@ class AdvertController extends Controller
         $childernRegions = $currentRegion
             ? $currentRegion->children()->orderBy('name')->getModels()
             : Region::roots()->orderBy('name')->getModels();
+
         $childernCategories = $currentCategory
-            ? $currentCategory->children->defaultOrder()->getModels()
+            ? $currentCategory->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
-        return view('adverts.index', compact('adverts', 'currentCategory', 'currentRegion', 'childernRegions', 'childernCategories'));
+//        return view('adverts.index', compact('adverts', 'currentCategory', 'currentRegion', 'childernRegions', 'childernCategories'));
+        return view('adverts.index', compact('adverts', 'path', 'childernRegions', 'childernCategories'));
     }
 
     public function show(Advert $advert)
@@ -52,7 +53,7 @@ class AdvertController extends Controller
         return view('adverts.show', compact('advert', 'similar'));
     }
 
-    public function phone(Advert $advert) : string
+    public function phone(Advert $advert): string
     {
         if (!$advert->isAllowToShow()) {
             abort(403);

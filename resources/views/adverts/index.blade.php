@@ -15,8 +15,9 @@
     @if ($childernCategories)
         <div class="card card-default mb-3">
             <div class="card-header">
-                @if ($currentCategory)
-                    Categories of {{ $currentCategory->name }}
+{{--                @if ($currentCategory)--}}
+                @if ($path->category)
+                    Categories of {{ $path->category->name }}
                 @else
                     Categories
                 @endif
@@ -28,8 +29,8 @@
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
                                     <li>
-                                        <a href="{{ route('adverts.index', [$currentRegion, $current]) }}">{{ $current->name }}</a>
-{{--                                        <a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($region, $current)], request()->all())) }}">{{ $current->name }}</a>--}}
+{{--                                        <a href="{{ route('adverts.index', [$currentRegion, $current]) }}">{{ $current->name }}</a>--}}
+                                        <a href="{{ route('adverts.index', $path->getRouteKey() . '/' . $current->slug) }}">{{ $current->name }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -43,8 +44,10 @@
     @if ($childernRegions)
         <div class="card card-default mb-3">
             <div class="card-header">
-                @if ($currentRegion)
-                    Regions of {{ $currentRegion->name }}
+                @if ($path->region)
+{{--                @if ($currentRegion)--}}
+                    Regions of {{ $path->region->name }}
+{{--                    Regions of {{ $currentRegion->name }}--}}
                 @else
                     Regions
                 @endif
@@ -56,8 +59,8 @@
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
                                     <li>
-                                        <a href="{{ route('adverts.index', [$current, $currentCategory]) }}">{{ $current->name }}</a>
-{{--                                        <a href="{{ route('adverts.index', array_merge(['adverts_path' => adverts_path($current, $category)], request()->all())) }}">{{ $current->name }}</a>--}}
+{{--                                        <a href="{{ route('adverts.index', [$current, $currentCategory]) }}">{{ $current->name }}</a>--}}
+                                        <a href="{{ route('adverts.index',  $path->getRouteKey() . '/' . $current->slug) }}">{{ $current->name }}</a>
                                     </li>
                                 @endforeach
                             </ul>
