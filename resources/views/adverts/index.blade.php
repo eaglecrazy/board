@@ -12,10 +12,35 @@
 @section('content')
 
     <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success">Add Advert</a></p>
+
+    @if ($childernRegions)
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                @if ($path->region)
+                    Regions of {{ $path->region->name }}
+                @else
+                    Regions
+                @endif
+            </div>
+            <div class="card-body pb-0" style="color: #aaa">
+                <div class="row">
+                    @foreach (array_chunk($childernRegions, 3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach ($chunk as $current)
+                                    <li><a href="{{ route('adverts.index',  $path->getRegionUrl($current)) }}">{{ $current->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if ($childernCategories)
         <div class="card card-default mb-3">
             <div class="card-header">
-{{--                @if ($currentCategory)--}}
                 @if ($path->category)
                     Categories of {{ $path->category->name }}
                 @else
@@ -28,40 +53,7 @@
                         <div class="col-md-3">
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
-                                    <li>
-{{--                                        <a href="{{ route('adverts.index', [$currentRegion, $current]) }}">{{ $current->name }}</a>--}}
-                                        <a href="{{ route('adverts.index', $path->getRouteKey() . '/' . $current->slug) }}">{{ $current->name }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if ($childernRegions)
-        <div class="card card-default mb-3">
-            <div class="card-header">
-                @if ($path->region)
-{{--                @if ($currentRegion)--}}
-                    Regions of {{ $path->region->name }}
-{{--                    Regions of {{ $currentRegion->name }}--}}
-                @else
-                    Regions
-                @endif
-            </div>
-            <div class="card-body pb-0" style="color: #aaa">
-                <div class="row">
-                    @foreach (array_chunk($childernRegions, 3) as $chunk)
-                        <div class="col-md-3">
-                            <ul class="list-unstyled">
-                                @foreach ($chunk as $current)
-                                    <li>
-{{--                                        <a href="{{ route('adverts.index', [$current, $currentCategory]) }}">{{ $current->name }}</a>--}}
-                                        <a href="{{ route('adverts.index',  $path->getRouteKey() . '/' . $current->slug) }}">{{ $current->name }}</a>
-                                    </li>
+                                    <li><a href="{{ route('adverts.index',  $path->getCategoryUrl($current)) }}">{{ $current->name }}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -73,7 +65,6 @@
 
     <div class="row">
         <div class="col-md-9">
-
             <div class="adverts-list">
                 @foreach ($adverts as $advert)
                     <div class="advert">
@@ -84,15 +75,14 @@
                             <div class="col-md-9">
                                 <span class="float-right">{{ $advert->price }}</span>
                                 <div class="h4" style="margin-top: 0"><a href="{{ route('adverts.show', $advert) }}">{{ $advert->title }}</a></div>
-                                <p>Region: <a href="">{{ $advert->region ? $advert->region->name : 'All regions' }}</a></p>
-                                <p>Category: <a href="">{{ $advert->category->name }}</a></p>
+                                <p>Регион: <a href="{{ route('adverts.index', adPath($advert)) }}">{{ $advert->region ? $advert->region->name : 'All regions' }}</a></p>
+                                <p>Категория: <a href="{{ route('adverts.index', adPath($advert)) }}">{{ $advert->category->name }}</a></p>
                                 <p>Date: {{ $advert->created_at }}</p>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-{{--@dump($adverts->links())--}}
             {{ $adverts->links() }}
         </div>
 {{--        <div class="col-md-3">--}}

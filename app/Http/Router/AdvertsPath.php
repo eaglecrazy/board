@@ -13,14 +13,14 @@ class AdvertsPath implements UrlRoutable
     public $region;
     public $category;
 
-    public function withRegion(Region $region): self
+    public function withRegion(?Region $region): self
     {
         $clone = clone $this;
         $clone->region = $region;
         return $clone;
     }
 
-    public function withCategory(Category $category): self
+    public function withCategory(?Category $category): self
     {
         $clone = clone $this;
         $clone->category = $category;
@@ -30,24 +30,65 @@ class AdvertsPath implements UrlRoutable
     public function getRouteKey()
     {
         $segments = [];
-
-        if ($this->region) {
-            $segments[] = $this->region->getPath();
+        if ($result = $this->makeRegionPath()) {
+            $segments[] = $result;
         }
-
-        if ($this->category) {
-            $segments[] = $this->category->getPath();
+        if ($result = $this->makeCategoryPath()) {
+            $segments[] = $result;
         }
-
         return implode('/', $segments);
     }
+
+    private function makeRegionPath(): string
+    {
+        if ($this->region) {
+            return $this->region->getPath();
+        }
+        return '';
+    }
+
+    private function makeCategoryPath(): string
+    {
+        if ($this->category) {
+            return $this->category->getPath();
+        }
+        return '';
+    }
+
+    public function getRegionUrl(Region $region): string
+    {
+        $segments = [];
+        if ($path = $this->makeRegionPath()) {
+            $segments[] = $path;
+        }
+        $segments[] = $region->slug;
+        if ($path = $this->makeCategoryPath()) {
+            $segments[] = $path;
+        }
+        return implode('/', $segments);
+    }
+
+    public function getCategoryUrl(Category $category): string
+    {
+        $segments = [];
+        if ($path = $this->makeRegionPath()) {
+            $segments[] = $path;
+        }
+        if ($path = $this->makeCategoryPath()) {
+            $segments[] = $path;
+        }
+        $segments[] = $category->slug;
+        return implode('/', $segments);
+    }
+
 
     public function getRouteKeyName()
     {
         return 'adverts_path';
     }
 
-    public function resolveRouteBinding($value)
+    public
+    function resolveRouteBinding($value)
     {
         $chunks = explode('/', $value);
 
@@ -68,10 +109,15 @@ class AdvertsPath implements UrlRoutable
         do {
             $slug = reset($chunks);
 
-            if ($slug &&
-                $next = Category::where('slug', $slug)
-                    ->where('parent_id', $category ? $category->id : null)
-                    ->first()) {
+            $next = Category::where('slug', $slug)
+                ->where('parent_id', $category ? $category->id : null)
+                ->first();
+
+//            if ($slug &&
+//                $next = Category::where('slug', $slug)
+//                    ->where('parent_id', $category ? $category->id : null)
+//                    ->first()) {
+            if ($slug && $next) {
                 $category = $next;
                 array_shift($chunks);
             }

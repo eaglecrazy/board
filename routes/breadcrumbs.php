@@ -242,7 +242,10 @@ Breadcrumbs::register('adverts.inner_category', function (BreadcrumbsGenerator $
     if ($path->category && $parent = $path->category->parent) {
         $crumbs->parent('adverts.inner_category', $path->withCategory($path->category->parent), $orig);
     } else {
+
         $crumbs->parent('adverts.inner_region', $orig);
+        if($path->category)
+            $crumbs->push('Категории:', route('adverts.index', $path->withCategory(null)));
     }
     if ($path->category) {
         $crumbs->push($path->category->name, route('adverts.index', $path));
@@ -255,7 +258,9 @@ Breadcrumbs::register('adverts.inner_region', function (BreadcrumbsGenerator $cr
         $crumbs->parent('adverts.inner_region', $path->withRegion($parent));
     } else {
         $crumbs->parent('home');
-        $crumbs->push('Adverts', route('adverts.index'));
+        $crumbs->push('Объявления', route('adverts.index'));
+        if($path->region)
+            $crumbs->push('Регионы:', route('adverts.index', $path->withRegion(null)));
     }
     if ($path->region) {
         $crumbs->push($path->region->name, route('adverts.index', $path));

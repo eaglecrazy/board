@@ -27,6 +27,7 @@ class AdvertController extends Controller
         if ($currentRegion = $path->region) {
             $query->forRegion($currentRegion);
         }
+
         $adverts = $query->paginate(20);
 
         //получим дочение регионы и категории
@@ -37,8 +38,6 @@ class AdvertController extends Controller
         $childernCategories = $currentCategory
             ? $currentCategory->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
-
-//        return view('adverts.index', compact('adverts', 'currentCategory', 'currentRegion', 'childernRegions', 'childernCategories'));
         return view('adverts.index', compact('adverts', 'path', 'childernRegions', 'childernCategories'));
     }
 

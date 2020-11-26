@@ -105,7 +105,7 @@ class Advert extends Model
             $ids = array_merge($ids, $childrenIds);
         }
         asort($ids);
-        return $query->where('region_id', $ids);
+        return $query->whereIn('region_id', $ids);
     }
 
     public static function scopeForcategory(Builder $query, Category $category)
