@@ -75,8 +75,8 @@
                             <div class="col-md-9">
                                 <span class="float-right">{{ $advert->price }}</span>
                                 <div class="h4" style="margin-top: 0"><a href="{{ route('adverts.show', $advert) }}">{{ $advert->title }}</a></div>
-                                <p>Регион: <a href="{{ route('adverts.index', adPath($advert)) }}">{{ $advert->region ? $advert->region->name : 'All regions' }}</a></p>
-                                <p>Категория: <a href="{{ route('adverts.index', adPath($advert)) }}">{{ $advert->category->name }}</a></p>
+                                <p>Регион: <a href="{{ route('adverts.index', adPath($advert->region, $path->category)) }}">{{ $advert->region ? $advert->region->name : 'All regions' }}</a></p>
+                                <p>Категория: <a href="{{ route('adverts.index', adPath($path->region, $advert->category)) }}">{{ $advert->category->name }}</a></p>
                                 <p>Date: {{ $advert->created_at }}</p>
                             </div>
                         </div>

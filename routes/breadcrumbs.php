@@ -269,7 +269,7 @@ Breadcrumbs::register('adverts.inner_region', function (BreadcrumbsGenerator $cr
 
 //adverts.show
 Breadcrumbs::register('adverts.show', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', adPath($advert));
+    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push($advert->title, route('adverts.show', $advert));
 });
 
