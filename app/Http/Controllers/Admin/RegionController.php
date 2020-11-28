@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class RegionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage-regions');
+    }
+
     public function index(Request $request)
     {
         $regions = Region::where('parent_id', null)->orderBy('name')->get();
