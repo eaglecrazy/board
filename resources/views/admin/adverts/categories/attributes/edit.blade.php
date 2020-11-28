@@ -2,11 +2,9 @@
 
 @section('content')
     @include('admin.adverts.categories._nav')
-
     <form method="POST" action="{{ route('admin.adverts.categories.attributes.update', [$category, $attribute]) }}">
         @csrf
         @method('PUT')
-
         <div class="form-group">
             <label for="name" class="col-form-label">Name</label>
             <input id="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"

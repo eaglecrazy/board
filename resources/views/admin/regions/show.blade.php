@@ -2,7 +2,6 @@
 
 @section('content')
     @include('admin.regions._nav')
-
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('admin.regions.edit', $region) }}" class="btn btn-primary mr-1">Edit</a>
         <form method="POST" action="{{ route('admin.regions.destroy', $region) }}" class="mr-1">

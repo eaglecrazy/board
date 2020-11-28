@@ -14,7 +14,6 @@ use App\Http\Router\AdvertsPath;
 
 class AdvertController extends Controller
 {
-//    public function index(Region $region = null, Category $category = null)
     public function path(AdvertsPath $path)
     {
         //получим и отфильтруем объявления

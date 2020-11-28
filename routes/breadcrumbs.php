@@ -116,7 +116,7 @@ Breadcrumbs::register('admin.adverts.adverts.photos', function (BreadcrumbsGener
 
 //admin.adverts.adverts.reject
 Breadcrumbs::register('admin.adverts.adverts.reject', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->parent('adverts.index');
     $crumbs->push('Reason for rejection : ' . $advert->title, route('admin.adverts.adverts.reject', $advert));
 });
 

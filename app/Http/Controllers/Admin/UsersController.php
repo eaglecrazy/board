@@ -17,6 +17,7 @@ class UsersController extends Controller
     public function __construct(RegisterService $service)
     {
         $this->service = $service;
+        $this->middleware('can:manage-users');
     }
 
     public function index(Request $request)
@@ -62,9 +63,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        //compact передаёт переменную по её имени
         return view('admin.users.show', compact('user'));
-//        return view('admin.users.show', ['user' => $user]);
     }
 
     public function edit(User $user)

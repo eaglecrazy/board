@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    @include('admin.adverts._nav')
     <form method="POST" action="{{ route('admin.adverts.adverts.refuse', $advert) }}">
         @csrf
         <div class="form-group">

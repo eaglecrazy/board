@@ -2,7 +2,6 @@
 
 @section('content')
     @include('admin.adverts.categories._nav')
-
     <form method="POST" action="{{ route('admin.adverts.categories.attributes.store', $category) }}">
         @csrf
 

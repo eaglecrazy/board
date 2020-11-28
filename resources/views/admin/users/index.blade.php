@@ -2,7 +2,6 @@
 
 @section('content')
     @include('admin.users._nav')
-
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('admin.users.create') }}" class="btn btn-primary mr-1">Create</a>
     </div>
