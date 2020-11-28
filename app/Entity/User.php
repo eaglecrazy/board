@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Adverts\Advert\Advert;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -103,6 +104,31 @@ class User extends Authenticatable
         'phone_auth' => 'boolean',
         'phone_verify_token_expire' => 'datetime',
     ];
+
+
+    //------------------
+    // Favorites
+    //------------------
+
+    public function addToFavorites($advertId)
+    {
+        if($this->hasInFavorites($advertId)){
+            throw new \DomainException('This advert is alerady added to favorites.');
+        }
+        $this->favorites()->attach($advertId);
+    }
+
+    public function removeFromFavorites($advertId)
+    {
+        $this->favorites()->detach($advertId);
+    }
+
+    public function hasInFavorites($advertId)
+    {
+        return $this->favorites()->where('advert_id', $advertId)->exists();
+    }
+
+
 
     //------------------
     // Register + Add
@@ -245,5 +271,18 @@ class User extends Authenticatable
     {
         return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
     }
+
+
+    //------------------
+    // Other
+    //------------------
+    public function favorites(){
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
+        //можно написать короче
+        //return $this->belongsToMany((Advert::class, 'advert_favorites');
+    }
+
+
+
 
 }

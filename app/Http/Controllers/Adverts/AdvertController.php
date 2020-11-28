@@ -28,7 +28,7 @@ class AdvertController extends Controller
         }
 
         $adverts = $query->paginate(20);
-
+-
         //получим дочение регионы и категории
         $childernRegions = $currentRegion
             ? $currentRegion->children()->orderBy('name')->getModels()
@@ -48,7 +48,8 @@ class AdvertController extends Controller
 
         $service = new AdvertService();
         $similar = $service->getSimilar($advert);
-        return view('adverts.show', compact('advert', 'similar'));
+        $user = Auth::user();
+        return view('adverts.show', compact('advert', 'similar', 'user'));
     }
 
     public function phone(Advert $advert): string

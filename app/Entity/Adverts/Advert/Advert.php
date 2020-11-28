@@ -122,6 +122,13 @@ class Advert extends Model
         return $query->where('status', static::STATUS_ACTIVE);
     }
 
+    public static function scopeFavoredByUser(Builder $query, User $user)
+    {
+        return $query->whereHas('favorites', function (Builder $query) use ($user) {
+           $query->where('user_id', $user->id);
+        });
+    }
+
 
 //    --------------------
 //    Статусы
@@ -182,6 +189,11 @@ class Advert extends Model
     public function photos()
     {
         return $this->hasMany(Photo::class, 'advert_id', 'id');
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'advert_favorites', 'advert_id', 'user_id');
     }
 
 
@@ -248,5 +260,6 @@ class Advert extends Model
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
     }
+
 }
 
