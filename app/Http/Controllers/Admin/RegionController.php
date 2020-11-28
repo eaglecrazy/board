@@ -29,7 +29,6 @@ class RegionController extends Controller
         return view('admin.regions.create', ['parent' => $region]);
     }
 
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -42,7 +41,6 @@ class RegionController extends Controller
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
-
         return redirect()->route('admin.regions.show', $region);
     }
 
@@ -67,7 +65,6 @@ class RegionController extends Controller
             'name' => $name = $request['name'],
             'slug' => Str::slug($name)
         ]);
-
         return redirect()->route('admin.regions.show', compact('region'));
     }
 

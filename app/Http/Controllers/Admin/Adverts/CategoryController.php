@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Category;
-use App\Entity\Region;
 use App\Http\Requests\Adverts\CategoryRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 
@@ -36,7 +34,6 @@ class CategoryController extends Controller
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
-
         return redirect()->route('admin.adverts.categories.show', compact('category'));
     }
 
@@ -47,7 +44,7 @@ class CategoryController extends Controller
         return view('admin.adverts.categories.show', compact('category', 'attributes', 'parentAttributes'));
     }
 
-    public function edit(Request $request, Category $category)
+    public function edit(Category $category)
     {
         $current = $category;
         $categories = Category::defaultOrder()->withDepth()->get();
@@ -61,7 +58,6 @@ class CategoryController extends Controller
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
-
         return redirect()->route('admin.adverts.categories.show', compact('category'));
     }
 

@@ -7,6 +7,7 @@ namespace App\Http\Router;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use Illuminate\Contracts\Routing\UrlRoutable;
+use Illuminate\Support\Facades\Cache;
 
 class AdvertsPath implements UrlRoutable
 {
@@ -42,16 +43,22 @@ class AdvertsPath implements UrlRoutable
     private function makeRegionPath(): string
     {
         if ($this->region) {
-            return $this->region->getPath();
+            return Cache::tags(Region::class)->rememberForever(Region::class . '_' . $this->region->id, function (){
+               return $this->region->getPath();
+            });
         }
         return '';
     }
 
     private function makeCategoryPath(): string
     {
+
         if ($this->category) {
-            return $this->category->getPath();
+            return Cache::tags(Category::class)->rememberForever(Category::class . '_' . $this->category->id, function (){
+                return $this->category->getPath();
+            });
         }
+
         return '';
     }
 
