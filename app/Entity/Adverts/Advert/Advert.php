@@ -55,6 +55,7 @@ use Illuminate\Support\Facades\Auth;
  * @property-read int|null $photos_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
  * @property-read int|null $values_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert Active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forActive()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(\App\Entity\Region $region)

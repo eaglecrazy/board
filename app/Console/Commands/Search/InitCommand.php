@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Search;
 
+use App\Entity\Adverts\Advert\Advert;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Console\Command;
 use Elasticsearch\Client;
@@ -106,6 +107,35 @@ class InitCommand extends Command
 //                ],
 //            ],
             ]]);
+
+        foreach (Advert::active()->orderBy('id')->cursor() as $advert) {
+            /** @var Advert $advert */
+            $regions = [];
+            if($region = $advert->region){
+                do {
+                    $regions[] = $region->id;
+                }while($region = $region->parent);
+            }
+
+            $this->client->index([
+                    'index' => 'app',
+                    'type' => 'adverts',
+                    'id' => $advert->id,
+                    'body' => [
+                        'id' => $advert->id,
+                        'published_at' => $advert->published_at ? $advert->published_at->format(DATE_ATOM) : null,
+                        'title' => $advert->title,
+                        'content' => $advert->content,
+                        'price' => $advert->price,
+                        'status' => $advert->status,
+                        'categories' => array_merge(
+                            [$advert->category->id],
+                            $advert->category->ancestors()->pluck('id')->toArray()),
+                        'regions' => $regions,
+                    ],
+                ]
+            );
+        }
     }
 //
 //    private function initBanners(): void
