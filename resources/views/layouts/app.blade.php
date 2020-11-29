@@ -73,6 +73,9 @@
             </div>
         </div>
     </nav>
+    @section('search')
+        @include('layouts.partials.search', ['category' => null, 'route' => route('adverts.index')])
+    @show
 </header>
 <main class="app-content py-3">
     <div class="container">
@@ -91,8 +94,5 @@
         </div>
     </div>
 </footer>
-
-
-
 </body>
 </html>

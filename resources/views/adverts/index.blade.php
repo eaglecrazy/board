@@ -5,14 +5,7 @@
 
 @extends('layouts.app')
 
-{{--@section('search')--}}
-{{--    @include('layouts.partials.search', ['category' => $category, 'route' => '?'])--}}
-{{--@endsection--}}
-
 @section('content')
-
-    <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success">Add Advert</a></p>
-
     @if ($childernRegions)
         <div class="card card-default mb-3">
             <div class="card-header">

@@ -47,6 +47,22 @@ class AdvertService
         });
     }
 
+    public function edit(Advert $advert, EditRequest $request): void
+    {
+//        $oldPrice = $advert->price;
+        $advert->update($request->only([
+            'title',
+            'content',
+            'price',
+            'address',
+        ]));
+//        if($advert->price !== $oldPrice){
+//            foreach ($advert->favorites()->cursor() as $user){
+////                $user->not...
+//            }
+//        }
+    }
+
     public function addPhotos(Advert $advert, PhotosRequest $request): void
     {
         DB::transaction(function () use ($request, $advert) {
@@ -107,15 +123,7 @@ class AdvertService
             ->take(3);
     }
 
-    public function edit(Advert $advert, EditRequest $request): void
-    {
-        $advert->update($request->only([
-            'title',
-            'content',
-            'price',
-            'address',
-        ]));
-    }
+
 
     public function expire(Advert $advert): void{
         $advert->expire();

@@ -25,8 +25,6 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.profile.home') }}">Profile</a></li>
             {{--    <li class="nav-item"><a class="nav-link" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>--}}
         </ul>
-        <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success">Add Advert</a></p>
-        <hr>
     @endauth
     <a href="{{ route('adverts.index') }}">Show all adverts</a>
     <hr>

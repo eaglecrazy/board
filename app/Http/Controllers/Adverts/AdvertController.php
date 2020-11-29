@@ -28,7 +28,7 @@ class AdvertController extends Controller
         }
 
         $adverts = $query->paginate(20);
--
+
         //получим дочение регионы и категории
         $childernRegions = $currentRegion
             ? $currentRegion->children()->orderBy('name')->getModels()

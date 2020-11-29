@@ -1,11 +1,14 @@
-dup:
+dup: memory
 	sudo -s docker-compose up
 
 ddown:
 	sudo -s docker-compose down
 
-dbuild:
+dbuild: memory
 	sudo -s docker-compose up --build
+
+memory:
+	sudo sysctl -w vm.max_map_count=262144
 
 # использование docker для команды
 test-docker:
@@ -58,5 +61,4 @@ horizon-continue:
 horizon-terminate:
 	docker-compose exec php-cli php artisan horizon:terminate
 
-memory:
-	sudo sysctl -w vm.max_map_count=262144
+
