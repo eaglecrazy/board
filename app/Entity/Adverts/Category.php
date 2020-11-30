@@ -34,6 +34,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereRgt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereIsRoot()
  * @mixin \Eloquent
  */
 class Category extends Model
