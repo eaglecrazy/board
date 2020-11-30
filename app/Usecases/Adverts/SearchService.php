@@ -22,10 +22,11 @@ class SearchService
 
     public function search(?Category $category, ?Region $region, SearchRequest $request, int $perPage, int $page): LengthAwarePaginator
     {
-        // получаем из рексеста только заполненные поля
+        // получаем из реквеста только заполненные поля
         $values = $this->getAttributesArray($request);
 
-        $responce = $this->client->search([
+
+        $query = [
             'index' => 'app',
             'type' => 'advert',
             'body' => [
@@ -42,14 +43,36 @@ class SearchService
                     ],
                 ],
             ],
-        ]);
+        ];
+//        dd($query);
+        $responce = $this->client->search($query);
 
-//        dd($responce);
+
+//        $responce = $this->client->search([
+//            'index' => 'app',
+//            'type' => 'advert',
+//            'body' => [
+//                '_source' => ['id'],
+//                //размеры выборки
+//                'from' => ($page - 1) * $perPage,
+//                'size' => $perPage,
+//                //сортирвка по дате публикации нужна только если поиск был не по тексту
+//                'sort' => empty($request['text']) ? ['published_at' => ['order' => 'desc']] : [],
+//                //сам запрос
+//                'query' => [
+//                    'bool' => [
+//                        'must' => $this->advertsMust($category, $region, $request, $values)
+//                    ],
+//                ],
+//            ],
+//        ]);
+
+        dd($responce);
 
         $ids = array_column($responce['hits']['hits'], '_id');
 
         //если запрос ничего не нашёл
-        if(!$ids){
+        if (!$ids) {
             return new LengthAwarePaginator([], 0, $perPage, $page);
         }
 
@@ -72,13 +95,13 @@ class SearchService
         $term = ['term' => ['status' => Advert::STATUS_ACTIVE]];
 
         //если категория или регион не заданы, то присвоим элементам массива false
-        $categoryRegion = [
+        $categoryRegion = array_filter([
             $category ? ['term' => ['categories' => $category->id]] : false,
             $region ? ['term' => ['regions' => $region->id]] : false,
-        ];
+        ]);
 
         //если есть текст, то ищем в названиях и контенте, названия более релевантны (вес 3)
-        $text = [false];
+        $text = [];
         if (!empty($request['text'])) {
             $text = [
                 'multy_match' => [
@@ -103,6 +126,7 @@ class SearchService
                 ],
             ];
         }, $values, array_keys($values));
+        return array_merge([$term], [array_merge($categoryRegion, $text, $attributes)]);
     }
 
 
