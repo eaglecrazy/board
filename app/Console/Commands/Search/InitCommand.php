@@ -30,13 +30,13 @@ class InitCommand extends Command
     {
         try {
             $this->client->indices()->delete([
-                'index' => 'app'
+                'index' => 'adverts'
             ]);
         } catch (Missing404Exception $e) {
         }
 
         $this->client->indices()->create([
-            'index' => 'app',
+            'index' => 'adverts',
             'body' => [
                 'mappings' => [
                     'advert' => [

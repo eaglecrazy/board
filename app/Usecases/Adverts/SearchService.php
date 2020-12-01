@@ -27,7 +27,7 @@ class SearchService
 
 
         $query = [
-            'index' => 'app',
+            'index' => 'adverts',
             'type' => 'advert',
             'body' => [
                 '_source' => ['id'],
@@ -46,30 +46,10 @@ class SearchService
         ];
 //        dd($query);
         $responce = $this->client->search($query);
-
-
-//        $responce = $this->client->search([
-//            'index' => 'app',
-//            'type' => 'advert',
-//            'body' => [
-//                '_source' => ['id'],
-//                //размеры выборки
-//                'from' => ($page - 1) * $perPage,
-//                'size' => $perPage,
-//                //сортирвка по дате публикации нужна только если поиск был не по тексту
-//                'sort' => empty($request['text']) ? ['published_at' => ['order' => 'desc']] : [],
-//                //сам запрос
-//                'query' => [
-//                    'bool' => [
-//                        'must' => $this->advertsMust($category, $region, $request, $values)
-//                    ],
-//                ],
-//            ],
-//        ]);
-
-        dd($responce);
+//        dd($responce['hits']);
 
         $ids = array_column($responce['hits']['hits'], '_id');
+//        dd($ids);
 
         //если запрос ничего не нашёл
         if (!$ids) {
@@ -104,7 +84,7 @@ class SearchService
         $text = [];
         if (!empty($request['text'])) {
             $text = [
-                'multy_match' => [
+                'multi_match' => [
                     'query' => $request['text'],
                     'fields' => ['title^3', 'content']
                 ]
@@ -128,7 +108,6 @@ class SearchService
         }, $values, array_keys($values));
         return array_merge([$term], [array_merge($categoryRegion, $text, $attributes)]);
     }
-
 
     private function attributeMust($value, $id): array
     {
