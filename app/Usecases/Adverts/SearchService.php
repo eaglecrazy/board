@@ -86,7 +86,8 @@ class SearchService
             $text = [
                 'multi_match' => [
                     'query' => $request['text'],
-                    'fields' => ['title^3', 'content']
+                    'fields' => ['title^4', 'content']
+//                    'fields' => ['title^4', 'content']
                 ]
             ];
         }

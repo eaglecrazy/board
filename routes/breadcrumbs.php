@@ -104,20 +104,20 @@ Breadcrumbs::register('admin.adverts.categories.attributes.edit', function (Brea
 
 //admin.adverts.adverts.edit
 Breadcrumbs::register('admin.adverts.adverts.edit', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push('Edit: ' . $advert->title, route('cabinet.adverts.edit', $advert));
 });
 
 //admin.adverts.adverts.photos
 Breadcrumbs::register('admin.adverts.adverts.photos', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
 });
 
 //admin.adverts.adverts.reject
 Breadcrumbs::register('admin.adverts.adverts.reject', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index');
-    $crumbs->push('Reason for rejection : ' . $advert->title, route('admin.adverts.adverts.reject', $advert));
+    $crumbs->parent('adverts.show', $advert);
+    $crumbs->push('Reason for rejection', route('admin.adverts.adverts.reject', $advert));
 });
 
 
@@ -309,7 +309,8 @@ Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGene
 
 //cabinet.adverts.edit
 Breadcrumbs::register('cabinet.adverts.edit', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+
+    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push('Edit: ' . $advert->title, route('cabinet.adverts.edit', $advert));
 });
 
@@ -321,7 +322,7 @@ Breadcrumbs::register('cabinet.adverts.index', function (BreadcrumbsGenerator $c
 
 //cabinet.adverts.photos
 Breadcrumbs::register('cabinet.adverts.photos', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-    $crumbs->parent('adverts.index', $advert->region, $advert->category);
+    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
 });
 
