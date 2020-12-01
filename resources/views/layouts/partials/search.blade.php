@@ -17,48 +17,48 @@
                             </div>
                         </div>
                     </div>
+@dump($path->category)
+                    @if (isset($path->category))
+                        <div class="row">
+                            @foreach ($path->category->allAttributes() as $attribute)
+                                @if ($attribute->isSelect() || $attribute->isNumber())
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">{{ $attribute->name }}</label>
 
-                    {{--                    @if ($category)--}}
-                    {{--                        <div class="row">--}}
-                    {{--                            @foreach ($category->allAttributes() as $attribute)--}}
-                    {{--                                @if ($attribute->isSelect() || $attribute->isNumber())--}}
-                    {{--                                    <div class="col-md-4">--}}
-                    {{--                                        <div class="form-group">--}}
-                    {{--                                            <label class="col-form-label">{{ $attribute->name }}</label>--}}
+                                            @if ($attribute->isSelect())
+                                                <select class="form-control" name="attrs[{{ $attribute->id }}][equals]">
+                                                    <option value=""></option>
+                                                    @foreach ($attribute->variants as $variant)
+                                                        <option
+                                                            value="{{ $variant }}"{{ $variant === request()->input('attrs.' . $attribute->id . '.equals') ? ' selected' : '' }}>
+                                                            {{ $variant }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
 
-                    {{--                                            @if ($attribute->isSelect())--}}
-                    {{--                                                <select class="form-control" name="attrs[{{ $attribute->id }}][equals]">--}}
-                    {{--                                                    <option value=""></option>--}}
-                    {{--                                                    @foreach ($attribute->variants as $variant)--}}
-                    {{--                                                        <option--}}
-                    {{--                                                            value="{{ $variant }}"{{ $variant === request()->input('attrs.' . $attribute->id . '.equals') ? ' selected' : '' }}>--}}
-                    {{--                                                            {{ $variant }}--}}
-                    {{--                                                        </option>--}}
-                    {{--                                                    @endforeach--}}
-                    {{--                                                </select>--}}
-
-                    {{--                                            @elseif ($attribute->isNumber())--}}
-                    {{--                                                <div class="row">--}}
-                    {{--                                                    <div class="col-md-6">--}}
-                    {{--                                                        <input type="number" class="form-control"--}}
-                    {{--                                                               name="attrs[{{ $attribute->id }}][from]"--}}
-                    {{--                                                               value="{{ request()->input('attrs.' . $attribute->id . '.from') }}"--}}
-                    {{--                                                               placeholder="From">--}}
-                    {{--                                                    </div>--}}
-                    {{--                                                    <div class="col-md-6">--}}
-                    {{--                                                        <input type="number" class="form-control"--}}
-                    {{--                                                               name="attrs[{{ $attribute->id }}][to]"--}}
-                    {{--                                                               value="{{ request()->input('attrs.' . $attribute->id . '.to') }}"--}}
-                    {{--                                                               placeholder="To">--}}
-                    {{--                                                    </div>--}}
-                    {{--                                                </div>--}}
-                    {{--                                            @endif--}}
-                    {{--                                        </div>--}}
-                    {{--                                    </div>--}}
-                    {{--                                @endif--}}
-                    {{--                            @endforeach--}}
-                    {{--                        </div>--}}
-                    {{--                    @endif--}}
+                                            @elseif ($attribute->isNumber())
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="number" class="form-control"
+                                                               name="attrs[{{ $attribute->id }}][from]"
+                                                               value="{{ request()->input('attrs.' . $attribute->id . '.from') }}"
+                                                               placeholder="From">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="number" class="form-control"
+                                                               name="attrs[{{ $attribute->id }}][to]"
+                                                               value="{{ request()->input('attrs.' . $attribute->id . '.to') }}"
+                                                               placeholder="To">
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                 </form>
             </div>
             <div class="col-md-3" style="text-align: right">

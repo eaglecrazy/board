@@ -82,7 +82,7 @@ class InitCommand extends Command
                             ],
                             'trigrams' => [
                                 'type' => 'ngram',
-                                'min_gram' => 3,
+                                'min_gram' => 2,
                                 'max_gram' => 6,
                             ],
                         ],

@@ -27,32 +27,29 @@ class AdvertController extends Controller
         $currentRegion = $path->region;
         $currentCategory = $path->category;
 
-        //получим дочение регионы и категории
+        $searchResult = $this->search->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
+
+        $adverts = $searchResult->adverts;
+        $regionsCounts = $searchResult->regionsCounts;
+        $categoriesCounts = $searchResult->categoriesCounts;
+
+        //получим дочение регионы и категории c ограничением тех р. и к. где найдены объявления
         $childernRegions = $currentRegion
-            ? $currentRegion->children()->orderBy('name')->getModels()
-            : Region::roots()->orderBy('name')->getModels();
+            ? $currentRegion->children()->orderBy('name')->whereIn('id', array_keys($regionsCounts))->getModels()
+            : Region::roots()->orderBy('name')->whereIn('id', array_keys($regionsCounts))->getModels();
 
         $childernCategories = $currentCategory
-            ? $currentCategory->children()->defaultOrder()->getModels()
-            : Category::whereIsRoot()->defaultOrder()->getModels();
+            ? $currentCategory->children()->defaultOrder()->whereIn('id', array_keys($categoriesCounts))->getModels()
+            : Category::whereIsRoot()->defaultOrder()->whereIn('id', array_keys($categoriesCounts))->getModels();
 
-        $adverts = $this->search->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
-
-//        //получим и отфильтруем объявления
-//        //фильтр по категории и дочерним категориям
-//        $query = Advert::active()->with('category', 'region')->orderByDesc('published_at');
-//        if ($currentCategory = $path->category) {
-//            $query->forCategory($currentCategory);
-//        }
-//        //фильтр по этому региону и дочерним регионам
-//        if ($currentRegion = $path->region) {
-//            $query->forRegion($currentRegion);
-//        }
-//
-//        $adverts = $query->paginate(20);
+//        dd($childernRegions);
+//        dd($childernCategories);
 
 
-        return view('adverts.index', compact('adverts', 'path', 'childernRegions', 'childernCategories'));
+        return view('adverts.index', compact(
+            'adverts', 'path',
+            'childernRegions', 'childernCategories',
+            'regionsCounts', 'categoriesCounts'));
     }
 
     public function show(Advert $advert)

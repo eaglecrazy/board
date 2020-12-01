@@ -20,7 +20,12 @@ class SearchService
         $this->client = $client;
     }
 
-    public function search(?Category $category, ?Region $region, SearchRequest $request, int $perPage, int $page): LengthAwarePaginator
+    public function search(
+        ?Category $category,
+        ?Region $region,
+        SearchRequest $request,
+        int $perPage,
+        int $page): SearchResult
     {
         // получаем из реквеста только заполненные поля
         $values = $this->getAttributesArray($request);
@@ -42,31 +47,37 @@ class SearchService
                         'must' => $this->advertsMust($category, $region, $request, $values)
                     ],
                 ],
+                'aggs' => $this->agregations(),
             ],
         ];
 //        dd($query);
+
         $responce = $this->client->search($query);
+
+//        dd($responce['aggregations']);
 //        dd($responce['hits']);
 
+        $regionsCounts = array_column($responce['aggregations']['group_by_region']['buckets'], 'doc_count', 'key');
+        $categoryesCounts = array_column($responce['aggregations']['group_by_category']['buckets'], 'doc_count', 'key');
         $ids = array_column($responce['hits']['hits'], '_id');
-//        dd($ids);
 
-        //если запрос ничего не нашёл
-        if (!$ids) {
-            return new LengthAwarePaginator([], 0, $perPage, $page);
+        //        dd($ids);
+
+        if ($ids) {
+            $items = Advert::active()
+                ->with(['category', 'region'])
+                ->whereIn('id', $ids)
+                //ларавел по умолчанию считает FIELD.... именем поля, поэтому нужно добавить Expression,
+                // чтобы элоквент понял, что это фрагмент запроса и не экранировал его
+                ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))
+                ->get();
+            $paginator = new LengthAwarePaginator($items, $responce['hits']['total'], $perPage, $page);
+        }
+        else {
+            $paginator = new LengthAwarePaginator([], 0, $perPage, $page);
         }
 
-        $items = Advert::active()
-            ->with(['category', 'region'])
-            ->whereIn('id', $ids)
-            //ларавел по умолчанию считает FIELD.... именем поля, поэтому нужно добавить Expression,
-            // чтобы элоквент понял, что это фрагмент запроса и не экранировал его
-            ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))
-            ->get();
-
-//        dd($items);
-
-        return new LengthAwarePaginator($items, $responce['hits']['total'], $perPage, $page);
+        return new SearchResult($paginator, $regionsCounts, $categoryesCounts);
     }
 
     private function advertsMust(?Category $category, ?Region $region, SearchRequest $request, array $values): array
@@ -80,14 +91,15 @@ class SearchService
             $region ? ['term' => ['regions' => $region->id]] : false,
         ]);
 
+//        dd($categoryRegion);
+
         //если есть текст, то ищем в названиях и контенте, названия более релевантны (вес 3)
         $text = [];
         if (!empty($request['text'])) {
             $text = [
                 'multi_match' => [
                     'query' => $request['text'],
-                    'fields' => ['title^4', 'content']
-//                    'fields' => ['title^4', 'content']
+                    'fields' => ['title^3', 'content']
                 ]
             ];
         }
@@ -107,7 +119,8 @@ class SearchService
                 ],
             ];
         }, $values, array_keys($values));
-        return array_merge([$term], [array_merge($categoryRegion, $text, $attributes)]);
+//        dd(array_filter(array_merge([$term], $categoryRegion, [array_merge($text, $attributes)])));
+        return array_filter(array_merge([$term], $categoryRegion, [array_merge($text, $attributes)]));
     }
 
     private function attributeMust($value, $id): array
@@ -133,5 +146,26 @@ class SearchService
         return array_filter($values, function ($value) {
             return !empty($value['equals']) || !empty($value['from']) || !empty($value['to']);
         });
+    }
+
+    private function agregations(): array
+    {
+        return
+            [
+                'group_by_region' =>
+                    [
+                        'terms' =>
+                            [
+                                'field' => 'regions'
+                            ],
+                    ],
+                'group_by_category' =>
+                    [
+                        'terms' =>
+                            [
+                                'field' => 'categories'
+                            ],
+                    ],
+            ];
     }
 }

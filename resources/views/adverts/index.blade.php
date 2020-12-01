@@ -5,6 +5,10 @@
 
 @extends('layouts.app')
 
+@section('search')
+    @include('layouts.partials.search', ['path' => $path, 'route' => route('adverts.index')])
+@endsection
+
 @section('content')
     @if ($childernRegions)
         <div class="card card-default mb-3">
@@ -21,7 +25,7 @@
                         <div class="col-md-3">
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
-                                    <li><a href="{{ route('adverts.index',  $path->getRegionUrl($current)) }}">{{ $current->name }}</a></li>
+                                    <li><a href="{{ route('adverts.index',  array_merge([$path->getRegionUrl($current)], request()->input())) }}">{{ $current->name }}</a> ({{ $regionsCounts[$current->id] ?? 0 }})</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -46,7 +50,7 @@
                         <div class="col-md-3">
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
-                                    <li><a href="{{ route('adverts.index',  $path->getCategoryUrl($current)) }}">{{ $current->name }}</a></li>
+                                    <li><a href="{{ route('adverts.index',  array_merge([$path->getCategoryUrl($current)], request()->input())) }}">{{ $current->name }}</a> ({{ $categoriesCounts[$current->id] ?? 0 }})</li>
                                 @endforeach
                             </ul>
                         </div>
