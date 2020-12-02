@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <form action="{{ $route }}" method="GET">
+                <form action="{{ $searchRoute }}" method="GET">
                     <div class="row">
                         <div class="col-md-11">
                             <div class="form-group">
@@ -17,11 +17,11 @@
                             </div>
                         </div>
                     </div>
-@dump($path->category)
-                    @if (isset($path->category))
+                    @if (isset($searchAttributes))
                         <div class="row">
-                            @foreach ($path->category->allAttributes() as $attribute)
-                                @if ($attribute->isSelect() || $attribute->isNumber())
+                            @foreach ($searchAttributes as $attribute)
+{{--                                @dump($attribute)--}}
+                            @if ($attribute->isSelect() || $attribute->isNumber())
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="col-form-label">{{ $attribute->name }}</label>

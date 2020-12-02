@@ -115,7 +115,7 @@ class AdvertService
 
     public function getSimilar(Advert $advert) : Collection
     {
-        return Advert::where('region_id', $advert->region->id)
+        return Advert::where('region_id', $advert->region ? $advert->region->id : null)
             ->where('category_id', $advert->category->id)
             ->where('id', '!=', $advert->id)
             ->get()

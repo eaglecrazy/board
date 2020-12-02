@@ -83,7 +83,7 @@ class SearchService
     private function advertsMust(?Category $category, ?Region $region, SearchRequest $request, array $values): array
     {
         //отображать только активные объявления
-        $term = ['term' => ['status' => Advert::STATUS_ACTIVE]];
+        $term = [['term' => ['status' => Advert::STATUS_ACTIVE]]];
 
         //если категория или регион не заданы, то присвоим элементам массива false
         $categoryRegion = array_filter([
@@ -96,12 +96,12 @@ class SearchService
         //если есть текст, то ищем в названиях и контенте, названия более релевантны (вес 3)
         $text = [];
         if (!empty($request['text'])) {
-            $text = [
+            $text = [[
                 'multi_match' => [
                     'query' => $request['text'],
                     'fields' => ['title^3', 'content']
                 ]
-            ];
+            ]];
         }
 
         //в array_map мы передаём значения values, а также массив ключей $values
@@ -119,8 +119,7 @@ class SearchService
                 ],
             ];
         }, $values, array_keys($values));
-//        dd(array_filter(array_merge([$term], $categoryRegion, [array_merge($text, $attributes)])));
-        return array_filter(array_merge([$term], $categoryRegion, [array_merge($text, $attributes)]));
+        return array_filter(array_merge($term, $categoryRegion, $attributes, $text));
     }
 
     private function attributeMust($value, $id): array

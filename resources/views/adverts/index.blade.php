@@ -6,7 +6,7 @@
 @extends('layouts.app')
 
 @section('search')
-    @include('layouts.partials.search', ['path' => $path, 'route' => route('adverts.index')])
+    @include('layouts.partials.search', ['searchRoute' => '?'])
 @endsection
 
 @section('content')

@@ -33,6 +33,8 @@ class AdvertController extends Controller
         $regionsCounts = $searchResult->regionsCounts;
         $categoriesCounts = $searchResult->categoriesCounts;
 
+        $searchAttributes = $path->category ? $path->category->allAttributes() : null;
+
         //получим дочение регионы и категории c ограничением тех р. и к. где найдены объявления
         $childernRegions = $currentRegion
             ? $currentRegion->children()->orderBy('name')->whereIn('id', array_keys($regionsCounts))->getModels()
@@ -46,8 +48,11 @@ class AdvertController extends Controller
 //        dd($childernCategories);
 
 
+
         return view('adverts.index', compact(
-            'adverts', 'path',
+            'adverts',
+            'path',
+            'searchAttributes',
             'childernRegions', 'childernCategories',
             'regionsCounts', 'categoriesCounts'));
     }
