@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -58,5 +59,18 @@ class Region extends Model
     public function getPath(): string
     {
         return ($this->parent ? $this->parent->getPath() . '/' : '') . $this->slug;
+    }
+
+    public function getAllInnerRegionsId(): array
+    {
+        $childIds = [];
+        if($childerns = $this->children()->get())
+        {
+            $childIds = array_merge($childerns->pluck('id')->toArray());
+            foreach ($childerns as $child){
+                $childIds = array_merge($childIds, $child->getAllInnerRegionsId());
+            }
+        }
+        return $childIds;
     }
 }

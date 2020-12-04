@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\AdvertEvent;
+use App\Events\RegionDeleteEvent;
 use App\Listeners\AdvertEventListener;
+use App\Listeners\RegionDeleteEventListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,12 +19,18 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+
+        AdvertEvent::class => [
+            AdvertEventListener::class
+        ],
+
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        AdvertEvent::class => [
-            AdvertEventListener::class
-        ]
+
+        RegionDeleteEvent::class => [
+            RegionDeleteEventListener::class
+        ],
 
     ];
 

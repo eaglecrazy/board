@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entity\Region;
+use App\Events\RegionDeleteEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -75,7 +76,10 @@ class RegionController extends Controller
 
     public function destroy(Region $region)
     {
-        $region->delete();
+//        $region->delete();
+        event(new RegionDeleteEvent($region));
+        //удаление региона, это причина перестроить индекс
+
         return redirect()->route('admin.regions.index');
     }
 
