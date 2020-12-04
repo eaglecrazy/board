@@ -68,7 +68,7 @@ class AdvertIndexer
     {
         $this->client->delete([
             'index' => 'adverts',
-            'type' => 'adverts',
+            'type' => 'advert',
             'id' => $advert->id,
         ]);
     }

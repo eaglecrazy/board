@@ -5,6 +5,7 @@ namespace App\Usecases\Adverts;
 
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Events\AdvertEvent;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Http\Requests\Adverts\EditRequest;
@@ -49,18 +50,16 @@ class AdvertService
 
     public function edit(Advert $advert, EditRequest $request): void
     {
-//        $oldPrice = $advert->price;
         $advert->update($request->only([
             'title',
             'content',
             'price',
             'address',
         ]));
-//        if($advert->price !== $oldPrice){
-//            foreach ($advert->favorites()->cursor() as $user){
-////                $user->not...
-//            }
-//        }
+
+        if ($advert->isActive()) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
+        }
     }
 
     public function addPhotos(Advert $advert, PhotosRequest $request): void
@@ -83,11 +82,15 @@ class AdvertService
     public function moderate(Advert $advert): void
     {
         $advert->moderate(Carbon::now());
+        event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
     }
 
     public function reject(Advert $advert, RejectRequest $request): void
     {
         $advert->reject($request['reason']);
+        if ($advert->isActive()) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+        }
     }
 
     public function editAttributes(Advert $advert, AttributesRequest $request): void
@@ -105,15 +108,21 @@ class AdvertService
             }
             $advert->update();
         });
+        if ($advert->isActive()) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
+        }
     }
 
     public function remove(Advert $advert)
     {
         $advert->delete();
+        if ($advert->isActive()) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+        }
         //тут нужно ещё фоточки удалить
     }
 
-    public function getSimilar(Advert $advert) : Collection
+    public function getSimilar(Advert $advert): Collection
     {
         return Advert::where('region_id', $advert->region ? $advert->region->id : null)
             ->where('category_id', $advert->category->id)
@@ -123,13 +132,15 @@ class AdvertService
             ->take(3);
     }
 
-
-
-    public function expire(Advert $advert): void{
+    public function expire(Advert $advert): void
+    {
         $advert->expire();
+        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
     }
 
-    public function close(Advert $advert): void{
+    public function close(Advert $advert): void
+    {
         $advert->close();
+        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
     }
 }
