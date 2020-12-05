@@ -29,9 +29,6 @@ class RegionDeleteEventListener
         $region = $event->region;
         //айдишники текущего региона и ВСЕХ вложенных на всех уровнях
         $ids = array_merge($region->getAllInnerRegionsId(), [$region->id]);
-//нужно сделать удаление всех дочерних регионов
-//нужно очищать кэш
-//нужно переиндексировать
         Advert::whereIn('region_id', $ids)->update(['region_id' => $region->parent_id]);
     }
 }

@@ -59,7 +59,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forActive()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(\App\Entity\Region $region)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forcategory(\App\Entity\Adverts\Category $category)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forCategory(\App\Entity\Adverts\Category $category)
  */
 class Advert extends Model
 {
@@ -109,7 +109,7 @@ class Advert extends Model
         return $query->whereIn('region_id', $ids);
     }
 
-    public static function scopeForcategory(Builder $query, Category $category)
+    public static function scopeForCategory(Builder $query, Category $category)
     {
         return $query->whereIn('category_id', array_merge(
             [$category->id],

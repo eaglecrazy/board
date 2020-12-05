@@ -47,7 +47,7 @@ class CreateRequest extends FormRequest
             'title' => 'required|string|min:3',
             'content' => 'required|string|min:3',
             'price' => 'required|integer',
-            'address' => 'string',
+            'address' => 'string|nullable',
         ], $items);
     }
 }

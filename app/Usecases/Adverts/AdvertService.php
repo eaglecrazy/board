@@ -87,8 +87,9 @@ class AdvertService
 
     public function reject(Advert $advert, RejectRequest $request): void
     {
+        $active = $advert->isActive();
         $advert->reject($request['reason']);
-        if ($advert->isActive()) {
+        if ($active) {
             event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
         }
     }
@@ -115,8 +116,9 @@ class AdvertService
 
     public function remove(Advert $advert)
     {
+        $active = $advert->isActive();
         $advert->delete();
-        if ($advert->isActive()) {
+        if ($active) {
             event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
         }
         //тут нужно ещё фоточки удалить

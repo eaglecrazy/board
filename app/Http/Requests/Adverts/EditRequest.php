@@ -17,7 +17,7 @@ class EditRequest extends FormRequest
             'title' => 'required|string',
             'content' => 'required|string',
             'price' => 'required|integer',
-            'address' => 'required|string',
+            'address' => 'string|nullable',
         ];
     }
 }

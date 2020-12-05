@@ -20,7 +20,7 @@ class CacheServiceProvider extends ServiceProvider
     public function boot()
     {
         foreach ($this->classes as $class){
-//            $this->registerFlush($class);
+            $this->registerFlush($class);
         }
     }
 

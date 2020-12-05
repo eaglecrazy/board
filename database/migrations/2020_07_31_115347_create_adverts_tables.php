@@ -11,7 +11,7 @@ class CreateAdvertsTables extends Migration
         Schema::create('advert_adverts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('category_id')->nullable()->default(null);
             $table->unsignedInteger('region_id')->nullable()->default(null);
             $table->string('title', 255);
             $table->integer('price');
@@ -26,8 +26,8 @@ class CreateAdvertsTables extends Migration
 
         Schema::table('advert_adverts', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('category_id')->references('id')->on('advert_categories');
-            $table->foreign('region_id')->references('id')->on('regions');
+            $table->foreign('category_id')->references('id')->on('advert_categories')->onDelete('SET NULL');
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('SET NULL');
         });
 
 

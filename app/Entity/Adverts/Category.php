@@ -77,4 +77,9 @@ class Category extends Model
     {
         return implode('/', array_merge($this->ancestors()->defaultOrder()->pluck('slug')->toArray(), [$this->slug]));
     }
+
+    public function getDescendantsIds():array
+    {
+        return $this->getDescendants()->pluck('id')->toArray();
+    }
 }

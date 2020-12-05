@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Category;
+use App\Events\CategoryDeleteEvent;
+use App\Events\CategoryUpdateEvent;
 use App\Http\Requests\Adverts\CategoryRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -26,7 +28,8 @@ class CategoryController extends Controller
         return view('admin.adverts.categories.create', compact('parents'));
     }
 
-    public function create_inner(Category $category){
+    public function create_inner(Category $category)
+    {
         $current = $category;
         $parents = Category::defaultOrder()->withDepth()->get();
         return view('admin.adverts.categories.create', compact('parents', 'current'));
@@ -58,40 +61,61 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
+        //если изменился родитель, то будем переиндексировать
+        if ($category->parent_id != $request['parent']) {
+            $categoryIds = array_merge($category->getDescendantsIds(), [$category->id]);
+        }
+
         $category->update([
             'name' => $name = $request['name'],
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
+
+        if (isset($categoryIds)) {
+            event(new CategoryUpdateEvent($categoryIds));
+        }
+
         return redirect()->route('admin.adverts.categories.show', compact('category'));
     }
 
     public function destroy(Category $category)
     {
+        $parentId = $category->parent_id;
+        //категорию верхнего уровня удалить нельзя
+        if ($parentId === null) {
+            return back()->with('error', 'Нельзя удалить корневую категорию.');
+        }
+        $categoryIds = array_merge($category->getDescendantsIds(), [$category->id]);
         $category->delete();
+        event(new CategoryDeleteEvent($categoryIds, $parentId));
         return redirect()->route('admin.adverts.categories.index');
     }
 
-    public function first(Category $category){
-        if($first = $category->siblings()->defaultOrder()->first()){
+    public function first(Category $category)
+    {
+        if ($first = $category->siblings()->defaultOrder()->first()) {
             $category->insertBeforeNode($first);
         }
         return redirect()->route('admin.adverts.categories.index');
     }
 
-    public function last(Category $category){
-        if($last = $category->siblings()->defaultOrder('desc')->first()){
+    public function last(Category $category)
+    {
+        if ($last = $category->siblings()->defaultOrder('desc')->first()) {
             $category->insertAfterNode($last);
         }
         return redirect()->route('admin.adverts.categories.index');
     }
 
-    public function up(Category $category){
+    public function up(Category $category)
+    {
         $category->up();
         return redirect()->route('admin.adverts.categories.index');
     }
 
-    public function down(Category $category){
+    public function down(Category $category)
+    {
         $category->down();
         return redirect()->route('admin.adverts.categories.index');
     }

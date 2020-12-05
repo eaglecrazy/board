@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'name' => $name = $faker->unique()->word,
+        'name' => $name = 'cat-' . $faker->unique()->word,
         'slug' => Str::slug($name),
         'parent_id' => null
     ];

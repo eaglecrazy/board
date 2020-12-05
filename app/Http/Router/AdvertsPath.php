@@ -28,7 +28,7 @@ class AdvertsPath implements UrlRoutable
         return $clone;
     }
 
-    public function getRouteKey()
+    public function getRouteKey(): string
     {
         $segments = [];
         if ($result = $this->makeRegionPath()) {
@@ -43,7 +43,8 @@ class AdvertsPath implements UrlRoutable
     private function makeRegionPath(): string
     {
         if ($this->region) {
-            return Cache::tags(Region::class)->rememberForever(Region::class . '_' . $this->region->id, function (){
+            return Cache::tags(Region::class)
+                ->rememberForever(Region::class . '_' . $this->region->id, function (){
                return $this->region->getPath();
             });
         }
@@ -52,9 +53,9 @@ class AdvertsPath implements UrlRoutable
 
     private function makeCategoryPath(): string
     {
-
         if ($this->category) {
-            return Cache::tags(Category::class)->rememberForever(Category::class . '_' . $this->category->id, function (){
+            return Cache::tags(Category::class)
+                ->rememberForever(Category::class . '_' . $this->category->id, function (){
                 return $this->category->getPath();
             });
         }
@@ -88,14 +89,12 @@ class AdvertsPath implements UrlRoutable
         return implode('/', $segments);
     }
 
-
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'adverts_path';
     }
 
-    public
-    function resolveRouteBinding($value)
+    public function resolveRouteBinding($value)
     {
         $chunks = explode('/', $value);
 

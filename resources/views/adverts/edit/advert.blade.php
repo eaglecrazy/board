@@ -49,7 +49,7 @@
                     <label for="address" class="col-form-label">Address</label>
                     <input id="address" type="text"
                            class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address"
-                           value="{{ old('address', $advert->address) }}" required>
+                           value="{{ old('address', $advert->address) }}">
                     @if ($errors->has('address'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
                     @endif
