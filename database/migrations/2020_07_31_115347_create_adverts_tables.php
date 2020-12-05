@@ -9,10 +9,10 @@ class CreateAdvertsTables extends Migration
     public function up()
     {
         Schema::create('advert_adverts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->integer('category_id')->references('id')->on('advert_categories');
-            $table->integer('region_id')->nullable()->default(null)->references('id')->on('advert_regions');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('region_id')->nullable()->default(null);
             $table->string('title', 255);
             $table->integer('price');
             $table->text('address')->nullable()->default(null);
@@ -24,8 +24,15 @@ class CreateAdvertsTables extends Migration
             $table->timestamp('expires_at')->nullable();
         });
 
+        Schema::table('advert_adverts', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('category_id')->references('id')->on('advert_categories');
+            $table->foreign('region_id')->references('id')->on('regions');
+        });
+
+
         Schema::create('advert_advert_values', function (Blueprint $table) {
-            $table->unsignedInteger('advert_id');
+            $table->unsignedBigInteger('advert_id');
             $table->unsignedInteger('attribute_id');
             $table->string('value', 255);
             $table->primary(['advert_id', 'attribute_id']);
@@ -39,18 +46,17 @@ class CreateAdvertsTables extends Migration
 
         Schema::create('advert_advert_photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
+            $table->unsignedBigInteger('advert_id');
             $table->string('file', 255);
+        });
+
+        Schema::table('advert_advert_photos', function (Blueprint $table) {
+            $table->foreign('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
         });
     }
 
     public function down()
     {
-        Schema::table('advert_advert_values', function (Blueprint $table) {
-            $table->dropForeign(['attribute_id']);
-            $table->dropForeign(['advert_id']);
-        });
-
         Schema::dropIfExists('advert_adverts');
         Schema::dropIfExists('advert_advert_values');
         Schema::dropIfExists('advert_advert_photos');

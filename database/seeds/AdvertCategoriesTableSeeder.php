@@ -8,7 +8,7 @@ class AdvertCategoriesTableSeeder extends Seeder
 
     public function run()
     {
-        factory(Category::class, 10)
+        factory(Category::class, 5)
             ->create()
             ->each(
                 function (Category $category) {

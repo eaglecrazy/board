@@ -6,25 +6,21 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAdvertFavoritesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('advert_favorites', function (Blueprint $table) {
-            $table->bigInteger('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->bigInteger('advert_id')->references('id')->on('adverts')->onDelete('CASCADE');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('advert_id');
             $table->primary(['user_id', 'advert_id']);
+        });
+
+        Schema::table('advert_favorites', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('advert_favorites');

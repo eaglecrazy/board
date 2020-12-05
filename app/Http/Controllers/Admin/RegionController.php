@@ -76,7 +76,7 @@ class RegionController extends Controller
 
     public function destroy(Region $region)
     {
-//        $region->delete();
+        $region->delete();
         event(new RegionDeleteEvent($region));
         //удаление региона, это причина перестроить индекс
 
