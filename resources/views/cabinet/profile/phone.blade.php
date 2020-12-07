@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.profile._nav')
+    @include('cabinet._nav', ['page' => 'profile'])
 
     @dump(Auth::user()->phone_verify_token)
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.profile._nav')
+    @include('cabinet._nav', ['page' => 'profile'])
 
     <div class="mb-3">
         <a href="{{ route('cabinet.profile.edit') }}" class="btn btn-primary">Edit</a>

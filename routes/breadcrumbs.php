@@ -331,6 +331,36 @@ Breadcrumbs::register('cabinet.adverts.photos', function (BreadcrumbsGenerator $
 // Cabinet.Favorites
 //-------------------------------------------------------------------------
 
+//cabinet.banners.create
+Breadcrumbs::register('cabinet.banners.create', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('cabinet.banners.index');
+    $crumbs->push('Create', route('cabinet.banners.create'));
+});
+
+//cabinet.banners.create.banner
+Breadcrumbs::register('cabinet.banners.create.banner', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null) {
+    $crumbs->parent('cabinet.banners.create.region', $category, $region);
+    $crumbs->push($region ? $region->name : 'Все регионы', route('cabinet.banners.create.banner', [$category, $region]));
+});
+
+//cabinet.banners.create.region
+Breadcrumbs::register('cabinet.banners.create.region', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null) {
+    $crumbs->parent('cabinet.banners.create');
+    $crumbs->push($category->name, route('cabinet.banners.create.region', [$category, $region]));
+});
+
+//cabinet.banners.index
+Breadcrumbs::register('cabinet.banners.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Баннеры', route('cabinet.banners.index'));
+});
+
+
+
+//-------------------------------------------------------------------------
+// Cabinet.Favorites
+//-------------------------------------------------------------------------
+
 Breadcrumbs::register('cabinet.favorites.index', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('cabinet.home');
     $crumbs->push('Adverts', route('cabinet.favorites.index'));

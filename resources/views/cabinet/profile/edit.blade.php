@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.profile._nav')
-
+    @include('cabinet._nav', ['page' => 'profile'])
     <form method="POST" action="{{ route('cabinet.profile.update') }}">
         @csrf
         @method('PUT')

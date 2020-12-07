@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.favorites._nav')
-
+    @include('cabinet._nav', ['page' => 'favorites'])
     <table class="table table-striped">
         <thead>
         <tr>

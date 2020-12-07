@@ -133,21 +133,6 @@ Route::group([
     Route::delete('favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
 
     //---------
-    // Cabinet.Profile
-    //---------
-    Route::group([
-        'prefix' => 'profile',
-        'as' => 'profile.',
-    ], function () {
-        Route::get('/', 'ProfileController@index')->name('home');
-        Route::get('/edit', 'ProfileController@edit')->name('edit');
-        Route::put('/update', 'ProfileController@update')->name('update');
-        Route::post('/phone', 'PhoneController@request');
-        Route::get('/phone', 'PhoneController@form')->name('phone');
-        Route::put('/phone', 'PhoneController@verify')->name('phone.verify');
-        Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
-    });
-    //---------
     // Cabinet.Adverts
     //---------
     Route::group([
@@ -175,6 +160,49 @@ Route::group([
         //удаление
         Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
         //
+    });
+
+    //---------
+    // Cabinet.Banners
+    //--------
+    Route::group([
+        'prefix' => 'banners',
+        'as' => 'banners.',
+        'namespace' => 'Banners',
+        'middleware' => [FilledProfile::class],
+    ], function () {
+        Route::get('/', 'BannerController@index')->name('index');
+        Route::get('/create', 'BannerCreateController@category')->name('create');
+        Route::get('/create/region/{category}/{region?}', 'BannerCreateController@region')->name('create.region');
+        Route::get('/create/banner/{category}/{region?}', 'BannerCreateController@banner')->name('create.banner');
+        Route::post('/create/banner/{category}/{region?}', 'BannerCreateController@store')->name('create.banner.store');
+
+//        Route::get('/show/{banner}', 'BannerController@show')->name('show');
+//        Route::get('/{banner}/edit', 'BannerController@editForm')->name('edit');
+//        Route::put('/{banner}/edit', 'BannerController@edit');
+//        Route::get('/{banner}/file', 'BannerController@fileForm')->name('file');
+//        Route::put('/{banner}/file', 'BannerController@file');
+//        Route::post('/{banner}/send', 'BannerController@send')->name('send');
+//        Route::post('/{banner}/cancel', 'BannerController@cancel')->name('cancel');
+//        Route::post('/{banner}/order', 'BannerController@order')->name('order');
+//        Route::delete('/{banner}/destroy', 'BannerController@destroy')->name('destroy');
+    });
+
+
+    //---------
+    // Cabinet.Profile
+    //---------
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile.',
+    ], function () {
+        Route::get('/', 'ProfileController@index')->name('home');
+        Route::get('/edit', 'ProfileController@edit')->name('edit');
+        Route::put('/update', 'ProfileController@update')->name('update');
+        Route::post('/phone', 'PhoneController@request');
+        Route::get('/phone', 'PhoneController@form')->name('phone');
+        Route::put('/phone', 'PhoneController@verify')->name('phone.verify');
+        Route::post('/phone/auth', 'PhoneController@auth')->name('phone.auth');
     });
 
 });
