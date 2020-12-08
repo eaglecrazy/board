@@ -171,21 +171,21 @@ Route::group([
         'namespace' => 'Banners',
         'middleware' => [FilledProfile::class],
     ], function () {
-        Route::get('/', 'BannerController@index')->name('index');
+        Route::get('/', 'CabinetBannerController@index')->name('index');
         Route::get('/create', 'BannerCreateController@category')->name('create');
         Route::get('/create/region/{category}/{region?}', 'BannerCreateController@region')->name('create.region');
         Route::get('/create/banner/{category}/{region?}', 'BannerCreateController@banner')->name('create.banner');
         Route::post('/create/banner/{category}/{region?}', 'BannerCreateController@store')->name('create.banner.store');
 
-//        Route::get('/show/{banner}', 'BannerController@show')->name('show');
-//        Route::get('/{banner}/edit', 'BannerController@editForm')->name('edit');
-//        Route::put('/{banner}/edit', 'BannerController@edit');
-//        Route::get('/{banner}/file', 'BannerController@fileForm')->name('file');
-//        Route::put('/{banner}/file', 'BannerController@file');
-//        Route::post('/{banner}/send', 'BannerController@send')->name('send');
-//        Route::post('/{banner}/cancel', 'BannerController@cancel')->name('cancel');
-//        Route::post('/{banner}/order', 'BannerController@order')->name('order');
-//        Route::delete('/{banner}/destroy', 'BannerController@destroy')->name('destroy');
+//        Route::get('/show/{banner}', 'CabinetBannerController@show')->name('show');
+//        Route::get('/{banner}/edit', 'CabinetBannerController@editForm')->name('edit');
+//        Route::put('/{banner}/edit', 'CabinetBannerController@edit');
+//        Route::get('/{banner}/file', 'CabinetBannerController@fileForm')->name('file');
+//        Route::put('/{banner}/file', 'CabinetBannerController@file');
+//        Route::post('/{banner}/send', 'CabinetBannerController@send')->name('send');
+//        Route::post('/{banner}/cancel', 'CabinetBannerController@cancel')->name('cancel');
+//        Route::post('/{banner}/order', 'CabinetBannerController@order')->name('order');
+//        Route::delete('/{banner}/destroy', 'CabinetBannerController@destroy')->name('destroy');
     });
 
 
