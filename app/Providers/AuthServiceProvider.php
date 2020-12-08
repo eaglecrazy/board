@@ -77,11 +77,6 @@ class AuthServiceProvider extends ServiceProvider
 //            return $user->isAdmin() || $user->isModerator();
 //        });
 //
-//        Gate::define('manage-banners', function (User $user) {
-//            return $user->isAdmin() || $user->isModerator();
-//        });
-
-//
 //        Gate::define('manage-own-ticket', function (User $user, Ticket $ticket) {
 //            return $ticket->user_id === $user->id;
 //        });

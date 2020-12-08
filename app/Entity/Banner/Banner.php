@@ -9,8 +9,9 @@ use App\Entity\Region;
 use App\Entity\User;
 use Carbon\Carbon;
 use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -19,11 +20,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Category $category
  * @property-read Region $region
  * @property-read User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner active()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner forUser(User $user)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner query()
+ * @method static Builder|\App\Entity\Banner\Banner active()
+ * @method static Builder|\App\Entity\Banner\Banner forUser(User $user)
+ * @method static Builder|\App\Entity\Banner\Banner newModelQuery()
+ * @method static Builder|\App\Entity\Banner\Banner newQuery()
+ * @method static Builder|\App\Entity\Banner\Banner query()
  * @mixin Eloquent
  */
 class Banner extends Model
@@ -35,8 +36,8 @@ class Banner extends Model
     public const STATUS_ACTIVE = 'active';
     public const STATUS_CLOSED = 'close';
 
-    protected $table = 'banner_banners';
-    protected $guarded = 'id';
+    protected $table = 'banners_banners';
+    protected $guarded = ['id'];
     protected $casts = ['published_at' => 'datetime'];
 
 
@@ -161,32 +162,32 @@ class Banner extends Model
 //    --------------------
 //    Статусы
 //    --------------------
-    private function isActive(): bool
+    public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
     }
 
-    private function isClosed(): bool
+    public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;
     }
 
-    private function isDraft(): bool
+    public function isDraft(): bool
     {
         return $this->status === self::STATUS_DRAFT;
     }
 
-    private function isModerated(): bool
+    public function isModerated(): bool
     {
         return $this->status === self::STATUS_MODERATED;
     }
 
-    private function isOnModeration(): bool
+    public function isOnModeration(): bool
     {
         return $this->status === self::STATUS_MODERATION;
     }
 
-    private function isOrdered(): bool
+    public function isOrdered(): bool
     {
         return $this->status === self::STATUS_ORDERED;
     }

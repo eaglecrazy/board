@@ -16,7 +16,7 @@ use App\Services\Banner\CostCalculator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
-class  BannerService
+class BannerService
 {
     private $calculator;
 
@@ -36,12 +36,14 @@ class  BannerService
 
     public function create(User $user, Category $category, ?Region $region, BannerCreateRequest $request): Banner
     {
+        $file = $request->file('file')->store('banners', 'public');
+
         $banner = Banner::make([
             'name' => $request['name'],
             'limit' => $request['limit'],
             'url' => $request['url'],
             'format' => $request['format'],
-            'file' => $request->file()->store('banners', 'public'),
+            'file' => $file,
             'status' => Banner::STATUS_DRAFT,
         ]);
 

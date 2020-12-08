@@ -2,6 +2,7 @@
 
 use App\Entity\Adverts\Attribute;
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Banner\Banner;
 use App\Entity\Region;
 use App\Entity\Adverts\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
@@ -326,6 +327,14 @@ Breadcrumbs::register('cabinet.adverts.photos', function (BreadcrumbsGenerator $
     $crumbs->push('Add photos: ' . $advert->title, route('cabinet.adverts.photos', $advert));
 });
 
+//-------------------------------------------------------------------------
+// Cabinet.Banners
+//-----------------------------------------------------------------------
+
+Breadcrumbs::register('cabinet.banners.show', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.index');
+    $crumbs->push($banner->name, route('cabinet.banners.show', $banner));
+});
 
 //-------------------------------------------------------------------------
 // Cabinet.Favorites

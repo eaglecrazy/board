@@ -4,7 +4,6 @@
     @include('cabinet._nav', ['page' => 'banners'])
 
     <div class="d-flex flex-row mb-3">
-
         @if ($banner->canBeChanged())
             <a href="{{ route('cabinet.banners.edit', $banner) }}" class="btn btn-primary mr-1">Редактировать</a>
             <a href="{{ route('cabinet.banners.file', $banner) }}" class="btn btn-primary mr-1">Изменить файл</a>

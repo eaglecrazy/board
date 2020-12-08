@@ -7,7 +7,7 @@ use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\BannerEditRequest;
 use App\Http\Requests\Banner\BannerRejectRequest;
-use App\UseCases\Banners\BannerService;
+use App\Usecases\Banners\BannerService;
 use Illuminate\Http\Request;
 
 class AdminBannerController extends Controller

@@ -71,6 +71,25 @@ Route::group([
     });
 
     //---------
+    // Admin.Banners
+    //--------
+    Route::group([
+        'prefix' => 'banners',
+        'as' => 'banners.'
+    ], function () {
+        Route::get('/', 'AdminBannerController@index')->name('index');
+        Route::get('/{banner}/show', 'AdminBannerController@show')->name('show');
+        Route::get('/{banner}/edit', 'AdminBannerController@editForm')->name('edit');
+        Route::put('/{banner}/edit', 'AdminBannerController@edit');
+        Route::post('/{banner}/moderate', 'AdminBannerController@moderate')->name('moderate');
+        Route::get('/{banner}/reject', 'AdminBannerController@rejectForm')->name('reject');
+        Route::post('/{banner}/reject', 'AdminBannerController@reject');
+        Route::post('/{banner}/pay', 'AdminBannerController@pay')->name('pay');
+        Route::delete('/{banner}/destroy', 'AdminBannerController@destroy')->name('destroy');
+    });
+
+
+    //---------
     // Admin.Users
     //---------
     Route::get('users/verify/{user}', 'UsersController@verify')->name('users.verify');
@@ -176,16 +195,15 @@ Route::group([
         Route::get('/create/region/{category}/{region?}', 'BannerCreateController@region')->name('create.region');
         Route::get('/create/banner/{category}/{region?}', 'BannerCreateController@banner')->name('create.banner');
         Route::post('/create/banner/{category}/{region?}', 'BannerCreateController@store')->name('create.banner.store');
-
-//        Route::get('/show/{banner}', 'CabinetBannerController@show')->name('show');
-//        Route::get('/{banner}/edit', 'CabinetBannerController@editForm')->name('edit');
-//        Route::put('/{banner}/edit', 'CabinetBannerController@edit');
-//        Route::get('/{banner}/file', 'CabinetBannerController@fileForm')->name('file');
-//        Route::put('/{banner}/file', 'CabinetBannerController@file');
-//        Route::post('/{banner}/send', 'CabinetBannerController@send')->name('send');
-//        Route::post('/{banner}/cancel', 'CabinetBannerController@cancel')->name('cancel');
-//        Route::post('/{banner}/order', 'CabinetBannerController@order')->name('order');
-//        Route::delete('/{banner}/destroy', 'CabinetBannerController@destroy')->name('destroy');
+        Route::get('/show/{banner}', 'CabinetBannerController@show')->name('show');
+        Route::get('/{banner}/edit', 'CabinetBannerController@editForm')->name('edit');
+        Route::put('/{banner}/edit', 'CabinetBannerController@edit');
+        Route::get('/{banner}/file', 'CabinetBannerController@fileForm')->name('file');
+        Route::put('/{banner}/file', 'CabinetBannerController@file');
+        Route::post('/{banner}/send', 'CabinetBannerController@send')->name('send');
+        Route::post('/{banner}/cancel', 'CabinetBannerController@cancel')->name('cancel');
+        Route::post('/{banner}/order', 'CabinetBannerController@order')->name('order');
+        Route::delete('/{banner}/destroy', 'CabinetBannerController@destroy')->name('destroy');
     });
 
 

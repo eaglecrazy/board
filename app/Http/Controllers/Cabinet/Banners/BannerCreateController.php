@@ -53,6 +53,6 @@ class BannerCreateController extends Controller
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('cabinet.banners.show', $this->banner());
+        return redirect()->route('cabinet.banners.show', $banner);
     }
 }
