@@ -6,7 +6,7 @@ use App\Entity\Banner\Banner;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class FileRequest extends FormRequest
+class BannerFileRequest extends FormRequest
 {
     public function authorize(): bool
     {

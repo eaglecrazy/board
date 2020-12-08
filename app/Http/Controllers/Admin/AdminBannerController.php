@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Entity\Banner\Banner;
 use App\Entity\User\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Banner\EditRequest;
-use App\Http\Requests\Banner\RejectRequest;
+use App\Http\Requests\Banner\BannerEditRequest;
+use App\Http\Requests\Banner\BannerRejectRequest;
 use App\UseCases\Banners\BannerService;
 use Illuminate\Http\Request;
 
@@ -31,7 +31,7 @@ class AdminBannerController extends Controller
         return redirect()->route('admin.banners.index');
     }
 
-    public function edit(EditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function edit(BannerEditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
     {
         try {
             $this->service->editByAdmin($banner, $request);
@@ -100,7 +100,7 @@ class AdminBannerController extends Controller
         return redirect()->route('admin.banners.show', $banner);
     }
 
-    public function reject(RejectRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function reject(BannerRejectRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
     {
         try {
             $this->service->reject($banner, $request);

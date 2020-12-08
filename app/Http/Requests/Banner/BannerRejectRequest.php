@@ -4,7 +4,7 @@ namespace App\Http\Requests\Banner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditRequest extends FormRequest
+class BannerRejectRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +14,7 @@ class EditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'limit' => 'required|integer',
-            'url' => 'required|url',
+            'reason' => 'required|string',
         ];
     }
 }

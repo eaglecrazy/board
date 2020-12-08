@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Cabinet\Banners;
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Banner\Banner;
 use App\Http\Middleware\FilledProfile;
-use App\Http\Requests\Banner\EditRequest;
-use App\Http\Requests\Banner\FileRequest;
+use App\Http\Requests\Banner\BannerEditRequest;
+use App\Http\Requests\Banner\BannerFileRequest;
 use App\UseCases\Banners\BannerService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -53,7 +53,7 @@ class CabinetBannerController extends Controller
         return redirect()->route('cabinet.banners.index');
     }
 
-    public function edit(EditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function edit(BannerEditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
     {
         $this->checkAccess($banner);
         try {
@@ -74,7 +74,7 @@ class CabinetBannerController extends Controller
         return view('cabinet.banners.edit', compact('banner'));
     }
 
-    public function file(FileRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function file(BannerFileRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
     {
         $this->checkAccess($banner);
         try {
