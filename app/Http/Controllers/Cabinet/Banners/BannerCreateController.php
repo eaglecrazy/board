@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Cabinet\Banners;
 use App\Entity\Adverts\Category;
 use App\Entity\Banner\Banner;
 use App\Entity\Region;
-use App\Http\Middleware\FilledProfile;
-use App\Http\Requests\Adverts\CreateRequest;
-use App\Usecases\Adverts\AdvertService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Banner\BannerCreateRequest;
 use App\Usecases\Banners\BannerService;
 use Illuminate\Support\Facades\Auth;
+
 
 class BannerCreateController extends Controller
 {
@@ -42,7 +41,7 @@ class BannerCreateController extends Controller
         return view('cabinet.banners.create.banner', compact('category', 'region', 'formats'));
     }
 
-    public function store(BannerCreateRequest $request, Category $category, Region $region)
+    public function store(BannerCreateRequest $request, Category $category, Region $region): \Illuminate\Http\RedirectResponse
     {
         try {
             $banner = $this->service->create(

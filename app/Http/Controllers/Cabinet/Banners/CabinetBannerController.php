@@ -1,0 +1,136 @@
+<?php
+
+namespace App\Http\Controllers\Cabinet\Banners;
+
+use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Banner\Banner;
+use App\Http\Middleware\FilledProfile;
+use App\Http\Requests\Banner\EditRequest;
+use App\Http\Requests\Banner\FileRequest;
+use App\UseCases\Banners\BannerService;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
+class CabinetBannerController extends Controller
+{
+    private $service;
+
+    public function __construct(BannerService $service)
+    {
+        $this->service = $service;
+    }
+
+    public function cancel(Banner $banner): \Illuminate\Http\RedirectResponse
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->service->cancelModeration($banner);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function checkAccess(Banner $banner)
+    {
+        if (!Gate::allows('manage-own-banner', $banner)) {
+            abort(403);
+        }
+    }
+
+    public function destroy(Banner $banner): \Illuminate\Http\RedirectResponse
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->service->removeByOwner($banner);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.index');
+    }
+
+    public function edit(EditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->service->editByOwner($banner, $request);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function editForm(Banner $banner)
+    {
+        $this->checkAccess($banner);
+        if (!$banner->canBeChanged()) {
+            return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Баннер недоступен для редактирования.');
+        }
+
+        return view('cabinet.banners.edit', compact('banner'));
+    }
+
+    public function file(FileRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->service->changeFile($banner, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function fileForm(Banner $banner)
+    {
+        $this->checkAccess($banner);
+        if (!$banner->canBeChanged()) {
+            return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Банннер недоступен для редактирования.');
+        }
+        $formats = Banner::formatsList();
+        return view('cabinet.banners.file', compact('banner', 'formats'));
+    }
+
+    public function index()
+    {
+        $banners = Banner::forUser(Auth::user())->orderByDesc('id')->paginate(20);
+        return view('cabinet.banners.index', compact('banners'));
+    }
+
+//    public function order(Banner $banner)
+//    {
+//        $this->checkAccess($banner);
+//        try {
+//            $banner = $this->service->order($banner);
+//            $url = $this->robokassa->generateRedirectUrl($banner, $banner->cost, 'banner');
+//            return redirect($url);
+//        } catch (\DomainException $e) {
+//            return back()->with('error', $e->getMessage());
+//        }
+//
+//        return redirect()->route('cabinet.banners.show', $banner);
+//    }
+
+    public function send(Banner $banner): \Illuminate\Http\RedirectResponse
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->service->sendToModeration($banner);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function show(Banner $banner)
+    {
+        $this->checkAccess($banner);
+        return view('cabinet.banners.show');
+    }
+}
