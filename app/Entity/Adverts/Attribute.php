@@ -3,6 +3,7 @@
 namespace App\Entity\Adverts;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Entity\Adverts\Attribute
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Attribute whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Attribute whereVariants($value)
  * @mixin \Eloquent
- * @property-read \App\Entity\Adverts\Category $category
+ * @property-read Category $category
  */
 class Attribute extends Model
 {
@@ -75,7 +76,8 @@ class Attribute extends Model
         return count($this->variants) > 1;
     }
 
-    public function category(){
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }

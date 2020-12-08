@@ -8,9 +8,24 @@ use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Entity\User;
 use Carbon\Carbon;
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Entity\Banner\Banner
+ *
+ * @property-read Category $category
+ * @property-read Region $region
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner active()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner forUser(User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Banner\Banner query()
+ * @mixin Eloquent
+ */
 class Banner extends Model
 {
     public const STATUS_DRAFT = 'draft';
@@ -94,12 +109,12 @@ class Banner extends Model
 //    Ограничения
 //    --------------------
 
-    function scopeActive(Builder $query)
+    function scopeActive(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_ACTIVE);
     }
 
-    function scopeForUser(Builder $query, User $user)
+    function scopeForUser(Builder $query, User $user): Builder
     {
         return $query->where('user_id', $user->id);
     }
@@ -128,17 +143,17 @@ class Banner extends Model
 //    Связи
 //    --------------------
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function region()
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

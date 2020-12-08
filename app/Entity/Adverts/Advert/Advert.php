@@ -6,11 +6,15 @@ use App\Entity\Adverts\Category;
 use App\Entity\Adverts\Advert\Photo;
 use App\Entity\Region;
 use App\Entity\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 /**
@@ -30,13 +34,13 @@ use Illuminate\Support\Facades\Auth;
  * @property string $content
  * @property string $status
  * @property string|null $reject_reason
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $published_at
- * @property \Illuminate\Support\Carbon|null $expires_at
- * @property-read \App\Entity\Adverts\Category $category
- * @property-read \App\Entity\Region $region
- * @property-read \App\Entity\User $user
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $published_at
+ * @property Carbon|null $expires_at
+ * @property-read Category $category
+ * @property-read Region $region
+ * @property-read User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereContent($value)
@@ -51,15 +55,18 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereUserId($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $photos
+ * @property-read Collection|Value[] $photos
  * @property-read int|null $photos_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Advert\Value[] $values
+ * @property-read Collection|Value[] $values
  * @property-read int|null $values_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert Active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forActive()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(\App\Entity\User $user)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(\App\Entity\Region $region)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forCategory(\App\Entity\Adverts\Category $category)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forUser(User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forRegion(Region $region)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forCategory(Category $category)
+ * @property-read Collection|User[] $favorites
+ * @property-read int|null $favorites_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert favoredByUser(User $user)
  */
 class Advert extends Model
 {
@@ -91,12 +98,12 @@ class Advert extends Model
 //    Ограничения
 //    --------------------
 
-    public static function scopeForUser(Builder $query, User $user)
+    public static function scopeForUser(Builder $query, User $user): Builder
     {
         return $query->where('user_id', $user->id);
     }
 
-    public static function scopeForRegion(Builder $query, Region $region)
+    public static function scopeForRegion(Builder $query, Region $region): Builder
     {
         $ids = [$region->id];
         $childrenIds = $ids;
@@ -109,7 +116,7 @@ class Advert extends Model
         return $query->whereIn('region_id', $ids);
     }
 
-    public static function scopeForCategory(Builder $query, Category $category)
+    public static function scopeForCategory(Builder $query, Category $category): Builder
     {
         return $query->whereIn('category_id', array_merge(
             [$category->id],
@@ -118,12 +125,12 @@ class Advert extends Model
         ));
     }
 
-    public static function scopeActive(Builder $query)
+    public static function scopeActive(Builder $query): Builder
     {
         return $query->where('status', static::STATUS_ACTIVE);
     }
 
-    public static function scopeFavoredByUser(Builder $query, User $user)
+    public static function scopeFavoredByUser(Builder $query, User $user): Builder
     {
         return $query->whereHas('favorites', function (Builder $query) use ($user) {
            $query->where('user_id', $user->id);
@@ -167,32 +174,32 @@ class Advert extends Model
 //    --------------------
 //    Связи
 //    --------------------
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function region()
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-    public function values()
+    public function values(): HasMany
     {
         return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
-    public function photos()
+    public function photos(): HasMany
     {
         return $this->hasMany(Photo::class, 'advert_id', 'id');
     }
 
-    public function favorites()
+    public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'advert_favorites', 'advert_id', 'user_id');
     }
@@ -252,12 +259,11 @@ class Advert extends Model
 
 
 
-
 //    --------------------
 //    Другое
 //    --------------------
 
-    public function isAllowToShow()
+    public function isAllowToShow(): bool
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
     }

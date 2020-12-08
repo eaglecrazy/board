@@ -4,9 +4,10 @@ namespace App\Entity\Adverts;
 
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Entity\Adverts\Category
@@ -17,24 +18,24 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $_lft
  * @property int $_rgt
  * @property int|null $parent_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Adverts\Attribute[] $attributes
+ * @property-read Collection|Attribute[] $attributes
  * @property-read int|null $attributes_count
- * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Adverts\Category[] $children
+ * @property-read \Kalnoy\Nestedset\Collection|Category[] $children
  * @property-read int|null $children_count
- * @property-read \App\Entity\Adverts\Category|null $parent
+ * @property-read Category|null $parent
  * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category d()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category d()
  * @method static \Kalnoy\Nestedset\Collection|static[] get($columns = ['*'])
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category newModelQuery()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category newQuery()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Entity\Adverts\Category query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereLft($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereRgt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Category whereIsRoot()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|Category newModelQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|Category newQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereLft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereRgt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsRoot()
  * @mixin \Eloquent
  */
 class Category extends Model
@@ -46,16 +47,14 @@ class Category extends Model
 
     protected $fillable = ['name', 'slug', 'parent_id'];
 
-    public function attributes()
+    public function attributes(): HasMany
     {
         return $this->hasMany(Attribute::class, 'category_id', 'id');
     }
 
     public function parentAttributes(): array
     {
-        $name = $this->name;
-        $q = $this->parent ? $this->parent->allAttributes() : [];
-        return $q;
+        return $this->parent ? $this->parent->allAttributes() : [];
     }
 
     public function allAttributes(): array

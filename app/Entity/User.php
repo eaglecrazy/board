@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Entity\Adverts\Advert\Advert;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,7 +31,7 @@ use phpDocumentor\Reflection\Types\This;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $status
  * @property string|null $verify_token
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newQuery()
@@ -55,6 +59,8 @@ use phpDocumentor\Reflection\Types\This;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyTokenExpire($value)
  * @property bool $phone_auth
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneAuth($value)
+ * @property-read Collection|Advert[] $favorites
+ * @property-read int|null $favorites_count
  */
 class User extends Authenticatable
 {
@@ -110,7 +116,7 @@ class User extends Authenticatable
     // Favorites
     //------------------
 
-    public function addToFavorites($advertId)
+    public function addToFavorites($advertId): void
     {
         if($this->hasInFavorites($advertId)){
             throw new \DomainException('This advert is alerady added to favorites.');
@@ -118,12 +124,12 @@ class User extends Authenticatable
         $this->favorites()->attach($advertId);
     }
 
-    public function removeFromFavorites($advertId)
+    public function removeFromFavorites($advertId): void
     {
         $this->favorites()->detach($advertId);
     }
 
-    public function hasInFavorites($advertId)
+    public function hasInFavorites($advertId): bool
     {
         return $this->favorites()->where('advert_id', $advertId)->exists();
     }
@@ -276,13 +282,10 @@ class User extends Authenticatable
     //------------------
     // Other
     //------------------
-    public function favorites(){
+    public function favorites(): BelongsToMany
+    {
         return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
         //можно написать короче
         //return $this->belongsToMany((Advert::class, 'advert_favorites');
     }
-
-
-
-
 }
