@@ -17,7 +17,7 @@
     @endif
 
     @can ('manage-adverts', $advert)
-        <h3>Moderation access</h3>
+        <h3>Панель модератора</h3>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
@@ -41,7 +41,7 @@
     @endcan
 
     @can ('manage-own-advert', $advert)
-        <h3>Advert owner access</h3>
+        <h3>Управление объявлением</h3>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>

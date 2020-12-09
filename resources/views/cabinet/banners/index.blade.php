@@ -12,7 +12,7 @@
             <th>Название</th>
             <th>Регион</th>
             <th>Категория</th>
-            <th>Публикация</th>
+            <th>Дата публикации</th>
             <th>Статус</th>
         </tr>
         </thead>
@@ -38,5 +38,5 @@
         </tbody>
     </table>
 
-    {{--    {{ $banners->links() }}--}}
+        {{ $banners->links() }}
 @endsection

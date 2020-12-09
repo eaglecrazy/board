@@ -55,7 +55,7 @@ class CabinetBannerController extends Controller
     {
         $this->checkAccess($banner);
         try {
-            $this->service->editByOwner($banner, $request);
+            $this->service->edit($banner, $request);
         } catch (\DomainException $exception) {
             return back()->with('error', $exception->getMessage());
         }

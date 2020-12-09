@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\BannerEditRequest;
 use App\Http\Requests\Banner\BannerRejectRequest;
 use App\Usecases\Banners\BannerService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminBannerController extends Controller
@@ -20,7 +21,7 @@ class AdminBannerController extends Controller
         $this->middleware('can:manage-banners');
     }
 
-    public function destroy(Banner $banner): \Illuminate\Http\RedirectResponse
+    public function destroy(Banner $banner): RedirectResponse
     {
         try {
             $this->service->removeByAdmin($banner);
@@ -31,10 +32,10 @@ class AdminBannerController extends Controller
         return redirect()->route('admin.banners.index');
     }
 
-    public function edit(BannerEditRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function edit(BannerEditRequest $request, Banner $banner): RedirectResponse
     {
         try {
-            $this->service->editByAdmin($banner, $request);
+            $this->service->edit($banner, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -44,7 +45,7 @@ class AdminBannerController extends Controller
 
     public function editForm(Banner $banner)
     {
-        return view('admin.banners.edit', compact('banner'));
+        return view('cabinet.banners.edit', compact('banner'));
     }
 
     public function index(Request $request)
@@ -78,7 +79,7 @@ class AdminBannerController extends Controller
         return view('admin.banners.index', compact('banners', 'statuses'));
     }
 
-    public function moderate(Banner $banner): \Illuminate\Http\RedirectResponse
+    public function moderate(Banner $banner): RedirectResponse
     {
         try {
             $this->service->moderate($banner);
@@ -89,7 +90,7 @@ class AdminBannerController extends Controller
         return redirect()->route('admin.banners.show', $banner);
     }
 
-    public function pay(Banner $banner): \Illuminate\Http\RedirectResponse
+    public function pay(Banner $banner): RedirectResponse
     {
         try {
             $this->service->pay($banner);
@@ -100,7 +101,7 @@ class AdminBannerController extends Controller
         return redirect()->route('admin.banners.show', $banner);
     }
 
-    public function reject(BannerRejectRequest $request, Banner $banner): \Illuminate\Http\RedirectResponse
+    public function reject(BannerRejectRequest $request, Banner $banner): RedirectResponse
     {
         try {
             $this->service->reject($banner, $request);
@@ -118,6 +119,6 @@ class AdminBannerController extends Controller
 
     public function show(Banner $banner)
     {
-        return view('admin.banners.show', compact('banner'));
+        return view('cabinet.banners.show', compact('banner'));
     }
 }

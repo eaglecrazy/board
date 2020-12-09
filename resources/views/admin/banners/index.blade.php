@@ -16,25 +16,25 @@
                     </div>
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label for="user" class="col-form-label">User</label>
+                            <label for="user" class="col-form-label">Пользователь</label>
                             <input id="user" class="form-control" name="user" value="{{ request('user') }}">
                         </div>
                     </div>
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label for="region" class="col-form-label">Region</label>
+                            <label for="region" class="col-form-label">Регион</label>
                             <input id="region" class="form-control" name="region" value="{{ request('region') }}">
                         </div>
                     </div>
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label for="category" class="col-form-label">Category</label>
+                            <label for="category" class="col-form-label">Категория</label>
                             <input id="category" class="form-control" name="category" value="{{ request('category') }}">
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="status" class="col-form-label">Status</label>
+                            <label for="status" class="col-form-label">Статус</label>
                             <select id="status" class="form-control" name="status">
                                 <option value=""></option>
                                 @foreach ($statuses as $value => $label)
@@ -46,8 +46,8 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="col-form-label">&nbsp;</label><br />
-                            <button type="submit" class="btn btn-primary">Search</button>
-                            <a href="?" class="btn btn-outline-secondary">Clear</a>
+                            <button type="submit" class="btn btn-primary">Поиск</button>
+                            <a href="?" class="btn btn-outline-secondary">Сброс</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
             <th>Пользователь</th>
             <th>Регион</th>
             <th>Категория</th>
-            <th>Публикация</th>
+            <th>Дата публикации</th>
             <th>Статус</th>
         </tr>
         </thead>
@@ -80,6 +80,7 @@
                     @endif
                 </td>
                 <td>{{ $banner->category->id }} - {{ $banner->category->name }}</td>
+                <td>{{ $banner->published_at }}</td>
                 <td>
                     @include('cabinet.banners._banners_bages')
                 </td>

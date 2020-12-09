@@ -3,7 +3,7 @@
 @elseif ($banner->isOnModeration())
     <span class="badge badge-primary">Модерация</span>
 @elseif ($banner->isModerated())
-    <span class="badge badge-success">Готов к оплате</span>
+    <span class="badge badge-success">Отмодерирован</span>
 @elseif ($banner->isOrdered())
     <span class="badge badge-warning">Ожидает оплаты</span>
 @elseif ($banner->isActive())

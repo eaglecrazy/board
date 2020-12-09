@@ -16,6 +16,7 @@ use App\Services\Banner\CostCalculator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class BannerService
@@ -66,18 +67,9 @@ class BannerService
         return $banner;
     }
 
-    public function editByAdmin(Banner $banner, BannerEditRequest $request): void
+    public function edit(Banner $banner, BannerEditRequest $request): void
     {
-        $banner->update([
-            'name' => $request['name'],
-            'limit' => $request['limit'],
-            'url' => $request['url'],
-        ]);
-    }
-
-    public function editByOwner(Banner $banner, BannerEditRequest $request): void
-    {
-        if(!$banner->canBeChanged()){
+        if(!($banner->canBeChanged() || Gate::allows('manage-banners', $this))){
             throw new \DomainException('Баннер недоступен для редактирования.');
         }
 

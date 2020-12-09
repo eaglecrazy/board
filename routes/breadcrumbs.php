@@ -123,6 +123,34 @@ Breadcrumbs::register('admin.adverts.adverts.reject', function (BreadcrumbsGener
 
 
 //-------------------------------------------------------------------------
+// Admin.AdminBannerController
+//-------------------------------------------------------------------------
+
+//admin.banners.edit
+Breadcrumbs::register('admin.banners.edit', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.show', $banner);
+    $crumbs->push('Редактирование', route('admin.banners.edit', $banner));
+});
+
+//admin.banners.index
+Breadcrumbs::register('admin.banners.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Баннеры', route('admin.banners.index'));
+});
+
+//admin.banners.reject
+Breadcrumbs::register('admin.banners.reject', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.show', $banner);
+    $crumbs->push('Отклонить', route('admin.banners.reject', $banner));
+});
+
+//admin.banners.show
+Breadcrumbs::register('admin.banners.show', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.index');
+    $crumbs->push($banner->name, route('admin.banners.show', $banner));
+});
+
+//-------------------------------------------------------------------------
 // Admin.CategoriesController
 //-------------------------------------------------------------------------
 

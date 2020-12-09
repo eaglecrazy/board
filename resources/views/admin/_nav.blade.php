@@ -3,6 +3,12 @@
         <li class="nav-item"><a href="{{ route('admin.adverts.adverts.index') }}"
                                 class="nav-link{{ $page === 'adverts' ? ' active' : '' }}">Объявления</a></li>
     @endcan
+
+    @can('manage-banners')
+        <li class="nav-item"><a href="{{ route('admin.banners.index') }}"
+                                class="nav-link{{ $page === 'banners' ? ' active' : '' }}">Баннеры</a></li>
+    @endcan
+
     @can('manage-users')
         <li class="nav-item"><a href="{{ route('admin.users.index') }}"
                                 class="nav-link{{ $page === 'users' ? ' active' : '' }}">Пользователи</a></li>

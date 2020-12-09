@@ -22,6 +22,7 @@ class CreateBannersTable extends Migration
             $table->integer('cost')->nullable();
             $table->string('format');
             $table->string('file');
+            $table->string('reject_reason')->nullable();
             $table->timestamps();
             $table->timestamp('publisher_at')->nullable();
         });

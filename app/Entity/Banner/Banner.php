@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * App\Entity\Banner\Banner
@@ -71,6 +72,7 @@ class Banner extends Model
         }
         $this->update([
             'status' => self::STATUS_MODERATED,
+            'reject_reason' => null,
         ]);
 
     }
@@ -139,6 +141,8 @@ class Banner extends Model
         }
     }
 
+
+
     public function canBeChanged(): bool
     {
         return $this->isDraft();
@@ -204,12 +208,12 @@ class Banner extends Model
     public static function statusesList(): array
     {
         return [
-            self::STATUS_DRAFT => 'Draft',
-            self::STATUS_MODERATION => 'On Moderation',
-            self::STATUS_MODERATED => 'Moderated',
-            self::STATUS_ORDERED => 'Payment',
-            self::STATUS_ACTIVE => 'Active',
-            self::STATUS_CLOSED => 'Closed',
+            self::STATUS_DRAFT => 'Черновик',
+            self::STATUS_MODERATION => 'Модерация',
+            self::STATUS_MODERATED => 'Отмодерирован',
+            self::STATUS_ORDERED => 'Ожидает оплаты',
+            self::STATUS_ACTIVE => 'Активный',
+            self::STATUS_CLOSED => 'Закрыт',
         ];
     }
 
