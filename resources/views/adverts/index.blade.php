@@ -12,11 +12,11 @@
 @section('content')
     @if ($childernRegions)
         <div class="card card-default mb-3">
-            <div class="card-header">
+            <div class="card-header h4">
                 @if ($path->region)
-                    Regions of {{ $path->region->name }}
+                    Регионы {{ $path->region->name }}
                 @else
-                    Regions
+                    Все регионы
                 @endif
             </div>
             <div class="card-body pb-0" style="color: #aaa">
@@ -37,11 +37,11 @@
 
     @if ($childernCategories)
         <div class="card card-default mb-3">
-            <div class="card-header">
+            <div class="card-header h4">
                 @if ($path->category)
-                    Categories of {{ $path->category->name }}
+                    Категории {{ $path->category->name }}
                 @else
-                    Categories
+                    Все категории
                 @endif
             </div>
             <div class="card-body pb-0" style="color: #aaa">
