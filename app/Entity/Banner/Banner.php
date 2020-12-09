@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Category $category
  * @property-read Region $region
  * @property-read User $user
+ * @property-read string $name
+ * @property-read string $file
  * @method static Builder|\App\Entity\Banner\Banner active()
  * @method static Builder|\App\Entity\Banner\Banner forUser(User $user)
  * @method static Builder|\App\Entity\Banner\Banner newModelQuery()
@@ -44,6 +46,13 @@ class Banner extends Model
 //    --------------------
 //    Изменения статусов
 //    --------------------
+    /**
+     * @var mixed
+     */
+
+    /**
+     * @var mixed
+     */
 
     public function cancelModeration(): void
     {
@@ -51,7 +60,7 @@ class Banner extends Model
             throw new \DomainException('Этот баннер не находится на модерации.');
         }
         $this->update([
-            'status' => self::STATUS_MODERATION,
+            'status' => self::STATUS_DRAFT,
         ]);
     }
 

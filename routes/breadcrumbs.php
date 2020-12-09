@@ -331,6 +331,20 @@ Breadcrumbs::register('cabinet.adverts.photos', function (BreadcrumbsGenerator $
 // Cabinet.Banners
 //-----------------------------------------------------------------------
 
+//cabinet.banners.edit
+Breadcrumbs::register('cabinet.banners.edit', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.show', $banner);
+    $crumbs->push('Редактирование', route('cabinet.banners.edit', $banner));
+});
+
+//cabinet.banners.edit_fileit
+Breadcrumbs::register('cabinet.banners.edit_file', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.show', $banner);
+    $crumbs->push('Изменить изображение', route('cabinet.banners.edit_file', $banner));
+});
+
+
+//cabinet.banners.show
 Breadcrumbs::register('cabinet.banners.show', function (BreadcrumbsGenerator $crumbs, Banner $banner) {
     $crumbs->parent('cabinet.banners.index');
     $crumbs->push($banner->name, route('cabinet.banners.show', $banner));

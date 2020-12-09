@@ -198,7 +198,7 @@ Route::group([
         Route::get('/show/{banner}', 'CabinetBannerController@show')->name('show');
         Route::get('/{banner}/edit', 'CabinetBannerController@editForm')->name('edit');
         Route::put('/{banner}/edit', 'CabinetBannerController@edit');
-        Route::get('/{banner}/file', 'CabinetBannerController@fileForm')->name('file');
+        Route::get('/{banner}/file', 'CabinetBannerController@fileForm')->name('edit_file');
         Route::put('/{banner}/file', 'CabinetBannerController@file');
         Route::post('/{banner}/send', 'CabinetBannerController@send')->name('send');
         Route::post('/{banner}/cancel', 'CabinetBannerController@cancel')->name('cancel');

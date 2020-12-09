@@ -14,7 +14,9 @@ use App\Http\Requests\Banner\BannerFileRequest;
 use App\Http\Requests\Banner\BannerRejectRequest;
 use App\Services\Banner\CostCalculator;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class BannerService
 {
@@ -32,9 +34,17 @@ class BannerService
 
     public function changeFile(Banner $banner, BannerFileRequest $request): void
     {
+        if (!$banner->canBeChanged()) {
+            throw new \DomainException('Баннер недоступен для редактирования.');
+        }
+        Storage::delete('public/' . $banner->file);
+        $banner->update([
+            'format' => $request['format'],
+            'file' => $request->file('file')->store('banners', 'public'),
+        ]);
     }
 
-    public function create(User $user, Category $category, ?Region $region, BannerCreateRequest $request): Banner
+    public function create(User $user, Category $category, ?Region $region, BannerCreateRequest $request): Model
     {
         $file = $request->file('file')->store('banners', 'public');
 
@@ -70,12 +80,11 @@ class BannerService
         if(!$banner->canBeChanged()){
             throw new \DomainException('Баннер недоступен для редактирования.');
         }
-        File::delete($banner->file);
+
         $banner->update([
             'name' => $request['name'],
             'limit' => $request['limit'],
             'url' => $request['url'],
-            'file' => $request['file']->store('banners'),
         ]);
     }
 
@@ -113,7 +122,7 @@ class BannerService
             throw new \DomainException('Баннер недоступен для удаления');
         }
         $banner->delete();
-        File::delete($banner->file);
+        Storage::delete('public/' . $banner->file);
     }
 
     public function sendToModeration(Banner $banner): void

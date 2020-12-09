@@ -69,7 +69,8 @@ class CabinetBannerController extends Controller
             return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Баннер недоступен для редактирования.');
         }
 
-        return view('cabinet.banners.edit', compact('banner'));
+        $formats = Banner::formatsList();
+        return view('cabinet.banners.edit', compact('banner', 'formats'));
     }
 
     public function file(BannerFileRequest $request, Banner $banner): RedirectResponse
@@ -91,7 +92,7 @@ class CabinetBannerController extends Controller
             return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Банннер недоступен для редактирования.');
         }
         $formats = Banner::formatsList();
-        return view('cabinet.banners.file', compact('banner', 'formats'));
+        return view('cabinet.banners.edit_file', compact('banner', 'formats'));
     }
 
     public function index()

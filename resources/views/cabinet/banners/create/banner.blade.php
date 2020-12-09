@@ -48,7 +48,7 @@
 
         <div class="form-group">
             <label for="file" class="col-form-label">Файл</label>
-            <input id="file" type="file" class="form-control{{ $errors->has('file') ? ' is-invalid' : '' }}" name="file"
+            <input id="file" type="file" class="form-control h-25{{ $errors->has('file') ? ' is-invalid' : '' }}" name="file"
                    required>
             @if ($errors->has('file'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('file') }}</strong></span>
