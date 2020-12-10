@@ -101,19 +101,19 @@ class CabinetBannerController extends Controller
         return view('cabinet.banners.index', compact('banners'));
     }
 
-//    public function order(Banner $banner)
-//    {
-//        $this->checkAccess($banner);
-//        try {
-//            $banner = $this->service->order($banner);
+    public function order(Banner $banner)
+    {
+        $this->checkAccess($banner);
+        try {
+            $banner = $this->service->order($banner);
 //            $url = $this->robokassa->generateRedirectUrl($banner, $banner->cost, 'banner');
 //            return redirect($url);
-//        } catch (\DomainException $e) {
-//            return back()->with('error', $e->getMessage());
-//        }
-//
-//        return redirect()->route('cabinet.banners.show', $banner);
-//    }
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
 
     public function send(Banner $banner): RedirectResponse
     {

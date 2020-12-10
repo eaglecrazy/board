@@ -24,7 +24,7 @@ class CreateBannersTable extends Migration
             $table->string('file');
             $table->string('reject_reason')->nullable();
             $table->timestamps();
-            $table->timestamp('publisher_at')->nullable();
+            $table->timestamp('published_at')->nullable();
         });
 
         Schema::table('banners_banners', function (Blueprint $table) {

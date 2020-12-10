@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Gate;
  * @property-read User $user
  * @property-read string $name
  * @property-read string $file
+ * @property-read string $limit
  * @method static Builder|\App\Entity\Banner\Banner active()
  * @method static Builder|\App\Entity\Banner\Banner forUser(User $user)
  * @method static Builder|\App\Entity\Banner\Banner newModelQuery()
