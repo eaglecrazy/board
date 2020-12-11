@@ -22,7 +22,7 @@ class InitCommand extends Command
     public function handle(): bool
     {
         $this->initAdverts();
-//        $this->initBanners();
+        $this->initBanners();
         return true;
     }
 
@@ -100,49 +100,45 @@ class InitCommand extends Command
         ]);
 
         return true;
-
-//        foreach (Advert::active()->orderBy('id')->cursor() as $advert) {
-//           $this->indexer->index($advert);
-//        }
     }
-//
-//    private function initBanners(): void
-//    {
-//        try {
-//            $this->client->indices()->delete([
-//                'index' => 'banners'
-//            ]);
-//        } catch (Missing404Exception $e) {
-//        }
-//
-//        $this->client->indices()->create([
-//            'index' => 'banners',
-//            'body' => [
-//                'mappings' => [
-//                    'banner' => [
-//                        '_source' => [
-//                            'enabled' => true,
-//                        ],
-//                        'properties' => [
-//                            'id' => [
-//                                'type' => 'integer',
-//                            ],
-//                            'status' => [
-//                                'type' => 'keyword',
-//                            ],
-//                            'format' => [
-//                                'type' => 'keyword',
-//                            ],
-//                            'categories' => [
-//                                'type' => 'integer',
-//                            ],
-//                            'regions' => [
-//                                'type' => 'integer',
-//                            ],
-//                        ],
-//                    ],
-//                ],
-//            ],
-//        ]);
-//    }
+
+    private function initBanners(): void
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners'
+            ]);
+        } catch (Missing404Exception $e) {
+        }
+
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'banner' => [
+                        '_source' => [
+                            'enabled' => true,
+                        ],
+                        'properties' => [
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'status' => [
+                                'type' => 'keyword',
+                            ],
+                            'format' => [
+                                'type' => 'keyword',
+                            ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
+                            'regions' => [
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
 }

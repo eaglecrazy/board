@@ -45,6 +45,10 @@ class BannerService
         ]);
     }
 
+    public function click(Banner $banner){
+        $banner->click();
+    }
+
     public function create(User $user, Category $category, ?Region $region, BannerCreateRequest $request): Model
     {
         $file = $request->file('file')->store('banners', 'public');

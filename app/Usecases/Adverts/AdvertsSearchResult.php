@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\Adverts;
+namespace App\Usecases\Adverts;
 
 use Illuminate\Contracts\Pagination\Paginator;
 
-class SearchResult
+class AdvertsSearchResult
 {
     public $adverts;
     public $regionsCounts;

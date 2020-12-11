@@ -11,13 +11,13 @@ use App\Usecases\Adverts\AdvertService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Router\AdvertsPath;
-use App\Usecases\Adverts\SearchService;
+use App\Usecases\Adverts\AdvertsSearchService;
 
 class AdvertController extends Controller
 {
     private $search;
 
-    public function __construct(SearchService $search)
+    public function __construct(AdvertsSearchService $search)
     {
         $this->search = $search;
     }

@@ -11,7 +11,7 @@ use Elasticsearch\Client;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class SearchService
+class AdvertsSearchService
 {
     private $client;
 
@@ -25,7 +25,7 @@ class SearchService
         ?Region $region,
         SearchRequest $request,
         int $perPage,
-        int $page): SearchResult
+        int $page): AdvertsSearchResult
     {
         // получаем из реквеста только заполненные поля
         $values = $this->getAttributesArray($request);
@@ -77,7 +77,7 @@ class SearchService
             $paginator = new LengthAwarePaginator([], 0, $perPage, $page);
         }
 
-        return new SearchResult($paginator, $regionsCounts, $categoryesCounts);
+        return new AdvertsSearchResult($paginator, $regionsCounts, $categoryesCounts);
     }
 
     private function advertsMust(?Category $category, ?Region $region, SearchRequest $request, array $values): array

@@ -23,7 +23,16 @@ use Illuminate\Support\Facades\Gate;
  * @property-read User $user
  * @property-read string $name
  * @property-read string $file
+ * @property-read string $url
  * @property-read string $limit
+ * @property-read string $title
+ * @property-read string content
+ * @property-read string status
+ * @property-read integer $id
+ * @property-read integer $price
+ * @property-read integer $views
+ * @property-read integer $clicks
+ * @property-read Carbon $published_at
  * @method static Builder|\App\Entity\Banner\Banner active()
  * @method static Builder|\App\Entity\Banner\Banner forUser(User $user)
  * @method static Builder|\App\Entity\Banner\Banner newModelQuery()
@@ -48,14 +57,6 @@ class Banner extends Model
 //    --------------------
 //    Изменения статусов
 //    --------------------
-    /**
-     * @var mixed
-     */
-
-    /**
-     * @var mixed
-     */
-
     public function cancelModeration(): void
     {
         if (!$this->isOnModeration()) {
@@ -142,8 +143,6 @@ class Banner extends Model
         }
     }
 
-
-
     public function canBeChanged(): bool
     {
         return $this->isDraft();
@@ -152,6 +151,22 @@ class Banner extends Model
     public function canBeRemoved(): bool
     {
         return !$this->isActive();
+    }
+
+    public function click(){
+        $this->assertIsActive();
+        $this->clicks++;
+        $this->save();
+    }
+
+    public function view(): void
+    {
+        $this->assertIsActive();
+        $this->views++;
+        if($this->views >= $this->limit){
+            $this->status = self::STATUS_CLOSED;
+        }
+        $this->save();
     }
 
 //    --------------------

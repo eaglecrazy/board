@@ -101,7 +101,7 @@ class CabinetBannerController extends Controller
         return view('cabinet.banners.index', compact('banners'));
     }
 
-    public function order(Banner $banner)
+    public function order(Banner $banner): RedirectResponse
     {
         $this->checkAccess($banner);
         try {

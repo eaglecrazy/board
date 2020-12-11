@@ -163,12 +163,8 @@
             @endif
         </div>
         <div class="col-md-3">
-            <div
-                style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px">баннер 1
-            </div>
-            <div
-                style="height: 400px; background: #f6f6f6; border: 1px solid #ddd; margin-bottom: 20px">баннер 2
-            </div>
+            <div class="banner mb-3" data-format="240x400" data-category="{{ $advert->category ? $advert->category->id : '' }}" data-region="{{ $advert->region ? $advert->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
+            <div class="banner mb-3" data-format="240x400" data-category="{{ $advert->category ? $advert->category->id : '' }}" data-region="{{ $advert->region ? $advert->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
         </div>
     </div>
 @endsection
