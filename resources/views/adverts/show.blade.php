@@ -164,7 +164,6 @@
         </div>
         <div class="col-md-3">
             <div class="banner mb-3" data-format="240x400" data-category="{{ $advert->category ? $advert->category->id : '' }}" data-region="{{ $advert->region ? $advert->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
-            <div class="banner mb-3" data-format="240x400" data-category="{{ $advert->category ? $advert->category->id : '' }}" data-region="{{ $advert->region ? $advert->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
         </div>
     </div>
 @endsection

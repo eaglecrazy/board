@@ -26,7 +26,8 @@ use Illuminate\Support\Facades\Gate;
  * @property-read string $url
  * @property-read string $limit
  * @property-read string $title
- * @property-read string content
+ * @property-read string $content
+ * @property-read string $format
  * @property-read string status
  * @property-read integer $id
  * @property-read integer $price

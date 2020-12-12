@@ -44,6 +44,7 @@ class BannerIndexer
                 'body' => [
                     'id' => $banner->id,
                     'status' => $banner->status,
+                    'format' => $banner->format,
                     'categories' => array_merge(
                         [$banner->category->id],
                         $banner->category->descendants()->pluck('id')->toArray()),
