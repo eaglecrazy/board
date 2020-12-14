@@ -10,6 +10,13 @@ dbuild: memory
 memory:
 	sudo sysctl -w vm.max_map_count=262144
 
+view-clear:
+	sudo -s docker-compose exec php-cli php artisan view:clear
+
+cache-clear:
+	sudo -s docker-compose exec php-cli php artisan cache:clear
+
+
 # использование docker для команды
 test-docker:
 	sudo -s docker exec app_php-cli_1 vendor/bin/phpunit --colors=always

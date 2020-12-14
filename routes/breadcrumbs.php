@@ -29,7 +29,7 @@ Breadcrumbs::register('home', function (BreadcrumbsGenerator $crumbs) {
 //login
 Breadcrumbs::register('login', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('home');
-    $crumbs->push('Login', route('login'));
+    $crumbs->push('Аутентификация', route('login'));
 });
 
 //login.phone
