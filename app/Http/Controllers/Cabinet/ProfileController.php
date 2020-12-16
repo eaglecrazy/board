@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Cabinet;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entity\User;
+use App\Entity\User\User ;
 
 class ProfileController extends Controller
 {

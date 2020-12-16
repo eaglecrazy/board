@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entity\Banner\Banner;
-use App\Entity\User\User;
+use App\Entity\User\User \User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\BannerEditRequest;
 use App\Http\Requests\Banner\BannerRejectRequest;

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Entity\User;
+use App\Entity\User\User ;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

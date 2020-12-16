@@ -11,7 +11,7 @@
             </ul>
         </div>
     @endif
-    <form method="POST" action="{{ Auth::user()->role === App\Entity\User::ROLE_ADMIN ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update', $advert) }}">
+    <form method="POST" action="{{ Auth::user()->role === App\Entity\User\User ::ROLE_ADMIN ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update', $advert) }}">
         @csrf
         @method('PUT')
 

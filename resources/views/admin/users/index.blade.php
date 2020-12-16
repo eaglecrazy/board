@@ -82,17 +82,17 @@
                 <td>{{ $user->email }}</td>
                 <td>
                     @if($user->isWait())
-                        <span class="badge badge-secondary">{{ $statuses[App\Entity\User::STATUS_WAIT] }}</span>
+                        <span class="badge badge-secondary">{{ $statuses[App\Entity\User\User ::STATUS_WAIT] }}</span>
                     @endif
                     @if($user->isActive())
-                        <span class="badge badge-primary">{{ $statuses[App\Entity\User::STATUS_ACTIVE] }}</span>
+                        <span class="badge badge-primary">{{ $statuses[App\Entity\User\User ::STATUS_ACTIVE] }}</span>
                     @endif
                 </td>
                 <td>
                     @if($user->isAdmin())
-                        <span class="badge badge-danger">{{ $roles[App\Entity\User::ROLE_ADMIN] }}</span>
+                        <span class="badge badge-danger">{{ $roles[App\Entity\User\User ::ROLE_ADMIN] }}</span>
                     @else
-                        <span class="badge badge-secondary">{{ $roles[App\Entity\User::ROLE_USER] }}</span>
+                        <span class="badge badge-secondary">{{ $roles[App\Entity\User\User ::ROLE_USER] }}</span>
                     @endif
                 </td>
             </tr>

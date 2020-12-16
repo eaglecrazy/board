@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\User;
 
 use App\Entity\Adverts\Advert\Advert;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ use phpDocumentor\Reflection\Types\This;
 
 
 /**
- * App\Entity\User
+ * App\Entity\User\User
  *
  * @property int $id
  * @property string $name
@@ -33,32 +34,32 @@ use phpDocumentor\Reflection\Types\This;
  * @property string|null $verify_token
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereVerifyToken($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereRole($value)
  * @property string|null $phone
  * @property bool $phone_verified
  * @property string|null $phone_verify_token
  * @property \Illuminate\Support\Carbon|null $phone_verify_token_expire
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerified($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneVerifyTokenExpire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerifyTokenExpire($value)
  * @property bool $phone_auth
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User wherePhoneAuth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneAuth($value)
  * @property-read Collection|Advert[] $favorites
  * @property-read int|null $favorites_count
  */
@@ -122,6 +123,13 @@ class User extends Authenticatable
             throw new \DomainException('This advert is alerady added to favorites.');
         }
         $this->favorites()->attach($advertId);
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
+        //можно написать короче
+        //return $this->belongsToMany((Advert::class, 'advert_favorites');
     }
 
     public function removeFromFavorites($advertId): void
@@ -280,12 +288,11 @@ class User extends Authenticatable
 
 
     //------------------
-    // Other
+    // Social Networks
     //------------------
-    public function favorites(): BelongsToMany
+    public function socialNetworks(): HasMany
     {
-        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
-        //можно написать короче
-        //return $this->belongsToMany((Advert::class, 'advert_favorites');
+        return $this->hasMany(SocialNetwork::class, 'user_id', 'id');
     }
+
 }

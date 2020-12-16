@@ -7,7 +7,7 @@ use App\Entity\Region;
 use App\Entity\Adverts\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
-use App\Entity\User;
+use App\Entity\User\User ;
 use Illuminate\Http\Request;
 use App\Http\Router\AdvertsPath;
 

@@ -3,7 +3,7 @@
 @section('content')
     @include('cabinet._nav', ['page' => 'banners'])
 
-    <form method="POST" action="{{ Auth::user()->role === App\Entity\User::ROLE_ADMIN ? route('admin.banners.edit', $banner) : route('cabinet.banners.edit', $baner) }}">
+    <form method="POST" action="{{ Auth::user()->role === App\Entity\User\User ::ROLE_ADMIN ? route('admin.banners.edit', $banner) : route('cabinet.banners.edit', $baner) }}">
         @csrf
         @method('PUT')
 

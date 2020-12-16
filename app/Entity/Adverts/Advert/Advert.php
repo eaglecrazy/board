@@ -5,7 +5,7 @@ namespace App\Entity\Adverts\Advert;
 use App\Entity\Adverts\Category;
 use App\Entity\Adverts\Advert\Photo;
 use App\Entity\Region;
-use App\Entity\User;
+use App\Entity\User\User ;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;

@@ -7,7 +7,7 @@ namespace App\Usecases\Banners;
 use App\Entity\Adverts\Category;
 use App\Entity\Banner\Banner;
 use App\Entity\Region;
-use App\Entity\User;
+use App\Entity\User\User ;
 use App\Http\Requests\Banner\BannerCreateRequest;
 use App\Http\Requests\Banner\BannerEditRequest;
 use App\Http\Requests\Banner\BannerFileRequest;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Mail\Auth\VerifyMail;
-use App\Entity\User;
+use App\Entity\User\User ;
 use App\Http\Controllers\Controller;
 use App\Usecases\Auth\RegisterService;
 use Illuminate\Auth\Events\Registered;

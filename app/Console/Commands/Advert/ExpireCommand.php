@@ -6,7 +6,7 @@ use App\Entity\Adverts\Advert\Advert;
 use App\Usecases\Adverts\AdvertService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Entity\User;
+use App\Entity\User\User ;
 
 
 class ExpireCommand extends Command

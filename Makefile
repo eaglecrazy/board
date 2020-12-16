@@ -6,6 +6,7 @@ ddown:
 
 dbuild: memory
 	sudo -s docker-compose up --build
+	#sudo -s docker-compose up --build --remove-orphans
 
 memory:
 	sudo sysctl -w vm.max_map_count=262144

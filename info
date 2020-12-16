@@ -150,13 +150,27 @@ Docker
 Статья про настройку отладчика в phpstorm
 https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
 
-Запуск скрипта из контейнера
+Запуск скрипта из контейнера:
 sudo docker exec app_php-cli_1 php artisan migrate
 
-Список контейнеров
+Подключение к контейнеру
+# docker ps
+# docker exec -i -t 6ee6223a3ce3 bash
+
+Список контейнеров:
 sudo docker container ls
 
+Работающие контейнеры:
+docker ps
 
+Узнать IP Docker:
+sudo ifconfig docker0
+----------------------
+Linux
+----------------------
+вывод файла: cat php.ini
+поиск файла: find / -name mcrypt.so -print (можно искать *.so)
+список расширений php -m
 
 ----------------------
 Elastic Search

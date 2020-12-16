@@ -3,7 +3,7 @@
 namespace App\Console\Commands\User;
 
 use Illuminate\Console\Command;
-use App\Entity\User;
+use App\Entity\User\User ;
 
 class RoleCommand extends Command
 {

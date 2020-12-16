@@ -145,8 +145,8 @@ Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.
 Route::get('/login/phone', 'Auth\LoginController@phone')->name('login.phone');
 Route::post('/login/phone', 'Auth\LoginController@verify');
 
-Route::get('/login/{network}', 'Auth\NetworkController@redirect')->name('login.network');
-Route::get('/login/{network}/callback', 'Auth\NetworkController@callback');
+Route::get('/login/{network}', 'Auth\Services\FacebookController@@redirect')->name('login.network');
+Route::get('/login/{network}/callback', 'Auth\Services\FacebookController@callback');
 
 //---------
 // Cabinet

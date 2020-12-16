@@ -4,7 +4,7 @@ namespace App\Console\Commands\User;
 
 use App\Usecases\Auth\RegisterService;
 use Illuminate\Console\Command;
-use App\Entity\User;
+use App\Entity\User\User ;
 
 class VerifyCommand extends Command
 {

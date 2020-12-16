@@ -6,7 +6,7 @@ use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entity\User;
+use App\Entity\User\User ;
 use Illuminate\Validation\Rule;
 use App\Usecases\Auth\RegisterService;
 
