@@ -35,8 +35,8 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-echo xdebug_info();
-die();
+//echo xdebug_info();
+//die();
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 

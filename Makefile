@@ -1,11 +1,11 @@
 dup: memory
-	sudo -s docker-compose up
+	sudo -s docker-compose up --abort-on-container-exit
 
 ddown:
 	sudo -s docker-compose down
 
 dbuild: memory
-	sudo -s docker-compose up --build
+	sudo -s docker-compose up --build --abort-on-container-exit
 	#sudo -s docker-compose up --build --remove-orphans
 
 memory:
