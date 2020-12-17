@@ -20,11 +20,11 @@ cache-clear:
 
 # использование docker для команды
 test-docker:
-	sudo -s docker exec app_php-cli_1 vendor/bin/phpunit --colors=always
+	sudo -s docker exec app_php-fpm_1 vendor/bin/phpunit --colors=always
 
 # использование docker-compose
 test:
-	sudo -s docker-compose exec php-cli vendor/bin/phpunit
+	sudo -s docker-compose exec php-fpm vendor/bin/phpunit
 
 perm:
 	sudo -s chown ${USER}:${USER} bootstrap/cache -R
