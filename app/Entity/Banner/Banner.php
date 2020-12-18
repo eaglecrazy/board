@@ -40,6 +40,31 @@ use Illuminate\Support\Facades\Gate;
  * @method static Builder|\App\Entity\Banner\Banner newQuery()
  * @method static Builder|\App\Entity\Banner\Banner query()
  * @mixin Eloquent
+ * @property string $status
+ * @property int $user_id
+ * @property int $category_id
+ * @property int|null $region_id
+ * @property int|null $cost
+ * @property string|null $reject_reason
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static Builder|Banner whereCategoryId($value)
+ * @method static Builder|Banner whereClicks($value)
+ * @method static Builder|Banner whereCost($value)
+ * @method static Builder|Banner whereCreatedAt($value)
+ * @method static Builder|Banner whereFile($value)
+ * @method static Builder|Banner whereFormat($value)
+ * @method static Builder|Banner whereId($value)
+ * @method static Builder|Banner whereLimit($value)
+ * @method static Builder|Banner whereName($value)
+ * @method static Builder|Banner wherePublishedAt($value)
+ * @method static Builder|Banner whereRegionId($value)
+ * @method static Builder|Banner whereRejectReason($value)
+ * @method static Builder|Banner whereStatus($value)
+ * @method static Builder|Banner whereUpdatedAt($value)
+ * @method static Builder|Banner whereUrl($value)
+ * @method static Builder|Banner whereUserId($value)
+ * @method static Builder|Banner whereViews($value)
  */
 class Banner extends Model
 {

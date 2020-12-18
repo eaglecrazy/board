@@ -4,17 +4,18 @@ namespace App\Entity\User;
 
 use App\Entity\Adverts\Advert\Advert;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\This;
 
 
 /**
@@ -58,10 +59,13 @@ use phpDocumentor\Reflection\Types\This;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerified($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerifyToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneVerifyTokenExpire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  bySocialNetwork($value, $value)
  * @property bool $phone_auth
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\User\User  wherePhoneAuth($value)
  * @property-read Collection|Advert[] $favorites
  * @property-read int|null $favorites_count
+ * @property-read Collection|\App\Entity\User\SocialNetwork[] $socialNetworks
+ * @property-read int|null $social_networks_count
  */
 class User extends Authenticatable
 {
@@ -75,7 +79,6 @@ class User extends Authenticatable
     public const PHONE_VERIFY_TIME = 300;
 
 //    public const PHONE_VERIFY_TIME = 5;
-
 
 
     public static function statusesList(): array
@@ -119,8 +122,8 @@ class User extends Authenticatable
 
     public function addToFavorites($advertId): void
     {
-        if($this->hasInFavorites($advertId)){
-            throw new \DomainException('This advert is alerady added to favorites.');
+        if ($this->hasInFavorites($advertId)) {
+            throw new DomainException('This advert is alerady added to favorites.');
         }
         $this->favorites()->attach($advertId);
     }
@@ -183,7 +186,7 @@ class User extends Authenticatable
     public function verify(): void
     {
         if (!$this->isWait()) {
-            throw new \DomainException('User is already verified.');
+            throw new DomainException('User is already verified.');
         }
         $this->update([
             'status' => self::STATUS_ACTIVE,
@@ -201,7 +204,7 @@ class User extends Authenticatable
             throw new \InvalidArgumentException('Undefined role "' . $role . '"');
         }
         if ($this->role === $role) {
-            throw new \DomainException('Role is already assigned');
+            throw new DomainException('Role is already assigned');
         }
         $this->update(['role' => $role]);
     }
@@ -240,12 +243,12 @@ class User extends Authenticatable
     {
         //если нет телефона
         if (empty($this->phone)) {
-            throw new \DomainException('Phone number is empty.');
+            throw new DomainException('Phone number is empty.');
         }
         //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
         //то есть токен отправили и получить другой ещё нельзя
         if (!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
-            throw new \DomainException('Token is already requested. The new token will be available in ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' seconds.');
+            throw new DomainException('Token is already requested. The new token will be available in ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' seconds.');
         }
 
         $this->phone_verified = false;
@@ -259,10 +262,10 @@ class User extends Authenticatable
     public function verifyPhone($token, Carbon $now): void
     {
         if ($token !== $this->phone_verify_token) {
-            throw new \DomainException('Incorrect verify token.');
+            throw new DomainException('Incorrect verify token.');
         }
         if ($this->phone_verify_token_expire->lt($now)) {
-            throw new \DomainException('Token is expired.');
+            throw new DomainException('Token is expired.');
         }
 
         $this->phone_verified = true;
@@ -293,6 +296,49 @@ class User extends Authenticatable
     public function socialNetworks(): HasMany
     {
         return $this->hasMany(SocialNetwork::class, 'user_id', 'id');
+    }
+
+    public function scopeBySocialNetwork(Builder $query, string $network, string $socialId): Builder
+    {
+        return $query->whereHas('socialNetworks', function (Builder $query) use ($network, $socialId) {
+            $query->where('network', $network)->where('social_id', $socialId);
+        });
+    }
+
+    public static function registerBySocialNetwork(string $socialNetwork, string $socialId)
+    {
+        return DB::transaction(function () use ($socialNetwork, $socialId) {
+            $user = User::create([
+                'name' => $socialId,
+                'email' => null,
+                'password' => null,
+                'verify_token' => null,
+                'role' => User::ROLE_USER,
+                'status' => User::STATUS_ACTIVE,
+            ]);
+            $user->socialNetworks()->create([
+                'network' => $socialNetwork,
+                'social_id' => $socialId,
+            ]);
+            return $user;
+        });
+    }
+
+    public function attachSocialNetwork(string $socialNetwork, string $socialId): void
+    {
+        $exists = $this->socialNetworks()->where([
+            'network' => $socialNetwork,
+            'social_id' => $socialId,
+        ])->exists();
+
+        if ($exists) {
+            throw new DomainException('Социальная сеть ' . $socialNetwork . ' уже привязана к пользователю.');
+        }
+
+        $this->socialNetworks()->create([
+            'network' => $socialNetwork,
+            'social_id' => $socialId,
+        ]);
     }
 
 }
