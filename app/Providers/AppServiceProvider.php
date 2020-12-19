@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             $config = $app->make('config')->get('banner');
             return new CostCalculator($config['price']);
         });
+        Passport::ignoreMigrations();
     }
 
     /**

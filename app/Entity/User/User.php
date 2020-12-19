@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
 
 
 /**
@@ -69,7 +70,7 @@ use Illuminate\Support\Str;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
@@ -105,7 +106,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email'
     ];
 
     protected $casts = [
@@ -341,4 +342,11 @@ class User extends Authenticatable
         ]);
     }
 
+
+    //------------------
+    // Other
+    //------------------
+    public function findForPassport($email){
+        return self::where('email', $email)->where('status', self::STATUS_ACTIVE)->first();
+    }
 }
