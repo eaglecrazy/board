@@ -13,3 +13,7 @@ Route::get('/', 'Api\HomeController@home');
 // Auth
 //---------
 Route::post('register', 'Api\Auth\RegisterController@register');
+//---------
+// Cabinet
+//---------
+Route::put('user', 'Api\User\ProfileController@update');

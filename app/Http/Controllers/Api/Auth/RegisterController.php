@@ -20,6 +20,8 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         $this->service->register($request);
-        return response()->json(['success' => 'Check your email and click on the link to verify.'], Response::HTTP_CREATED);
+        return response()
+            ->json(['success' => 'Check your email and click on the link to verify.'])
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 }

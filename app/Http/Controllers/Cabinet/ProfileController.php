@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers\Cabinet;
 
-use Auth;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entity\User\User ;
+use App\Http\Requests\Cabinet\ProfileEditReruest;
+use App\Usecases\Profile\ProfileService;
+use Auth;
+use DomainException;
+use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends Controller
 {
+    private ProfileService $editService;
+
+    public function __construct(ProfileService $service)
+    {
+        $this->editService = $service;
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -21,19 +30,13 @@ class ProfileController extends Controller
         return view('cabinet.profile.edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(ProfileEditReruest $request): RedirectResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255|regex:/^\d+$/s',
-        ]);
-        $user = Auth::user();
-        if ($user->phone !== $request['phone']) {
-            $user->unverifyPhone();
+        try {
+            $this->editService->edit(Auth::user(), $request);
+        } catch(DomainException $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        $user->update($request->only('name', 'last_name', 'phone'));
-
         return redirect()->route('cabinet.profile.home');
     }
 }

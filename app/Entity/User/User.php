@@ -262,10 +262,10 @@ class User extends Authenticatable
     public function verifyPhone($token, Carbon $now): void
     {
         if ($token !== $this->phone_verify_token) {
-            throw new DomainException('Incorrect verify token.');
+            throw new DomainException('Некорректный токен.');
         }
         if ($this->phone_verify_token_expire->lt($now)) {
-            throw new DomainException('Token is expired.');
+            throw new DomainException('Токен просрочен.');
         }
 
         $this->phone_verified = true;

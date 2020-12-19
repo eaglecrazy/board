@@ -27,8 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerPermissions();
+    }
 
-        Gate::define('admin-panel', function (User $user){
+    private function registerPermissions(): void
+    {
+        Gate::define('admin-panel', function (User $user) {
             return $user->isAdmin() || $user->isModerator();
         });
 
@@ -52,11 +56,11 @@ class AuthServiceProvider extends ServiceProvider
             return $banner->user_id === $user->id;
         });
 
-        Gate::define('manage-regions', function (User $user){
+        Gate::define('manage-regions', function (User $user) {
             return $user->isAdmin();
         });
 
-        Gate::define('manage-users', function (User $user){
+        Gate::define('manage-users', function (User $user) {
             return $user->isAdmin();
         });
 
