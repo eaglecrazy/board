@@ -2,34 +2,30 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cabinet\ProfileEditReruest;
+use App\Http\Resources\User\ProfileResource;
 use App\Usecases\Profile\ProfileService;
-use Auth;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    private ProfileService $editService;
+    private $editService;
 
-    public function __construct(ProfileService $service)
+    public function __construct(ProfileService $editService)
     {
-        $this->editService = $service;
+        $this->editService = $editService;
     }
 
-    public function show(): User
+    public function show(Request $request): ProfileResource
     {
-        return Auth::user();
+        return new ProfileResource($request->user());
     }
 
-    public function update(ProfileEditReruest $request): JsonResponse
+    public function update(ProfileEditReruest $request): ProfileResource
     {
         $user = $request->user();
         $this->editService->edit($user, $request);
-        return response()
-            ->json($user)
-            ->setStatusCode(Response::HTTP_OK);
+        return new ProfileResource($request->user());
     }
 }

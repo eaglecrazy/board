@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Entity\User\User ;
 use App\Services\Sms\SmsSender;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

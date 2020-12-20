@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Elasticsearch\ClientBuilder;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller

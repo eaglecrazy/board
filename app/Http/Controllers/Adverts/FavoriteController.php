@@ -3,15 +3,9 @@
 namespace App\Http\Controllers\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Category;
-use App\Entity\Region;
-use App\Services\PhoneFormatter;
-use App\Usecases\Adverts\AdvertService;
-use App\Usecases\Adverts\FavoriteService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Usecases\Adverts\FavoriteService;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Router\AdvertsPath;
 
 class FavoriteController extends Controller
 {

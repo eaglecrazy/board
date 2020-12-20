@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Attribute;
-use App\Entity\Adverts\Category;
-use App\Entity\User\User ;
-use App\Http\Requests\Adverts\AttributeRequest;
+use App\Entity\User\User;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class AdvertController extends Controller
 {

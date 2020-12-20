@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Adverts;
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\SearchRequest;
+use App\Http\Router\AdvertsPath;
 use App\Services\PhoneFormatter;
 use App\Usecases\Adverts\AdvertService;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Router\AdvertsPath;
 use App\Usecases\Adverts\AdvertsSearchService;
+use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {

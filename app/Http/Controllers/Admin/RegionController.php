@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entity\Region;
 use App\Events\RegionDeleteEvent;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class RegionController extends Controller

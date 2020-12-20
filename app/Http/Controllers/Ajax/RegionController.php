@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Entity\Region;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class RegionController extends Controller
 {

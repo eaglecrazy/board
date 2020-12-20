@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Http\Middleware\FilledProfile;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\FilledProfile;
 use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Admin\Users;
 
+use App\Entity\User\User;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Entity\User\User ;
 use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest

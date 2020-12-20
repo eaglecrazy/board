@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Attribute;
 use App\Entity\Adverts\Category;
-use App\Http\Requests\Adverts\AttributeRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\Adverts\AttributeRequest;
 
 class AttributeController extends Controller
 {

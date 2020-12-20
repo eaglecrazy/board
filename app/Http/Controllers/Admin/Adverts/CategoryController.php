@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Adverts;
 use App\Entity\Adverts\Category;
 use App\Events\CategoryDeleteEvent;
 use App\Events\CategoryUpdateEvent;
-use App\Http\Requests\Adverts\CategoryRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Adverts\CategoryRequest;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller

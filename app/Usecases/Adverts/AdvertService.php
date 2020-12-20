@@ -9,6 +9,7 @@ use App\Http\Requests\Adverts\CreateRequest;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
+use DomainException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -140,6 +141,10 @@ class AdvertService
 
     public function close(Advert $advert): void
     {
+        if($advert->status !== Advert::STATUS_ACTIVE){
+            throw new DomainException('Advert status is not active.');
+        }
+
         $advert->close();
         event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
     }

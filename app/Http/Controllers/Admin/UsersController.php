@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entity\User\User;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Entity\User\User ;
-use Illuminate\Validation\Rule;
 use App\Usecases\Auth\RegisterService;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {

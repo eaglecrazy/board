@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Region;
-use App\Entity\User\User ;
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
+use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Usecases\Adverts\AdvertService;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\Adverts\EditRequest;
 
 class ManageController extends Controller
 {
@@ -55,6 +51,7 @@ class ManageController extends Controller
         return view('adverts.edit.attributes', compact('advert'));
     }
 
+    //todo так как я не менял атрибуты вообще, то нужно проверить как работает их редактирование
     public function updateAttributes(AttributesRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);

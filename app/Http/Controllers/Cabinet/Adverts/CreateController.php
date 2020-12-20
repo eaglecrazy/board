@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Usecases\Adverts\AdvertService;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class CreateController extends Controller

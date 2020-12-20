@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Usecases\Adverts\FavoriteService;
 use App\Http\Controllers\Controller;
+use App\Usecases\Adverts\FavoriteService;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
