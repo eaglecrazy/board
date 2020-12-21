@@ -5,14 +5,12 @@
     <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}">
         @csrf
         <div class="card mb-3">
-            <div class="card-header">
-                Common
-            </div>
+            <div class="card-header">Описание объявления</div>
             <div class="card-body pb-2">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="title" class="col-form-label">Title</label>
+                            <label for="title" class="col-form-label">Название</label>
                             <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                                    name="title" value="{{ old('title') }}" required>
                             @if ($errors->has('title'))
@@ -22,7 +20,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="price" class="col-form-label">Price</label>
+                            <label for="price" class="col-form-label">Стоимость</label>
                             <input id="price" type="number"
                                    class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price"
                                    value="{{ old('price') }}" required>
@@ -35,7 +33,7 @@
 
                 @if($region)
                     <div class="form-group">
-                        <label for="address" class="col-form-label">Address</label>
+                        <label for="address" class="col-form-label">Адрес</label>
                         <div class="row">
                             <div class="col-md-11">
                                 <input id="address" type="text"
@@ -56,7 +54,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="content" class="col-form-label">Content</label>
+                    <label for="content" class="col-form-label">Подробное описание</label>
                     <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
                               name="content" rows="10" required>{{ old('content') }}</textarea>
                     @if ($errors->has('content'))
@@ -67,16 +65,14 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-header">
-                Characteristics
-            </div>
+            <div class="card-header">Характеристики</div>
             <div class="card-body pb-2">
                 @include('cabinet.adverts.create._attributes')
             </div>
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 

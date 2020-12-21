@@ -9,9 +9,6 @@
 
     <title>Board</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -83,7 +80,7 @@
         @yield('breadcrumbs')
         @include('layouts.partials.flash')
         @yield('content')
-        @yield('scripts')
+
     </div>
 </main>
 
@@ -94,5 +91,8 @@
         </div>
     </div>
 </footer>
+<!-- Scripts -->
+<script src="{{ mix('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

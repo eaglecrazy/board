@@ -19,23 +19,23 @@
     @can ('manage-adverts', $advert)
         <h3>Панель модератора</h3>
         <div class="d-flex flex-row mb-3">
-            <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
-            <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
+            <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Редактировать</a>
+            <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Добавить фото</a>
             @if ($advert->isModeration())
                 <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">
                     @csrf
-                    <button class="btn btn-success">Moderate</button>
+                    <button class="btn btn-success">Одобрить публикацию</button>
                 </form>
             @endif
 
             @if ($advert->isModeration() || $advert->isActive())
-                <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Reject</a>
+                <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Отклонить</a>
             @endif
 
             <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-1">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger">Удалить</button>
             </form>
         </div>
     @endcan
@@ -43,26 +43,26 @@
     @can ('manage-own-advert', $advert)
         <h3>Управление объявлением</h3>
         <div class="d-flex flex-row mb-3">
-            <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
-            <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
+            <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Редактировать</a>
+            <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Добавить фото</a>
 
             @if ($advert->isDraft() || $advert->isClosed())
                 <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
                     @csrf
-                    <button class="btn btn-success">Publish</button>
+                    <button class="btn btn-success">Опубликовать</button>
                 </form>
             @endif
             @if ($advert->isActive())
                 <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-1">
                     @csrf
-                    <button class="btn btn-success">Close</button>
+                    <button class="btn btn-success">Закрыть</button>
                 </form>
             @endif
 
             <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-1">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger">Удалить</button>
             </form>
         </div>
     @endcan
@@ -70,12 +70,12 @@
     <div class="row">
         <div class="col-md-9">
 
-            <p class="float-right" style="font-size: 36px;">{{ $advert->price }}</p>
+            <p class="float-right" style="font-size: 36px;">{{ $advert->price }} руб.</p>
             <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
             <p>
-                Created date: {{ $advert->created_at }} &nbsp;
+                Дата создания: {{ $advert->created_at }} &nbsp;
                 @if ($advert->expires_at)
-                    Expires: {{ $advert->expires_at }}
+                    Активно до: {{ $advert->expires_at }}
                 @endif
             </p>
 
@@ -109,35 +109,33 @@
                 </tbody>
             </table>
 
-            <p>Address: {{ $advert->address }}</p>
+            <p>Адрес: {{ $advert->address }}</p>
 
             <div style="margin: 20px 0; border: 1px solid #ddd">
                 <div id="map" style="width: 100%; height: 350px"></div>
             </div>
 
-            <p style="margin-bottom: 20px">Seller: {{ $advert->user->name }}</p>
+            <p style="margin-bottom: 20px">Продавец: {{ $advert->user->name }}</p>
 
             <div class="d-flex flex-row mb-3">
-                <span class="btn btn-success mr-1"><span class="fa fa-envelope"></span> Send Message</span>
+                <span class="btn btn-success mr-1"><span class="fa fa-envelope"></span> Написать сообщение</span>
                 <span class="btn btn-primary phone-button mr-1"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
-                        class="number">Show Phone Number</span></span>
+                        class="number">Показать телефон</span></span>
 
                 @if ($user && $user->hasInFavorites($advert->id))
                     <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-secondary"><span class="fa fa-star"></span> Remove from Favorites</button>
+                        <button class="btn btn-secondary"><span class="fa fa-star"></span> Убрать из избранного</button>
                     </form>
                 @else
                     <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
                         @csrf
-                        <button class="btn btn-danger"><span class="fa fa-star"></span> Add to Favorites</button>
+                        <button class="btn btn-danger"><span class="fa fa-star"></span> Добавить в избранное</button>
                     </form>
                 @endif
             </div>
-
-            {{--            <hr/>--}}
 
             @if($similar->count())
                 <div class="h3">Similar adverts</div>
@@ -169,7 +167,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=418aa256-e41b-4893-aa9f-5530867df1a5"
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey={{ env('YANDEX_MAPS_KEY') }}"
+{{--    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=418aa256-e41b-4893-aa9f-5530867df1a5"--}}
             type="text/javascript"></script>
 
     <script type='text/javascript'>
@@ -200,7 +199,7 @@
                         // Центр карты - координаты первого элемента
                         center: coord,
                         // Коэффициент масштабирования
-                        zoom: 9,
+                        zoom: 12,
                         // включаем масштабирование карты колесом
                         behaviors: ['default', 'scrollZoom'],
                         controls: ['mapTools']
