@@ -20,3 +20,13 @@ class ProfileEditReruest extends FormRequest
         ];
     }
 }
+
+/**
+ * @SWG\Definition(
+ *     definition="ProfileEditRequest",
+ *     type="object",
+ *     @SWG\Property(property="name", type="string"),
+ *     @SWG\Property(property="last_name", type="string"),
+ *     @SWG\Property(property="phone", type="string"),
+ * )
+ */

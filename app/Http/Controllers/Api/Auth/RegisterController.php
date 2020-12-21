@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Usecases\Auth\RegisterService;
+use Illuminate\Http\JsonResponse;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -17,7 +19,20 @@ class RegisterController extends Controller
         $this->service = $service;
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * @SWG\Post(
+     *     path="/register",
+     *     tags={"Profile"},
+     *     @SWG\Parameter(name="body", in="body", required=true, @SWG\Schema(ref="#/definitions/RegisterRequest")),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Success response",
+     *     )
+     * )
+     * @param RegisterRequest $request
+     * @return JsonResponse
+     */
+    public function register(RegisterRequest $request): JsonResponse
     {
         $this->service->register($request);
         return response()

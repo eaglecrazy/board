@@ -26,29 +26,52 @@ class AdvertListResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $res = ['id' => 5];
-        return $res;
-//        return [
-//            'id' => $this->id,
-//            'user' => [
-//                'name' => $this->user->name,
-//                'phone' => $this->user->phone,
-//            ],
-//            'category' => [
-//                'id' => $this->category->id,
-//                'name' => $this->category->name,
-//            ],
-//            'region' => $this->region ?
-//                [
-//                    'id' => $this->region->id,
-//                    'name' => $this->region->name,
-//                ]
-//                :
-//                [],
-//            'title' => $this->title,
-//            'price' => $this->price,
-//            'date' => $this->published_at,
-//            'photo' => $this->photos->first()->file,
-//        ];
+        return [
+            'id' => $this->id,
+            'user' => [
+                'name' => $this->user->name,
+                'phone' => $this->user->phone,
+            ],
+            'category' => [
+                'id' => $this->category->id,
+                'name' => $this->category->name,
+            ],
+            'region' => $this->region ?
+                [
+                    'id' => $this->region->id,
+                    'name' => $this->region->name,
+                ]
+                :
+                [],
+            'title' => $this->title,
+            'price' => $this->price,
+            'date' => $this->published_at,
+            'photos' => array_map(function (Photo $photo) {return $photo->file;}, $this->photos->toArray())
+        ];
     }
 }
+
+
+/**
+ * @SWG\Definition(
+ *     definition="AdvertList",
+ *     type="object",
+ *     @SWG\Property(property="id", type="integer"),
+ *     @SWG\Property(property="user", type="object",
+ *         @SWG\Property(property="name", type="string"),
+ *         @SWG\Property(property="phone", type="string"),
+ *     ),
+ *     @SWG\Property(property="category", type="object",
+ *         @SWG\Property(property="id", type="integer"),
+ *         @SWG\Property(property="name", type="string"),
+ *     ),
+ *     @SWG\Property(property="region", type="object",
+ *         @SWG\Property(property="id", type="integer"),
+ *         @SWG\Property(property="name", type="string"),
+ *     ),
+ *     @SWG\Property(property="title", type="string"),
+ *     @SWG\Property(property="price", type="integer"),
+ *     @SWG\Property(property="date", type="date"),
+ *     @SWG\Property(property="photo", type="string"),
+ * )
+ */
