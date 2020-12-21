@@ -58,6 +58,10 @@ class AuthServiceProvider extends ServiceProvider
             return $banner->user_id === $user->id;
         });
 
+        Gate::define('manage-pages', function (User $user) {
+            return $user->isAdmin();
+        });
+
         Gate::define('manage-regions', function (User $user) {
             return $user->isAdmin();
         });
@@ -75,9 +79,7 @@ class AuthServiceProvider extends ServiceProvider
 //            return $user->isAdmin() || $user->isModerator();
 //        });
 //
-//        Gate::define('manage-pages', function (User $user) {
-//            return $user->isAdmin();
-//        });
+
 //
 //        Gate::define('manage-tickets', function (User $user) {
 //            return $user->isAdmin() || $user->isModerator();

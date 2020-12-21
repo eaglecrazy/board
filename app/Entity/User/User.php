@@ -67,6 +67,10 @@ use Laravel\Passport\HasApiTokens;
  * @property-read int|null $favorites_count
  * @property-read Collection|\App\Entity\User\SocialNetwork[] $socialNetworks
  * @property-read int|null $social_networks_count
+ * @property-read Collection|\Laravel\Passport\Client[] $clients
+ * @property-read int|null $clients_count
+ * @property-read Collection|\Laravel\Passport\Token[] $tokens
+ * @property-read int|null $tokens_count
  */
 class User extends Authenticatable
 {
