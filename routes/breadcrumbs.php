@@ -3,6 +3,7 @@
 use App\Entity\Adverts\Attribute;
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Banner\Banner;
+use App\Entity\Page;
 use App\Entity\Region;
 use App\Entity\Adverts\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
@@ -187,6 +188,38 @@ Breadcrumbs::register('admin.adverts.categories.edit', function (BreadcrumbsGene
     $crumbs->push('Edit category', route('admin.adverts.categories.edit', $category));
 });
 
+
+//-------------------------------------------------------------------------
+// Admin.PagesController
+//-------------------------------------------------------------------------
+
+//admin.pages.create
+Breadcrumbs::register('admin.pages.create', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('admin.pages.index');
+    $crumbs->push('Создание', route('admin.pages.create'));
+});
+
+//admin.pages.edit
+Breadcrumbs::register('admin.pages.edit', function (BreadcrumbsGenerator $crumbs, Page $page) {
+    $crumbs->parent('admin.pages.show', $page);
+    $crumbs->push('Редактирование', route('admin.pages.edit', $page));
+});
+
+//admin.pages.index
+Breadcrumbs::register('admin.pages.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Страницы', route('admin.pages.index'));
+});
+
+//admin.pages.show
+Breadcrumbs::register('admin.pages.show', function (BreadcrumbsGenerator $crumbs, Page $page) {
+    if ($parent = $page->parent) {
+        $crumbs->parent('admin.pages.show', $parent);
+    } else {
+        $crumbs->parent('admin.pages.index');
+    }
+    $crumbs->push($page->title, route('admin.pages.show', $page));
+});
 
 //-------------------------------------------------------------------------
 // Admin.RegionsController

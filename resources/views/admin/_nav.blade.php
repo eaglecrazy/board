@@ -23,4 +23,9 @@
         <li class="nav-item"><a href="{{ route('admin.adverts.categories.index') }}"
                                 class="nav-link{{ $page === 'categories' ? ' active' : '' }}">Категории</a></li>
     @endcan
+
+    @can('manage-pages')
+        <li class="nav-item"><a href="{{ route('admin.pages.index') }}"
+                                class="nav-link{{ $page === 'pages' ? ' active' : '' }}">Страницы</a></li>
+    @endcan
 </ul>

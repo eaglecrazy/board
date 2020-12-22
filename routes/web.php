@@ -16,8 +16,6 @@ Route::get('/banner/{banner}/click', 'BannerController@click')->name('banner.cli
 Route::get('/', 'HomeController@index')->name('home');
 
 
-
-
 //---------
 // Admin
 //---------
@@ -96,6 +94,21 @@ Route::group([
         Route::post('/{banner}/pay', 'AdminBannerController@pay')->name('pay');
         Route::delete('/{banner}/destroy', 'AdminBannerController@destroy')->name('destroy');
     });
+
+    //---------
+    // Admin.Pages
+    //---------
+    Route::resource('pages', 'PageController');
+
+    Route::group([
+        'prefix' => 'pages/{page}',
+        'as' => 'pages.'],
+        function () {
+            Route::post('/first', 'PageController@first')->name('first');
+            Route::post('/up', 'PageController@up')->name('up');
+            Route::post('/down', 'PageController@down')->name('down');
+            Route::post('/last', 'PageController@last')->name('last');
+        });
 
 
     //---------
@@ -236,3 +249,4 @@ Route::group([
 
 });
 
+Route::get('/{page_path}', 'PageController@show')->name('page')->where('page_path', '.+');

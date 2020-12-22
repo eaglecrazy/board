@@ -6,6 +6,7 @@ use App\Entity\Page;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Pages\PageRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -30,7 +31,7 @@ class PageController extends Controller
     {
         $page = Page::create([
             'title' => $request['title'],
-            'slug' => $request['slug'],
+            'slug' => Str::slug($request['title']),
             'menu_title' => $request['menu_title'],
             'parent_id' => $request['parent'],
             'content' => $request['content'],
@@ -54,7 +55,7 @@ class PageController extends Controller
     {
         $page->update([
             'title' => $request['title'],
-            'slug' => $request['slug'],
+            'slug' => Str::slug($request['title']),
             'menu_title' => $request['menu_title'],
             'parent_id' => $request['parent'],
             'content' => $request['content'],
@@ -96,8 +97,4 @@ class PageController extends Controller
         $page->delete();
         return redirect()->route('admin.pages.index');
     }
-
-закончил на 1.12
-
-
 }

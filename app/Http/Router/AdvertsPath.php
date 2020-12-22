@@ -28,18 +28,6 @@ class AdvertsPath implements UrlRoutable
         return $clone;
     }
 
-    public function getRouteKey(): string
-    {
-        $segments = [];
-        if ($result = $this->makeRegionPath()) {
-            $segments[] = $result;
-        }
-        if ($result = $this->makeCategoryPath()) {
-            $segments[] = $result;
-        }
-        return implode('/', $segments);
-    }
-
     private function makeRegionPath(): string
     {
         if ($this->region) {
@@ -89,6 +77,7 @@ class AdvertsPath implements UrlRoutable
         return implode('/', $segments);
     }
 
+    //UrlRoutable
     public function getRouteKeyName(): string
     {
         return 'adverts_path';
@@ -136,4 +125,15 @@ class AdvertsPath implements UrlRoutable
         return $this->withRegion($region)->withCategory($category);
     }
 
+    public function getRouteKey(): string
+    {
+        $segments = [];
+        if ($result = $this->makeRegionPath()) {
+            $segments[] = $result;
+        }
+        if ($result = $this->makeCategoryPath()) {
+            $segments[] = $result;
+        }
+        return implode('/', $segments);
+    }
 }
