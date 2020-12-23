@@ -9,8 +9,9 @@
         <thead>
         <tr>
             <th>Название</th>
+            <th>Название в меню</th>
             <th>Slug</th>
-            <th></th>
+            <th>Управление</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +19,7 @@
         @foreach ($pages as $page)
             <tr>
                 <td>
-                    @for ($i = 0; $i < $page->depth; $i++) &mdash; @endfor
+                    @for ($i = 0; $i < $page->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor
                     <a href="{{ route('admin.pages.show', $page) }}">{{ $page->title }}</a>
                 </td>
                 <td>{{ $page->menu_title }}</td>

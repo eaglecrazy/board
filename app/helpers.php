@@ -4,6 +4,7 @@ use App\Entity\Adverts\Category;
 use App\Entity\Page;
 use App\Entity\Region;
 use App\Http\Router\AdvertsPath;
+use App\Http\Router\PagePath;
 
 
 if(!function_exists('adPath')){
@@ -19,7 +20,7 @@ if(!function_exists('adPath')){
 if(!function_exists('pagePath')){
     function pagePath(?Page $page){
         return app()
-            ->make(AdvertsPath::class)
+            ->make(PagePath::class)
             ->withPage($page);
     }
 }

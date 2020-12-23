@@ -42,20 +42,20 @@
             @endif
         </div>
 
-        {{--        <div class="form-group">--}}
-        {{--            <label for="content" class="col-form-label">Content</label>--}}
-        {{--            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote" data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>--}}
-        {{--            @if ($errors->has('content'))--}}
-        {{--                <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>--}}
-        {{--            @endif--}}
-        {{--        </div>--}}
-
         <div class="form-group">
-            <label for="content" class="col-form-label">content</label>
-            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
-                      name="content" rows="3">{{ old('content', $page->content) }}</textarea>
+            <label for="content" class="col-form-label">Контент</label>
+            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" data-image-url="{{ route('home') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>
+{{--            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote" data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>--}}
             @if ($errors->has('content'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="col-form-label">Описание</label>
+            <textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" rows="3">{{ old('description', $page->description) }}</textarea>
+            @if ($errors->has('description'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('description') }}</strong></span>
             @endif
         </div>
 

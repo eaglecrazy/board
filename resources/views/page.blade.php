@@ -17,3 +17,5 @@
 
     {!! nl2br(e($page->content)) !!}
 @endsection
+
+ЗАКОНЧИЛ 1-31

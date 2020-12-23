@@ -29,9 +29,13 @@
             <th>Slug</th>
             <td>{{ $page->slug }}</td>
         </tr>
-        <tr>\
+        <tr>
             <th>Контент</th>
             <td>{{ strip_tags($page->content) }}</td>
+        </tr>
+        <tr>
+            <th>Описание</th>
+            <td>{{ strip_tags($page->description) }}</td>
         </tr>
         </tbody>
     </table>
