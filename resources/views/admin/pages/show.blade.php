@@ -29,7 +29,7 @@
             <th>Slug</th>
             <td>{{ $page->slug }}</td>
         </tr>
-        <tr>
+        <tr>\
             <th>Контент</th>
             <td>{{ strip_tags($page->content) }}</td>
         </tr>
@@ -38,7 +38,8 @@
 
     <div class="card">
         <div class="card-body pb-1">
-            {!! $page->content !!}
+{{--            {!! $page->content !!}--}}
+            {!! nl2br(e($page->content)) !!}
         </div>
     </div>
 @endsection

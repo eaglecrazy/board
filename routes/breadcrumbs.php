@@ -6,6 +6,7 @@ use App\Entity\Banner\Banner;
 use App\Entity\Page;
 use App\Entity\Region;
 use App\Entity\Adverts\Category;
+use App\Http\Router\PagePath;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Entity\User\User ;
@@ -14,7 +15,7 @@ use App\Http\Router\AdvertsPath;
 
 
 //-------------------------------------------------------------------------
-//Home
+//Home + pages
 //-------------------------------------------------------------------------
 
 //home
@@ -22,6 +23,14 @@ Breadcrumbs::register('home', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->push('Home', route('home'));
 });
 
+Breadcrumbs::register('page', function (BreadcrumbsGenerator $crumbs, PagePath $path) {
+    if ($parent = $path->page->parent) {
+        $crumbs->parent('page', $path->withPage($path->page->parent));
+    } else {
+        $crumbs->parent('home');
+    }
+    $crumbs->push($path->page->title, route('page', $path));
+});
 
 //-------------------------------------------------------------------------
 //Аутентификация, регистрация, ЛК

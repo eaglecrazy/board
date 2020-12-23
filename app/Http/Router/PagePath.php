@@ -26,7 +26,7 @@ class PagePath implements UrlRoutable
             throw new \BadMethodCallException('Empty page');
         }
         return Cache::tags(Page::class)->rememberForever('page_path_' . $this->page->id, function (){
-           return $this->page->path;
+           return $this->page->getPath();
         });
     }
 
