@@ -44,8 +44,7 @@
 
         <div class="form-group">
             <label for="content" class="col-form-label">Контент</label>
-            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" data-image-url="{{ route('home') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>
-{{--            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote" data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>--}}
+            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote" data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>
             @if ($errors->has('content'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>
             @endif

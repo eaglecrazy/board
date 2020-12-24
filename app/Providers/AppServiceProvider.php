@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Entity\Adverts\Category;
+use App\Entity\Page;
 use App\Entity\Region;
 use App\Services\Banner\CostCalculator;
 use App\Services\Sms\FakeSender;
@@ -11,6 +12,7 @@ use App\Services\Sms\SmsSender;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use Mockery\Generator\StringManipulation\Pass\Pass;
@@ -39,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 
 }

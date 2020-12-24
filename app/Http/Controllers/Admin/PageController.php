@@ -53,6 +53,7 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $page): RedirectResponse
     {
+        //todo При изменинии любой страницы нужно удалять кэш, так как адреса могли измениться
         $page->update([
             'title' => $request['title'],
             'slug' => Str::slug($request['title']),

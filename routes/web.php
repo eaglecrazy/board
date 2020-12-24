@@ -27,9 +27,10 @@ Route::group([
 ], function () {
 
     //---------
-    // Admin.Home
+    // Admin
     //---------
     Route::get('/', 'HomeController@index')->name('home');
+    Route::post('/ajax/upload/image', 'UploadController@image')->name('ajax.upload.image');
 
     //---------
     // Admin.Adverts
