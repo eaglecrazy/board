@@ -5,6 +5,7 @@ namespace App\Entity\Adverts\Advert;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Entity\User\User;
+use DomainException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,7 @@ use Illuminate\Support\Facades\Gate;
  * @property-read Category $category
  * @property-read Region $region
  * @property-read User $user
+ * @property-read Dialog $dialog
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereContent($value)
@@ -192,6 +194,11 @@ class Advert extends Model
         return $this->hasMany(Value::class, 'advert_id', 'id');
     }
 
+    public function dialogs(): HasMany
+    {
+        return $this->hasMany(Dialog::class, 'advert_id', 'id');
+    }
+
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class, 'advert_id', 'id');
@@ -255,7 +262,55 @@ class Advert extends Model
         ]);
     }
 
+//    --------------------
+//    Сообщения
+//    --------------------
+    public function writeClientMessage(int $fromId, string $message): void
+    {
+        $dialog = $this->getOrCreateDialogWith($fromId);
+        $dialog->writeMessage($fromId, $message);
+    }
 
+    public function writeOwnerMessage(int $toId, string $message): void
+    {
+        $dialog = $this->getDialogWith($toId);
+        $dialog->writeMessage($this->user_id, $message);
+    }
+
+    private function getOrCreateDialogWith(int $fromId): Dialog
+    {
+        if($fromId === $this->user_id){
+            throw new DomainException('Нельзя отправить сообщение себе.');
+        }
+        return $this->dialogs()->firstOrCreate([
+            'user_id'=>$this->user_id,
+            'client_id'=> $fromId,
+        ]);
+    }
+
+    private function getDialogWith(int $clientId): Dialog
+    {
+        $dialog = $this->dialogs()->where([
+            'user_id'=>$this->user_id,
+            'client_id'=> $clientId,
+        ])->first();
+        if(!$dialog){
+            throw new DomainException('Диалог не найден.');
+        }
+        return $dialog;
+    }
+
+    private function readClientMessages(int $clientId):void
+    {
+        $this->getDialogWith($clientId)->readByClient();
+    }
+
+    private function readOwnerMessages(int $clientId):void
+    {
+        $this->getDialogWith($clientId)->readByOwner();
+    }
+
+    //ЗАКОНЧИЛ НА 5.04
 
 //    --------------------
 //    Другое
@@ -265,6 +320,9 @@ class Advert extends Model
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
     }
+
+
+
 
 }
 
