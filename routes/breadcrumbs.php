@@ -6,6 +6,7 @@ use App\Entity\Banner\Banner;
 use App\Entity\Page;
 use App\Entity\Region;
 use App\Entity\Adverts\Category;
+use App\Entity\Ticket\Ticket;
 use App\Http\Router\PagePath;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
@@ -267,6 +268,24 @@ Breadcrumbs::register('admin.regions.edit', function (BreadcrumbsGenerator $crum
     $crumbs->push('Edit', route('admin.regions.edit', $region));
 });
 
+//-------------------------------------------------------------------------
+// Admin.Tickets.Controller
+//-------------------------------------------------------------------------
+
+Breadcrumbs::register('admin.tickets.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Заявки', route('admin.tickets.index'));
+});
+
+Breadcrumbs::register('admin.tickets.show', function (BreadcrumbsGenerator $crumbs, Ticket $ticket) {
+    $crumbs->parent('admin.tickets.index');
+    $crumbs->push($ticket->subject, route('admin.tickets.show', $ticket));
+});
+
+Breadcrumbs::register('admin.tickets.edit', function (BreadcrumbsGenerator $crumbs, Ticket $ticket) {
+    $crumbs->parent('admin.tickets.show', $ticket);
+    $crumbs->push('Редактировать', route('admin.tickets.edit', $ticket));
+});
 
 //-------------------------------------------------------------------------
 // Admin.UsersController
@@ -479,4 +498,26 @@ Breadcrumbs::register('cabinet.profile.edit', function (BreadcrumbsGenerator $cr
 Breadcrumbs::register('cabinet.profile.phone', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('cabinet.profile.home');
     $crumbs->push('Edit', route('cabinet.profile.phone'));
+});
+
+//-------------------------------------------------------------------------
+// Cabinet.Tickets
+//-------------------------------------------------------------------------
+
+//cabinet.tickets.index
+Breadcrumbs::register('cabinet.tickets.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Заявки', route('cabinet.tickets.index'));
+});
+
+//cabinet.tickets.create
+Breadcrumbs::register('cabinet.tickets.create', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('cabinet.tickets.index');
+    $crumbs->push('Создать', route('cabinet.tickets.create'));
+});
+
+//cabinet.tickets.show
+Breadcrumbs::register('cabinet.tickets.show', function (BreadcrumbsGenerator $crumbs, Ticket $ticket) {
+    $crumbs->parent('cabinet.tickets.index');
+    $crumbs->push($ticket->subject, route('cabinet.tickets.show', $ticket));
 });

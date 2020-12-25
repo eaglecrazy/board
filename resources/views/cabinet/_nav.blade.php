@@ -4,5 +4,5 @@
     <li class="nav-item"><a class="nav-link{{ $page === 'favorites' ? ' active' : '' }}" href="{{ route('cabinet.favorites.index') }}">Избранное</a></li>
     <li class="nav-item"><a class="nav-link{{ $page === 'banners' ? ' active' : '' }}" href="{{ route('cabinet.banners.index') }}">Баннеры</a></li>
     <li class="nav-item"><a class="nav-link{{ $page === 'profile' ? ' active' : '' }}" href="{{ route('cabinet.profile.home') }}">Профиль</a></li>
-{{--    <li class="nav-item"><a class="nav-link{{ $page === 'tickets' ? ' active' : '' }}" href="{{ route('cabinet.tickets.index') }}">Tickets</a></li>--}}
+    <li class="nav-item"><a class="nav-link{{ $page === 'tickets' ? ' active' : '' }}" href="{{ route('cabinet.tickets.index') }}">Заявки</a></li>
 </ul>
