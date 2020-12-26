@@ -2,6 +2,7 @@
 
 namespace App\Entity\Adverts\Advert;
 
+use App\Entity\Adverts\Advert\Dialog\Dialog;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Entity\User\User;
@@ -265,26 +266,26 @@ class Advert extends Model
 //    --------------------
 //    Сообщения
 //    --------------------
-    public function writeClientMessage(int $fromId, string $message): void
+    public function writeClientMessage(int $clientId, string $message): void
     {
-        $dialog = $this->getOrCreateDialogWith($fromId);
-        $dialog->writeMessage($fromId, $message);
+        $dialog = $this->getOrCreateDialogWith($clientId);
+        $dialog->writeMessageByClient($clientId, $message);
     }
 
-    public function writeOwnerMessage(int $toId, string $message): void
+    public function writeOwnerMessage(int $clientId, string $message): void
     {
-        $dialog = $this->getDialogWith($toId);
-        $dialog->writeMessage($this->user_id, $message);
+        $dialog = $this->getDialogWith($clientId);
+        $dialog->writeMessageByOwner($this->user_id, $message);
     }
 
-    private function getOrCreateDialogWith(int $fromId): Dialog
+    private function getOrCreateDialogWith(int $clientId): Dialog
     {
-        if($fromId === $this->user_id){
+        if($clientId === $this->user_id){
             throw new DomainException('Нельзя отправить сообщение себе.');
         }
         return $this->dialogs()->firstOrCreate([
             'user_id'=>$this->user_id,
-            'client_id'=> $fromId,
+            'client_id'=> $clientId,
         ]);
     }
 
@@ -310,7 +311,6 @@ class Advert extends Model
         $this->getDialogWith($clientId)->readByOwner();
     }
 
-    //ЗАКОНЧИЛ НА 5.04
 
 //    --------------------
 //    Другое
@@ -320,9 +320,5 @@ class Advert extends Model
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
     }
-
-
-
-
 }
 
