@@ -4,6 +4,7 @@ namespace App\Usecases\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
 use App\Events\AdvertEvent;
+use App\Events\AdvertModerationPassedEvent;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Http\Requests\Adverts\EditRequest;
@@ -81,7 +82,7 @@ class AdvertService
     public function moderate(Advert $advert): void
     {
         $advert->moderate(Carbon::now());
-        event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
+        event(new AdvertModerationPassedEvent($advert));
     }
 
     public function reject(Advert $advert, RejectRequest $request): void

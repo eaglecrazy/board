@@ -238,6 +238,7 @@ class Advert extends Model
         $this->update([
             'status' => self::STATUS_ACTIVE,
             'published_at' => $date,
+            'reject_reason' => '',
             'expires_at' => $date->copy()->addMonth(1),
         ]);
     }

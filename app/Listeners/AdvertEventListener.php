@@ -11,22 +11,11 @@ class AdvertEventListener
 {
     private $advertsIndexer;
 
-    /**
-     * Create the event listener.
-     *
-     * @param AdvertIndexer $adverts
-     */
     public function __construct(AdvertIndexer $adverts)
     {
         $this->advertsIndexer = $adverts;
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
     public function handle($event)
     {
         $action = $event->action;

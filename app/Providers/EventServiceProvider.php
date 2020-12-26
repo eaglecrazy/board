@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Events\AdvertEvent;
+use App\Events\AdvertModerationPassedEvent;
 use App\Events\CategoryDeleteEvent;
 use App\Events\CategoryUpdateEvent;
 use App\Events\RegionDeleteEvent;
 use App\Listeners\AdvertEventListener;
+use App\Listeners\AdvertModerationPassedListener;
 use App\Listeners\CategoryDeleteEventListener;
 use App\Listeners\CategoryUpdateEventListener;
 use App\Listeners\RegionDeleteEventListener;
@@ -27,6 +29,10 @@ class EventServiceProvider extends ServiceProvider
 
         AdvertEvent::class => [
             AdvertEventListener::class
+        ],
+
+        AdvertModerationPassedEvent::class => [
+            AdvertModerationPassedListener::class
         ],
 
         CategoryDeleteEvent::class => [

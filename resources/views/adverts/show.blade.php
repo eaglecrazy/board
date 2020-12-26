@@ -138,7 +138,7 @@
             </div>
 
             @if($similar->count())
-                <div class="h3">Similar adverts</div>
+                <div class="h3">Похожие объявления</div>
                 <div class="row">
 
                     @foreach($similar as $similar_item)
