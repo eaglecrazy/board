@@ -3,10 +3,10 @@
 namespace App\Notifications\Advert;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Notifications\SmsChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ModerationPassedNotification extends Notification
 {
@@ -21,7 +21,7 @@ class ModerationPassedNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['mail'];
+        return ['mail', SmsChannel::class];
     }
 
     public function toMail($notifiable): MailMessage
@@ -32,5 +32,10 @@ class ModerationPassedNotification extends Notification
             ->line('Your advert successfully passed a moderation.')
             ->action('View Advert', route('adverts.show', $this->advert))
             ->line('Thank you for using our application!');
+    }
+
+    public function toSms($notifiable): string
+    {
+        return 'Your advert successfully passed a moderation.';
     }
 }
