@@ -7,6 +7,7 @@ use App\Events\AdvertModerationPassedEvent;
 use App\Events\CategoryDeleteEvent;
 use App\Events\CategoryUpdateEvent;
 use App\Events\RegionDeleteEvent;
+use App\Listeners\AdvertChangedListener;
 use App\Listeners\AdvertEventListener;
 use App\Listeners\AdvertModerationPassedListener;
 use App\Listeners\CategoryDeleteEventListener;
@@ -32,7 +33,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         AdvertModerationPassedEvent::class => [
-            AdvertModerationPassedListener::class
+            AdvertModerationPassedListener::class,
+            AdvertChangedListener::class,
         ],
 
         CategoryDeleteEvent::class => [

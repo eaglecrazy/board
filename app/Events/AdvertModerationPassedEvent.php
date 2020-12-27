@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class AdvertModerationPassedEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
 
     public $advert;
 
