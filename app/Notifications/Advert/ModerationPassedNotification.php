@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 
-class ModerationPassedNotification extends Notification implements ShouldQueue
+class ModerationPassedNotification extends Notification
 {
     use Queueable, SerializesModels;
 

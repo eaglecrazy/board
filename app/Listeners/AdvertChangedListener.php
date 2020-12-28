@@ -2,19 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Services\Search\AdvertIndexer;
+use App\Jobs\Advert\ReindexAdvertJob;
 
 class AdvertChangedListener
 {
-    private $advertsIndexer;
-
-    public function __construct(AdvertIndexer $advertsIndexer)
+    public function handle($event): void
     {
-        $this->advertsIndexer = $advertsIndexer;
-    }
-
-    public function handle($event)
-    {
-        $this->advertsIndexer->index($event->advert);
+        ReindexAdvertJob::dispatch($event->advert);
     }
 }
