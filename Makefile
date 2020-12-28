@@ -58,7 +58,8 @@ queue:
 	docker-compose exec php-cli php artisan queue:work
 
 horizon:
-	docker-compose exec php-cli php artisan horizon
+	#docker-compose exec php-cli php artisan horizon
+	docker-compose exec php-fpm php artisan horizon
 
 horizon-pause:
 	docker-compose exec php-cli php artisan horizon:pause

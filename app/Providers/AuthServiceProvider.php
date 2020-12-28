@@ -6,6 +6,7 @@ use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Banner\Banner;
 use App\Entity\Ticket\Ticket;
 use App\Entity\User\User ;
+use Horizon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -31,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         $this->registerPermissions();
         Passport::routes();
+        Horizon::auth(function (){
+            return Gate::allows('horizon');
+        });
     }
 
     private function registerPermissions(): void
