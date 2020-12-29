@@ -52,8 +52,22 @@ class CreateTicketsTable extends Migration
 
     public function down()
     {
+
+        Schema::table('ticket_messages', function (Blueprint $table) {
+            $table->dropForeign(['ticket_id']);
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('ticket_messages');
+
+        Schema::table('ticket_statuses', function (Blueprint $table) {
+            $table->dropForeign(['ticket_id']);
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('ticket_statuses');
+
+        Schema::table('ticket_tickets', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('ticket_tickets');
     }
 }

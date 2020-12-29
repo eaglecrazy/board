@@ -27,11 +27,15 @@ class AddNetworksAuth extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('user_networks');
+        Schema::table('user_networks', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
 
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->change();
             $table->string('password')->change();
         });
+
+        Schema::dropIfExists('user_networks');
     }
 }

@@ -23,6 +23,10 @@ class CreateAdvertFavoritesTable extends Migration
 
     public function down()
     {
+        Schema::table('advert_favorites', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['advert_id']);
+        });
         Schema::dropIfExists('advert_favorites');
     }
 }

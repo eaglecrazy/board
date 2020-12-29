@@ -1,6 +1,9 @@
 3-32
 
 
+RUN pecl install xdebug-2.9.8 && docker-php-ext-enable xdebug
+
+
 https://127.0.0.1:8080/adverts - не выводить черновики, проверить вывод дочерних категорий и регионов
 
 

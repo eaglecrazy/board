@@ -36,6 +36,11 @@ class CreateBannersTable extends Migration
 
     public function down()
     {
+        Schema::table('banners_banners', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['category_id']);
+            $table->dropForeign(['region_id']);
+        });
         Schema::dropIfExists('banners_banners');
     }
 }

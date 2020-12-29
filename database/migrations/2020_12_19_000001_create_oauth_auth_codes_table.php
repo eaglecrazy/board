@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOauthAuthCodesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('oauth_auth_codes', function (Blueprint $table) {
@@ -23,11 +18,6 @@ class CreateOauthAuthCodesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('oauth_auth_codes');

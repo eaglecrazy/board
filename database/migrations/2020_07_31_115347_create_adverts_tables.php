@@ -57,8 +57,30 @@ class CreateAdvertsTables extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('advert_adverts');
-        Schema::dropIfExists('advert_advert_values');
+        Schema::table('advert_advert_photos', function (Blueprint $table) {
+            $table->dropForeign(['advert_id']);
+        });
         Schema::dropIfExists('advert_advert_photos');
+
+        Schema::table('advert_advert_values', function (Blueprint $table) {
+            $table->dropForeign(['advert_id']);
+            $table->dropForeign(['attribute_id']);
+        });
+        Schema::dropIfExists('advert_advert_values');
+
+        Schema::table('advert_adverts', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['category_id']);
+            $table->dropForeign(['region_id']);
+        });
+        Schema::dropIfExists('advert_adverts');
+
+
+
+
+
+
+
+
     }
 }
