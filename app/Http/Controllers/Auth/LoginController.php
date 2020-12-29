@@ -25,8 +25,9 @@ class LoginController extends Controller
         $this->sms = $sms;
     }
 
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+//        dd($request->session()->all());
         return view('auth.login');
     }
 

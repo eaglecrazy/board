@@ -1,0 +1,4 @@
+[2020-12-29T17:35:41,709][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2020-12-29T17:35:41,820][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2020-12-29T18:01:11,341][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2020-12-29T18:01:11,363][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
