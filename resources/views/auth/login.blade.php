@@ -12,32 +12,31 @@
                         <div class="form-group row">
                             <label for="email"
                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input id="email" type="email"
+                                       class="form-control @if($errors->has('email')) is-invalid @endif"
                                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-{{--                                @error('email')--}}
-{{--                                <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
+                                @if($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="password"
                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
-                                       class="form-control @error('password') is-invalid @enderror" name="password"
+                                       class="form-control @if($errors->has('password')) is-invalid @endif"
+                                       name="password"
                                        required autocomplete="current-password">
-
-{{--                                @error('password')--}}
-{{--                                <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
+                                @if($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -77,10 +76,14 @@
                 <div class="card-header">Войти через:</div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('login.social-network', ['network' => 'facebook']) }}"><span class="fa fa-facebook-square"></span> Facebook</a></li>
-                        <li><a href="{{ route('login.social-network', ['network' => 'twitter']) }}"><span class="fa fa-twitter-square"></span> Twitter</a></li>
-                        <li><a href="{{ route('login.social-network', ['network' => 'vkontakte']) }}"><span class="fa fa-vk"></span> В контакте</a></li>
-                        <li><a href="{{ route('login.social-network', ['network' => 'github']) }}"><span class="fa fa-github"></span> GitHub</a></li>
+                        <li><a href="{{ route('login.social-network', ['network' => 'facebook']) }}"><span
+                                    class="fa fa-facebook-square"></span> Facebook</a></li>
+                        <li><a href="{{ route('login.social-network', ['network' => 'twitter']) }}"><span
+                                    class="fa fa-twitter-square"></span> Twitter</a></li>
+                        <li><a href="{{ route('login.social-network', ['network' => 'vkontakte']) }}"><span
+                                    class="fa fa-vk"></span> В контакте</a></li>
+                        <li><a href="{{ route('login.social-network', ['network' => 'github']) }}"><span
+                                    class="fa fa-github"></span> GitHub</a></li>
                     </ul>
                 </div>
             </div>
