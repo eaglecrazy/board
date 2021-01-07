@@ -4,36 +4,126 @@ namespace App\Console\Commands\Seed\Regions;
 
 
 use Illuminate\Console\Command;
+use Storage;
+use App\Entity\Region;
+use Str;
 
 class SeedRegions extends Command
 {
     protected $signature = 'seed:regions';
-    private $access_token = 'b8568bac94f8d60c68ece4a645584e0a93cd50cc6483558dcde3ee83092b848f4580282ed07ad954d6e1b';
+    private $access_token = 'c2ae6d76af4dc42542c2b1d61b116c9f55ccf5ef0d5699a0604ae5930afd751aab45be2fd32626bb09ecd';
+    private $id = 1;
+    private $all;
+    private $places = [];
+    private $regionNames = [];
+
 
     public function handle()
     {
+        $this->madeRegionNames();//впадлу руками делать то
 
-        $rootRegions = $this->getRootRegions();
+// ПОЛУЧЕНИЕ ВСЕХ ДАННЫХ ИЗ ВК
+//        $all = $this->getAreasAndCities();
+//        $str = \GuzzleHttp\json_encode($all, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//        $rez = Storage::disk('public')->put('areasAndCities', $str);
 
-//        var_dump($rootRegions);
-//        die();
 
-        $areasAndCities = $this->getAreasAndCities();
+// ПОЛУЧЕНИЕ ВСЕХ ДАННЫХ ИЗ ФАЙЛА
+        $this->all = $this->getAreasAndCitiesFromFile();
+        $this->trimAllNames();
+        $this->sortAllPlaces();
 
-        var_dump($areasAndCities);
 
-        $areas = $this->getAreas($areasAndCities, $rootRegions);
-//        var_dump($areas);
+//        $str = \GuzzleHttp\json_encode($this->places, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//        Storage::disk('public')->put('places', $str);
 
-        $areasIds = $this->getAreasIds($areas);
-        var_dump($areasIds);
-        die();
 
-        $cities = $this->getCities($areasAndCities, $areasIds);
+        $regions = $this->getRegions();
+//        $str = \GuzzleHttp\json_encode($regions, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//        Storage::disk('public')->put('regions', $str);
 
+
+        $data = $this->fillData($regions);
+//        $str = \GuzzleHttp\json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//        Storage::disk('public')->put('data', $str);
+
+        $this->fillBD($data);
     }
 
-    private function getRootRegions()
+    private function fillData(array $regions): array
+    {
+        echo 'Filling data.' . PHP_EOL;
+        //Москва город
+        $data = [];
+        $count = count($regions);
+        $num = 1;
+
+//        dd($this->regionNames);
+
+        foreach ($regions as $region){
+
+            //добавляем регионы
+//            $newRegion = $region;
+//            $newRegion['name'] = $this->regionNames[$region['name']];
+            $region['name'] = $this->regionNames[$region['name']];
+
+            echo 'Filling region: ' . $num++ . ' of ' . $count . ' ' . $region['name'] . PHP_EOL;
+//            echo 'Filling region: ' . $num++ . ' of ' . $count . ' ' . $newRegion['name'] . PHP_EOL;
+//            $data[] = $newRegion;
+            $data[] = $region;
+
+            //добавляем области/районы
+            if(empty($this->places[$region['name']])){
+                continue;
+            }
+            $areas = array_keys($this->places[$region['name']]);
+            foreach ($areas as $areaName){
+                $data[] = [
+                    'id' => $areaId = $this->id++,
+                    'name' => $areaName,
+                    'parent_id' => $region['id'],
+                    'slug' => Str::slug($areaName),
+                ];
+
+                //добавляем города/дерёвни
+                if(empty($this->places[$region['name']][$areaName])){
+                    continue;
+                }
+
+                $currentAreaCitySlugs = [];//этот массив нужен из за того, что появляются одинаковые слаги.
+                $currentAreaCityNames = [];//этот массив нужен из за того, что появляются одинаковые имена.
+                $cities = array_unique($this->places[$region['name']][$areaName]);
+
+                foreach ($cities as $cityName){
+
+                    //нельзя, чтобы имена повторялись в пределах области
+                    if(array_search(Str::lower($cityName), $currentAreaCityNames))
+                    {
+                        continue;
+                    }
+                    $currentAreaCityNames[] = Str::lower($cityName);
+
+                    //нельзя, чтобы слаги повторялись в пределах области
+                    $slug = Str::slug($cityName);
+                    while(array_search($slug, $currentAreaCitySlugs)){
+                        $slug = $slug . Str::lower(Str::random(1));
+                    }
+                    $currentAreaCitySlugs[] = $slug;
+
+                    $data[] = [
+                        'id' => $this->id++,
+                        'name' => $cityName,
+                        'parent_id' => $areaId,
+                        'slug' => $slug,
+                    ];
+                }
+            }
+        }
+        echo 'Filling data is done.' . PHP_EOL;
+        return $data;
+    }
+
+    private function getRegions(): array
     {
         $parameters = [
             'access_token' => $this->access_token,
@@ -41,104 +131,313 @@ class SeedRegions extends Command
             'country_id' => 1,
         ];
 
-
         $url = 'https://api.vk.com/method/database.getRegions?' . http_build_query($parameters);
         $result = file_get_contents($url);
         $resultRoot = \GuzzleHttp\json_decode($result);
 
-        $rootRegions = [];
+        $rootRegions =
+            [
+                [
+                    'id' => $this->id++,
+                    'name' => $mos = 'Москва город',
+                    'slug' => Str::slug($mos),
+                    'parent_id' => null,
+                ],
+
+                [
+                    'id' => $this->id++,
+                    'name' => $spb = 'Санкт-Петербург город',
+                    'parent_id' => null,
+                    'slug' => Str::slug($spb),
+                ],
+                [
+                    'id' => $this->id++,
+                    'name' => $sev = 'Севастополь город',
+                    'parent_id' => null,
+                    'slug' => Str::slug($sev),
+                ]];
+
         array_map(function ($region) use (&$rootRegions) {
             array_push($rootRegions, [
-                'parent_id' => 'null',
-                'name' => $region->title,
-                'id' => $region->id,
+                'id' => $this->id++,
+                'parent_id' => null,
+                'name' => $name = trim($region->title),
+                'slug' => Str::slug($name),
             ]);
         }, $resultRoot->response->items);
+
         return $rootRegions;
     }
 
-    private function getAreasAndCities()
+    private function getAreasAndCitiesFromFile()
     {
-        $end = 10;
-        $resultCities = [];
+        $str = Storage::disk('public')->get('all');
+        return \GuzzleHttp\json_decode($str, false, 512, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    }
 
-        for ($num = 0; $num < $end; $num++) {
-            $access_token = $this->access_token;
-            $parameters = [
-                'access_token' => $access_token,
-                'v' => '5.21',
-                'country_id' => 1,
-                'need_all' => 1,
-                'count' => 1000,
-                'offset' => $num * 1000,
-            ];
+    private function sortAllPlaces(){
+        $count = (count($this->all));
+        $num = 0;
 
-            $url = 'https://api.vk.com/method/database.getCities?' . http_build_query($parameters);
-            $result = file_get_contents($url);
-
-            if (!isset(\GuzzleHttp\json_decode($result)->response)) {
-                dd($result);
+        echo 'Sorting:' . PHP_EOL;
+        foreach ($this->all as $some){
+            if(!(isset($some->region) && isset($some->area) && isset($some->title))){
+                $num++;
+                continue;
+            }
+            if(empty($this->places[$some->region][$some->area])) {
+                $this->places[$some->region][$some->area] = [];
             }
 
-            $end = \GuzzleHttp\json_decode($result)->response->count / 1000;
-            $end = 2;
-            echo 'Request № ' . ($num + 1) . ' of ' . ($end % 1000 + 1) . '.' . PHP_EOL;
-            $resultCities = array_merge($resultCities, \GuzzleHttp\json_decode($result)->response->items);
-            echo 'Regions count: ' . count($resultCities) . PHP_EOL;
-            echo 'Last region:' . ($resultCities[count($resultCities) - 1])->title;
-            echo PHP_EOL . PHP_EOL;
-            usleep(200000);
-        }
+            $this->places[$some->region][$some->area][] = $some->title;
+            $num++;
 
-        return $resultCities;
-    }
-
-    private function getAreas(array $cities, array $rootRegions)
-    {
-        $areas = [];
-        $areas_light = [];
-        foreach ($cities as $city) {
-            if (isset($city->area) && !in_array($city->area, $areas_light)) {
-                $areas_light[] = $city->area;
-                $areas[] = [
-                    'id' => $city->id,
-                    'name' => trim($city->area),
-                    'region_name' => trim($city->region),
-                    'parent_id' => $this->getAreaParentId(trim($city->region), $rootRegions),
-                ];
+            if($num % 10000 === 0) {
+                echo 'Sorted ' . $num . ' of ' . $count . PHP_EOL;
             }
         }
-        sort($areas);
-        return $areas;
+        echo 'Sorting is done.' . PHP_EOL;
     }
 
-    private function getAreaParentId(string $regionName, array $rootRegions)
+    private function trimAllNames()
     {
-        foreach ($rootRegions as $region) {
-            if ($region['name'] === $regionName)
-                return $region['id'];
-        }
-    }
+        echo 'Trimming:' . PHP_EOL;
 
-    private function getAreasIds($areas): array
-    {
-        $ids = [];
-        foreach ($areas as $area) {
-            $ids[] = $area['id'];
-        }
-        return $ids;
-    }
+        $count = (count($this->all));
+        $num = 0;
 
-    private function getCities(array $areasAndCities, array $areasIds): array
-    {
-        $cities = [];
-        foreach ($areasAndCities as $city){
-
-            if(!in_array($city->id, $areasIds)){
-                //тогда это не область и его нужно вставить в города
+        foreach ($this->all as $some){
+            if(isset($some->region)){
+                $some->region = trim($some->region);
+            }
+            if(isset($some->area)){
+                $some->area = trim($some->area);
+            }
+            if(isset($some->title)){
+                $some->title = trim($some->title);
+            }
+            $num++;
+            if($num % 10000 === 0) {
+                echo 'Trimmed record № ' . $num . ' of ' . $count . PHP_EOL;
             }
         }
+        echo 'Trimming is done.' . PHP_EOL;
+    }
+
+    private function fillBD(array $data)
+    {
+        echo 'Seedeng DB.' . PHP_EOL;
+
+        $chunks = array_chunk($data, 1000);
+        $count = count($chunks) * 1000;
+        $num = 0;
+
+        foreach ($chunks as $chunk){
+            if ($num % 10000 === 0) {
+                echo 'Seeding ' . $num . ' of ' . $count . PHP_EOL;
+            }
+            Region::insert($chunk);
+            $num += 1000;
+        }
+        echo 'Seedeng DB is done.' . PHP_EOL;
+    }
+
+    private function madeRegionNames()
+    {
+        $orig = explode(PHP_EOL, $this->originalRegionsNames);
+        $modif = explode(PHP_EOL, $this->modifiedRegionsNames);
+
+        for($i = 0; $i < count($orig); $i++){
+            $this->regionNames[$orig[$i]] = $modif[$i];
+        }
     }
 
 
+
+
+
+
+
+
+
+
+
+
+    private $originalRegionsNames =
+        'Адыгея
+Алтай
+Алтайский край
+Амурская область
+Архангельская область
+Астраханская область
+Башкортостан
+Белгородская область
+Брянская область
+Бурятия
+Владимирская область
+Волгоградская область
+Вологодская область
+Воронежская область
+Дагестан
+Еврейская АОбл
+Забайкальский край
+Ивановская область
+Ингушетия
+Иркутская область
+Кабардино-Балкарская
+Калининградская область
+Калмыкия
+Калужская область
+Камчатский край
+Карачаево-Черкесская
+Карелия
+Кемеровская область
+Кировская область
+Коми
+Корякский АО
+Костромская область
+Краснодарский край
+Красноярский край
+Крым
+Курганская область
+Курская область
+Ленинградская область
+Липецкая область
+Магаданская область
+Марий Эл
+Мордовия
+Москва город
+Московская область
+Мурманская область
+Ненецкий АО
+Нижегородская область
+Новгородская область
+Новосибирская область
+Омская область
+Оренбургская область
+Орловская область
+Пензенская область
+Пермский край
+Приморский край
+Псковская область
+Ростовская область
+Рязанская область
+Самарская область
+Санкт-Петербург город
+Саратовская область
+Саха /Якутия/
+Сахалинская область
+Свердловская область
+Севастополь город
+Северная Осетия — Алания
+Смоленская область
+Ставропольский край
+Таймырский (Долгано-Ненецкий) АО
+Тамбовская область
+Татарстан
+Тверская область
+Томская область
+Тульская область
+Тыва
+Тюменская область
+Удмуртская
+Ульяновская область
+Хабаровский край
+Хакасия
+Ханты-Мансийский Автономный округ - Югра АО
+Челябинская область
+Чеченская
+Чувашская
+Чукотский АО
+Ямало-Ненецкий  АО
+Ярославская область';
+
+    private $modifiedRegionsNames =
+        'республика Адыгея
+республика Алтай
+Алтайский край
+Амурская область
+Архангельская область
+Астраханская область
+республика Башкортостан
+Белгородская область
+Брянская область
+республика Бурятия
+Владимирская область
+Волгоградская область
+Вологодская область
+Воронежская область
+республика Дагестан
+Еврейская АО
+Забайкальский край
+Ивановская область
+республика Ингушетия
+Иркутская область
+Кабардино-Балкарская республика
+Калининградская область
+республика Калмыкия
+Калужская область
+Камчатский край
+Карачаево-Черкесская республика
+республика Карелия
+Кемеровская область (Кузбасс)
+Кировская область
+республика Коми
+Корякский АО
+Костромская область
+Краснодарский край
+Красноярский край
+республика Крым
+Курганская область
+Курская область
+Ленинградская область
+Липецкая область
+Магаданская область
+республика Марий Эл
+республика Мордовия
+Москва
+Московская область
+Мурманская область
+Ненецкий АО
+Нижегородская область
+Новгородская область
+Новосибирская область
+Омская область
+Оренбургская область
+Орловская область
+Пензенская область
+Пермский край
+Приморский край
+Псковская область
+Ростовская область
+Рязанская область
+Самарская область
+Санкт-Петербург
+Саратовская область
+республика Саха (Якутия)
+Сахалинская область
+Свердловская область
+Севастополь
+республика Северная Осетия
+Смоленская область
+Ставропольский край
+Таймырский (Долгано-Ненецкий) АО
+Тамбовская область
+республика Татарстан
+Тверская область
+Томская область
+Тульская область
+республика Тыва
+Тюменская область
+Удмуртская республика
+Ульяновская область
+Хабаровский край
+республика Хакасия
+Ханты-Мансийский Автономный округ (Югра)
+Челябинская область
+Чеченская республика
+Чувашская республика
+Чукотский АО
+Ямало-Ненецкий АО
+Ярославская область';
 }

@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Region extends Model
 {
-    protected $fillable = ['name', 'slug', 'parent_id'];
+    protected $fillable = ['id', 'name', 'slug', 'parent_id'];
     public $timestamps = false;
 
 
