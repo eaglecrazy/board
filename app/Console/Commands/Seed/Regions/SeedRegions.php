@@ -33,60 +33,61 @@ class SeedRegions extends Command
         $this->trimAllNames();
         $this->sortAllPlaces();
 
-
-//        $str = \GuzzleHttp\json_encode($this->places, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//        Storage::disk('public')->put('places', $str);
-
-
         $regions = $this->getRegions();
-//        $str = \GuzzleHttp\json_encode($regions, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//        Storage::disk('public')->put('regions', $str);
-
-
         $data = $this->fillData($regions);
-//        $str = \GuzzleHttp\json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//        Storage::disk('public')->put('data', $str);
-
+        $data = $this->changeRegionNames($data);
         $this->fillBD($data);
+
+        echo 'Make elasticsearch.' . PHP_EOL;
+        $this->call('search:init');
     }
 
     private function fillData(array $regions): array
     {
         echo 'Filling data.' . PHP_EOL;
-        //Москва город
         $data = [];
         $count = count($regions);
         $num = 1;
 
-//        dd($this->regionNames);
-
-        foreach ($regions as $region){
-
-            //добавляем регионы
-//            $newRegion = $region;
-//            $newRegion['name'] = $this->regionNames[$region['name']];
-            $region['name'] = $this->regionNames[$region['name']];
-
+        foreach ($regions as $region) {
             echo 'Filling region: ' . $num++ . ' of ' . $count . ' ' . $region['name'] . PHP_EOL;
-//            echo 'Filling region: ' . $num++ . ' of ' . $count . ' ' . $newRegion['name'] . PHP_EOL;
-//            $data[] = $newRegion;
             $data[] = $region;
 
             //добавляем области/районы
-            if(empty($this->places[$region['name']])){
+            if (empty($this->places[$region['name']])) {
                 continue;
             }
-            $areas = array_keys($this->places[$region['name']]);
-            foreach ($areas as $areaName){
-                $data[] = [
-                    'id' => $areaId = $this->id++,
-                    'name' => $areaName,
-                    'parent_id' => $region['id'],
-                    'slug' => Str::slug($areaName),
-                ];
+            $areas = array_unique(array_keys($this->places[$region['name']]));
+            $currentRegionAreaSlugs = [];//этот массив нужен из за того, что появляются одинаковые слаги.
+            $currentRegionAreaNames = [];//этот массив нужен из за того, что появляются одинаковые имена.
 
+            foreach ($areas as $areaName) {
+                //улучшим имена районов/областей
+                $areaName = $this->getNiceAreaName($areaName);
+
+                //нельзя, чтобы имена повторялись в пределах области
+                if (!(array_search(Str::lower($areaName), $currentRegionAreaNames) !== false)) {
+                    $currentRegionAreaNames[] = Str::lower($areaName);
+
+                    //нельзя, чтобы слаги повторялись в пределах области
+                    $slug = Str::slug($areaName);
+                    while (array_search($slug, $currentRegionAreaSlugs) !== false) {
+                        $slug = $slug . Str::lower(Str::random(1));
+                    }
+                    $currentRegionAreaSlugs[] = $slug;
+
+                    //добавим область
+                    if ($areaName !== 'without-area') {
+                        $data[] = [
+                            'id' => $areaId = $this->id++,
+                            'name' => $areaName,
+                            'parent_id' => $region['id'],
+                            'slug' => $slug,
+                        ];
+                    }
+                }
                 //добавляем города/дерёвни
-                if(empty($this->places[$region['name']][$areaName])){
+                if (empty($this->places[$region['name']][$areaName])) {
                     continue;
                 }
 
@@ -94,28 +95,39 @@ class SeedRegions extends Command
                 $currentAreaCityNames = [];//этот массив нужен из за того, что появляются одинаковые имена.
                 $cities = array_unique($this->places[$region['name']][$areaName]);
 
-                foreach ($cities as $cityName){
+                foreach ($cities as $cityName) {
 
                     //нельзя, чтобы имена повторялись в пределах области
-                    if(array_search(Str::lower($cityName), $currentAreaCityNames))
-                    {
+                    if (
+                        (array_search(Str::lower($cityName), $currentAreaCityNames) !== false) ||
+                        ($areaName === 'without-area' && (array_search(Str::lower($cityName), $currentRegionAreaNames) !== false))
+                    ) {
                         continue;
                     }
                     $currentAreaCityNames[] = Str::lower($cityName);
 
                     //нельзя, чтобы слаги повторялись в пределах области
                     $slug = Str::slug($cityName);
-                    while(array_search($slug, $currentAreaCitySlugs)){
+                    while ((array_search($slug, $currentAreaCitySlugs) !== false)) {
                         $slug = $slug . Str::lower(Str::random(1));
                     }
                     $currentAreaCitySlugs[] = $slug;
 
-                    $data[] = [
-                        'id' => $this->id++,
-                        'name' => $cityName,
-                        'parent_id' => $areaId,
-                        'slug' => $slug,
-                    ];
+                    if ($areaName !== 'without-area') {
+                        $data[] = [
+                            'id' => $this->id++,
+                            'name' => $cityName,
+                            'parent_id' => $areaId,
+                            'slug' => $slug,
+                        ];
+                    } else {
+                        $data[] = [
+                            'id' => $this->id++,
+                            'name' => $cityName,
+                            'parent_id' => $region['id'],
+                            'slug' => $slug,
+                        ];
+                    }
                 }
             }
         }
@@ -175,28 +187,42 @@ class SeedRegions extends Command
         return \GuzzleHttp\json_decode($str, false, 512, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 
-    private function sortAllPlaces(){
+    private function sortAllPlaces()
+    {
         $count = (count($this->all));
         $num = 0;
 
-        echo 'Sorting:' . PHP_EOL;
-        foreach ($this->all as $some){
-            if(!(isset($some->region) && isset($some->area) && isset($some->title))){
-                $num++;
+        echo 'Sorting 1:' . PHP_EOL;
+        foreach ($this->all as $some) {
+            if (++$num % 10000 === 0) {
+                echo 'Sorted ' . $num . ' of ' . $count . PHP_EOL;
+            }
+            if (!(isset($some->region) && isset($some->area) && isset($some->title))) {
                 continue;
             }
-            if(empty($this->places[$some->region][$some->area])) {
+            if (empty($this->places[$some->region][$some->area])) {
                 $this->places[$some->region][$some->area] = [];
             }
 
             $this->places[$some->region][$some->area][] = $some->title;
-            $num++;
+        }
+        echo 'Sorting 1 is done.' . PHP_EOL;
 
-            if($num % 10000 === 0) {
+
+        $num = 0;
+        echo 'Sorting 2:' . PHP_EOL;
+        foreach ($this->all as $some) {
+            if (++$num % 10000 === 0) {
                 echo 'Sorted ' . $num . ' of ' . $count . PHP_EOL;
             }
+
+            if (!(isset($some->region) && empty($some->area) && isset($some->title))) {
+                continue;
+            }
+
+            $this->places[$some->region]['without-area'][] = $some->title;
         }
-        echo 'Sorting is done.' . PHP_EOL;
+        echo 'Sorting 2 is done.' . PHP_EOL;
     }
 
     private function trimAllNames()
@@ -206,18 +232,18 @@ class SeedRegions extends Command
         $count = (count($this->all));
         $num = 0;
 
-        foreach ($this->all as $some){
-            if(isset($some->region)){
+        foreach ($this->all as $some) {
+            if (isset($some->region)) {
                 $some->region = trim($some->region);
             }
-            if(isset($some->area)){
+            if (isset($some->area)) {
                 $some->area = trim($some->area);
             }
-            if(isset($some->title)){
+            if (isset($some->title)) {
                 $some->title = trim($some->title);
             }
             $num++;
-            if($num % 10000 === 0) {
+            if ($num % 10000 === 0) {
                 echo 'Trimmed record № ' . $num . ' of ' . $count . PHP_EOL;
             }
         }
@@ -226,13 +252,16 @@ class SeedRegions extends Command
 
     private function fillBD(array $data)
     {
-        echo 'Seedeng DB.' . PHP_EOL;
 
+        echo 'Cleaning DB.' . PHP_EOL;
+        Region::where('parent_id', null)->delete();
+
+        echo 'Seedeng DB.' . PHP_EOL;
         $chunks = array_chunk($data, 1000);
         $count = count($chunks) * 1000;
         $num = 0;
 
-        foreach ($chunks as $chunk){
+        foreach ($chunks as $chunk) {
             if ($num % 10000 === 0) {
                 echo 'Seeding ' . $num . ' of ' . $count . PHP_EOL;
             }
@@ -247,20 +276,10 @@ class SeedRegions extends Command
         $orig = explode(PHP_EOL, $this->originalRegionsNames);
         $modif = explode(PHP_EOL, $this->modifiedRegionsNames);
 
-        for($i = 0; $i < count($orig); $i++){
+        for ($i = 0; $i < count($orig); $i++) {
             $this->regionNames[$orig[$i]] = $modif[$i];
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
     private $originalRegionsNames =
@@ -440,4 +459,26 @@ class SeedRegions extends Command
 Чукотский АО
 Ямало-Ненецкий АО
 Ярославская область';
+
+    private function changeRegionNames(array $data)
+    {
+        foreach ($data as &$some) {
+            if (empty($some['parent_id'])) {
+                $some['name'] = $this->regionNames[$some['name']];
+            }
+        }
+        return $data;
+    }
+
+    private function getNiceAreaName($areaName): string
+    {
+        if ((Str::contains($areaName, 'Городской округ') || Str::contains($areaName, 'городской округ')) && Str::contains($areaName, ' район')) {
+            $areaName = Str::replaceLast(' район', '', $areaName);
+        }
+
+        if (Str::contains($areaName, ' город')) {
+            $areaName = Str::replaceLast(' город', '', $areaName);
+        }
+        return $areaName;
+    }
 }
