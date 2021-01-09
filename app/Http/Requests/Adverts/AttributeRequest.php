@@ -17,7 +17,7 @@ class AttributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|min:3',
+            'name' => 'required|string|max:255|min:2',
             'type' => 'required|string|max:255', Rule::in(array_keys(Attribute::typesList())),
             'required' => 'nullable|string|max:255',
             'variants' => 'nullable|string',

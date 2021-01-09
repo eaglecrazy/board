@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Region extends Model
 {
-    protected $fillable = ['id', 'name', 'slug', 'parent_id'];
+    protected $fillable = ['id', 'name', 'slug', 'parent_id', 'important'];
     public $timestamps = false;
 
 
@@ -53,11 +53,6 @@ class Region extends Model
         return ($this->parent ? $this->parent->getAddress() . ', ' : '') . $this->name;
     }
 
-    public function scopeRoots(Builder $query): Builder
-    {
-        return $query->where('parent_id', null);
-    }
-
     public function getPath(): string
     {
         return ($this->parent ? $this->parent->getPath() . '/' : '') . $this->slug;
@@ -74,5 +69,16 @@ class Region extends Model
             }
         }
         return $childIds;
+    }
+
+    //Ограничения
+    public function scopeRoots(Builder $query): Builder
+    {
+        return $query->where('parent_id', null);
+    }
+
+    public function scopeImportant(Builder $query): Builder
+    {
+        return $query->where('important', true);
     }
 }

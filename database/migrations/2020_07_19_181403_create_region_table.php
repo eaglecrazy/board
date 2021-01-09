@@ -10,9 +10,9 @@ class CreateRegionTable extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->increments('id');
-//            $table->string('name', 255)->index();
             $table->string('name', 255)->index();
             $table->string('slug', 255);
+            $table->boolean('important')->default(false);
             $table->unsignedInteger('parent_id')->nullable();
             $table->unique(['parent_id', 'slug']);
             $table->unique(['parent_id', 'name']);

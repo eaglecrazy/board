@@ -15,8 +15,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $regions = Region::roots()->orderBy('name')->getModels();
+        $roots = Region::roots()->orderBy('name');
+        $regions = $roots->getModels();
+        $importantRegions  = $roots->important()->getModels();
+
         $categories = Category::whereIsRoot()->defaultOrder()->getModels();
-        return view('home', compact('regions', 'categories'));
+
+        return view('home', compact('regions', 'importantRegions', 'categories'));
     }
 }

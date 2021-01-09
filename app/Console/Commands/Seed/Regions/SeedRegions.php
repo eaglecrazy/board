@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Seed\Regions;
 
 
+use App\Entity\Adverts\Category;
 use Illuminate\Console\Command;
 use Storage;
 use App\Entity\Region;
@@ -83,6 +84,7 @@ class SeedRegions extends Command
                             'name' => $areaName,
                             'parent_id' => $region['id'],
                             'slug' => $slug,
+                            'important' => false,
                         ];
                     }
                 }
@@ -119,6 +121,7 @@ class SeedRegions extends Command
                             'name' => $cityName,
                             'parent_id' => $areaId,
                             'slug' => $slug,
+                            'important' => false,
                         ];
                     } else {
                         $data[] = [
@@ -126,6 +129,7 @@ class SeedRegions extends Command
                             'name' => $cityName,
                             'parent_id' => $region['id'],
                             'slug' => $slug,
+                            'important' => false,
                         ];
                     }
                 }
@@ -154,6 +158,7 @@ class SeedRegions extends Command
                     'name' => $mos = 'Москва город',
                     'slug' => Str::slug($mos),
                     'parent_id' => null,
+                    'important' => true,
                 ],
 
                 [
@@ -161,12 +166,14 @@ class SeedRegions extends Command
                     'name' => $spb = 'Санкт-Петербург город',
                     'parent_id' => null,
                     'slug' => Str::slug($spb),
+                    'important' => true,
                 ],
                 [
                     'id' => $this->id++,
                     'name' => $sev = 'Севастополь город',
                     'parent_id' => null,
                     'slug' => Str::slug($sev),
+                    'important' => false,
                 ]];
 
         array_map(function ($region) use (&$rootRegions) {
@@ -175,6 +182,7 @@ class SeedRegions extends Command
                 'parent_id' => null,
                 'name' => $name = trim($region->title),
                 'slug' => Str::slug($name),
+                'important' => false,
             ]);
         }, $resultRoot->response->items);
 
@@ -252,7 +260,6 @@ class SeedRegions extends Command
 
     private function fillBD(array $data)
     {
-
         echo 'Cleaning DB.' . PHP_EOL;
         Region::where('parent_id', null)->delete();
 

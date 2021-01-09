@@ -5,31 +5,25 @@ use App\Entity\Adverts\Category;
 
 class AdvertCategoriesTableSeeder extends Seeder
 {
-
     public function run()
     {
-        factory(Category::class, 5)
-            ->create()
-            ->each(
-                function (Category $category) {
-                    $category->children()
-                        ->saveMany(factory(Category::class, $this->counts())
-                        ->create()
-                        ->each(
-                            function (Category $category) {
-                                $category->children()
-                                    ->saveMany(factory(Category::class, $this->counts())
-                                    ->create());
-                            }
-                        ));
-                });
+        Category::where('name', '!=', '')->delete();
 
-
-    }
-
-    private function counts(){
-        $array = [0, random_int(3, 7)];
-        return $array[array_rand($array)];
+        Category::create([
+            'name' => $name = 'Фотоаппараты',
+            'slug' => Str::slug($name),
+            'parent_id' => null
+        ]);
+        Category::create([
+            'name' => $name = 'Объективы',
+            'slug' => Str::slug($name),
+            'parent_id' => null
+        ]);
+        Category::create([
+            'name' => $name = 'Вспышки',
+            'slug' => Str::slug($name),
+            'parent_id' => null
+        ]);
     }
 }
 

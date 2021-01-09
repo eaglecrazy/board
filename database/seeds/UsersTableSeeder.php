@@ -7,6 +7,8 @@ class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
+        User::where('name', '!=', '')->delete();
+
         factory(User::class, 30)->create();
 
         User::create([

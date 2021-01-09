@@ -11,8 +11,8 @@ class CreateAdvertCategoriesTable extends Migration
     {
         Schema::create('advert_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255)->index();
-            $table->string('slug', 255);
+            $table->string('name', 255)->unique();
+            $table->string('slug', 255)->unique();
             NestedSet::columns($table);
         });
     }

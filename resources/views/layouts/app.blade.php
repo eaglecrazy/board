@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                Board
+                <i class="fa fa-refresh" aria-hidden="true"></i> Фотобарахолка №1</i>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"

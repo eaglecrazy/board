@@ -35,7 +35,7 @@ class CreateRequest extends FormRequest
             } else {
                 $rules[] = 'string';
                 $rules[] = 'max:255';
-                $rules[] = 'min:3';
+                $rules[] = 'min:2';
             }
             if ($attribute->isSelect()) {
                 $rules[] = Rule::in($attribute->variants);

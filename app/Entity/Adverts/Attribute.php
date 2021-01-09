@@ -38,7 +38,7 @@ class Attribute extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'type', 'required', 'default', 'variants', 'sort'];
+    protected $fillable = ['name', 'type', 'required', 'default', 'variants', 'sort', 'category_id'];
 
     protected $casts = ['variants' => 'array'];
 
