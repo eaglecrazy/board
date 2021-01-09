@@ -5,7 +5,7 @@ namespace App\Services\Search;
 
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Advert\Value;
+use App\Entity\Adverts\Advert\AttributeValue;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
@@ -51,7 +51,7 @@ class AdvertIndexer
                         [$advert->category->id],
                         $advert->category->ancestors()->pluck('id')->toArray()),
                     'regions' => $regions,
-                    'values' => array_map(function (Value $value) {
+                    'values' => array_map(function (AttributeValue $value) {
                         return [
                             'attribute' => $value->attribute_id,
                             'value_string' => (string)$value->value,

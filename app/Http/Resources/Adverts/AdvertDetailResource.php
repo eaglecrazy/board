@@ -5,7 +5,7 @@
 namespace App\Http\Resources\Adverts;
 
 use App\Entity\Adverts\Advert\Photo;
-use App\Entity\Adverts\Advert\Value;
+use App\Entity\Adverts\Advert\AttributeValue;
 use App\Entity\Adverts\Attribute;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
@@ -28,7 +28,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property User $user
  * @property Region $region
  * @property Category $category
- * @property Value[] $values
+ * @property AttributeValue[] $values
  * @property Photo[]|Collection $photos
  *
  * @method  mixed getValue($id)

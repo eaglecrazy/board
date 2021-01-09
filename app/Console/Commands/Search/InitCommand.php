@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Search;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Advert\Value;
+use App\Entity\Adverts\Advert\AttributeValue;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Console\Command;
 use Elasticsearch\Client;

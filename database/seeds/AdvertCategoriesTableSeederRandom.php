@@ -23,8 +23,6 @@ class AdvertCategoriesTableSeederRandom extends Seeder
                             }
                         ));
                 });
-
-
     }
 
     private function counts(){

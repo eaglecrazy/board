@@ -31,14 +31,14 @@ class CreateAdvertsTables extends Migration
         });
 
 
-        Schema::create('advert_advert_values', function (Blueprint $table) {
+        Schema::create('advert_attributes_values', function (Blueprint $table) {
             $table->unsignedBigInteger('advert_id');
             $table->unsignedInteger('attribute_id');
             $table->string('value', 255);
             $table->primary(['advert_id', 'attribute_id']);
         });
 
-        Schema::table('advert_advert_values', function (Blueprint $table) {
+        Schema::table('advert_attributes_values', function (Blueprint $table) {
             $table->foreign('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
             $table->foreign('attribute_id')->references('id')->on('advert_attributes')->onDelete('CASCADE');
         });
@@ -62,11 +62,11 @@ class CreateAdvertsTables extends Migration
         });
         Schema::dropIfExists('advert_advert_photos');
 
-        Schema::table('advert_advert_values', function (Blueprint $table) {
+        Schema::table('advert_attributes_values', function (Blueprint $table) {
             $table->dropForeign(['advert_id']);
             $table->dropForeign(['attribute_id']);
         });
-        Schema::dropIfExists('advert_advert_values');
+        Schema::dropIfExists('advert_attributes_values');
 
         Schema::table('advert_adverts', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
