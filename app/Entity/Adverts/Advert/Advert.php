@@ -321,5 +321,9 @@ class Advert extends Model
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
     }
+
+    public function getPhotosLinks(): array {
+        return array_column($this->photos()->get()->toArray(), 'file');
+    }
 }
 

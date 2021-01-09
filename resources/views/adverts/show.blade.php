@@ -83,7 +83,9 @@
             <div style="margin-bottom: 20px">
                 <div class="row">
                     <div class="col-10">
-                        <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd"></div>
+                        <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd">
+{{--                            <img src="{{ asset('storage/') . '/' .  $advert->getPhotosLinks()[0]}}"/>--}}
+                        </div>
                     </div>
                     <div class="col-2">
                         <div style="height: 100px; background: #f6f6f6; border: 1px solid #ddd"></div>

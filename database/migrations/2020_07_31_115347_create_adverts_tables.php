@@ -44,23 +44,23 @@ class CreateAdvertsTables extends Migration
         });
 
 
-        Schema::create('advert_advert_photos', function (Blueprint $table) {
+        Schema::create('advert_photos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('advert_id');
             $table->string('file', 255);
         });
 
-        Schema::table('advert_advert_photos', function (Blueprint $table) {
+        Schema::table('advert_photos', function (Blueprint $table) {
             $table->foreign('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
         });
     }
 
     public function down()
     {
-        Schema::table('advert_advert_photos', function (Blueprint $table) {
+        Schema::table('advert_photos', function (Blueprint $table) {
             $table->dropForeign(['advert_id']);
         });
-        Schema::dropIfExists('advert_advert_photos');
+        Schema::dropIfExists('advert_photos');
 
         Schema::table('advert_attributes_values', function (Blueprint $table) {
             $table->dropForeign(['advert_id']);

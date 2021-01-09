@@ -51,7 +51,6 @@ class ManageController extends Controller
         return view('adverts.edit.attributes', compact('advert'));
     }
 
-    //todo так как я не менял атрибуты вообще, то нужно проверить как работает их редактирование
     public function updateAttributes(AttributesRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);

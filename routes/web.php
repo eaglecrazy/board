@@ -206,7 +206,7 @@ Route::group([
         Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
         //добавление фото
-        Route::post('/{advert}/photos', 'ManageController@photos');
+        Route::post('/{advert}/photos', 'ManageController@updatePhotos');
         Route::get('/{advert}/photos', 'ManageController@editPhotosForm')->name('photos');
         //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
