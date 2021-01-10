@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
-use App\Entity\Adverts\Advert\Photo;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Http\Controllers\Controller;
@@ -13,7 +12,10 @@ use App\Services\PhoneFormatter;
 use App\Usecases\Adverts\AdvertService;
 use App\Usecases\Adverts\AdvertsPhotoService;
 use App\Usecases\Adverts\AdvertsSearchService;
+use http\Url;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+
 
 class AdvertController extends Controller
 {
@@ -28,12 +30,16 @@ class AdvertController extends Controller
 
     public function path(SearchRequest $request, AdvertsPath $path)
     {
+//        dd($request->get('page'));
         $currentRegion = $path->region;
         $currentCategory = $path->category;
 
         $searchResult = $this->search->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
 
+        /** @var LengthAwarePaginator $adverts */
         $adverts = $searchResult->adverts;
+        $adverts->setPath($request->url());
+
         $regionsCounts = $searchResult->regionsCounts;
         $categoriesCounts = $searchResult->categoriesCounts;
 
