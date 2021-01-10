@@ -22,13 +22,13 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
         $flashesAttributes = Attribute::where('category_id', $flashesCategoryId)->get();
 
         $adverts = Advert::all();
-        $count = $adverts->count();
+        $count = $countAll = $adverts->count();
 
         $data = [];
 
         foreach ($adverts as $advert) {
             if ($count-- % 1000 === 0) {
-                echo $count + 1 . ' adverts of ' . $count . ' left.' . PHP_EOL;
+                echo $count + 1 . ' adverts of ' . $countAll . ' left.' . PHP_EOL;
             }
 
             $categoryId = $advert->category_id;
@@ -46,8 +46,9 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
                 continue;
             }
         }
-        AttributeValue::insert($data);
         echo 'Adverts attributes values seeding is end' . PHP_EOL;
+        echo 'Inserting data to DB' . PHP_EOL;
+        AttributeValue::insert($data);
         echo 'Performing: search:make' . PHP_EOL;
         Artisan::call('search:make');
         echo 'Done!' . PHP_EOL;
