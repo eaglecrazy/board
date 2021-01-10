@@ -312,6 +312,13 @@ class Advert extends Model
         $this->getDialogWith($clientId)->readByOwner();
     }
 
+//    --------------------
+//    Фото
+//    --------------------
+
+    public function getPhotosLinks(): array {
+        return array_column($this->photos()->get()->toArray(), 'file');
+    }
 
 //    --------------------
 //    Другое
@@ -320,10 +327,6 @@ class Advert extends Model
     public function isAllowToShow(): bool
     {
         return $this->isActive() || Gate::allows('show-advert', $this);
-    }
-
-    public function getPhotosLinks(): array {
-        return array_column($this->photos()->get()->toArray(), 'file');
     }
 }
 

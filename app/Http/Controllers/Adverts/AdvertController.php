@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Advert\Photo;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Http\Controllers\Controller;
@@ -10,16 +11,19 @@ use App\Http\Requests\Adverts\SearchRequest;
 use App\Http\Router\AdvertsPath;
 use App\Services\PhoneFormatter;
 use App\Usecases\Adverts\AdvertService;
+use App\Usecases\Adverts\AdvertsPhotoService;
 use App\Usecases\Adverts\AdvertsSearchService;
 use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {
     private $search;
+    private $photos;
 
-    public function __construct(AdvertsSearchService $search)
+    public function __construct(AdvertsSearchService $search, AdvertsPhotoService $photos)
     {
         $this->search = $search;
+        $this->photos = $photos;
     }
 
     public function path(SearchRequest $request, AdvertsPath $path)
@@ -47,10 +51,10 @@ class AdvertController extends Controller
 //        dd($childernRegions);
 //        dd($childernCategories);
 
-
+        $photos = $this->photos->getPhotosArray($adverts->items());
 
         return view('adverts.index', compact(
-            'adverts',
+            'adverts', 'photos',
             'path',
             'searchAttributes',
             'childernRegions', 'childernCategories',

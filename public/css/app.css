@@ -14034,3 +14034,10 @@ body {
   transform: scale(1.06);
 }
 
+.advert-photo {
+  height: 180px;
+  background: #f6f6f6;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
