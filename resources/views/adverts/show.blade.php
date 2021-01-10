@@ -137,7 +137,7 @@
 
             <p style="margin-bottom: 20px"><span class="font-weight-bold">Продавец:</span> {{ $advert->user->name }}</p>
 
-            <div class="d-flex flex-row mb-3">
+            <div class="d-flex flex-row mb-4">
                 <span class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</span>
                 <span class="btn btn-primary phone-button mr-2"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
@@ -164,14 +164,12 @@
                     @foreach($similar as $similar_item)
                         <div class="col-sm-6 col-md-4">
                             <div class="card">
-                                <img class="card-img-top"
-                                     src="https://images.pexels.com/photos/297933/pexels-photo-297933.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"
-                                     alt=""/>
+                                <img class="card-img-top" src="{{ asset('storage/') . '/' .  $similarPhotos[$similar_item->id] }}">
                                 <div class="card-body">
                                     <div class="card-title h4 mt-0" style="margin: 10px 0"><a
                                             href="#">{{ $similar_item->title }}</a></div>
                                     <p class="card-text" style="color: #666"><b>{{ $similar_item->price }} руб.</b></p>
-                                    <p class="card-text"
+                                    <p class="card-text mt-0"
                                        style="color: #666">{{ Str::limit($similar_item->content, 100) }}</p>
                                 </div>
                             </div>

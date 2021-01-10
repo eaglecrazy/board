@@ -12,8 +12,9 @@ class AdvertsPhotoService
     {
         $photos = [];
         foreach ($adverts as $advert) {
-            $photo = Photo::where('advert_id', $advert->id)->first();
-            $photos[$advert->id] = $photo->file;
+            $id = is_array($advert) ? $advert['id'] : $advert->id;
+            $photo = Photo::where('advert_id', $id)->first();
+            $photos[$id] = $photo->file;
         }
         return $photos;
     }

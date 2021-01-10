@@ -19,13 +19,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {
-    private $search;
-    private $photos;
+    private $searchService;
+    private $photosService;
 
     public function __construct(AdvertsSearchService $search, AdvertsPhotoService $photos)
     {
-        $this->search = $search;
-        $this->photos = $photos;
+        $this->searchService = $search;
+        $this->photosService = $photos;
     }
 
     public function path(SearchRequest $request, AdvertsPath $path)
@@ -34,7 +34,7 @@ class AdvertController extends Controller
         $currentRegion = $path->region;
         $currentCategory = $path->category;
 
-        $searchResult = $this->search->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
+        $searchResult = $this->searchService->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
 
         /** @var LengthAwarePaginator $adverts */
         $adverts = $searchResult->adverts;
@@ -57,7 +57,7 @@ class AdvertController extends Controller
 //        dd($childernRegions);
 //        dd($childernCategories);
 
-        $photos = $this->photos->getPhotosArray($adverts->items());
+        $photos = $this->photosService->getPhotosArray($adverts->items());
 
         return view('adverts.index', compact(
             'adverts', 'photos',
@@ -77,7 +77,8 @@ class AdvertController extends Controller
         $similar = $service->getSimilar($advert);
         $user = Auth::user();
         $photos = $advert->getPhotosLinks();
-        return view('adverts.show', compact('advert', 'similar', 'user', 'photos'));
+        $similarPhotos = $this->photosService->getPhotosArray($similar->toArray());
+        return view('adverts.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos'));
     }
 
     public function phone(Advert $advert): string
