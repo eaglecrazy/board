@@ -92,6 +92,16 @@ $(document).ready(function () {
     });
 });
 
+
+$(document).on('click', '.second-photo', function ($e) {
+
+    let photo = $(this);
+    let src = photo.attr('src');
+    let main = $('.main-photo');
+    main.attr('src', src);
+});
+
+
 //начальное заполнение
 // let root = $('.region-select');
 // let root = [];

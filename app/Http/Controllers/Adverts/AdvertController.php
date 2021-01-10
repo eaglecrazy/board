@@ -66,7 +66,8 @@ class AdvertController extends Controller
         $service = new AdvertService();
         $similar = $service->getSimilar($advert);
         $user = Auth::user();
-        return view('adverts.show', compact('advert', 'similar', 'user'));
+        $photos = $advert->getPhotosLinks();
+        return view('adverts.show', compact('advert', 'similar', 'user', 'photos'));
     }
 
     public function phone(Advert $advert): string

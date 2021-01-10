@@ -38,19 +38,49 @@ body {
     }
 }
 
-.search-bar{
+.search-bar {
     background: #e9ecef;
 }
 
-.breadcrumb{
+.breadcrumb {
     background: none;
     padding: 0;
 }
 
-.banner{
+.banner {
     border: 1px solid #ddd;
 }
 
-.cursor-pointer:hover{
+.cursor-pointer:hover {
     cursor: pointer;
+}
+
+
+.main-photo-wrap {
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.second-photo-wrap {
+    background: #f6f6f6;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.main-photo {
+    height: 410px;
+}
+
+.second-photo {
+    height: 100px;
+    transition: all 0.3s ease-out;
+}
+
+.second-photo:hover {
+    outline: 4px solid #ddd;
+    cursor: pointer;
+    transform: scale(1.06);
+
 }

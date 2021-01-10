@@ -3,67 +3,77 @@
 @section('content')
     @if ($advert->isDraft())
         <div class="alert alert-danger">
-            Advert status: draft
+            Статус объявления: черновик.
         </div>
         @if ($advert->reject_reason)
             <div class="alert alert-danger">
-                Reject reason: {{ $advert->reject_reason }}
+                Причина отклонения: {{ $advert->reject_reason }}
             </div>
         @endif
     @elseif($advert->isClosed())
         <div class="alert alert-danger">
-            Advert status: closed
+            Статус объявления: закрыто.
         </div>
     @endif
 
     @can ('manage-adverts', $advert)
-        <h3>Панель модератора</h3>
-        <div class="d-flex flex-row mb-3">
-            <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Редактировать</a>
-            <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Добавить фото</a>
-            @if ($advert->isModeration())
-                <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}" class="mr-1">
+        <div class="card card-default mb-2">
+            <div class="card-header h4">Панель модератора</div>
+            <div class="card-body d-flex flex-row mv0">
+                <a href="{{ route('admin.adverts.adverts.edit', $advert) }}"
+                   class="btn btn-primary mr-2">Редактировать</a>
+                <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-2">Добавить
+                    фото</a>
+                @if ($advert->isModeration())
+                    <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}"
+                          class="mr-2">
+                        @csrf
+                        <button class="btn btn-success">Одобрить публикацию</button>
+                    </form>
+                @endif
+
+                @if ($advert->isModeration() || $advert->isActive())
+                    <a href="{{ route('admin.adverts.adverts.reject', $advert) }}"
+                       class="btn btn-danger mr-2">Отклонить</a>
+                @endif
+
+                <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-2">
                     @csrf
-                    <button class="btn btn-success">Одобрить публикацию</button>
+                    @method('DELETE')
+                    <button class="btn btn-danger">Удалить</button>
                 </form>
-            @endif
-
-            @if ($advert->isModeration() || $advert->isActive())
-                <a href="{{ route('admin.adverts.adverts.reject', $advert) }}" class="btn btn-danger mr-1">Отклонить</a>
-            @endif
-
-            <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-1">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger">Удалить</button>
-            </form>
+            </div>
         </div>
     @endcan
 
     @can ('manage-own-advert', $advert)
-        <h3>Управление объявлением</h3>
-        <div class="d-flex flex-row mb-3">
-            <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Редактировать</a>
-            <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Добавить фото</a>
+        <div class="card card-default mb-3">
+            <div class="card-header h4">Управление вашим объявлением</div>
+            <div class="card-body d-flex flex-row mv0">
+                <a href="{{ route('cabinet.adverts.edit', $advert) }}"
+                   class="btn btn-primary mr-2">Редактировать</a>
+                <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-2">Добавить
+                    фото</a>
 
-            @if ($advert->isDraft() || $advert->isClosed())
-                <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Опубликовать</button>
-                </form>
-            @endif
-            @if ($advert->isActive())
-                <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Закрыть</button>
-                </form>
-            @endif
+                @if ($advert->isDraft() || $advert->isClosed())
+                    <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-2">
+                        @csrf
+                        <button class="btn btn-success">Опубликовать</button>
+                    </form>
+                @endif
+                @if ($advert->isActive())
+                    <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-2">
+                        @csrf
+                        <button class="btn btn-success">Закрыть</button>
+                    </form>
+                @endif
 
-            <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-1">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger">Удалить</button>
-            </form>
+                <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-2">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
         </div>
     @endcan
 
@@ -73,31 +83,39 @@
             <p class="float-right" style="font-size: 36px;">{{ $advert->price }} руб.</p>
             <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
             <p>
-                Дата создания: {{ $advert->created_at }} &nbsp;
+                <span class="font-weight-bold">Дата создания:</span> {{ $advert->created_at }}. &nbsp;
                 @if ($advert->expires_at)
-                    Активно до: {{ $advert->expires_at }}
+                    <span class="font-weight-bold">Активно до:</span> {{ $advert->expires_at }}.
                 @endif
             </p>
 
-            {{--        Блок для фоток          --}}
+            @if(!empty($photos))
             <div style="margin-bottom: 20px">
                 <div class="row">
                     <div class="col-10">
-                        <div style="height: 400px; background: #f6f6f6; border: 1px solid #ddd">
-{{--                            <img src="{{ asset('storage/') . '/' .  $advert->getPhotosLinks()[0]}}"/>--}}
+                        <div class="main-photo-wrap">
+                            <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"
+                                 height="410"/>
                         </div>
                     </div>
-                    <div class="col-2">
-                        <div style="height: 100px; background: #f6f6f6; border: 1px solid #ddd"></div>
-                        <div style="height: 100px; background: #f6f6f6; border: 1px solid #ddd"></div>
-                        <div style="height: 100px; background: #f6f6f6; border: 1px solid #ddd"></div>
-                        <div style="height: 100px; background: #f6f6f6; border: 1px solid #ddd"></div>
-                    </div>
+                    @if(count($photos) > 1)
+                        <div class="col-2">
+                            @foreach($photos as $photoLink)
+                                <div class="second-photo-wrap">
+                                    <img class="second-photo"
+                                         src="{{ asset('storage/') . '/' .  $photoLink}}"
+                                         height="100"/>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
+            @endif
 
             {{--            e вызывает внутри себя экранирование через html special chars--}}
             {{--            Если вы не хотите экранировать данные, используйте такой синтаксис: {!! !!} --}}
+            <h4 class="font-weight-bold">Описание</h4>
             <p>{!! nl2br(e($advert->content)) !!}</p>
 
             <table class="table table-bordered">
@@ -111,28 +129,28 @@
                 </tbody>
             </table>
 
-            <p>Адрес: {{ $advert->address }}</p>
+            <p><span class="font-weight-bold">Адрес:</span> {{ $advert->address }}</p>
 
             <div style="margin: 20px 0; border: 1px solid #ddd">
                 <div id="map" style="width: 100%; height: 350px"></div>
             </div>
 
-            <p style="margin-bottom: 20px">Продавец: {{ $advert->user->name }}</p>
+            <p style="margin-bottom: 20px"><span class="font-weight-bold">Продавец:</span> {{ $advert->user->name }}</p>
 
             <div class="d-flex flex-row mb-3">
-                <span class="btn btn-success mr-1"><span class="fa fa-envelope"></span> Написать сообщение</span>
-                <span class="btn btn-primary phone-button mr-1"
+                <span class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</span>
+                <span class="btn btn-primary phone-button mr-2"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Показать телефон</span></span>
 
                 @if ($user && $user->hasInFavorites($advert->id))
-                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
+                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-secondary"><span class="fa fa-star"></span> Убрать из избранного</button>
                     </form>
                 @else
-                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
+                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
                         @csrf
                         <button class="btn btn-danger"><span class="fa fa-star"></span> Добавить в избранное</button>
                     </form>
@@ -163,14 +181,17 @@
             @endif
         </div>
         <div class="col-md-3">
-            <div class="banner mb-3" data-format="240x400" data-category="{{ $advert->category ? $advert->category->id : '' }}" data-region="{{ $advert->region ? $advert->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
+            <div class="banner mb-3" data-format="240x400"
+                 data-category="{{ $advert->category ? $advert->category->id : '' }}"
+                 data-region="{{ $advert->region ? $advert->region->id : '' }}"
+                 data-url="{{ route('banner.get') }}"></div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey={{ env('YANDEX_MAPS_KEY') }}"
-{{--    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=418aa256-e41b-4893-aa9f-5530867df1a5"--}}
+            {{--    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=418aa256-e41b-4893-aa9f-5530867df1a5"--}}
             type="text/javascript"></script>
 
     <script type='text/javascript'>
