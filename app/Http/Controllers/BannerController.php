@@ -27,6 +27,7 @@ class BannerController extends Controller
         if (!$banner = $this->search->getRandomForView($category, $region, $format)) {
             return '';
         }
+
         return view('banner.get', compact('banner'));
     }
 

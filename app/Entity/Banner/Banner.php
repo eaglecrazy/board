@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Gate;
  * @method static Builder|\App\Entity\Banner\Banner newQuery()
  * @method static Builder|\App\Entity\Banner\Banner query()
  * @mixin Eloquent
- * @property string $status
+// * @property string $status
  * @property int $user_id
  * @property int $category_id
  * @property int|null $region_id
