@@ -47603,6 +47603,7 @@ $(document).on('click', '.location-button', function () {
   window.geocode_callback = function (response) {
     if (response.response.GeoObjectCollection.metaDataProperty.GeocoderResponseMetaData.found > 0) {
       target.val(response.response.GeoObjectCollection.featureMember['0'].GeoObject.metaDataProperty.GeocoderMetaData.Address.formatted);
+      alert('Unable to detect your address.');
     } else {
       alert('Unable to detect your address.');
     }

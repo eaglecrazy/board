@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region roots()
+ * @method static \Illuminate\Database\Eloquent\Builder|Region important()
  */
 class Region extends Model
 {

@@ -2,10 +2,11 @@
 
 @section('content')
     @include('cabinet._nav', ['page' => 'adverts'])
-    <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}">
+    <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}"
+          enctype="multipart/form-data">
         @csrf
         <div class="card mb-3">
-            <div class="card-header">Описание объявления</div>
+            <div class="card-header h3">Описание объявления</div>
             <div class="card-body pb-2">
                 <div class="row">
                     <div class="col-md-6">
@@ -45,10 +46,11 @@
                                         class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
                                 @endif
                             </div>
-                            <div class="col-md-1">
-                            <span class="btn btn-primary btn-block location-button" data-target="#address"><span
-                                    class="fa fa-location-arrow"></span></span>
-                            </div>
+                            {{-- Кнопка определения местоположения, работает только если есть https --}}
+                            {{--                            <div class="col-md-1">--}}
+                            {{--                            <span class="btn btn-primary btn-block location-button" data-target="#address"><span--}}
+                            {{--                                    class="fa fa-location-arrow"></span></span>--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
                 @endif
@@ -65,10 +67,19 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-header">Характеристики</div>
+            <div class="card-header h3">Характеристики</div>
             <div class="card-body pb-2">
                 @include('cabinet.adverts.create._attributes')
             </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header h3">Фотографии</div>
+            <label for="photos" class="col-form-label ml-3">Можно загрузить не более 4 фотографий. Максимальный размер
+                1Мб.</label>
+            <input id="photos" type="file"
+                   class="form-control h-25 py-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" name="files[]"
+                   multiple required>
         </div>
 
         <div class="form-group">

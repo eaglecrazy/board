@@ -53,9 +53,9 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @can('admin-panel')
-                                    <a class="dropdown-item" href="{{ route('admin.home') }}">Admin</a>
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}">Админка</a>
                                 @endcan
-                                <a class="dropdown-item" href="{{ route('cabinet.home') }}">Cabinet</a>
+                                <a class="dropdown-item" href="{{ route('cabinet.home') }}">Личный кабинет</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -88,7 +88,7 @@
 <footer>
     <div class="container">
         <div class="border-top pt-3">
-            <p>&copy; {{ date('Y') }} - Board</p>
+            <p>&copy; {{ date('Y') }} - Фотобарахолка №1</p>
         </div>
     </div>
 </footer>

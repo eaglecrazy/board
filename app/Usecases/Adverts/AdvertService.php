@@ -44,6 +44,12 @@ class AdvertService
                     ]);
                 }
             }
+            //создавать фоточки можно только после сохранения объявления
+            foreach ($request['files'] as $file) {
+                $advert->photos()->create([
+                    'file' => $file->store('adverts', 'public')
+                ]);
+            }
             return $advert;
         });
     }
@@ -70,7 +76,7 @@ class AdvertService
                     'file' => $file->store('adverts', 'public')
                 ]);
             }
-            $advert->update();
+//            $advert->update();   это же тут не нужно????
         });
     }
 

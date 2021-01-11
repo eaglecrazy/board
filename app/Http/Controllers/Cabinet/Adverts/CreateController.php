@@ -29,10 +29,19 @@ class CreateController extends Controller
 
     public function region(Category $category, Region $region = null)
     {
-        $regions = Region::where('parent_id', $region ? $region->id : null)
-            ->orderBy('name')
-            ->get();
-        return view('cabinet.adverts.create.region', compact('category', 'region', 'regions'));
+        $innerRegionsQuery = Region::where('parent_id', $region ? $region->id : null)->orderBy('name');
+        $innerRegions = $innerRegionsQuery->get();
+        if($innerRegions->isEmpty()){
+            return redirect()->route('cabinet.adverts.create.advert', compact('category', 'region'));
+        }
+
+        if(empty($region)){
+            $importantRegions = $innerRegionsQuery->important()->getModels();
+        } else {
+            $importantRegions = null;
+        }
+
+        return view('cabinet.adverts.create.region', compact('category', 'region', 'innerRegions', 'importantRegions'));
     }
 
     public function advert(Category $category, Region $region = null)
