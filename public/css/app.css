@@ -13998,10 +13998,6 @@ body {
   padding: 0;
 }
 
-.banner {
-  border: 1px solid #ddd;
-}
-
 .cursor-pointer:hover {
   cursor: pointer;
 }
