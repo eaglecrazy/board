@@ -14,7 +14,7 @@ class CreateAdvertsTables extends Migration
             $table->unsignedInteger('category_id')->nullable()->default(null);
             $table->unsignedInteger('region_id')->nullable()->default(null);
             $table->string('title', 255);
-            $table->integer('price');
+            $table->unsignedInteger('price');
             $table->text('address')->nullable()->default(null);
             $table->text('content');
             $table->string('status', 16);

@@ -382,19 +382,19 @@ Breadcrumbs::register('cabinet.home', function (BreadcrumbsGenerator $crumbs) {
 //cabinet.adverts.create.advert
 Breadcrumbs::register('cabinet.adverts.create.advert', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null) {
     $crumbs->parent('cabinet.adverts.index');
-    $crumbs->push($category->name . ' / ' . ($region ? $region->name : 'All regions'), route('cabinet.adverts.create.advert', $category, $region));
+    $crumbs->push('Создание объявления');
 });
 
 //cabinet.adverts.create.category
 Breadcrumbs::register('cabinet.adverts.create.category', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('cabinet.adverts.index');
-    $crumbs->push('Создание объявления', route('cabinet.adverts.create.category'));
+    $crumbs->push('Создание объявления');
 });
 
 //cabinet.adverts.create.region
 Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGenerator $crumbs, Category $category, Region $region = null) {
     $crumbs->parent('cabinet.adverts.index');
-    $crumbs->push($category->name, route('cabinet.adverts.create.region', $category, $region));
+    $crumbs->push('Создание объявления');
 });
 
 //cabinet.adverts.edit

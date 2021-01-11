@@ -23,6 +23,8 @@
                         <div class="form-group">
                             <label for="price" class="col-form-label">Стоимость</label>
                             <input id="price" type="number"
+                                   min="1"
+                                   max="2147483646"
                                    class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price"
                                    value="{{ old('price') }}" required>
                             @if ($errors->has('price'))
