@@ -77,16 +77,19 @@
 
         <div class="card mb-3">
             <div class="card-header h3">Фотографии</div>
-            <label for="photos" class="col-form-label ml-3">Можно загрузить не более 4 фотографий. Максимальный размер
+            <label for="files" class="col-form-label ml-3">Можно загрузить не более 4 фотографий. Максимальный
+                размер
                 1Мб.</label>
-            <input id="photos" type="file"
-                   class="form-control h-25 py-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" name="files[]"
+            <input id="files" type="file"
+                   class="form-control h-25 py-3 {{ $errors->has('files.*') ? ' is-invalid' : '' }}" name="files[]"
                    multiple required>
+            @if ($errors->has('files.*'))
+                <span class="invalid-feedback"><strong>1212{{ $errors->first('files.*') }}1212</strong></span>
+            @endif
         </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
-
 @endsection

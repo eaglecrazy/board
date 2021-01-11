@@ -46,8 +46,10 @@ class CreateRequest extends FormRequest
         return array_merge([
             'title' => 'required|string|min:3',
             'content' => 'required|string|min:3',
-            'price' => 'required|integer',
+            'price' => 'required|integer|min:1|max:2147483646',
             'address' => 'string|nullable',
+            'files.*' => 'required|mimes:jpg,jpeg,png|size:1024',
+
         ], $items);
     }
 }
