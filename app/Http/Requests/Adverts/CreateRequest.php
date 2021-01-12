@@ -48,8 +48,8 @@ class CreateRequest extends FormRequest
             'content' => 'required|string|min:3',
             'price' => 'required|integer|min:1|max:2147483646',
             'address' => 'string|nullable',
-            'files.*' => 'required|mimes:jpg,jpeg,png|size:1024',
-
+            'files.*' => 'required|mimes:jpg,jpeg,png|max:1024',
+            'files' => 'files_count:4'
         ], $items);
     }
 }

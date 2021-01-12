@@ -81,11 +81,14 @@
                 размер
                 1Мб.</label>
             <input id="files" type="file"
-                   class="form-control h-25 py-3 {{ $errors->has('files.*') ? ' is-invalid' : '' }}" name="files[]"
+                   class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}" name="files[]"
                    multiple required>
-            @if ($errors->has('files.*'))
-                <span class="invalid-feedback"><strong>1212{{ $errors->first('files.*') }}1212</strong></span>
+            @if ($errors->has('files'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('files') }}</strong></span>
+            @elseif ($errors->has('files.*'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('files.*') }}</strong></span>
             @endif
+
         </div>
 
         <div class="form-group">

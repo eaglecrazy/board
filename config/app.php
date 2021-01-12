@@ -180,6 +180,8 @@ return [
         App\Providers\CacheServiceProvider::class,
         App\Providers\SearchServiceProvider::class,
         App\Providers\ComposeServiceProvider::class,
+        App\Providers\ValidationServiceProvider::class,
+
 
     ],
 
