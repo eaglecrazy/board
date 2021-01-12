@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Gate;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert whereUserId($value)
  * @property-read Collection|AttributeValue[] $photos
  * @property-read int|null $photos_count
- * @property-read Collection|AttributeValue[] $values
+ * @property-read Collection|AttributeValue[] $attributesValues
  * @property-read int|null $values_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert Active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert forActive()
@@ -85,10 +85,10 @@ class Advert extends Model
         'expires_at' => 'datetime',
     ];
 
-    public function getValue($attributeId)
+    public function getAdvertAttributeValue($attributeId)
     {
         $result = null;
-        foreach ($this->values as $value) {
+        foreach ($this->attributesValues as $value) {
             if ($value->attribute_id === $attributeId) {
                 return $value->value;
             }
@@ -190,7 +190,7 @@ class Advert extends Model
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-    public function values(): HasMany
+    public function attributesValues(): HasMany
     {
         return $this->hasMany(AttributeValue::class, 'advert_id', 'id');
     }

@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Advert\Photo;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Usecases\Adverts\AdvertService;
+use App\Usecases\Adverts\AdvertsPhotoService;
 use Illuminate\Support\Facades\Gate;
 
 class ManageController extends Controller
 {
-    private $service;
+    private $advertService;
+    private $photoService;
 
-    public function __construct(AdvertService $service)
+    public function __construct(AdvertService $advert, AdvertsPhotoService $photo)
     {
-        $this->service = $service;
+        $this->advertService = $advert;
+        $this->photoService = $photo;
         $this->middleware([FilledProfile::class]);
     }
 
@@ -27,22 +31,23 @@ class ManageController extends Controller
         return view('adverts.edit.photos', compact('advert'));
     }
 
-    public function updatePhotos(PhotosRequest $request, Advert $advert)
-    {
-        $this->checkAccess($advert);
-        try {
-            $this->service->addPhotos($advert, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('adverts.show', $advert);
-    }
+//    public function updatePhotos(PhotosRequest $request, Advert $advert)
+//    {
+//        $this->checkAccess($advert);
+//        try {
+//            $this->advertService->addPhotos($advert, $request);
+//        } catch (\DomainException $e) {
+//            return back()->with('error', $e->getMessage());
+//        }
+//
+//        return redirect()->route('adverts.show', $advert);
+//    }
 
     public function editForm(Advert $advert)
     {
         $this->checkAccess($advert);
-        return view('adverts.edit.advert', compact('advert'));
+        $pageTitle = 'Редактирование объявления';
+        return view('adverts.edit.advert', compact('advert', 'pageTitle'));
     }
 
     public function attributes(Advert $advert)
@@ -55,7 +60,7 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->editAttributes($advert, $request);
+            $this->advertService->editAttributes($advert, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -66,13 +71,25 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->remove($advert);
+            $this->advertService->remove($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
         return redirect()->route('cabinet.adverts.index');
     }
+
+    public function destroyPhoto(Advert $advert, Photo $photo){
+        $this->checkAccess($advert);
+        try {
+            $this->photoService->removePhoto($photo);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('cabinet.adverts.edit', $advert);
+    }
+
 
     private function checkAccess(Advert $advert): void
     {
@@ -85,7 +102,7 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->edit($advert, $request);
+            $this->advertService->edit($advert, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -97,7 +114,7 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->sendToModeration($advert);
+            $this->advertService->sendToModeration($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -108,7 +125,7 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->close($advert);
+            $this->advertService->close($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

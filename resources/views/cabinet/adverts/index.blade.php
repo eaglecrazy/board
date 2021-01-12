@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav', ['page' => 'adverts'])
     <h2>Мои объявления</h2>
     <div class="card mb-3">
         <div class="card-header">Фильтрация</div>

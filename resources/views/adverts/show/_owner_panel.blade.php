@@ -3,9 +3,6 @@
     <div class="card-body d-flex flex-row mv0">
         <a href="{{ route('cabinet.adverts.edit', $advert) }}"
            class="btn btn-primary mr-2">Редактировать</a>
-        <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-2">Добавить
-            фото</a>
-
         @if ($advert->isDraft() || $advert->isClosed())
             <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-2">
                 @csrf

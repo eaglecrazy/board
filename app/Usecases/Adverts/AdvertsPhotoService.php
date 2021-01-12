@@ -18,4 +18,9 @@ class AdvertsPhotoService
         }
         return $photos;
     }
+
+    public function removePhoto(Photo $photo)
+    {
+        Photo::where('id', $photo->id)->delete();
+    }
 }

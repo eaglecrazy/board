@@ -67,7 +67,8 @@ class AdvertController extends Controller
 
     public function editForm(Advert $advert)
     {
-        return view('adverts.edit.advert', compact('advert'));
+        $pageTitle = 'Редактирование объявления';
+        return view('adverts.edit.advert', compact('advert', 'pageTitle'));
     }
 
     public function attributesForm(Advert $advert)

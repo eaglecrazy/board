@@ -73,6 +73,7 @@ Route::group([
             Route::post('{advert}/moderate', 'AdvertController@moderate')->name('moderate');
             Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');
             Route::post('/{advert}/reject', 'AdvertController@reject')->name('refuse');
+//*****************
             Route::put('/{advert}/edit', 'AdvertController@edit')->name('update');
         });
     });
@@ -205,18 +206,21 @@ Route::group([
         Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
         //добавление фото
-        Route::post('/{advert}/photos', 'ManageController@updatePhotos');
-        Route::get('/{advert}/photos', 'ManageController@editPhotosForm')->name('photos');
+// удалить всё связанное
+//        Route::post('/{advert}/photos', 'ManageController@updatePhotos');
+//        Route::get('/{advert}/photos', 'ManageController@editPhotosForm')->name('photos');
         //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
         Route::put('/{advert}/edit', 'ManageController@edit')->name('update');
+        Route::delete('/{advert}/{photo}/destroy', 'ManageController@destroyPhoto')->name('destroyPhoto');
+
+
         //отправка на модерацию
         Route::post('/{advert}/send', 'ManageController@send')->name('send');
         //закрытие
         Route::post('/{advert}/close', 'ManageController@close')->name('close');
         //удаление
         Route::delete('/{advert}/destroy', 'ManageController@destroy')->name('destroy');
-        //
     });
 
     //---------

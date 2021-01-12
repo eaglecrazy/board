@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav', ['page' => 'adverts'])
     <form method="POST" action="{{ route('cabinet.adverts.create.advert.store', [$category, $region]) }}"
           enctype="multipart/form-data">
         @csrf
@@ -81,7 +80,8 @@
                 размер
                 1Мб.</label>
             <input id="files" type="file"
-                   class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}" name="files[]"
+                   class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}"
+                   name="files[]"
                    multiple required>
             @if ($errors->has('files'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('files') }}</strong></span>

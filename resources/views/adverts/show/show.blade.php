@@ -70,7 +70,7 @@
                 @foreach ($advert->category->allAttributes() as $attribute)
                     <tr>
                         <th>{{ $attribute->name }}</th>
-                        <td>{{ $advert->getValue($attribute->id) }}</td>
+                        <td>{{ $advert->getAttributeValue($attribute->id) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -126,7 +126,7 @@
             @endif
         </div>
         <div class="col-md-3">
-            <div class="banner mb-3" data-format="240x400"
+            <div class="banner mb-3 mt-5" data-format="240x400"
                  data-category="{{ $advert->category ? $advert->category->id : '' }}"
                  data-region="{{ $advert->region ? $advert->region->id : '' }}"
                  data-url="{{ route('banner.get') }}"></div>

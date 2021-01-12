@@ -24,7 +24,8 @@ class CreateController extends Controller
     {
         //toTree сразу возвращается дерево категорий, и при запросе childern одной категории SQL запросы уже не выполняются
         $categories = Category::defaultOrder()->withDepth()->get()->toTree();
-        return view('cabinet.adverts.create.category', compact('categories'));
+        $pageTitle = 'Выбор категории';
+        return view('cabinet.adverts.create.category', compact('categories', 'pageTitle'));
     }
 
     public function region(Category $category, Region $region = null)
@@ -40,13 +41,16 @@ class CreateController extends Controller
         } else {
             $importantRegions = null;
         }
+        $pageTitle = 'Выбор региона';
 
-        return view('cabinet.adverts.create.region', compact('category', 'region', 'innerRegions', 'importantRegions'));
+
+        return view('cabinet.adverts.create.region', compact('category', 'region', 'innerRegions', 'importantRegions', 'pageTitle'));
     }
 
     public function advert(Category $category, Region $region = null)
     {
-        return view('cabinet.adverts.create.advert', compact('category', 'region'));
+        $pageTitle = 'Создание объявления';
+        return view('cabinet.adverts.create.advert', compact('category', 'region', 'pageTitle'));
     }
 
     public function store(CreateRequest $request, Category $category, Region $region)
