@@ -69,7 +69,6 @@ Route::group([
         ], function () {
             Route::get('/', 'AdvertController@index')->name('index');
             Route::get('/{advert}/edit', 'AdvertController@editForm')->name('edit');
-            Route::get('/{advert}/photos', 'AdvertController@photosForm')->name('photos');
             Route::delete('/{advert}/destroy', 'AdvertController@destroy')->name('destroy');
             Route::post('{advert}/moderate', 'AdvertController@moderate')->name('moderate');
             Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');

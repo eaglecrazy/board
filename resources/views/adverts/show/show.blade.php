@@ -17,64 +17,11 @@
     @endif
 
     @can ('manage-adverts', $advert)
-        <div class="card card-default mb-2">
-            <div class="card-header h4">Панель модератора</div>
-            <div class="card-body d-flex flex-row mv0">
-                <a href="{{ route('admin.adverts.adverts.edit', $advert) }}"
-                   class="btn btn-primary mr-2">Редактировать</a>
-                <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-2">Добавить
-                    фото</a>
-                @if ($advert->isModeration())
-                    <form method="POST" action="{{ route('admin.adverts.adverts.moderate', $advert) }}"
-                          class="mr-2">
-                        @csrf
-                        <button class="btn btn-success">Одобрить публикацию</button>
-                    </form>
-                @endif
-
-                @if ($advert->isModeration() || $advert->isActive())
-                    <a href="{{ route('admin.adverts.adverts.reject', $advert) }}"
-                       class="btn btn-danger mr-2">Отклонить</a>
-                @endif
-
-                <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-2">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger">Удалить</button>
-                </form>
-            </div>
-        </div>
+        @include('adverts.show._moderator_panel')
     @endcan
 
     @can ('manage-own-advert', $advert)
-        <div class="card card-default mb-3">
-            <div class="card-header h4">Управление вашим объявлением</div>
-            <div class="card-body d-flex flex-row mv0">
-                <a href="{{ route('cabinet.adverts.edit', $advert) }}"
-                   class="btn btn-primary mr-2">Редактировать</a>
-                <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-2">Добавить
-                    фото</a>
-
-                @if ($advert->isDraft() || $advert->isClosed())
-                    <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-2">
-                        @csrf
-                        <button class="btn btn-success">Опубликовать</button>
-                    </form>
-                @endif
-                @if ($advert->isActive())
-                    <form method="POST" action="{{ route('cabinet.adverts.close', $advert) }}" class="mr-2">
-                        @csrf
-                        <button class="btn btn-success">Закрыть</button>
-                    </form>
-                @endif
-
-                <form method="POST" action="{{ route('cabinet.adverts.destroy', $advert) }}" class="mr-2">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger">Удалить</button>
-                </form>
-            </div>
-        </div>
+        @include('adverts.show._owner_panel')
     @endcan
 
     <div class="row">

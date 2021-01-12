@@ -32,7 +32,7 @@ class ModerationPassedNotification extends Notification
             ->subject('Moderation is passed')
             ->greeting('Hello!')
             ->line('Your advert successfully passed a moderation.')
-            ->action('View Advert', route('adverts.show', $this->advert))
+            ->action('View Advert', route('adverts.shshow', $this->advert))
             ->line('Thank you for using our application!');
     }
 

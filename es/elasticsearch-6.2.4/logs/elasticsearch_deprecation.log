@@ -78,3 +78,7 @@
 [2021-01-11T17:52:42,440][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
 [2021-01-11T17:52:48,109][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
 [2021-01-11T17:52:48,130][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2021-01-12T11:36:02,916][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2021-01-12T11:36:04,687][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2021-01-12T11:36:09,227][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]
+[2021-01-12T11:36:09,272][WARN ][o.e.d.a.c.NGramTokenFilterFactory] Deprecated big difference between max_gram and min_gram in NGram Tokenizer,expected difference must be less than or equal to: [1]

@@ -54,11 +54,6 @@ class AdvertController extends Controller
         return view('admin.adverts.adverts.index', compact('adverts', 'statuses', 'roles'));
     }
 
-    public function photosForm(Advert $advert)
-    {
-        return view('adverts.edit.photos', compact('advert'));
-    }
-
     public function updatePhotos(PhotosRequest $request, Advert $advert)
     {
         try {

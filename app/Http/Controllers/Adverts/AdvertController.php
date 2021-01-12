@@ -78,7 +78,7 @@ class AdvertController extends Controller
         $user = Auth::user();
         $photos = $advert->getPhotosLinks();
         $similarPhotos = $this->photosService->getPhotosArray($similar->toArray());
-        return view('adverts.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos'));
+        return view('adverts.show.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos'));
     }
 
     public function phone(Advert $advert): string
