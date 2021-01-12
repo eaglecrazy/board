@@ -7,13 +7,14 @@ use App\Events\AdvertEvent;
 use App\Events\AdvertModerationPassedEvent;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
-use App\Http\Requests\Adverts\EditRequest;
-use App\Http\Requests\Adverts\PhotosRequest;
+use App\Http\Requests\Adverts\AdvertContentEditRequest;
+use App\Http\Requests\Adverts\AddPhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use DomainException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class AdvertService
 {
@@ -45,16 +46,12 @@ class AdvertService
                 }
             }
             //создавать фоточки можно только после сохранения объявления
-            foreach ($request['files'] as $file) {
-                $advert->photos()->create([
-                    'file' => $file->store('adverts', 'public')
-                ]);
-            }
+            $this->addPhotos($advert, $request);
             return $advert;
         });
     }
 
-    public function edit(Advert $advert, EditRequest $request): void
+    public function edit(Advert $advert, AdvertContentEditRequest $request): void
     {
         $advert->update($request->only([
             'title',
@@ -68,7 +65,7 @@ class AdvertService
         }
     }
 
-    public function addPhotos(Advert $advert, PhotosRequest $request): void
+    public function addPhotos(Advert $advert, Request $request): void
     {
         DB::transaction(function () use ($request, $advert) {
             foreach ($request['files'] as $file) {
@@ -76,7 +73,6 @@ class AdvertService
                     'file' => $file->store('adverts', 'public')
                 ]);
             }
-//            $advert->update();   это же тут не нужно????
         });
     }
 
@@ -103,8 +99,8 @@ class AdvertService
     public function editAttributes(Advert $advert, AttributesRequest $request): void
     {
         DB::transaction(function () use ($request, $advert) {
-            $this->values()->delete();
-            foreach ($advert->category()->allAttributes() as $attribute) {
+            $advert->attributesValues()->delete();
+            foreach ($advert->category->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
                 if (!empty($value)) {
                     $advert->attributesValues()->create([

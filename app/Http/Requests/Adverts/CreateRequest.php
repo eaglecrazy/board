@@ -20,7 +20,7 @@ class CreateRequest extends FormRequest
         return true;
     }
 
-    public function rules(Request $request): array
+    public function rules(): array
     {
         $items = [];
 
@@ -45,7 +45,7 @@ class CreateRequest extends FormRequest
 
         return array_merge([
             'title' => 'required|string|min:3',
-            'content' => 'required|string|min:3',
+            'content' => 'required|string|min:10',
             'price' => 'required|integer|min:1|max:2147483646',
             'address' => 'string|nullable',
             'files.*' => 'required|mimes:jpg,jpeg,png|max:1024',

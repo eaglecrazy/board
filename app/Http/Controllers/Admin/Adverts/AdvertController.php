@@ -6,8 +6,8 @@ use App\Entity\Adverts\Advert\Advert;
 use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\AttributesRequest;
-use App\Http\Requests\Adverts\EditRequest;
-use App\Http\Requests\Adverts\PhotosRequest;
+use App\Http\Requests\Adverts\AdvertContentEditRequest;
+use App\Http\Requests\Adverts\AddPhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Usecases\Adverts\AdvertService;
 use Illuminate\Http\Request;
@@ -54,7 +54,7 @@ class AdvertController extends Controller
         return view('admin.adverts.adverts.index', compact('adverts', 'statuses', 'roles'));
     }
 
-    public function updatePhotos(PhotosRequest $request, Advert $advert)
+    public function updatePhotos(AddPhotosRequest $request, Advert $advert)
     {
         try {
             $this->service->addPhotos($advert, $request);
@@ -108,7 +108,7 @@ class AdvertController extends Controller
         return redirect()->route('adverts.show', $advert);
     }
 
-    public function edit(EditRequest $request, Advert $advert)
+    public function edit(AdvertContentEditRequest $request, Advert $advert)
     {
         try {
             $this->service->edit($advert, $request);

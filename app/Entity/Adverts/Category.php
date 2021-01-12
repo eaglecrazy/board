@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $_rgt
  * @property int|null $parent_id
  * @property-read Collection|Attribute[] $attributes
+ * @property-read Collection|Attribute[] $allAttributes
  * @property-read int|null $attributes_count
  * @property-read \Kalnoy\Nestedset\Collection|Category[] $children
  * @property-read int|null $children_count

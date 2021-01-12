@@ -5,6 +5,7 @@ namespace App\Usecases\Adverts;
 
 
 use App\Entity\Adverts\Advert\Photo;
+use Storage;
 
 class AdvertsPhotoService
 {
@@ -21,6 +22,8 @@ class AdvertsPhotoService
 
     public function removePhoto(Photo $photo)
     {
+        $file = $photo->file;
         Photo::where('id', $photo->id)->delete();
+        Storage::disk('public')->delete($file);
     }
 }

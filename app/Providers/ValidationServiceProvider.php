@@ -14,7 +14,7 @@ class ValidationServiceProvider extends ServiceProvider
         });
 
         Validator::replacer('files_count', function($message, $attribute, $rule, $parameters) {
-            return 'Можно загрузить не более ' . $parameters[0] . ' фотографий.';
+            return 'Можно загрузить не более ' . $parameters[0] . ' фото.';
         });
     }
 

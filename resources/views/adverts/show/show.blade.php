@@ -76,8 +76,9 @@
                 </tbody>
             </table>
 
-            <p><span class="font-weight-bold">Адрес:</span> {{ $advert->address }}</p>
-
+            @if($advert->address)
+                <p><span class="font-weight-bold">Адрес:</span> {{ $advert->address }}</p>
+            @endif
             <div style="margin: 20px 0; border: 1px solid #ddd">
                 <div id="map" style="width: 100%; height: 350px"></div>
             </div>

@@ -1,5 +1,4 @@
-<form method="POST"
-      action="{{ Auth::user()->can('manage-adverts') ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update', $advert) }}">
+<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.attrubutesUpdate', $advert) }}">
     @csrf
     @method('PUT')
     <div class="card mb-3">

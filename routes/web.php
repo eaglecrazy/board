@@ -190,9 +190,9 @@ Route::group([
     Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
     Route::delete('favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
 
-    //---------
+    //---------------------------
     // Cabinet.Adverts
-    //---------
+    //---------------------------
     Route::group([
         'prefix' => 'adverts',
         'as' => 'adverts.',
@@ -205,13 +205,11 @@ Route::group([
         Route::get('/create/region/{category}/{region?}', 'CreateController@region')->name('create.region');
         Route::get('/create/advert/{category}/{region?}', 'CreateController@advert')->name('create.advert');
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
-        //добавление фото
-// удалить всё связанное
-//        Route::post('/{advert}/photos', 'ManageController@updatePhotos');
-//        Route::get('/{advert}/photos', 'ManageController@editPhotosForm')->name('photos');
         //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
-        Route::put('/{advert}/edit', 'ManageController@edit')->name('update');
+        Route::put('/{advert}/advert-update', 'ManageController@advertUpdate')->name('advertUpdate');
+        Route::put('/{advert}/attributes-update', 'ManageController@attrubutesUpdate')->name('attrubutesUpdate');
+        Route::post('/{advert}/photos-add', 'ManageController@photosAdd')->name('photosAdd');
         Route::delete('/{advert}/{photo}/destroy', 'ManageController@destroyPhoto')->name('destroyPhoto');
 
 

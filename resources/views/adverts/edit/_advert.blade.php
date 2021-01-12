@@ -1,5 +1,4 @@
-<form method="POST"
-      action="{{ Auth::user()->can('manage-adverts') ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update', $advert) }}">
+<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.advertUpdate', $advert) }}">
     @csrf
     @method('PUT')
     <div class="card mb-3">
@@ -8,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="title" class="col-form-label">Название</label>
+                        <label for="title" class="col-form-label">Наименование</label>
                         <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                                name="title" value="{{ old('title') ?? $advert->title }}" required>
                         @if ($errors->has('title'))
@@ -39,7 +38,7 @@
                             <input id="address" type="text"
                                    class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
                                    name="address"
-                                   value="{{ old('address') ?? $advert->address }}" required>
+                                   value="{{ old('address') ?? $advert->address }}">
                             @if ($errors->has('address'))
                                 <span
                                     class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>

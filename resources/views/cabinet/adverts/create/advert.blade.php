@@ -41,7 +41,7 @@
                                 <input id="address" type="text"
                                        class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
                                        name="address"
-                                       value="{{ old('address', $region->getAddress()) }}" required>
+                                       value="{{ old('address', $region->getAddress()) }}">
                                 @if ($errors->has('address'))
                                     <span
                                         class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>

@@ -31,13 +31,40 @@ class AttributesRequest extends FormRequest
             } else {
                 $rules[] = 'string';
                 $rules[] = 'max:255';
+                $rules[] = 'min:2';
             }
             if ($attribute->isSelect()) {
                 $rules[] = Rule::in($attribute->variants);
             }
-            $items['attribute.' . $attribute->id] = $rules;
+            $items['attributes.' . $attribute->id] = $rules;
         }
 
         return $items;
     }
+
+
+//    public function rules(): array
+//    {
+//        $items = [];
+//
+//        foreach ($this->advert->category->allAttributes() as $attribute) {
+//            $rules = [
+//                $attribute->required ? 'required' : 'nullable',
+//            ];
+//            if ($attribute->isInteger()) {
+//                $rules[] = 'integer';
+//            } elseif ($attribute->isFloat()) {
+//                $rules[] = 'numeric';
+//            } else {
+//                $rules[] = 'string';
+//                $rules[] = 'max:255';
+//            }
+//            if ($attribute->isSelect()) {
+//                $rules[] = Rule::in($attribute->variants);
+//            }
+//            $items['attribute.' . $attribute->id] = $rules;
+//        }
+//
+//        return $items;
+//    }
 }

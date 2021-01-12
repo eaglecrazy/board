@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\CreateRequest;
-use App\Http\Requests\Adverts\EditRequest;
-use App\Http\Requests\Adverts\PhotosRequest;
+use App\Http\Requests\Adverts\AdvertContentEditRequest;
+use App\Http\Requests\Adverts\AddPhotosRequest;
 use App\Http\Resources\Adverts\AdvertDetailResource;
 use App\Http\Resources\Adverts\AdvertListResource;
 use App\Usecases\Adverts\AdvertService;
@@ -52,7 +52,7 @@ class AdvertController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function update(EditRequest $request, Advert $advert): AdvertDetailResource
+    public function update(AdvertContentEditRequest $request, Advert $advert): AdvertDetailResource
     {
         $this->checkAccess($advert);
         $this->service->edit($advert, $request);
