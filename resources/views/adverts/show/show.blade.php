@@ -88,23 +88,26 @@
             <p style="margin-bottom: 20px"><span class="font-weight-bold">Продавец:</span> {{ $advert->user->name }}</p>
 
             <div class="d-flex flex-row mb-4">
-                <span class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</span>
                 <span class="btn btn-primary phone-button mr-2"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Показать телефон</span></span>
-
-                @if ($user && $user->hasInFavorites($advert->id))
-                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-secondary"><span class="fa fa-star"></span> Убрать из избранного</button>
-                    </form>
-                @else
-                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
-                        @csrf
-                        <button class="btn btn-danger"><span class="fa fa-star"></span> Добавить в избранное</button>
-                    </form>
-                @endif
+                @auth
+                    <span class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</span>
+                    @if ($user && $user->hasInFavorites($advert->id))
+                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-secondary"><span class="fa fa-star"></span> Убрать из избранного
+                            </button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
+                            @csrf
+                            <button class="btn btn-danger"><span class="fa fa-star"></span> Добавить в избранное
+                            </button>
+                        </form>
+                    @endif
+                @endauth
             </div>
 
             @if($similar->count())
