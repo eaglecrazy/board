@@ -37,13 +37,16 @@ Route::group([
         'prefix' => 'adverts',
         'as' => 'adverts.'
     ], function () {
-        Route::get('/', 'AdvertController@index')->name('index');
-        Route::get('/{advert}/edit', 'AdvertController@editForm')->name('edit');
-        Route::delete('/{advert}/destroy', 'AdvertController@destroy')->name('destroy');
-        Route::post('{advert}/moderate', 'AdvertController@moderate')->name('moderate');
-        Route::get('/{advert}/reject', 'AdvertController@rejectForm')->name('reject');
-        Route::post('/{advert}/reject', 'AdvertController@reject')->name('refuse');
-//*****************
-        Route::put('/{advert}/edit', 'AdvertController@edit')->name('update');
+        Route::get('/', 'AdminAdvertController@index')->name('index');
+        Route::post('{advert}/moderate', 'AdminAdvertController@moderate')->name('moderate');
+        Route::get('/{advert}/reject', 'AdminAdvertController@rejectForm')->name('reject');
+        Route::post('/{advert}/reject', 'AdminAdvertController@reject')->name('refuse');
+        Route::delete('/{advert}/destroy', 'AdminAdvertController@destroy')->name('destroy');
+        //редактирование
+        Route::get('/{advert}/edit', 'AdminAdvertController@editForm')->name('edit');
+        Route::put('/{advert}/advert-update', 'AdminAdvertController@updateAdvert')->name('update.advert');
+        Route::put('/{advert}/attributes-update', 'AdminAdvertController@updateAttrubutes')->name('update.attributes');
+        Route::post('/{advert}/photos-add', 'AdminAdvertController@addPhotos')->name('add.photos');
+        Route::delete('/{advert}/{photo}/destroy', 'AdminAdvertController@destroyPhoto')->name('destroy.photo');
     });
 });

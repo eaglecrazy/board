@@ -5,7 +5,7 @@
             размер фото 1Мб.</label>
         <div class="d-flex p-3">
             @foreach($advert->photos as $photo)
-                <form method="POST" action="{{ route('cabinet.adverts.destroy.photo', [$advert, $photo]) }}"
+                <form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.destroy.photo', [$advert, $photo]) : route('cabinet.adverts.destroy.photo', [$advert, $photo]) }}"
                       class="mr-2">
                     @csrf
                     @method('DELETE')
@@ -24,7 +24,7 @@
 
     @if($advert->photos->count() < 4)
         <form method="POST"
-              action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.add.photos', $advert) }}"
+              action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.add.photos', $advert) : route('cabinet.adverts.add.photos', $advert) }}"
               enctype="multipart/form-data">
             @csrf
             <input id="files" type="file"

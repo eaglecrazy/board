@@ -1,4 +1,4 @@
-<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update.attrubutes', $advert) }}">
+<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update.attributes', $advert) : route('cabinet.adverts.update.attrubutes', $advert) }}">
     @csrf
     @method('PUT')
     <div class="card mb-3">
@@ -7,8 +7,6 @@
             @foreach ($advert->category->allAttributes() as $attribute)
                 <div class="form-group">
                     <label for=attribute_{{ $attribute->id }}" class="col-form-label">{{ $attribute->name }}</label>
-
-                    {{--SELECT--}}
                     @if ($attribute->isSelect())
                         <select id="attribute_{{ $attribute->id }}"
                                 class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
@@ -21,15 +19,11 @@
                                 </option>
                             @endforeach
                         </select>
-
-                        {{--INTEGER--}}
                     @elseif ($attribute->isInteger())
                         <input id="attribute_{{ $attribute->id }}" type="number"
                                class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
                                name="attributes[{{ $attribute->id }}]"
                                value="{{ old('attributes.' . $attribute->id ?? $advert->getAdvertAttributeValue($attribute->id)) }}">
-
-                        {{--TEXT--}}
                     @else
                         <input id="attribute_{{ $attribute->id }}" type="text"
                                class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"

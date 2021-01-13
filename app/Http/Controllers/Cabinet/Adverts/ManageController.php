@@ -75,11 +75,7 @@ class ManageController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-//        $user = 'user';
-        return redirect()
-            ->route('cabinet.adverts.edit', compact('advert'))
-//            ->route('cabinet.adverts.edit', compact('advert', 'user'))
-            ->with('success', 'Фотография удалена.');
+        return back()->with('success', 'Фотография удалена.');
     }
 
     //---------------------------
@@ -101,11 +97,7 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-//        $user = 'user';
-        return redirect()
-            ->route('cabinet.adverts.edit', compact('advert'))
-//            ->route('cabinet.adverts.edit', compact('advert', 'user'))
-            ->with('success', 'Объявление успешно отредактировано.');
+        return back()->with('success', 'Объявление успешно отредактировано.');;
     }
 
     public function updateAttrubutes(AttributesRequest $request, Advert $advert)
@@ -116,13 +108,8 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-//        $user = 'user';
-        return redirect()
-//            ->route('cabinet.adverts.edit', compact('advert', 'user'))
-            ->route('cabinet.adverts.edit', compact('advert'))
-            ->with('success', 'Характеристики успешно отредактированы.');
+        return back()->with('success', 'Характеристики успешно отредактированы.');;
     }
-
 
     public function addPhotos(AddPhotosRequest $request, Advert $advert)
     {
@@ -133,30 +120,7 @@ class ManageController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-//        $user = 'user';
-        return redirect()
-//            ->route('cabinet.adverts.edit', compact('advert', 'user'))
-            ->route('cabinet.adverts.edit', compact('advert'))
-            ->with('success', 'Фотографии успешно добавлены.');
+        return back()->with('success', 'Фотографии успешно добавлены.');
     }
-
-
-
-//    public function editPhotosForm(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        return view('adverts.edit.photos', compact('advert'));
-//    }
-
-
-//    public function attributes(Advert $advert)
-//    {
-//        $this->checkAccess($advert);
-//        return view('adverts.edit.attributes', compact('advert'));
-//    }
-
-
-
-
 
 }

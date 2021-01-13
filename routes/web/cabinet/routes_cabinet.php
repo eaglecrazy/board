@@ -1,8 +1,11 @@
 <?php
+use App\Http\Middleware\FilledProfile;
+
 
 //---------
 // Cabinet
 //---------
+
 Route::group([
     'prefix' => 'cabinet',
     'as' => 'cabinet.',

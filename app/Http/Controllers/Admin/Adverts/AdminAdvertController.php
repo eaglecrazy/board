@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Advert\Photo;
 use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\AttributesRequest;
@@ -10,9 +11,11 @@ use App\Http\Requests\Adverts\AdvertContentEditRequest;
 use App\Http\Requests\Adverts\AddPhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Usecases\Adverts\AdvertService;
+use DomainException;
 use Illuminate\Http\Request;
 
-class AdvertController extends Controller
+
+class AdminAdvertController extends Controller
 {
     private $advertService;
 
@@ -55,15 +58,28 @@ class AdvertController extends Controller
         return view('admin.adverts.adverts.index', compact('adverts', 'statuses', 'roles'));
     }
 
+    //---------------------------
+    // Удаление
+    //---------------------------
+
     public function destroy(Advert $advert)
     {
         try {
             $this->advertService->remove($advert);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
         return redirect()->route('admin.adverts.adverts.index');
+    }
+
+    public function destroyPhoto(Advert $advert, Photo $photo){
+        try {
+            $this->advertService->removePhoto($photo);
+        } catch (DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return back()->with('success', 'Фотография удалена.');
     }
 
     //---------------------------
@@ -73,7 +89,7 @@ class AdvertController extends Controller
     {
         try {
             $this->advertService->moderate($advert);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
@@ -84,7 +100,7 @@ class AdvertController extends Controller
     {
         try {
             $this->advertService->reject($advert, $request);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
@@ -99,15 +115,6 @@ class AdvertController extends Controller
     //---------------------------
     // Редактирование
     //---------------------------
-    public function edit(AdvertContentEditRequest $request, Advert $advert)
-    {
-        try {
-            $this->advertService->edit($advert, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-        return redirect()->route('adverts.show', $advert);
-    }
 
     public function editForm(Advert $advert)
     {
@@ -115,28 +122,34 @@ class AdvertController extends Controller
         $editUser = 'admin';
         return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
     }
-    public function updateAttributes(AttributesRequest $request, Advert $advert)
+
+    public function updateAdvert (AdvertContentEditRequest $request, Advert $advert)
+    {
+        try {
+            $this->advertService->edit($advert, $request);
+        } catch (DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return back()->with('success', 'Объявление успешно отредактировано.');;
+    }
+
+    public function updateAttrubutes (AttributesRequest $request, Advert $advert)
     {
         try {
             $this->advertService->editAttributes($advert, $request);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('adverts.show', $advert);
+        return back()->with('success', 'Характеристики успешно отредактированы.');;
     }
-    public function updatePhotos(AddPhotosRequest $request, Advert $advert)
+
+    public function addPhotos(AddPhotosRequest $request, Advert $advert)
     {
         try {
             $this->advertService->addPhotos($advert, $request);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-
-        return redirect()->route('adverts.show', $advert);
+        return back()->with('success', 'Фотографии успешно добавлены.');
     }
-
-
-
-
-
 }
