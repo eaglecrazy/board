@@ -1,9 +1,10 @@
+@php($pageTitle = 'Управление страницами')
 @extends('layouts.app')
 
 @section('content')
     @include('admin.pages._nav')
 
-    <p><a href="{{ route('admin.pages.create') }}" class="btn btn-success">Добавить страницу</a></p>
+    <p><a href="{{ route('admin.pages.create') }}" class="btn btn-success">Создать страницу</a></p>
 
     <table class="table table-bordered table-striped">
         <thead>

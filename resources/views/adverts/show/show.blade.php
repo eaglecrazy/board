@@ -1,3 +1,4 @@
+@php($pageTitle = $advert->title)
 @extends('layouts.app')
 
 @section('content')

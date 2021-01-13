@@ -1,3 +1,4 @@
+@php($pageTitle = 'Завяка "' . $ticket->subject . '"')
 @extends('layouts.app')
 
 @section('content')

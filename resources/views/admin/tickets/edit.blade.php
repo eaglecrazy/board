@@ -1,3 +1,4 @@
+@php($pageTitle = 'Работа с заявкой')
 @extends('layouts.app')
 
 @section('content')

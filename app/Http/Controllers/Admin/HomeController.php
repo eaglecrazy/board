@@ -13,7 +13,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $pageTitle = 'Админка';
-        return view('admin.home', compact('pageTitle'));
+        return view('admin.home');
     }
 }

@@ -1,3 +1,4 @@
+@php($pageTitle = 'Сброс пароля')
 @extends('layouts.app')
 
 @section('content')

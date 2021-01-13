@@ -1,3 +1,4 @@
+@php($pageTitle = $page->title)
 @extends('layouts.app')
 
 @section('meta')

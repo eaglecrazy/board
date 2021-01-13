@@ -1,3 +1,4 @@
+@php($pageTitle = 'Создание категории')
 @extends('layouts.app')
 
 @section('content')

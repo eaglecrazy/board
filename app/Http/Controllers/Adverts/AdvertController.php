@@ -56,15 +56,13 @@ class AdvertController extends Controller
 //        dd($childernCategories);
 
         $photos = $this->advertService->getPhotosArray($adverts->items());
-        $pageTitle = 'Объявления';
 
         return view('adverts.index', compact(
             'adverts', 'photos',
             'path',
             'searchAttributes',
             'childernRegions', 'childernCategories',
-            'regionsCounts', 'categoriesCounts',
-            'pageTitle'));
+            'regionsCounts', 'categoriesCounts'));
     }
 
     public function show(Advert $advert)
@@ -73,13 +71,12 @@ class AdvertController extends Controller
             abort(403);
         }
 
-        $pageTitle = $advert->title;
         $service = new AdvertService();
         $similar = $service->getSimilar($advert);
         $user = Auth::user();
         $photos = $advert->getPhotosLinks();
         $similarPhotos = $this->advertService->getPhotosArray($similar->toArray());
-        return view('adverts.show.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos', 'pageTitle'));
+        return view('adverts.show.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos'));
     }
 
     public function phone(Advert $advert): string

@@ -1,3 +1,4 @@
+@php($pageTitle = 'Регистрация')
 @extends('layouts.app')
 
 @section('content')

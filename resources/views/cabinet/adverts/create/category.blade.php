@@ -1,3 +1,4 @@
+@php($pageTitle = 'Выбор категории')
 @extends('layouts.app')
 
 @section('content')

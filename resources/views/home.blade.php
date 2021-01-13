@@ -1,3 +1,4 @@
+@php($pageTitle = 'Фотобарахолка №1')
 @extends('layouts.app')
 
 @section('breadcrumbs', '')
@@ -14,12 +15,6 @@
         @include('cabinet._nav', ['page' => ''])
     @endauth
     <a class="page-link h2" href="{{ route('adverts.index') }}">Все объявления</a>
-
-
-
-
-
-
     <div id="accordion">
         <div class="card">
             <div class="card-header page-link h4 cursor-pointer" id="headingOne" data-toggle="collapse"

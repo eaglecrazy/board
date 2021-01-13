@@ -1,3 +1,4 @@
+@php($pageTitle = 'Редактирование региона')
 @extends('layouts.app')
 @section('content')
     @include('admin.regions._nav')

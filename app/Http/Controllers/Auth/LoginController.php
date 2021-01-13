@@ -27,8 +27,8 @@ class LoginController extends Controller
 
     public function showLoginForm(Request $request)
     {
-        $pageTitle = 'Вход на сайт';
-        return view('auth.login', compact('pageTitle'));
+
+        return view('auth.login');
     }
 
     public function login(LoginRequest $request)

@@ -1,3 +1,4 @@
+@php($pageTitle = 'Страница "' . $page->title . '"')
 @extends('layouts.app')
 
 @section('content')

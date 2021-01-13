@@ -70,7 +70,9 @@ class AdminAdvertController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.adverts.adverts.index');
+        return redirect()
+            ->route('admin.adverts.adverts.index')
+            ->with('success', 'Объявление удалено.');
     }
 
     public function destroyPhoto(Advert $advert, Photo $photo){
@@ -118,9 +120,8 @@ class AdminAdvertController extends Controller
 
     public function editForm(Advert $advert)
     {
-        $pageTitle = 'Редактирование объявления';
         $editUser = 'admin';
-        return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
+        return view('adverts.edit.advert', compact('advert', 'editUser'));
     }
 
     public function updateAdvert (AdvertContentEditRequest $request, Advert $advert)

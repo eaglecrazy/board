@@ -1,3 +1,4 @@
+@php($pageTitle = 'Категория "' . $category->name . '"')
 @extends('layouts.app')
 
 @section('content')

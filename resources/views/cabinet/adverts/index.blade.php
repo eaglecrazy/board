@@ -1,3 +1,4 @@
+@php($pageTitle = 'Мои объявления')
 @extends('layouts.app')
 
 @section('content')

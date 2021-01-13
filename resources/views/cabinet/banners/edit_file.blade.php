@@ -1,3 +1,4 @@
+@php($pageTitle = 'Изменение файла')
 @extends('layouts.app')
 
 @section('content')

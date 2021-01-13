@@ -1,3 +1,5 @@
+@php($pageTitle = 'Управление объявлениями')
+
 @extends('layouts.app')
 
 @section('content')

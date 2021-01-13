@@ -1,3 +1,4 @@
+@php($pageTitle = 'Причина отклонения')
 @extends('layouts.app')
 
 @section('content')

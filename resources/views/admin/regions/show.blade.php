@@ -1,3 +1,4 @@
+@php($pageTitle = 'Регион "' . $region->name . '"')
 @extends('layouts.app')
 
 @section('content')

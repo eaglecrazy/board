@@ -1,3 +1,4 @@
+@php($pageTitle = 'Подтверждение email')
 @extends('layouts.app')
 
 @section('content')

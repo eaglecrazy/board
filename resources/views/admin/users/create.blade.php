@@ -1,3 +1,4 @@
+@php($pageTitle = 'Создание пользователя')
 @extends('layouts.app')
 
 @section('content')

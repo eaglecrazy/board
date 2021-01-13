@@ -15,13 +15,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $pageTitle = 'Фотобарахолка №1';
         $roots = Region::roots()->orderBy('name');
         $regions = $roots->getModels();
         $importantRegions  = $roots->important()->getModels();
 
         $categories = Category::whereIsRoot()->defaultOrder()->getModels();
 
-        return view('home', compact('regions', 'importantRegions', 'categories', 'pageTitle'));
+        return view('home', compact('regions', 'importantRegions', 'categories'));
     }
 }

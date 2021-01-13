@@ -1,3 +1,4 @@
+@php($pageTitle = 'Добавление атрибута')
 @extends('layouts.app')
 
 @section('content')

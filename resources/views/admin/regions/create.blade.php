@@ -1,3 +1,4 @@
+@php($pageTitle = 'Создание региона')
 @extends('layouts.app')
 
 @section('content')

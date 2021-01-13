@@ -84,9 +84,8 @@ class ManageController extends Controller
     public function editForm(Advert $advert)
     {
         $this->checkAccess($advert);
-        $pageTitle = 'Редактирование объявления';
         $editUser = 'user';
-        return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
+        return view('adverts.edit.advert', compact('advert','editUser'));
     }
 
     public function updateAdvert(AdvertContentEditRequest $request, Advert $advert)

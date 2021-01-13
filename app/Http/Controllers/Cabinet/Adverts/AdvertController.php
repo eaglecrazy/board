@@ -17,7 +17,6 @@ class AdvertController extends Controller
     public function index(){
         $adverts = Advert::forUser(Auth::user())->orderByDesc('id')->paginate(20);
         $statuses = Advert::statusesList();
-        $pageTitle = 'Мои объявления';
-        return view('cabinet.adverts.index', compact('adverts', 'statuses', 'pageTitle'));
+        return view('cabinet.adverts.index', compact('adverts', 'statuses'));
     }
 }

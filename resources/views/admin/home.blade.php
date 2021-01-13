@@ -1,3 +1,4 @@
+@php($pageTitle = 'Админка')
 @extends('layouts.app')
 
 @section('content')
