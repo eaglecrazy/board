@@ -29,10 +29,11 @@ class ModerationPassedNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Moderation is passed')
+            ->subject('Объявление ' . $this->advert->title . )
             ->greeting('Hello!')
             ->line('Your advert successfully passed a moderation.')
-            ->action('View Advert', route('adverts.shshow', $this->advert))
+//            ->action('View Advert', route('adverts.show', $this->advert))
+            ->action('View Advert', 'http://board.xyz/adverts/show/' . $this->advert->id)
             ->line('Thank you for using our application!');
     }
 

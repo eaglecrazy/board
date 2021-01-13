@@ -77,10 +77,10 @@
                 <div class="card-header">Войти через:</div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('login.social-network', ['network' => 'facebook']) }}"><span
-                                    class="fa fa-facebook-square"></span> Facebook</a></li>
-                        <li><a href="{{ route('login.social-network', ['network' => 'twitter']) }}"><span
-                                    class="fa fa-twitter-square"></span> Twitter</a></li>
+{{--                        <li><a href="{{ route('login.social-network', ['network' => 'facebook']) }}"><span--}}
+{{--                                    class="fa fa-facebook-square"></span> Facebook</a></li>--}}
+{{--                        <li><a href="{{ route('login.social-network', ['network' => 'twitter']) }}"><span--}}
+{{--                                    class="fa fa-twitter-square"></span> Twitter</a></li>--}}
                         <li><a href="{{ route('login.social-network', ['network' => 'vkontakte']) }}"><span
                                     class="fa fa-vk"></span> В контакте</a></li>
                         <li><a href="{{ route('login.social-network', ['network' => 'github']) }}"><span

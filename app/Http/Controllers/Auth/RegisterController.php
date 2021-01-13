@@ -29,7 +29,8 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         $this->service->register($request);
-        return redirect()->route('login')->with('success', 'Check your email and click on the link to verify.');
+        return redirect()->route('login')
+            ->with('success', 'Подтвердите свою почту кликнув на ссылку в письме, которое мы отправили на указанный email.');
     }
 
     public function verify($token)
@@ -38,12 +39,12 @@ class RegisterController extends Controller
 
         if (!$user) {
             return redirect()->route('login')
-                ->with('error', 'Sorry, your link cannot be identified.');
+                ->with('error', 'Извините, ссылка не определена.');
         }
 
         try {
             $this->service->verify($user->id);
-            return redirect()->route('login')->with('success', 'Your email is verified. You can now login.');
+            return redirect()->route('login')->with('success', 'Ваш email подтверждён. Вы можете войти на сайт.');
         } catch (\DomainException $e){
             return redirect()->route('login')->with('error', $e->getMessage());
         }
