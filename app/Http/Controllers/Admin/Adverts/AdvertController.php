@@ -68,7 +68,8 @@ class AdvertController extends Controller
     public function editForm(Advert $advert)
     {
         $pageTitle = 'Редактирование объявления';
-        return view('adverts.edit.advert', compact('advert', 'pageTitle'));
+        $editUser = 'admin';
+        return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
     }
 
     public function attributesForm(Advert $advert)
@@ -134,5 +135,8 @@ class AdvertController extends Controller
         return redirect()->route('adverts.show', $advert);
     }
 
+    //---------------------------
+    // Редактирование
+    //---------------------------
 
 }

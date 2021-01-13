@@ -3,6 +3,7 @@ namespace App\Usecases\Adverts;
 
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Advert\Photo;
 use App\Events\AdvertEvent;
 use App\Events\AdvertModerationPassedEvent;
 use App\Http\Requests\Adverts\AttributesRequest;
@@ -51,18 +52,74 @@ class AdvertService
         });
     }
 
-    public function edit(Advert $advert, AdvertContentEditRequest $request): void
+    public function remove(Advert $advert)
     {
-        $advert->update($request->only([
-            'title',
-            'content',
-            'price',
-            'address',
-        ]));
-
-        if ($advert->isActive()) {
-            event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
+        $active = $advert->isActive();
+        $advert->delete();
+        if ($active) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
         }
+        //тут нужно ещё фоточки удалить
+    }
+
+    //---------------------------
+    // Изменение статусов
+    //---------------------------
+    public function close(Advert $advert): void
+    {
+        if($advert->status !== Advert::STATUS_ACTIVE){
+            throw new DomainException('Advert status is not active.');
+        }
+
+        $advert->close();
+        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+    }
+
+    public function expire(Advert $advert): void
+    {
+        $advert->expire();
+        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+    }
+
+    public function moderate(Advert $advert): void
+    {
+        $advert->moderate(Carbon::now());
+        event(new AdvertModerationPassedEvent($advert));
+    }
+
+    public function sendToModeration(Advert $advert): void
+    {
+        $advert->sendToModeration();
+    }
+
+    public function reject(Advert $advert, RejectRequest $request): void
+    {
+        $active = $advert->isActive();
+        $advert->reject($request['reason']);
+        if ($active) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+        }
+    }
+
+    //---------------------------
+    // Работа с фотографиями
+    //---------------------------
+    public function getPhotosArray(array $adverts): array
+    {
+        $photos = [];
+        foreach ($adverts as $advert) {
+            $id = is_array($advert) ? $advert['id'] : $advert->id;
+            $photo = Photo::where('advert_id', $id)->first();
+            $photos[$id] = $photo->file;
+        }
+        return $photos;
+    }
+
+    public function removePhoto(Photo $photo)
+    {
+        $file = $photo->file;
+        Photo::where('id', $photo->id)->delete();
+        Storage::disk('public')->delete($file);
     }
 
     public function addPhotos(Advert $advert, Request $request): void
@@ -76,23 +133,33 @@ class AdvertService
         });
     }
 
-    public function sendToModeration(Advert $advert): void
+    //---------------------------
+    // Разное
+    //---------------------------
+    public function getSimilar(Advert $advert): Collection
     {
-        $advert->sendToModeration();
+        return Advert::where('region_id', $advert->region ? $advert->region->id : null)
+            ->where('category_id', $advert->category->id)
+            ->where('id', '!=', $advert->id)
+            ->get()
+            ->shuffle()
+            ->take(3);
     }
 
-    public function moderate(Advert $advert): void
+    //---------------------------
+    // Редактирование
+    //---------------------------
+    public function edit(Advert $advert, AdvertContentEditRequest $request): void
     {
-        $advert->moderate(Carbon::now());
-        event(new AdvertModerationPassedEvent($advert));
-    }
+        $advert->update($request->only([
+            'title',
+            'content',
+            'price',
+            'address',
+        ]));
 
-    public function reject(Advert $advert, RejectRequest $request): void
-    {
-        $active = $advert->isActive();
-        $advert->reject($request['reason']);
-        if ($active) {
-            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
+        if ($advert->isActive()) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
         }
     }
 
@@ -116,39 +183,7 @@ class AdvertService
         }
     }
 
-    public function remove(Advert $advert)
-    {
-        $active = $advert->isActive();
-        $advert->delete();
-        if ($active) {
-            event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
-        }
-        //тут нужно ещё фоточки удалить
-    }
 
-    public function getSimilar(Advert $advert): Collection
-    {
-        return Advert::where('region_id', $advert->region ? $advert->region->id : null)
-            ->where('category_id', $advert->category->id)
-            ->where('id', '!=', $advert->id)
-            ->get()
-            ->shuffle()
-            ->take(3);
-    }
 
-    public function expire(Advert $advert): void
-    {
-        $advert->expire();
-        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
-    }
 
-    public function close(Advert $advert): void
-    {
-        if($advert->status !== Advert::STATUS_ACTIVE){
-            throw new DomainException('Advert status is not active.');
-        }
-
-        $advert->close();
-        event(new AdvertEvent($advert, AdvertEvent::ADVERT_REMOVE));
-    }
 }

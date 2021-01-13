@@ -10,19 +10,16 @@ use App\Http\Requests\Adverts\AttributesRequest;
 use App\Http\Requests\Adverts\AdvertContentEditRequest;
 use App\Http\Requests\Adverts\AddPhotosRequest;
 use App\Usecases\Adverts\AdvertService;
-use App\Usecases\Adverts\AdvertsPhotoService;
 use DomainException;
 use Illuminate\Support\Facades\Gate;
 
 class ManageController extends Controller
 {
     private $advertService;
-    private $photoService;
 
-    public function __construct(AdvertService $advert, AdvertsPhotoService $photo)
+    public function __construct(AdvertService $advert)
     {
         $this->advertService = $advert;
-        $this->photoService = $photo;
         $this->middleware([FilledProfile::class]);
     }
 
@@ -73,7 +70,7 @@ class ManageController extends Controller
     public function destroyPhoto(Advert $advert, Photo $photo){
         $this->checkAccess($advert);
         try {
-            $this->photoService->removePhoto($photo);
+            $this->advertService->removePhoto($photo);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -10,9 +10,7 @@ use App\Http\Requests\Adverts\SearchRequest;
 use App\Http\Router\AdvertsPath;
 use App\Services\PhoneFormatter;
 use App\Usecases\Adverts\AdvertService;
-use App\Usecases\Adverts\AdvertsPhotoService;
 use App\Usecases\Adverts\AdvertsSearchService;
-use http\Url;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,12 +18,12 @@ use Illuminate\Support\Facades\Auth;
 class AdvertController extends Controller
 {
     private $searchService;
-    private $photosService;
+    private $advertService;
 
-    public function __construct(AdvertsSearchService $search, AdvertsPhotoService $photos)
+    public function __construct(AdvertsSearchService $search, AdvertService $advert)
     {
         $this->searchService = $search;
-        $this->photosService = $photos;
+        $this->advertService = $advert;
     }
 
     public function path(SearchRequest $request, AdvertsPath $path)
@@ -57,7 +55,7 @@ class AdvertController extends Controller
 //        dd($childernRegions);
 //        dd($childernCategories);
 
-        $photos = $this->photosService->getPhotosArray($adverts->items());
+        $photos = $this->advertService->getPhotosArray($adverts->items());
         $pageTitle = 'Объявления';
 
         return view('adverts.index', compact(
@@ -80,7 +78,7 @@ class AdvertController extends Controller
         $similar = $service->getSimilar($advert);
         $user = Auth::user();
         $photos = $advert->getPhotosLinks();
-        $similarPhotos = $this->photosService->getPhotosArray($similar->toArray());
+        $similarPhotos = $this->advertService->getPhotosArray($similar->toArray());
         return view('adverts.show.show', compact('advert', 'similar', 'user', 'photos', 'similarPhotos', 'pageTitle'));
     }
 
