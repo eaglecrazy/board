@@ -42,7 +42,7 @@ class LoginTest extends TestCase
         $response
             ->assertStatus(302)
             ->assertRedirect('/')
-            ->assertSessionHas('error', 'You need to confirm your account. Please check your email.');
+            ->assertSessionHas('error', 'Вам необходимо подвердить электронную почту. Пожалуйста, проверьте email.');
     }
 
     public function testActive(): void

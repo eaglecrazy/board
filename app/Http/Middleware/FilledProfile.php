@@ -19,7 +19,7 @@ class FilledProfile
         $user = Auth::user();
         if(empty($user->hasFilledProfile())){
             return redirect()->route('cabinet.profile.home')
-                ->with('error', 'Please fill your profile and verify your phone.');
+                ->with('error', 'Вам необходимо заполнить профиль и подтвердить номер мобильного телефона.');
         }
 
         return $next($request);

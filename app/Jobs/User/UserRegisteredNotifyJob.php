@@ -3,7 +3,7 @@
 namespace App\Jobs\User;
 
 use App\Entity\User\User;
-use App\Notifications\Advert\ModerationPassedNotification;
+use App\Notifications\User\EmailVerificationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,7 +23,6 @@ class UserRegisteredNotifyJob implements ShouldQueue
 
     public function handle()
     {
-        $this->user->notify(new ModerationPassedNotification($this->user));
-
+        $this->user->notify(new EmailVerificationNotification($this->user));
     }
 }

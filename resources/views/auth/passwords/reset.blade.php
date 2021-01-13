@@ -1,6 +1,5 @@
 @php($pageTitle = 'Сброс пароля')
 @extends('layouts.app')
-
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -20,9 +19,7 @@
                                 <input id="email" type="email" class="form-control @if($errors->has('email')) is-invalid @endif" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                                 @if($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span>
                                 @endif
                             </div>
                         </div>
@@ -34,9 +31,7 @@
                                 <input id="password" type="password" class="form-control @if($errors->has('password')) is-invalid @endif" name="password" required autocomplete="new-password">
 
                                 @if($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
                                 @endif
                             </div>
                         </div>

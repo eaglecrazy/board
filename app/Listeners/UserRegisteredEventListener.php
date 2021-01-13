@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Jobs\Advert\ModerationPassedNotifyJob;
 use App\Jobs\User\UserRegisteredNotifyJob;
 
 class UserRegisteredEventListener

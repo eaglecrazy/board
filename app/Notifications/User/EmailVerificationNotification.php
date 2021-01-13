@@ -29,9 +29,11 @@ class EmailVerificationNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Registracion is passed')
-            ->greeting('Hello!')
-            ->line('Your advert successfully passed a moderation.')
-            ->action('View Advert', route('register.verify', ['token' => $this->user->verify_token]))
-            ->line('Thank you for using our application!');
-    }}
+            ->subject('Регистрация пройдена!')
+            ->greeting('Здравствуйте, ' . $this->user->name)
+            ->greeting('Здравствуйте!')
+            ->line('Регистрация на Фотобарахолке №1 пройдена. Для подтверждения почты нажимте на кнопку ниже.')
+            ->action('Подтвердить почту', 'http://board.xyz/verify/' . $this->user->verify_token)
+            ->line('Спасибо за использование нашего сайта!');
+    }
+}

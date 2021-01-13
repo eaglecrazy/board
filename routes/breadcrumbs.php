@@ -64,7 +64,7 @@ Breadcrumbs::register('password.request', function (BreadcrumbsGenerator $crumbs
 //password.reset
 Breadcrumbs::register('password.reset', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('password.request');
-    $crumbs->push('Сброс пароля', route('password.reset'));
+    $crumbs->push('Сброс пароля');
 });
 
 

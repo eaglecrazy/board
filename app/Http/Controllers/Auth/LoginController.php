@@ -49,7 +49,7 @@ class LoginController extends Controller
             $user = Auth::user();
             if ($user->status !== User::STATUS_ACTIVE) {
                 Auth::logout();
-                return back()->with('error', 'You need to confirm your account. Please check your email.');
+                return back()->with('error', 'Вам необходимо подвердить электронную почту. Пожалуйста, проверьте email.');
             }
 
             //если есть двухфакторная аутентификация
@@ -61,7 +61,7 @@ class LoginController extends Controller
                     'token' => $token,
                     'remember' => $request->filled('remember'),
                 ]);
-                $this->sms->send($user->phone, ('Your auth token: ' . $token));
+                $this->sms->send($user->phone, ('Ваш код: ' . $token));
                 return redirect()->route('login.phone');
             }
 
@@ -100,7 +100,7 @@ class LoginController extends Controller
         ]);
 
         if(!$session = $request->session()->get('auth')){
-            throw new BadRequestHttpException('Missing token info');
+            throw new BadRequestHttpException('Неправильный код.');
         }
 
         $user = User::findOrFail($session['id']);
@@ -112,6 +112,6 @@ class LoginController extends Controller
         }
 
         $this->incrementLoginAttempts();
-        throw ValidationException::withMessages(['token' => ['Invalid auth token']]);
+        throw ValidationException::withMessages(['token' => ['Неправильный код.']]);
     }
 }
