@@ -182,9 +182,19 @@ Linux
 поиск файла: find / -name mcrypt.so -print (можно искать *.so)
 список расширений php -m
 
+копирование файла "$ cp опции файл-источник файл-приемник"
+cp -R /home/vagrant/code/board/es/elasticsearch /usr/bin/
+
 ----------------------
 Elastic Search
 ----------------------
+скачать: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
+/home/vagrant/code/board/es/elasticsearch/bin/elasticsearch
+/home/vagrant/code/board/es/elasticsearch/bin/elasticsearch -d
+
+/usr/bin/elasticsearch/bin/elasticsearch -d
+
+
 Проверка работоспособности: curl http://127.0.0.1:9201
 Поиск: curl http://127.0.0.1:9201/app/_search?pretty=true
 
@@ -238,6 +248,3 @@ ls /opt/
 ----------------------
 ElasticSearch
 ----------------------
-https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
-/home/vagrant/code/board/es/elasticsearch-6.2.4/bin/elasticsearch
-/home/vagrant/code/board/es/elasticsearch-6.2.4/bin/elasticsearch -d

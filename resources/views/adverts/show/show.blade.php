@@ -37,27 +37,27 @@
             </p>
 
             @if(!empty($photos))
-            <div style="margin-bottom: 20px">
-                <div class="row">
-                    <div class="col-10">
-                        <div class="main-photo-wrap">
-                            <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"
-                                 height="410"/>
+                <div style="margin-bottom: 20px">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="main-photo-wrap">
+                                <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"
+                                     height="410"/>
+                            </div>
                         </div>
+                        @if(count($photos) > 1)
+                            <div class="col-2">
+                                @foreach($photos as $photoLink)
+                                    <div class="second-photo-wrap">
+                                        <img class="second-photo"
+                                             src="{{ asset('storage/') . '/' .  $photoLink}}"
+                                             height="100"/>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
-                    @if(count($photos) > 1)
-                        <div class="col-2">
-                            @foreach($photos as $photoLink)
-                                <div class="second-photo-wrap">
-                                    <img class="second-photo"
-                                         src="{{ asset('storage/') . '/' .  $photoLink}}"
-                                         height="100"/>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
                 </div>
-            </div>
             @endif
 
             {{--            e вызывает внутри себя экранирование через html special chars--}}
@@ -70,7 +70,7 @@
                 @foreach ($advert->category->allAttributes() as $attribute)
                     <tr>
                         <th>{{ $attribute->name }}</th>
-                        <td>{{ $advert->getAttributeValue($attribute->id) }}</td>
+                        <td>{{ $advert->getAdvertAttributeValue($attribute->id) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -78,10 +78,11 @@
 
             @if($advert->address)
                 <p><span class="font-weight-bold">Адрес:</span> {{ $advert->address }}</p>
+
+                <div style="margin: 20px 0; border: 1px solid #ddd">
+                    <div id="map" style="width: 100%; height: 350px"></div>
+                </div>
             @endif
-            <div style="margin: 20px 0; border: 1px solid #ddd">
-                <div id="map" style="width: 100%; height: 350px"></div>
-            </div>
 
             <p style="margin-bottom: 20px"><span class="font-weight-bold">Продавец:</span> {{ $advert->user->name }}</p>
 
@@ -112,7 +113,8 @@
                     @foreach($similar as $similar_item)
                         <div class="col-sm-6 col-md-4">
                             <div class="card">
-                                <img class="card-img-top" src="{{ asset('storage/') . '/' .  $similarPhotos[$similar_item->id] }}">
+                                <img class="card-img-top"
+                                     src="{{ asset('storage/') . '/' .  $similarPhotos[$similar_item->id] }}">
                                 <div class="card-body">
                                     <div class="card-title h4 mt-0" style="margin: 10px 0"><a
                                             href="#">{{ $similar_item->title }}</a></div>

@@ -207,11 +207,10 @@ Route::group([
         Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
         //редактирование
         Route::get('/{advert}/edit', 'ManageController@editForm')->name('edit');
-        Route::put('/{advert}/advert-update', 'ManageController@advertUpdate')->name('advertUpdate');
-        Route::put('/{advert}/attributes-update', 'ManageController@attrubutesUpdate')->name('attrubutesUpdate');
-        Route::post('/{advert}/photos-add', 'ManageController@photosAdd')->name('photosAdd');
-        Route::delete('/{advert}/{photo}/destroy', 'ManageController@destroyPhoto')->name('destroyPhoto');
-
+        Route::put('/{advert}/advert-update', 'ManageController@updateAdvert')->name('update.advert');
+        Route::put('/{advert}/attributes-update', 'ManageController@updateAttrubutes')->name('update.attrubutes');
+        Route::post('/{advert}/photos-add', 'ManageController@addPhotos')->name('add.photos');
+        Route::delete('/{advert}/{photo}/destroy', 'ManageController@destroyPhoto')->name('destroy.photo');
 
         //отправка на модерацию
         Route::post('/{advert}/send', 'ManageController@send')->name('send');

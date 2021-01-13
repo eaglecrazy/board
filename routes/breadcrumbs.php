@@ -399,8 +399,7 @@ Breadcrumbs::register('cabinet.adverts.create.region', function (BreadcrumbsGene
 
 //cabinet.adverts.edit
 Breadcrumbs::register('cabinet.adverts.edit', function (BreadcrumbsGenerator $crumbs, Advert $advert) {
-
-    $crumbs->parent('adverts.index', adPath($advert->region, $advert->category));
+    $crumbs->parent('cabinet.adverts.index', adPath($advert->region, $advert->category));
     $crumbs->push('Редактирование объявления: ' . $advert->title, route('cabinet.adverts.edit', $advert));
 });
 

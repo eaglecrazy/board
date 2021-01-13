@@ -1,4 +1,4 @@
-<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.attrubutesUpdate', $advert) }}">
+<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update', $advert) : route('cabinet.adverts.update.attrubutes', $advert) }}">
     @csrf
     @method('PUT')
     <div class="card mb-3">

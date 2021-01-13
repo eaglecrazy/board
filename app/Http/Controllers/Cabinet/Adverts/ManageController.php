@@ -96,7 +96,7 @@ class ManageController extends Controller
         return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
     }
 
-    public function advertUpdate(AdvertContentEditRequest $request, Advert $advert)
+    public function updateAdvert(AdvertContentEditRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
@@ -111,7 +111,7 @@ class ManageController extends Controller
             ->with('success', 'Объявление успешно отредактировано.');
     }
 
-    public function attrubutesUpdate(AttributesRequest $request, Advert $advert)
+    public function updateAttrubutes(AttributesRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
@@ -127,7 +127,7 @@ class ManageController extends Controller
     }
 
 
-    public function photosAdd(AddPhotosRequest $request, Advert $advert)
+    public function addPhotos(AddPhotosRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
