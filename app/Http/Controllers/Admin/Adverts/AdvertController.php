@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 
 class AdvertController extends Controller
 {
-    private $service;
+    private $advertService;
+
     public function __construct(AdvertService $service){
-        $this->service = $service;
+        $this->advertService = $service;
         $this->middleware('can:manage-adverts');
     }
 
@@ -54,14 +55,57 @@ class AdvertController extends Controller
         return view('admin.adverts.adverts.index', compact('adverts', 'statuses', 'roles'));
     }
 
-    public function updatePhotos(AddPhotosRequest $request, Advert $advert)
+    public function destroy(Advert $advert)
     {
         try {
-            $this->service->addPhotos($advert, $request);
+            $this->advertService->remove($advert);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
+        return redirect()->route('admin.adverts.adverts.index');
+    }
+
+    //---------------------------
+    // Изменение статусов
+    //---------------------------
+    public function moderate(Advert $advert)
+    {
+        try {
+            $this->advertService->moderate($advert);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('adverts.show', $advert);
+    }
+
+    public function reject(RejectRequest $request, Advert $advert)
+    {
+        try {
+            $this->advertService->reject($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('adverts.show', $advert);
+    }
+
+    public function rejectForm(Advert $advert)
+    {
+        return view('admin.adverts.reject', compact('advert'));
+    }
+
+    //---------------------------
+    // Редактирование
+    //---------------------------
+    public function edit(AdvertContentEditRequest $request, Advert $advert)
+    {
+        try {
+            $this->advertService->edit($advert, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
         return redirect()->route('adverts.show', $advert);
     }
 
@@ -71,37 +115,19 @@ class AdvertController extends Controller
         $editUser = 'admin';
         return view('adverts.edit.advert', compact('advert', 'pageTitle', 'editUser'));
     }
-
-    public function attributesForm(Advert $advert)
-    {
-        return view('adverts.edit.attributes', compact('advert'));
-    }
-
     public function updateAttributes(AttributesRequest $request, Advert $advert)
     {
         try {
-            $this->service->editAttributes($advert, $request);
+            $this->advertService->editAttributes($advert, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
         return redirect()->route('adverts.show', $advert);
     }
-
-    public function destroy(Advert $advert)
+    public function updatePhotos(AddPhotosRequest $request, Advert $advert)
     {
         try {
-            $this->service->remove($advert);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('admin.adverts.adverts.index');
-    }
-
-    public function moderate(Advert $advert)
-    {
-        try {
-            $this->service->moderate($advert);
+            $this->advertService->addPhotos($advert, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -109,34 +135,8 @@ class AdvertController extends Controller
         return redirect()->route('adverts.show', $advert);
     }
 
-    public function edit(AdvertContentEditRequest $request, Advert $advert)
-    {
-        try {
-            $this->service->edit($advert, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-        return redirect()->route('adverts.show', $advert);
-    }
 
-    public function rejectForm(Advert $advert)
-    {
-        return view('admin.adverts.reject', compact('advert'));
-    }
 
-    public function reject(RejectRequest $request, Advert $advert)
-    {
-        try {
-            $this->service->reject($advert, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
 
-        return redirect()->route('adverts.show', $advert);
-    }
-
-    //---------------------------
-    // Редактирование
-    //---------------------------
 
 }
