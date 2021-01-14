@@ -70,7 +70,8 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.favorites.index');
+        return redirect()->route('cabinet.tickets.index')
+            ->with('success', 'Заявка удалена.');
     }
 
     private function checkAccess(Ticket $ticket): void

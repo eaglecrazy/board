@@ -9,7 +9,6 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Создана</th>
             <th>Обновлена</th>
             <th>Тема</th>
@@ -20,7 +19,6 @@
 
         @foreach ($tickets as $ticket)
             <tr>
-                <td>{{ $ticket->id }}</td>
                 <td>{{ $ticket->created_at }}</td>
                 <td>{{ $ticket->updated_at }}</td>
                 <td><a href="{{ route('cabinet.tickets.show', $ticket) }}" target="_blank">{{ $ticket->subject }}</a></td>
