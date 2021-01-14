@@ -25,7 +25,6 @@ class Dialog extends Model
 
     protected $guarded = ['id'];
 
-
     public function writeMessageByOwner(int $ownerId, string $message): void
     {
         $this->messages()->create([

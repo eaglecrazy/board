@@ -11,17 +11,20 @@ use Faker\Generator as Faker;
 
 
 $factory->define(Advert::class, function (Faker $faker) {
-    $userId = User::All()->random()->id;
+    do {
+        $user = User::All()->random();
+    }while(!($user->isActive() && $user->isPhoneVerified()));
+    $userId = $user->id;
     $category = Category::All()->random();
     $lens = false;
-    if($category->name === 'Объективы'){
+    if ($category->name === 'Объективы') {
         $lens = true;
     }
     $categoryId = $category->id;
     $mosSpb = rand(1, 2);
     $regionId = $mosSpb;
     $brands = ["Canon", "Nikon", "Sony"];
-    if($lens) {
+    if ($lens) {
         $title = $brands[rand(0, 2)] . ' ' . Str::ucfirst($faker->word()) . ' ' . rand(10, 200) . 'mm';
     } else {
         $title = $brands[rand(0, 2)] . ' ' . Str::ucfirst($faker->word()) . ' ' . rand(1, 10000);
@@ -43,23 +46,23 @@ $factory->define(Advert::class, function (Faker $faker) {
         $expires = null;
     }
     $GLOBALS['advert_seeder']--;
-    if($GLOBALS['advert_seeder'] % 1000 === 0){
+    if ($GLOBALS['advert_seeder'] % 1000 === 0) {
         echo ($GLOBALS['advert_seeder']) . ' adverts left.' . PHP_EOL;
     }
 
     return [
-            'user_id' => $userId,
-            'category_id' => $categoryId,
-            'region_id' => $regionId,
-            'title' => $title,
-            'price' => $price,
-            'address' => $adress,
-            'content' => $content,
-            'status' => $status,
-            'reject_reason' => $reject_reason,
-            'published_at' => $published,
-            'expires_at' => $expires,
-        ];
+        'user_id' => $userId,
+        'category_id' => $categoryId,
+        'region_id' => $regionId,
+        'title' => $title,
+        'price' => $price,
+        'address' => $adress,
+        'content' => $content,
+        'status' => $status,
+        'reject_reason' => $reject_reason,
+        'published_at' => $published,
+        'expires_at' => $expires,
+    ];
 });
 
 
