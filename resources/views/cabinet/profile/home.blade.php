@@ -5,17 +5,17 @@
     @include('cabinet._nav', ['page' => 'profile'])
 
     <div class="mb-3">
-        <a href="{{ route('cabinet.profile.edit') }}" class="btn btn-primary">Edit</a>
+        <a href="{{ route('cabinet.profile.edit') }}" class="btn btn-primary">Редактировать</a>
     </div>
 
     <table class="table table-bordered">
         <tbody>
         <tr>
-            <th>First Name</th>
+            <th>Имя</th>
             <td>{{ $user->name }}</td>
         </tr>
         <tr>
-            <th>Last Name</th>
+            <th>Фамилия</th>
             <td>{{ $user->last_name }}</td>
         </tr>
         <tr>
@@ -23,14 +23,14 @@
             <td>{{ $user->email }}</td>
         </tr>
         <tr>
-            <th>Phone</th><td>
+            <th>Телефон</th><td>
                 @if ($user->phone)
                     {{ $user->phone }}
                     @if (!$user->isPhoneVerified())
-                        <i>(is not verified)</i>
+                        <i>не подтверждён</i>
                         <form method="POST" action="{{ route('cabinet.profile.phone') }}">
                             @csrf
-                            <button type="submit" class="btn btn-sm btn-success">Verify</button>
+                            <button type="submit" class="btn btn-sm btn-success">Подтвердить телефон</button>
                         </form>
                     @endif
                 @endif
@@ -38,13 +38,13 @@
         </tr>
         @if ($user->phone && $user->phone_verified)
             <tr>
-                <th>Two Factor Auth</th><td>
+                <th>Двухфакторная аутентификация</th><td>
                     <form method="POST" action="{{ route('cabinet.profile.phone.auth') }}">
                         @csrf
                         @if ($user->isPhoneAuthEnabled())
-                            <button type="submit" class="btn btn-sm btn-success">On</button>
+                            <p>Включена</p> <button type="submit" class="btn btn-sm btn-success">Выключить</button>
                         @else
-                            <button type="submit" class="btn btn-sm btn-danger">Off</button>
+                            <p>Выключена</p><button type="submit" class="btn btn-sm btn-danger"> Включить</button>
                         @endif
                     </form>
                 </td>

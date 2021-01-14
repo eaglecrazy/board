@@ -46,7 +46,7 @@ Breadcrumbs::register('login', function (BreadcrumbsGenerator $crumbs) {
 //login.phone
 Breadcrumbs::register('login.phone', function (BreadcrumbsGenerator $crumbs) {
     $crumbs->parent('home');
-    $crumbs->push('Подтверждение телефона', route('login.phone'));
+    $crumbs->push('Двухфакторная аутентификация', route('login.phone'));
 });
 
 //register
