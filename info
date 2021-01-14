@@ -179,23 +179,42 @@ sudo ifconfig docker0
 Linux
 ----------------------
 вывод файла: cat php.ini
-поиск файла: find / -name mcrypt.so -print (можно искать *.so)
-список расширений php -m
 
 копирование файла "$ cp опции файл-источник файл-приемник"
 cp -R /home/vagrant/code/board/es/elasticsearch /usr/bin/
 
+поиск файла: find / -name mcrypt.so -print (можно искать *.so)
+
+создать папку
+mkdir -p ./x/y
+
+список расширений php -m
+
+
+
 ----------------------
 Elastic Search
 ----------------------
-скачать: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
+Инструкция: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
+
+скачать в текущую папку:
+curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gz
+
+установить
+в текущую папку: tar -xvf elasticsearch-6.2.4.tar.gz
+в другую папку: tar -xvf elasticsearch-6.2.4.tar.gz -C /usr/bin/elasticsearch
+
+установить права
+sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
+
+запустить
+/usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
+
 /home/vagrant/code/board/es/elasticsearch/bin/elasticsearch
 /home/vagrant/code/board/es/elasticsearch/bin/elasticsearch -d
 
-/usr/bin/elasticsearch/bin/elasticsearch -d
 
-
-Проверка работоспособности: curl http://127.0.0.1:9201
+Проверка рабоcтоспособности: curl http://127.0.0.1:9201
 Поиск: curl http://127.0.0.1:9201/app/_search?pretty=true
 
 
