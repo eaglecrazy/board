@@ -2,85 +2,23 @@
 @extends('layouts.app')
 
 @section('content')
-
-    @if ($banner->reject_reason)
+    @include('cabinet._nav', ['page'=>'banners'])
+    @if ($banner->isDraft() && $banner->reject_reason)
         <div class="alert alert-danger">
-            Причина отклонения: {{ $banner->reject_reason }}
+            Модерация не пройдена. Причина отклонения: {{ $banner->reject_reason }}
         </div>
     @endif
 
-    @can ('manage-banners')
-        <h3>Панель модератора</h3>
-        <div class="d-flex flex-row mb-3">
-            <a href="{{ route('admin.banners.edit', $banner) }}" class="btn btn-primary mr-1">Редактировать</a>
-            @if ($banner->isOnModeration())
-                <form method="POST" action="{{ route('admin.banners.moderate', $banner) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Одобрить</button>
-                </form>
-                <a href="{{ route('admin.banners.reject', $banner) }}" class="btn btn-warning mr-1">Отклонить</a>
-            @endif
-
-            @if ($banner->isOrdered())
-                <form method="POST" action="{{ route('admin.banners.pay', $banner) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Отметить как оплаченный</button>
-                </form>
-            @endif
-            <form method="POST" action="{{ route('admin.banners.destroy', $banner) }}" class="mr-1">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger">Удалить</button>
-            </form>
-        </div>
+    @can ('manage-banners', $banner)
+        @include('cabinet.banners._moderator_panel')
     @endcan
 
     @can ('manage-own-banner', $banner)
-        <h3>Управление баннером</h3>
-        <div class="d-flex flex-row mb-3">
-            @if ($banner->canBeChanged())
-                <a href="{{ route('cabinet.banners.edit', $banner) }}" class="btn btn-primary mr-1">Редактировать</a>
-                <a href="{{ route('cabinet.banners.edit_file', $banner) }}" class="btn btn-primary mr-1">Изменить
-                    файл</a>
-            @endif
-
-            @if ($banner->isDraft())
-                <form method="POST" action="{{ route('cabinet.banners.send', $banner) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Отправить на модерацию</button>
-                </form>
-            @endif
-
-            @if ($banner->isOnModeration())
-                <form method="POST" action="{{ route('cabinet.banners.cancel', $banner) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-secondary">Отозвать с модерации</button>
-                </form>
-            @endif
-
-            @if ($banner->isModerated())
-                <form method="POST" action="{{ route('cabinet.banners.order', $banner) }}" class="mr-1">
-                    @csrf
-                    <button class="btn btn-success">Оплатить</button>
-                </form>
-            @endif
-
-            @if ($banner->canBeRemoved())
-                <form method="POST" action="{{ route('cabinet.banners.destroy', $banner) }}" class="mr-1">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger">Удалить</button>
-                </form>
-            @endif
-        </div>
+        @include('cabinet.banners._owner_panel')
     @endcan
 
     <table class="table table-bordered table-striped">
         <tbody>
-        <tr>
-            <th>ID</th>
-            <td>{{ $banner->id }}</td>
-        </tr>
         <tr>
             <th>Наименование</th>
             <td>{{ $banner->name }}</td>
@@ -124,7 +62,7 @@
 
     <div class="card">
         <div class="card-body">
-            <img src="{{ Storage::disk('public')->url($banner->file) }}"/>
+            <img class="main-photo" src="{{ asset('storage/') . '/' .  $banner->file}}" width="240" height="400"/>
         </div>
     </div>
 @endsection

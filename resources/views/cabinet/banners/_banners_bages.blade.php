@@ -1,7 +1,7 @@
 @if ($banner->isDraft())
     <span class="badge badge-secondary">Черновик</span>
 @elseif ($banner->isOnModeration())
-    <span class="badge badge-primary">Модерация</span>
+    <span class="badge badge-primary">На модерации</span>
 @elseif ($banner->isModerated())
     <span class="badge badge-success">Отмодерирован</span>
 @elseif ($banner->isOrdered())

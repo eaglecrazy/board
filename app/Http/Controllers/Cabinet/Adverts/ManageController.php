@@ -30,7 +30,7 @@ class ManageController extends Controller
         }
     }
 
-    public function send(Advert $advert)
+    public function sendToModeration(Advert $advert)
     {
         $this->checkAccess($advert);
         try {
@@ -38,7 +38,7 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('adverts.show', $advert);
+        return back()->with('success', 'Объявление передано на модерацию.');
     }
 
     public function close(Advert $advert)
@@ -49,7 +49,7 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('adverts.show', $advert);
+        return back();
     }
 
     //---------------------------
@@ -64,7 +64,7 @@ class ManageController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.adverts.index');
+        return redirect()->route('cabinet.adverts.index')->with('success', 'Объявление удалено.');
     }
 
     public function destroyPhoto(Advert $advert, Photo $photo){
@@ -107,7 +107,7 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Характеристики успешно отредактированы.');;
+        return back()->with('success', 'Характеристики успешно отредактированы.');
     }
 
     public function addPhotos(AddPhotosRequest $request, Advert $advert)

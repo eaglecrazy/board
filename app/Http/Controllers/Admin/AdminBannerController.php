@@ -21,33 +21,9 @@ class AdminBannerController extends Controller
         $this->middleware('can:manage-banners');
     }
 
-    public function destroy(Banner $banner): RedirectResponse
-    {
-        try {
-            $this->service->removeByAdmin($banner);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('admin.banners.index');
-    }
-
-    public function edit(BannerEditRequest $request, Banner $banner): RedirectResponse
-    {
-        try {
-            $this->service->edit($banner, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('admin.banners.show', $banner);
-    }
-
-    public function editForm(Banner $banner)
-    {
-        return view('cabinet.banners.edit', compact('banner'));
-    }
-
+    //---------------------------
+    // Отображение
+    //---------------------------
     public function index(Request $request)
     {
         $query = Banner::orderByDesc('updated_at');
@@ -79,6 +55,46 @@ class AdminBannerController extends Controller
         return view('admin.banners.index', compact('banners', 'statuses'));
     }
 
+    public function show(Banner $banner)
+    {
+        return view('cabinet.banners.show', compact('banner'));
+    }
+
+
+    //---------------------------
+    // Редактирование
+    //---------------------------
+    public function edit(BannerEditRequest $request, Banner $banner): RedirectResponse
+    {
+        try {
+            $this->service->edit($banner, $request);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        return back()->with('success', 'Баннер отредактирован.');
+    }
+
+    public function editForm(Banner $banner)
+    {
+        $editUser = 'admin';
+        return view('cabinet.banners.edit', compact('banner', 'editUser'));
+    }
+
+
+    //---------------------------
+    // Статусы
+    //---------------------------
+    public function destroy(Banner $banner): RedirectResponse
+    {
+        try {
+            $this->service->removeByAdmin($banner);
+        } catch (\DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('admin.banners.index')->with('success', 'Баннер удалён.');
+    }
+
     public function moderate(Banner $banner): RedirectResponse
     {
         try {
@@ -87,7 +103,7 @@ class AdminBannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.banners.show', $banner);
+        return back()->with('success', 'Баннер прошёл модерацию.');
     }
 
     public function pay(Banner $banner): RedirectResponse
@@ -98,7 +114,7 @@ class AdminBannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.banners.show', $banner);
+        return back()->with('success', 'Баннер оплачен. Показы начаты.');
     }
 
     public function reject(BannerRejectRequest $request, Banner $banner): RedirectResponse
@@ -109,16 +125,11 @@ class AdminBannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.banners.show', $banner);
+        return redirect()->route('admin.banners.show', $banner)->with('success', 'Баннер не прошёл модерацию.');;
     }
 
     public function rejectForm(Banner $banner)
     {
         return view('admin.banners.reject', compact('banner'));
-    }
-
-    public function show(Banner $banner)
-    {
-        return view('cabinet.banners.show', compact('banner'));
     }
 }

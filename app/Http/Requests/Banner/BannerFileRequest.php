@@ -22,7 +22,7 @@ class BannerFileRequest extends FormRequest
 
         return [
             'format' => ['required', 'string', Rule::in(Banner::formatsList())],
-            'file' => 'required|image|mimes:jpg,jpeg,png|dimensions:width=' . $width . ',height=' . $height,
+            'file' => 'required|mimes:jpg,jpeg,png|dimensions:width=' . $width . ',height=' . $height,
         ];
     }
 }

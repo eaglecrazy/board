@@ -14,8 +14,8 @@ class BannerEditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'limit' => 'required|integer',
+            'name' => 'required|string|min:3',
+            'limit' => 'required|integer|min:100',
             'url' => 'required|url',
         ];
     }

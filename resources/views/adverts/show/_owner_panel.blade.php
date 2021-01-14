@@ -4,7 +4,7 @@
         <a href="{{ route('cabinet.adverts.edit', $advert) }}"
            class="btn btn-primary mr-2">Редактировать</a>
         @if ($advert->isDraft() || $advert->isClosed())
-            <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-2">
+            <form method="POST" action="{{ route('cabinet.adverts.sendToModeration', $advert) }}" class="mr-2">
                 @csrf
                 <button class="btn btn-success">Опубликовать</button>
             </form>

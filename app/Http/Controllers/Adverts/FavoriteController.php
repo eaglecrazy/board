@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Adverts;
 use App\Entity\Adverts\Advert\Advert;
 use App\Http\Controllers\Controller;
 use App\Usecases\Adverts\FavoriteService;
+use DomainException;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
@@ -20,18 +21,18 @@ class FavoriteController extends Controller
     public function add(Advert $advert){
         try {
             $this->service->add(Auth::id(), $advert->id);
-        } catch (\DomainException $e){
+        } catch (DomainException $e){
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('adverts.show', $advert)->with('success', 'Advert is added to your favorites.');
+        return back()->with('success', 'Объявление добавлено в избранное.');
     }
 
     public function remove(Advert $advert){
         try {
             $this->service->remove(Auth::id(), $advert->id);
-        } catch (\DomainException $e){
+        } catch (DomainException $e){
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('adverts.show', $advert);
+        return back()->with('success', 'Объявление удалено из избранного.');
     }
 }

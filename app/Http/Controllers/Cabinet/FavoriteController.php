@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cabinet;
 use App\Entity\Adverts\Advert\Advert;
 use App\Http\Controllers\Controller;
 use App\Usecases\Adverts\FavoriteService;
+use DomainException;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
@@ -25,9 +26,9 @@ class FavoriteController extends Controller
     public function remove(Advert $advert){
         try {
             $this->service->remove(Auth::id(), $advert->id);
-        } catch (\DomainException $e){
+        } catch (DomainException $e){
             return back()->with('error', $e->getMessage());
         }
-        return redirect()->route('cabinet.favorites.index');
+        return back()->with('success', 'Объявление удалено из избранного.');
     }
 }

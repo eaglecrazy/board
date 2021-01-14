@@ -8,7 +8,7 @@
         </div>
         @if ($advert->reject_reason)
             <div class="alert alert-danger">
-                Причина отклонения: {{ $advert->reject_reason }}
+                Модерация не пройдена. Причина отклонения: {{ $advert->reject_reason }}
             </div>
         @endif
     @elseif($advert->isClosed())

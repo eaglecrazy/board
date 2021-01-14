@@ -8,6 +8,7 @@ use App\Entity\Region;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
 {
@@ -18,8 +19,7 @@ class AdvertController extends Controller
 
     public function index(Request $request){
 
-
-        $query = Advert::orderByDesc('updated_at');
+        $query = Advert::forUser(Auth::user())->orderByDesc('updated_at');
 
         if(!empty($value = $request->get('title'))){
             $query->where('title', 'like', '%' . $value . '%');

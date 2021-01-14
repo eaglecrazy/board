@@ -218,12 +218,12 @@ class Advert extends Model
     public function sendToModeration(): void
     {
         if (!($this->isDraft() || $this->isClosed())) {
-            throw new \DomainException('Advert is not draft.');
+            throw new DomainException('Advert is not draft.');
         }
-//TODO Эту проверку нужно вернуть, когда будут фотки
-//        if (!$this->photos()->count()) {
-//            throw new \DomainException('You need to upload photos.');
-//        }
+
+        if (!$this->photos()->count()) {
+            throw new DomainException('Нужно загрузить хотя бы одну фотографию.');
+        }
 
         $this->update([
             'status' => self::STATUS_MODERATION,
@@ -233,7 +233,7 @@ class Advert extends Model
     public function moderate(Carbon $date): void
     {
         if ($this->status !== self::STATUS_MODERATION) {
-            throw new \DomainException('Advert is not sent to moderation.');
+            throw new DomainException('Advert is not sent to moderation.');
         }
         $this->update([
             'status' => self::STATUS_ACTIVE,

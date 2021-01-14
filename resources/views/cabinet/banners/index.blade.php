@@ -9,7 +9,6 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Название</th>
             <th>Регион</th>
             <th>Категория</th>
@@ -21,7 +20,6 @@
 
         @foreach ($banners as $banner)
             <tr>
-                <td>{{ $banner->id }}</td>
                 <td><a href="{{ route('cabinet.banners.show', $banner) }}" target="_blank">{{ $banner->name }}</a></td>
                 <td>
                     @if ($banner->region)

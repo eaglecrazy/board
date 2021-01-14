@@ -13,7 +13,7 @@
 
         @if ($advert->isModeration() || $advert->isActive())
             <a href="{{ route('admin.adverts.adverts.reject', $advert) }}"
-               class="btn btn-danger mr-2">Отклонить</a>
+               class="btn btn-warning mr-2">Отклонить</a>
         @endif
 
         <form method="POST" action="{{ route('admin.adverts.adverts.destroy', $advert) }}" class="mr-2">

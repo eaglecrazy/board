@@ -21,11 +21,11 @@ class BannerCreateRequest extends FormRequest
         }
 
         return [
-            'name' => 'required|string',
-            'limit' => 'required|integer',
+            'name' => 'required|string|min:3',
+            'limit' => 'required|integer|min:100',
             'url' => 'required|url',
             'format' => ['required', 'string', Rule::in(Banner::formatsList())],
-            'file' => 'required|image|mimes:jpg,jpeg,png|dimensions:width=' . $width . ',height=' . $height,
+            'file' => 'required|mimes:jpg,jpeg,png|dimensions:width=' . $width . ',height=' . $height,
         ];
     }
 }

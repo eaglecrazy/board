@@ -6,11 +6,10 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Updated</th>
-            <th>Title</th>
-            <th>Region</th>
-            <th>Category</th>
+            <th>Наименование</th>
+            <th>Регион</th>
+            <th>Категория</th>
+            <th>Изменено</th>
             <th></th>
         </tr>
         </thead>
@@ -18,8 +17,6 @@
 
         @foreach ($adverts as $advert)
             <tr>
-                <td>{{ $advert->id }}</td>
-                <td>{{ $advert->updated_at }}</td>
                 <td><a href="{{ route('adverts.show', $advert) }}" target="_blank">{{ $advert->title }}</a></td>
                 <td>
                     @if ($advert->region)
@@ -27,11 +24,12 @@
                     @endif
                 </td>
                 <td>{{ $advert->category->name }}</td>
+                <td>{{ $advert->updated_at }}</td>
                 <td>
                     <form method="POST" action="{{ route('cabinet.favorites.remove', $advert) }}" class="mr-1">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-sm btn-danger"><span class="fa fa-remove"></span> Remove</button>
+                        <button class="btn btn-sm btn-danger"><span class="fa fa-remove"></span> Удалить</button>
                     </form>
                 </td>
             </tr>

@@ -131,7 +131,7 @@ class AdminAdvertController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Объявление успешно отредактировано.');;
+        return back()->with('success', 'Объявление успешно отредактировано.');
     }
 
     public function updateAttrubutes (AttributesRequest $request, Advert $advert)
@@ -141,7 +141,7 @@ class AdminAdvertController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Характеристики успешно отредактированы.');;
+        return back()->with('success', 'Характеристики успешно отредактированы.');
     }
 
     public function addPhotos(AddPhotosRequest $request, Advert $advert)
