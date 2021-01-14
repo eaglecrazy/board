@@ -516,3 +516,13 @@ Breadcrumbs::register('cabinet.tickets.show', function (BreadcrumbsGenerator $cr
     $crumbs->parent('cabinet.tickets.index');
     $crumbs->push($ticket->subject, route('cabinet.tickets.show', $ticket));
 });
+
+
+//-------------------------------------------------------------------------
+// Cabinet.Dialogs
+//-------------------------------------------------------------------------
+//cabinet.dialogs.index
+Breadcrumbs::register('cabinet.dialogs.index', function (BreadcrumbsGenerator $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Сообщения', route('cabinet.dialogs.index'));
+});

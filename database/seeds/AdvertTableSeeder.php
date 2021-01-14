@@ -12,7 +12,7 @@ class AdvertTableSeeder extends Seeder
     {
         echo 'Adverts seeding is begin' . PHP_EOL;
         Advert::where('title', '!=', '')->delete();
-        $num = 5000;
+        $num = 1000;
         $GLOBALS['advert_seeder'] = $num;
         factory(Advert::class, $num)->create();
         echo 'Adverts seeding is end' . PHP_EOL;

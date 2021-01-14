@@ -27,7 +27,6 @@ class LoginController extends Controller
 
     public function showLoginForm(Request $request)
     {
-
         return view('auth.login');
     }
 
@@ -65,7 +64,7 @@ class LoginController extends Controller
                 return redirect()->route('login.phone');
             }
 
-            return redirect()->intended(route('cabinet.home'));
+            return redirect()->intended();
         }
 
         $this->incrementLoginAttempts($request);
