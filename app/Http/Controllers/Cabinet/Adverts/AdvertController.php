@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Cabinet\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Category;
+use App\Entity\Region;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AdvertController extends Controller
 {
@@ -14,8 +16,30 @@ class AdvertController extends Controller
         $this->middleware(FilledProfile::class);
     }
 
-    public function index(){
-        $adverts = Advert::forUser(Auth::user())->orderByDesc('id')->paginate(20);
+    public function index(Request $request){
+
+
+        $query = Advert::orderByDesc('updated_at');
+
+        if(!empty($value = $request->get('title'))){
+            $query->where('title', 'like', '%' . $value . '%');
+        }
+
+        if(!empty($value = $request->get('region'))){
+            $region_ids = Region::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('region_id', $region_ids);
+        }
+
+        if(!empty($value = $request->get('category'))){
+            $categories_ids = Category::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('category_id', $categories_ids);
+        }
+
+        if(!empty($value = $request->get('status'))){
+            $query->where('status', $value);
+        }
+
+        $adverts = $query->paginate(20);
         $statuses = Advert::statusesList();
         return view('cabinet.adverts.index', compact('adverts', 'statuses'));
     }

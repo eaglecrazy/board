@@ -145,10 +145,10 @@ class Advert extends Model
     public static function statusesList(): array
     {
         return [
-            self::STATUS_DRAFT => 'Draft',
-            self::STATUS_MODERATION => 'On Moderation',
-            self::STATUS_ACTIVE => 'Active',
-            self::STATUS_CLOSED => 'Closed',
+            self::STATUS_DRAFT => 'Черновик',
+            self::STATUS_MODERATION => 'На модерации',
+            self::STATUS_ACTIVE => 'Активно',
+            self::STATUS_CLOSED => 'Закрыто',
         ];
     }
 

@@ -120,8 +120,9 @@
                                 <img class="card-img-top"
                                      src="{{ asset('storage/') . '/' .  $similarPhotos[$similar_item->id] }}">
                                 <div class="card-body">
-                                    <div class="card-title h4 mt-0" style="margin: 10px 0"><a
-                                            href="#">{{ $similar_item->title }}</a></div>
+                                    <div class="card-title h4 mt-0" style="margin: 10px 0">
+                                        <a href="{{ route('adverts.show', $similar_item) }}">{{ $similar_item->title }}</a>
+                                    </div>
                                     <p class="card-text" style="color: #666"><b>{{ $similar_item->price }} руб.</b></p>
                                     <p class="card-text mt-0"
                                        style="color: #666">{{ Str::limit($similar_item->content, 100) }}</p>

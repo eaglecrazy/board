@@ -12,8 +12,12 @@ Route::group([
     'namespace' => 'Cabinet',
     'middleware' => ['auth'],
 ], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'Adverts\AdvertController@index')->name('home');
 
+
+    //---------------------------
+    // Cabinet.Favorites
+    //---------------------------
     Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
     Route::delete('favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
 
