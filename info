@@ -258,12 +258,3 @@ ls /opt/
 
 ОБНОВЛЕНИЕ АВТОЛОАДА
 /opt/php72/bin/php /usr/local/bin/composer dump-autoload
-
-
-
-
-
-
-----------------------
-ElasticSearch
-----------------------

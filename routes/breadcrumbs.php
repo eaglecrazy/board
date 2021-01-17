@@ -1,18 +1,17 @@
 <?php
 
-use App\Entity\Adverts\Attribute;
 use App\Entity\Adverts\Advert\Advert;
+use App\Entity\Adverts\Attribute;
+use App\Entity\Adverts\Category;
 use App\Entity\Banner\Banner;
 use App\Entity\Page;
 use App\Entity\Region;
-use App\Entity\Adverts\Category;
 use App\Entity\Ticket\Ticket;
+use App\Entity\User\User;
+use App\Http\Router\AdvertsPath;
 use App\Http\Router\PagePath;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
-use App\Entity\User\User ;
-use Illuminate\Http\Request;
-use App\Http\Router\AdvertsPath;
 
 
 //-------------------------------------------------------------------------
@@ -518,11 +517,6 @@ Breadcrumbs::register('cabinet.tickets.show', function (BreadcrumbsGenerator $cr
 });
 
 
-//-------------------------------------------------------------------------
-// Cabinet.Dialogs
-//-------------------------------------------------------------------------
-//cabinet.dialogs.index
-Breadcrumbs::register('cabinet.dialogs.index', function (BreadcrumbsGenerator $crumbs) {
-    $crumbs->parent('cabinet.home');
-    $crumbs->push('Сообщения', route('cabinet.dialogs.index'));
-});
+require_once('breadcrumbs/cabinet/breadcrumbs_cabinet_dialogs.php');
+
+

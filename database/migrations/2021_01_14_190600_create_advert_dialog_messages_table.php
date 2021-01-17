@@ -11,12 +11,14 @@ class CreateAdvertDialogMessagesTable extends Migration
         Schema::create('advert_dialog_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->bigIncrements('user_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('dialog_id');
             $table->text('message');
         });
 
         Schema::table('advert_dialog_messages', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('dialog_id')->references('id')->on('advert_dialogs')->onDelete('CASCADE');
         });
     }
 

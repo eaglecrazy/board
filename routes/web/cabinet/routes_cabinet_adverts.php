@@ -2,6 +2,7 @@
 //---------------------------
 // Cabinet.Adverts
 //---------------------------
+use App\Http\Middleware\ActiveAdvert;
 use App\Http\Middleware\FilledProfile;
 
 Route::group([

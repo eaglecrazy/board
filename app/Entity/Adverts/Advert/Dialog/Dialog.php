@@ -3,11 +3,13 @@
 
 namespace App\Entity\Adverts\Advert\Dialog;
 
+use App\Entity\Adverts\Advert\Advert;
 use App\Entity\User\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -63,5 +65,16 @@ class Dialog extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'dialog_id', 'id');
+    }
+
+    public function getAdvert(): Advert
+    {
+        return Advert::where('id', $this->advert_id)->first();
+    }
+
+    public function getLastMessageShort(): string
+    {
+        $str = $this->messages()->orderByDesc('created_at')->pluck('message')->first();
+        return Str::limit($str, 50);
     }
 }

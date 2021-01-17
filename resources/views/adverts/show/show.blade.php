@@ -92,7 +92,7 @@
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Показать телефон</span></span>
                 @auth
-                    <span class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</span>
+                    <a href="{{ route('cabinet.dialogs.dialog', $advert) }}" class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</a>
                     @if ($user && $user->hasInFavorites($advert->id))
                         <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
                             @csrf

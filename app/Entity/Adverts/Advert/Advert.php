@@ -290,7 +290,7 @@ class Advert extends Model
         ]);
     }
 
-    private function getDialogWith(int $clientId): Dialog
+    public function getDialogWith(int $clientId)
     {
         $dialog = $this->dialogs()->where([
             'user_id'=>$this->user_id,
