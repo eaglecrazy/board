@@ -68,6 +68,9 @@ use Illuminate\Support\Facades\Gate;
  * @property-read Collection|User[] $favorites
  * @property-read int|null $favorites_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Adverts\Advert\Advert favoredByUser(User $user)
+ * @property-read int|null $attributes_values_count
+ * @property-read Collection|Dialog[] $dialogs
+ * @property-read int|null $dialogs_count
  */
 class Advert extends Model
 {
@@ -284,14 +287,17 @@ class Advert extends Model
         if($clientId === $this->user_id){
             throw new DomainException('Нельзя отправить сообщение себе.');
         }
-        return $this->dialogs()->firstOrCreate([
+        /** @var Dialog $dialog */
+        $dialog = $this->dialogs()->firstOrCreate([
             'user_id'=>$this->user_id,
             'client_id'=> $clientId,
         ]);
+        return $dialog;
     }
 
-    public function getDialogWith(int $clientId)
+    public function getDialogWith(int $clientId): Dialog
     {
+        /** @var Dialog $dialog */
         $dialog = $this->dialogs()->where([
             'user_id'=>$this->user_id,
             'client_id'=> $clientId,

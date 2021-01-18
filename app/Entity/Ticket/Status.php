@@ -8,12 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * App\Entity\Ticket\Status
+ *
  * @property int $id
  * @property int $ticket_id
  * @property int $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property string $status
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Status newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Status newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Status query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereTicketId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Status whereUserId($value)
+ * @mixin \Eloquent
  */
 class Status extends Model
 {

@@ -29,6 +29,22 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property string $content
  * @property string $description
  * @mixin \Eloquent
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $_lft
+ * @property int $_rgt
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereLft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereMenuTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereRgt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
  */
 class Page extends Model
 {

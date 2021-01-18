@@ -8,56 +8,39 @@ use App\Entity\Adverts\Advert\Dialog\Dialog;
 use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\MessageRequest;
+use App\Usecases\Adverts\Dialogs\DialogService;
+use App\Usecases\Adverts\Dialogs\DialogUsersRoles;
 use DomainException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class DialogController extends Controller
 {
-    public function dialog(Advert $advert)
+    private $dialogService;
+
+    public function __construct(DialogService $dialog)
     {
-        $user = Auth::user();
-        if ($advert->user_id === $user->id) {
-            $clientId = Dialog::where('advert_id', $advert->id)
-                ->where('user_id', $user->id)->first()->client_id;
-            $client = User::where('id', $clientId)->first();
-        } else {
-            $client = $user;
-        }
-
-        $dialog = $advert->getDialogWith($client->id);
-        $messages = $dialog->messages()->orderBy('updated_at')->get();
-        $newMessages = collect([]);
-
-        if ($client = $user) {
-            if ($dialog->client_new_messages) {
-                $newMessages = $messages->splice($messages->count() - $dialog->client_new_messages, $dialog->client_new_messages);
-            }
-            $dialog->readByClient();
-        } else {
-            if ($dialog->user_new_messages) {
-                $newMessages = $messages->splice($messages->count() - $dialog->user_new_messages, $dialog->user_new_messages);
-            }
-            $dialog->readByOwner();
-        }
-        return view('cabinet.dialogs.dialog', compact('advert', 'messages', 'newMessages'));
+        $this->dialogService = $dialog;
     }
 
     public function index()
     {
-        $dialogsIds = DB::table('advert_dialogs')
-            ->where('user_id', Auth::id())
-            ->orWhere(function ($query) {
-                $query->where('client_id', Auth::id());
-            })->pluck('id');
-        $dialogs = Dialog::whereIn('id', $dialogsIds)->paginate(20);
+        $dialogs = $this->dialogService->getCurrentUserDialogsQueryBuilder()->paginate(20);
         return view('cabinet.dialogs.index', compact('dialogs'));
     }
 
-    public function write(Advert $advert, MessageRequest $request)
+    public function dialog(Advert $advert)
+    {
+        $dialog = $this->dialogService->getDialog($advert);
+        $messages = $this->dialogService->getDialogMessages($dialog);
+        $otherUser = $this->dialogService->getOtherUser($dialog);
+        $this->dialogService->readMessages($dialog);
+        return view('cabinet.dialogs.dialog', compact('advert', 'messages', 'otherUser', 'dialog'));
+    }
+
+    public function write(Dialog $dialog, MessageRequest $request)
     {
         try {
-            $advert->writeClientMessage(Auth::id(), request('message'));
+            $this->dialogService->writeMessage($dialog, $request['message']);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

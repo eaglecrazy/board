@@ -23,16 +23,15 @@
                 <td>
                     {{ $dialog->updated_at->format('Y.m.d - H:i') }}
                 </td>
-                <td>{{ $dialog->user_id == Auth::id() ? $dialog->user_new_messages : $dialog->client_new_messages }}</td>
+                <td>{{ $dialog->user_id === Auth::id() ? $dialog->user_new_messages : $dialog->client_new_messages }}</td>
                 <td>{{ $dialog->getLastMessageShort() }}</td>
                 <td>
                     <a href="{{ route('cabinet.dialogs.dialog', $advert) }}"
-                       class="btn btn-sm btn-primary">Написать</a>
+                       class="btn btn-sm btn-primary">Посмотреть диалог</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
     {{ $dialogs->links() }}
-
 @endsection

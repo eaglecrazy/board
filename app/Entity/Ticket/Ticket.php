@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * App\Entity\Ticket\Ticket
+ *
  * @property int $id
  * @property int $user_id
  * @property Carbon $created_at
@@ -18,10 +20,25 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $subject
  * @property string $content
  * @property string $status
- *
  * @method static Builder forUser(User $user)
  * @method static Ticket findOrFail(int $id)
  * @method static \Illuminate\Database\Query\Builder orderByDesc(Carbon $updated_at)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Ticket\Message[] $messages
+ * @property-read int|null $messages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Ticket\Status[] $statuses
+ * @property-read int|null $statuses_count
+ * @property-read User $user
+ * @method static Builder|Ticket newModelQuery()
+ * @method static Builder|Ticket newQuery()
+ * @method static Builder|Ticket query()
+ * @method static Builder|Ticket whereContent($value)
+ * @method static Builder|Ticket whereCreatedAt($value)
+ * @method static Builder|Ticket whereId($value)
+ * @method static Builder|Ticket whereStatus($value)
+ * @method static Builder|Ticket whereSubject($value)
+ * @method static Builder|Ticket whereUpdatedAt($value)
+ * @method static Builder|Ticket whereUserId($value)
+ * @mixin \Eloquent
  */
 class Ticket extends Model
 {
