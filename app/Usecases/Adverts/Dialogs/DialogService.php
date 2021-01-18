@@ -15,6 +15,25 @@ class DialogService
 {
     private $dialogUsersRoles;
 
+    public static function newMessagesCount(): int
+    {
+        $id = Auth::id();
+        $dialogs = DB::table('advert_dialogs')
+            ->where('user_id', $id)
+            ->orWhere(function ($query) use ($id) {
+                $query->where('client_id', $id);
+            })->get();
+        $sum = 0;
+        foreach ($dialogs as $dialog) {
+            if ($dialog->user_id == $id){
+                $sum += $dialog->user_new_messages;
+            } else if($dialog->client_id == $id){
+                $sum += $dialog->client_new_messages;
+            }
+        }
+        return $sum;
+    }
+
     public function getCurrentUserDialogsQueryBuilder()
     {
         $dialogsIds = $this->getCurrentUserDialogsIds();
