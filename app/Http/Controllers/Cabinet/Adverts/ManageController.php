@@ -92,34 +92,34 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->advertService->edit($advert, $request);
+            $this->advertService->edit($advert, $request, true);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Объявление успешно отредактировано.');;
+        return back()->with('success', 'Объявление успешно отредактировано. Объявление появится в поиске после модерации.');;
     }
 
     public function updateAttrubutes(AttributesRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
-            $this->advertService->editAttributes($advert, $request);
+            $this->advertService->editAttributes($advert, $request, true);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Характеристики успешно отредактированы.');
+        return back()->with('success', 'Характеристики успешно отредактированы. Объявление появится в поиске после модерации.');
     }
 
     public function addPhotos(AddPhotosRequest $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
-            $this->advertService->addPhotos($advert, $request);
+            $this->advertService->addPhotos($advert, $request, true);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'Фотографии успешно добавлены.');
+        return back()->with('success', 'Фотографии успешно добавлены. Объявление появится в поиске после модерации.');
     }
 
 }

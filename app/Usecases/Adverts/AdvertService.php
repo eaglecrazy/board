@@ -123,15 +123,25 @@ class AdvertService
         Storage::disk('public')->delete($file);
     }
 
-    public function addPhotos(Advert $advert, Request $request): void
+    public function addPhotos(Advert $advert, Request $request, bool $addAsUser = true): void
     {
-        DB::transaction(function () use ($request, $advert) {
+        $againModeration = false;
+        DB::transaction(function () use ($request, $advert, &$againModeration) {
             foreach ($request['files'] as $file) {
                 $advert->photos()->create([
                     'file' => $file->store('adverts', 'public')
                 ]);
             }
+
+            if($advert->isActive()){
+                $advert->status = Advert::STATUS_DRAFT;
+                $advert->update();
+                $againModeration = true;
+            }
         });
+        if ($againModeration) {
+            event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
+        }
     }
 
     //---------------------------
@@ -150,23 +160,32 @@ class AdvertService
     //---------------------------
     // Редактирование
     //---------------------------
-    public function edit(Advert $advert, AdvertContentEditRequest $request): void
+    public function edit(Advert $advert, AdvertContentEditRequest $request, bool $editAsUser = true): void
     {
-        $advert->update($request->only([
+        $data = $request->only([
             'title',
             'content',
             'price',
             'address',
-        ]));
+        ]);
 
-        if ($advert->isActive()) {
+        $againModeration = false;
+        if($advert->isActive()){
+            $advert->status = Advert::STATUS_DRAFT;
+            $againModeration = true;
+        }
+
+        $advert->update($data);
+
+        if ($againModeration) {
             event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
         }
     }
 
-    public function editAttributes(Advert $advert, AttributesRequest $request): void
+    public function editAttributes(Advert $advert, AttributesRequest $request, bool $editAsUser = true): void
     {
-        DB::transaction(function () use ($request, $advert) {
+        $againModeration = false;
+        DB::transaction(function () use ($request, $advert, &$againModeration) {
             $advert->attributesValues()->delete();
             foreach ($advert->category->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
@@ -177,14 +196,17 @@ class AdvertService
                     ]);
                 }
             }
+
+            if($advert->isActive()){
+                $advert->status = Advert::STATUS_DRAFT;
+                $againModeration = true;
+            }
+
             $advert->update();
         });
-        if ($advert->isActive()) {
+
+        if ($againModeration) {
             event(new AdvertEvent($advert, AdvertEvent::ADVERT_INDEX));
         }
     }
-
-
-
-
 }
