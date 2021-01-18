@@ -12,24 +12,29 @@
             {{ $messages->newMessages->count() ? 'Новых сообщений: ' . $messages->newMessages->count() : 'Сообщения:'}}
         </div>
         <div class="card-body p-0">
-            @foreach($messages->oldMessages as $message)
-                @if($message->user_id === Auth::id())
-                    <div class="message p-2 text-primary">{{ $message->created_at->format('Y.m.d - H:i') }}
-                        <br>Вы: {{ $message->message }}
-                    </div>
-                @else
+            @if($messages->hasMessages())
+                @foreach($messages->oldMessages as $message)
+                    @if($message->user_id === Auth::id())
+                        <div class="message p-2 text-primary">{{ $message->created_at->format('Y.m.d - H:i') }}
+                            <br>Вы: {{ $message->message }}
+                        </div>
+                    @else
+                        <div
+                            class="message other-user-message p-2 text-danger">{{ $message->created_at->format('Y.m.d - H:i') }}
+                            <br>{{ $otherUser->name }}: {{ $message->message }}
+                        </div>
+                    @endif
+                @endforeach
+                @foreach($messages->newMessages as $message)
                     <div
                         class="message other-user-message p-2 text-danger">{{ $message->created_at->format('Y.m.d - H:i') }}
-                        <br>{{ $otherUser->name }}: {{ $message->message }}
+                        <span class="font-weight-bold">новое сообщение</span><br>{{ $otherUser->name }}
+                        : {{ $message->message }}
                     </div>
-                @endif
-            @endforeach
-            @foreach($messages->newMessages as $message)
-                <div
-                    class="message other-user-message p-2 text-danger">{{ $message->created_at->format('Y.m.d - H:i') }}
-                    <span class="font-weight-bold">новое сообщение</span><br>{{ $otherUser->name }}: {{ $message->message }}
-                </div>
-            @endforeach
+                @endforeach
+            @else
+                <div class="message p-2 text-primary">Сообщений нет.</div>
+            @endif
         </div>
     </div>
     <div class="card card-default">
@@ -40,7 +45,7 @@
                 <div class="form-group">
                     <textarea id="message" class="form-control{{ $errors->has('message') ? ' is-invalid' : '' }}"
                               name="message"
-                              rows="3" required>message {{ old('message') }}</textarea>
+                              rows="3" required>{{ old('message') }}</textarea>
                     @if ($errors->has('message'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('message') }}</strong></span>
                     @endif

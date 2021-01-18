@@ -106,7 +106,7 @@ class DialogService
     public function getDialog(Advert $advert)
     {
         $this->setDialogUsersRolesByAdvert($advert);
-        return $advert->getDialogWith($this->dialogUsersRoles->client->id);
+        return $advert->getOrCreateDialogWith($this->dialogUsersRoles->client->id);
     }
 
     public function writeMessage(Dialog $dialog, string $message)

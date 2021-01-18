@@ -11,6 +11,14 @@ class DialogMessages
         $this->oldMessages = $oldMessages;
     }
 
+    public function hasMessages(): bool
+    {
+        if($this->newMessages->isEmpty() && $this->oldMessages->isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
     public $oldMessages;
     public $newMessages;
 }

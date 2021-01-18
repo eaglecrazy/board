@@ -282,7 +282,7 @@ class Advert extends Model
         $dialog->writeMessageByOwner($this->user_id, $message);
     }
 
-    private function getOrCreateDialogWith(int $clientId): Dialog
+    public function getOrCreateDialogWith(int $clientId): Dialog
     {
         if($clientId === $this->user_id){
             throw new DomainException('Нельзя отправить сообщение себе.');
