@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Usecases\Auth\RegisterService;
+use DomainException;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -74,20 +75,20 @@ class UsersController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->update($request->only(['name', 'email', 'status', 'role']));
-        return redirect()->route('admin.users.show', $user);
+        return redirect()->route('admin.users.show', $user)->with('success', 'Пользователь успешно отредактирован.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'Пользователь удалён.');;
     }
 
     public function verify(User $user){
         try {
             $this->service->verify($user->id);
-            return redirect()->route('admin.users.show', $user)->with('success', 'User ' . $user->name . ' is verified.');
-        } catch (\DomainException $e){
+            return back()->with('success', 'Пользователь ' . $user->name . ' верифицирован.');
+        } catch (DomainException $e){
             return redirect()->route('admin.users.show', $user)->with('error', $e->getMessage());
         }
     }

@@ -6,7 +6,7 @@
     <form method="POST" action="{{ route('admin.users.store') }}">
         @csrf
         <div class="form-group">
-            <label for="name" class="col-form-label">Name</label>
+            <label for="name" class="col-form-label">Имя</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"
@@ -29,7 +29,7 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="password" class="col-form-label">Password</label>
+            <label for="password" class="col-form-label">Пароль</label>
             <input id="password"
                    class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                    name="password"
@@ -40,7 +40,7 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="password_confirmation" class="col-form-label">Password confirmation</label>
+            <label for="password_confirmation" class="col-form-label">Подтверждение пароля</label>
             <input id="password_confirmation"
                    class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
                    name="password_confirmation"

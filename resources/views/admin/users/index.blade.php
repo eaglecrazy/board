@@ -4,11 +4,11 @@
 @section('content')
     @include('admin.users._nav')
     <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary mr-1">Create</a>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary mr-1">Создать пользователя</a>
     </div>
 
     <div class="card mb-3">
-        <div class="card-header">Filter</div>
+        <div class="card-header">Фильтрация</div>
         <div class="card-body">
             <form action="?" method="GET">
                 <div class="row">
@@ -18,13 +18,13 @@
                             <input id="id" class="form-control" name="id" value="{{ request('id') }}">
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label for="name" class="col-form-label">Name</label>
+                            <label for="name" class="col-form-label">Имя</label>
                             <input id="name" class="form-control" name="name" value="{{ request('name') }}">
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
                             <input id="email" class="form-control" name="email" value="{{ request('email') }}">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="status" class="col-form-label">Status</label>
+                            <label for="status" class="col-form-label">Статус</label>
                             <select id="status" class="form-control" name="status">
                                 <option value=""></option>
                                 @foreach ($statuses as $value => $label)
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="role" class="col-form-label">Role</label>
+                            <label for="role" class="col-form-label">Роль</label>
                             <select id="role" class="form-control" name="role">
                                 <option value=""></option>
                                 @foreach ($roles as $value => $label)
@@ -54,10 +54,13 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label class="col-form-label">&nbsp;</label><br/>
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <label class="col-form-label">&nbsp;</label><br />
+                            <button type="submit" class="btn btn-primary">Поиск</button>
+
+                            <a href="?" class="btn btn-outline-secondary">Сброс</a>
                         </div>
                     </div>
                 </div>
@@ -68,11 +71,11 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
+            <th>ID</th>
+            <th>Имя</th>
             <th>Email</th>
-            <th>Status</th>
-            <th>Role</th>
+            <th>Статус</th>
+            <th>Роль</th>
         </tr>
         </thead>
         <tbody>

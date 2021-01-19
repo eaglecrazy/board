@@ -89,8 +89,8 @@ class User extends Authenticatable
     public static function statusesList(): array
     {
         return [
-            self::STATUS_WAIT => 'Wait',
-            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_WAIT => 'Ожидает',
+            self::STATUS_ACTIVE => 'Активный',
         ];
     }
 
