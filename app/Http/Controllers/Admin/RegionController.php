@@ -38,7 +38,7 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
+            'name' => 'required|string|min:3|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
             'parent' => 'nullable|exists:regions,id',
         ]);
 
@@ -47,7 +47,7 @@ class RegionController extends Controller
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
-        return redirect()->route('admin.regions.show', $region);
+        return redirect()->route('admin.regions.show', $region)->with('success', 'Регион создан.');
     }
 
     public function show(Region $region)
@@ -64,14 +64,14 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
+            'name' => 'required|string|min:3|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
         ]);
 
         $region->update([
             'name' => $name = $request['name'],
             'slug' => Str::slug($name)
         ]);
-        return redirect()->route('admin.regions.show', compact('region'));
+        return redirect()->route('admin.regions.show', compact('region'))->with('success', 'Регион успешно отредактирован.');
     }
 
     public function destroy(Region $region)
@@ -80,7 +80,7 @@ class RegionController extends Controller
         event(new RegionDeleteEvent($region));
         //удаление региона, это причина перестроить индекс
 
-        return redirect()->route('admin.regions.index');
+        return redirect()->route('admin.regions.index')->with('success', 'Регион удалён.');
     }
 
 }

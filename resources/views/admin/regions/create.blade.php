@@ -4,15 +4,15 @@
 @section('content')
     @include('admin.regions._nav')
     @if($parent)
-        <h2>Creating an inland region for {{ $parent->name }}</h2>
+        <h2>Создать внутренний регион для: {{ $parent->name }}</h2>
     @else
-        <h2>Creating an root region.</h2>
+        <h2>Создать корневой регион</h2>
     @endif
     <form method="POST" action="{{ route('admin.regions.store', ['parent' => $parent ? $parent->id : null]) }}">
         @csrf
 
         <div class="form-group">
-            <label for="name" class="col-form-label">Region name</label>
+            <label for="name" class="col-form-label">Наименование региона</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"
@@ -23,7 +23,7 @@
             @endif
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 @endsection
