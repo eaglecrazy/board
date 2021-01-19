@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entity\Adverts\Category;
 use App\Entity\Banner\Banner;
+use App\Entity\Region;
 use App\Entity\User\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\BannerEditRequest;
@@ -28,20 +30,35 @@ class AdminBannerController extends Controller
     {
         $query = Banner::orderByDesc('updated_at');
 
+
+
         if (!empty($value = $request->get('id'))) {
             $query->where('id', $value);
         }
 
         if (!empty($value = $request->get('user'))) {
-            $query->where('user_id', $value);
+            $users_ids = \App\Entity\User\User::where('name', 'like', '%' . $value . '%')
+                ->orWhere(
+                    function ($query) use ($value) {
+                        $query->where('last_name', 'like', '%' . $value . '%');
+                    })
+                ->get()
+                ->pluck('id');
+            $query->whereIn('user_id', $users_ids);
         }
 
         if (!empty($value = $request->get('region'))) {
-            $query->where('region_id', $value);
+            $region_ids = Region::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('region_id', $region_ids);
         }
 
         if (!empty($value = $request->get('category'))) {
-            $query->where('category_id', $value);
+            $categories_ids = Category::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('category_id', $categories_ids);
+        }
+
+        if (!empty($value = $request->get('status'))) {
+            $query->where('status', $value);
         }
 
         if (!empty($value = $request->get('status'))) {

@@ -5,7 +5,7 @@
     @include('admin.banners._nav')
 
     <div class="card mb-3">
-        <div class="card-header">Filter</div>
+        <div class="card-header">Фильтрация</div>
         <div class="card-body">
             <form action="?" method="GET">
                 <div class="row">
@@ -15,19 +15,19 @@
                             <input id="id" class="form-control" name="id" value="{{ request('id') }}">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label for="user" class="col-form-label">Пользователь</label>
                             <input id="user" class="form-control" name="user" value="{{ request('user') }}">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="region" class="col-form-label">Регион</label>
                             <input id="region" class="form-control" name="region" value="{{ request('region') }}">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="category" class="col-form-label">Категория</label>
                             <input id="category" class="form-control" name="category" value="{{ request('category') }}">
@@ -74,14 +74,14 @@
             <tr>
                 <td>{{ $banner->id }}</td>
                 <td><a href="{{ route('admin.banners.show', $banner) }}" target="_blank">{{ $banner->name }}</a></td>
-                <td>{{ $banner->user->id }} - {{ $banner->user->name }}</td>
+                <td>{{ $banner->user->name }}</td>
                 <td>
                     @if ($banner->region)
-                        {{ $banner->region->id }} - {{ $banner->region->name }}
+                        {{ $banner->region->name }}
                     @endif
                 </td>
-                <td>{{ $banner->category->id }} - {{ $banner->category->name }}</td>
-                <td>{{ $banner->published_at }}</td>
+                <td>{{ $banner->category->name }}</td>
+                <td>{{ isset($banner->published_at) ? dtFormat($banner->published_at) : '' }}</td>
                 <td>
                     @include('cabinet.banners._banners_bages')
                 </td>

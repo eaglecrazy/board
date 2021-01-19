@@ -8,6 +8,7 @@ use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use App\Entity\User\User ;
 use Carbon\Carbon;
+use DomainException;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -40,7 +41,6 @@ use Illuminate\Support\Facades\Gate;
  * @method static Builder|\App\Entity\Banner\Banner newQuery()
  * @method static Builder|\App\Entity\Banner\Banner query()
  * @mixin Eloquent
- * // * @property string $status
  * @property int $user_id
  * @property int $category_id
  * @property int|null $region_id
@@ -65,7 +65,6 @@ use Illuminate\Support\Facades\Gate;
  * @method static Builder|Banner whereUrl($value)
  * @method static Builder|Banner whereUserId($value)
  * @method static Builder|Banner whereViews($value)
- * @property string $status
  */
 class Banner extends Model
 {
@@ -87,7 +86,7 @@ class Banner extends Model
     public function cancelModeration(): void
     {
         if (!$this->isOnModeration()) {
-            throw new \DomainException('Этот баннер не находится на модерации.');
+            throw new DomainException('Этот баннер не находится на модерации.');
         }
         $this->update([
             'status' => self::STATUS_DRAFT,
@@ -97,7 +96,7 @@ class Banner extends Model
     public function moderate(): void
     {
         if (!$this->isOnModeration()) {
-            throw new \DomainException('Этот баннер не находится на модерации.');
+            throw new DomainException('Этот баннер не находится на модерации.');
         }
         $this->update([
             'status' => self::STATUS_MODERATED,
@@ -109,7 +108,7 @@ class Banner extends Model
     public function order(int $cost): void
     {
         if (!$this->isModerated()) {
-            throw new \DomainException('Баннер не прошёл модерацию.');
+            throw new DomainException('Баннер не прошёл модерацию.');
         }
         $this->update([
             'cost' => $cost,
@@ -120,7 +119,7 @@ class Banner extends Model
     public function pay(Carbon $date): void
     {
         if (!$this->isOrdered()) {
-            throw new \DomainException('Баннер не входит в заказ.');
+            throw new DomainException('Баннер не входит в заказ.');
         }
         $this->update([
             'published_at' => $date,
@@ -139,7 +138,7 @@ class Banner extends Model
     public function sendToModeration(): void
     {
         if (!$this->isDraft()) {
-            throw new \DomainException('Этот баннер не черновик.');
+            throw new DomainException('Этот баннер не черновик.');
         }
         $this->update([
             'status' => self::STATUS_MODERATION,
@@ -166,7 +165,7 @@ class Banner extends Model
     public function assertIsActive(): void
     {
         if(!$this->isActive()){
-            throw new \DomainException('Баннер не активен.');
+            throw new DomainException('Баннер не активен.');
         }
     }
 

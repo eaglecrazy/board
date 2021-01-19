@@ -14,7 +14,9 @@
     @endcan
 
     @can ('manage-own-banner', $banner)
-        @include('cabinet.banners._owner_panel')
+        @if(!$banner->isActive())
+            @include('cabinet.banners._owner_panel')
+        @endif
     @endcan
 
     <table class="table table-bordered table-striped">
