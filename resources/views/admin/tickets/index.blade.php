@@ -5,7 +5,7 @@
     @include ('admin._nav', ['page' => 'tickets'])
 
     <div class="card mb-3">
-        <div class="card-header">Фтльтр</div>
+        <div class="card-header">Фильтрация</div>
         <div class="card-body">
             <form action="?" method="GET">
                 <div class="row">
@@ -15,13 +15,13 @@
                             <input id="id" class="form-control" name="id" value="{{ request('id') }}">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label for="user" class="col-form-label">Пользователь</label>
                             <input id="user" class="form-control" name="user" value="{{ request('user') }}">
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label for="status" class="col-form-label">Статус</label>
                             <select id="status" class="form-control" name="status">
@@ -32,7 +32,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label">&nbsp;</label><br />
                             <button type="submit" class="btn btn-primary">Поиск</button>
@@ -63,7 +63,7 @@
                 <td>{{ dtFormat($ticket->created_at) }}</td>
                 <td>{{ dtFormat($ticket->updated_at) }}</td>
                 <td><a href="{{ route('admin.tickets.show', $ticket) }}" target="_blank">{{ $ticket->subject }}</a></td>
-                <td>{{ $ticket->user->id }} - {{ $ticket->user->name }}</td>
+                <td>{{ $ticket->user->name }}</td>
                 <td>
                     @if ($ticket->isOpen())
                         <span class="badge badge-danger">Открыта</span>

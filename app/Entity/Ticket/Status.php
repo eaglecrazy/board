@@ -41,9 +41,9 @@ class Status extends Model
     public static function statusesList(): array
     {
         return [
-            self::OPEN => 'Open',
-            self::APPROVED => 'Approved',
-            self::CLOSED => 'Closed',
+            self::OPEN => 'Открыта',
+            self::APPROVED => 'В обработке',
+            self::CLOSED => 'Закрыта',
         ];
     }
 

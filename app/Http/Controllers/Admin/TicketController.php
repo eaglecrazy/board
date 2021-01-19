@@ -32,7 +32,14 @@ class TicketController extends Controller
         }
 
         if (!empty($value = $request->get('user'))) {
-            $query->where('user_id', $value);
+            $users_ids = \App\Entity\User\User::where('name', 'like', '%' . $value . '%')
+                ->orWhere(
+                    function ($query) use ($value) {
+                        $query->where('last_name', 'like', '%' . $value . '%');
+                    })
+                ->get()
+                ->pluck('id');
+            $query->whereIn('user_id', $users_ids);
         }
 
         if (!empty($value = $request->get('status'))) {
@@ -64,7 +71,7 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.tickets.show', $ticket);
+        return redirect()->route('admin.tickets.show', $ticket)->with('success', 'Заявка отредактирована.');
     }
 
     public function message(MessageRequest $request, Ticket $ticket): RedirectResponse
@@ -74,8 +81,7 @@ class TicketController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-
-        return redirect()->route('cabinet.tickets.show', $ticket);
+        return back();
     }
 
     public function approve(Ticket $ticket): RedirectResponse
@@ -86,7 +92,7 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.tickets.show', $ticket);
+        return redirect()->route('admin.tickets.show', $ticket)->with('success', 'Заявка принята в обработку.');
     }
 
     public function close(Ticket $ticket): RedirectResponse
@@ -97,7 +103,7 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.tickets.show', $ticket);
+        return redirect()->route('admin.tickets.show', $ticket)->with('success', 'Заявка закрыта.');
     }
 
     public function reopen(Ticket $ticket): RedirectResponse
@@ -108,7 +114,7 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.tickets.show', $ticket);
+        return redirect()->route('admin.tickets.show', $ticket)->with('success', 'Заявка открыта заново.');
     }
 
     public function destroy(Ticket $ticket): RedirectResponse
@@ -119,6 +125,6 @@ class TicketController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('admin.tickets.index');
+        return redirect()->route('admin.tickets.index')->with('success', 'Заявка удалена.');
     }
 }
