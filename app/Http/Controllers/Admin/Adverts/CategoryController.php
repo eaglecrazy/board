@@ -42,7 +42,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
         ]);
-        return redirect()->route('admin.adverts.categories.show', compact('category'));
+        return redirect()->route('admin.adverts.categories.show', compact('category'))->with('success', 'Категория создана.');
     }
 
     public function show(Category $category)
@@ -76,7 +76,7 @@ class CategoryController extends Controller
             event(new CategoryUpdateEvent($categoryIds));
         }
 
-        return redirect()->route('admin.adverts.categories.show', compact('category'));
+        return redirect()->route('admin.adverts.categories.show', compact('category'))->with('success', 'Категория успешно отредактирована.');
     }
 
     public function destroy(Category $category)
@@ -89,7 +89,7 @@ class CategoryController extends Controller
         $categoryIds = array_merge($category->getDescendantsIds(), [$category->id]);
         $category->delete();
         event(new CategoryDeleteEvent($categoryIds, $parentId));
-        return redirect()->route('admin.adverts.categories.index');
+        return redirect()->route('admin.adverts.categories.index')->with('success', 'Категория удалена.');
     }
 
     public function first(Category $category)

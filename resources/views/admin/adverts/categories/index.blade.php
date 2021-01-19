@@ -4,15 +4,15 @@
 @section('content')
     @include('admin.adverts.categories._nav')
     <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.adverts.categories.create') }}" class="btn btn-success mr-1">Add category</a>
+        <a href="{{ route('admin.adverts.categories.create') }}" class="btn btn-success mr-1">Создать категорию</a>
     </div>
 
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Manage</th>
+            <th>Наименование</th>
+            <th>Слаг</th>
+            <th>Управление</th>
         </tr>
         </thead>
         <tbody>

@@ -30,7 +30,7 @@ class AttributeController extends Controller
             'sort' => $request['sort'],
         ]);
 
-        return redirect()->route('admin.adverts.categories.show', compact('category'));
+        return redirect()->route('admin.adverts.categories.show', compact('category'))->with('success', 'Атрибут создан.');
     }
 
     public function show(Category $category, Attribute $attribute)
@@ -59,6 +59,6 @@ class AttributeController extends Controller
 
     public function destroy(Category $category, Attribute $attribute){
         $attribute->delete();
-        return redirect()->route('admin.adverts.categories.show', compact('category'));
+        return redirect()->route('admin.adverts.categories.show', compact('category'))->with('success', 'Атрибут удален.');
     }
 }

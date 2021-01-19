@@ -3,7 +3,7 @@
     <tr>
         <th>ID</th>
         <th>Наименование</th>
-        <th>Слаг</th>
+        <th>ЧПУ</th>
     </tr>
     </thead>
     <tbody>

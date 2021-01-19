@@ -7,7 +7,7 @@
         @csrf
 
         <div class="form-group">
-            <label for="name" class="col-form-label">Name</label>
+            <label for="name" class="col-form-label">Наименование</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"
@@ -20,13 +20,13 @@
 
 
         <div class="form-group">
-            <label for="parent" class="col-form-label">Parent</label>
+            <label for="parent" class="col-form-label">Родительская категория</label>
             <select id="parent"
                    class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
                    name="parent">
                 <option value=""></option>
                 @foreach($parents as $parent)
-                    <option value="{{ $parent->id }}"{{ $parent->id == old('parent') ? ' selected' : ''  }}>
+                    <option value="{{ $parent->id }}"{{ ((isset($current) && $parent->id == $current->id) || $parent->id == old('parent')) ? ' selected' : ''  }}>
                         @for ($i = 0; $i < $parent->depth; $i++) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @endfor {{ $parent->name }}
                     </option>
                 @endforeach
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 @endsection

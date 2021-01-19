@@ -7,7 +7,7 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="name" class="col-form-label">Name</label>
+            <label for="name" class="col-form-label">Наименование</label>
             <input id="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
                    value="{{ old('name', $attribute->name) }}" required>
             @if ($errors->has('name'))
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-            <label for="sort" class="col-form-label">Sort</label>
+            <label for="sort" class="col-form-label">Сортировка</label>
             <input id="sort" type="text" class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}" name="sort"
                    value="{{ old('sort', $attribute->sort) }}" required>
             @if ($errors->has('sort'))
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            <label for="type" class="col-form-label">Type</label>
+            <label for="type" class="col-form-label">Тип атрибута</label>
             <select id="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}" name="type">
                 @foreach ($types as $type => $label)
                     <option
@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            <label for="variants" class="col-form-label">Variants</label>
+            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную, то нужно оставить пустое поле).</label>
             <textarea id="variants" type="text" class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
                       name="variants">{{ old('variants', implode("\n", $attribute->variants)) }}</textarea>
             @if ($errors->has('variants'))
@@ -51,7 +51,7 @@
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="required" {{ old('required', $attribute->required) ? 'checked' : '' }}>
-                    Required
+                    Обязательный атрибут.
                 </label>
             </div>
             @if ($errors->has('required'))
@@ -60,7 +60,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 @endsection

@@ -1,9 +1,9 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Slug</th>
+        <th>ID</th>
+        <th>Наименование</th>
+        <th>ЧПУ</th>
     </tr>
     </thead>
     <tbody>

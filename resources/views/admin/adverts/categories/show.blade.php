@@ -31,7 +31,7 @@
             </tr>
             @if($category->parent)
                 <tr>
-                    <th>Parent</th>
+                    <th>Родительская категория</th>
                     <td>
                         <a href="{{ route('admin.adverts.categories.show', $category->parent) }}">{{ $category->parent->name }}</a>
                     </td>
@@ -51,7 +51,7 @@
                 <th>Сортировка</th>
                 <th>Имя</th>
                 <th>Тип</th>
-                <th>Обязательность</th>
+                <th>Обязательный атрибут</th>
             </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@
                         <a href="{{ route('admin.adverts.categories.attributes.show', [$attribute->category, $attribute]) }}">{{ $attribute->name }}</a>
                     </td>
                     <td>{{ $attribute->type }}</td>
-                    <td>{{ $attribute->required ? 'Yes' : '' }}</td>
+                    <td>{!! $attribute->required ? '&#10004;' : '' !!}</td>
                 </tr>
             @endforeach
             </tbody>
@@ -74,7 +74,7 @@
     <div class="card p-3  mb-3">
         <h2>Атрибуты</h2>
         <div class="d-flex flex-row mb-3">
-            <a href="{{ route('admin.adverts.categories.attributes.create', $category) }}" class="btn btn-primary mr-1">Добавить атрибут</a>
+            <a href="{{ route('admin.adverts.categories.attributes.create', $category) }}" class="btn btn-primary mr-1">Добавить атрибут для категории</a>
         </div>
         <table class="table table-bordered table-striped">
             <thead>
@@ -83,7 +83,7 @@
                 <th>Сортировка</th>
                 <th>Имя</th>
                 <th>Тип</th>
-                <th>Обязательность</th>
+                <th>Обязательный атрибут</th>
                 <th>Изменить</th>
                 <th>Удалить</th>
 
@@ -96,15 +96,15 @@
                     <td>{{ $attribute->sort }}</td>
                     <td><a href="{{ route('admin.adverts.categories.attributes.show', [$category, $attribute]) }}">{{ $attribute->name }}</a></td>
                     <td>{{ $attribute->type }}</td>
-                    <td>{{ $attribute->required ? 'Yes' : '' }}</td>
+                    <td>{!! $attribute->required ? '&#10004;' : '' !!}</td>
                     <td class="text-center">
-                        <a href="{{ route('admin.adverts.categories.attributes.edit', [$category, $attribute]) }}" class="btn btn-primary mr-1">Edit</a>
+                        <a href="{{ route('admin.adverts.categories.attributes.edit', [$category, $attribute]) }}" class="btn btn-primary mr-1">Редактировать</a>
                     </td>
                     <td class="text-center">
                         <form method="POST" action="{{ route('admin.adverts.categories.attributes.destroy', [$category, $attribute]) }}" class="mr-1">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger">Удалить</button>
                         </form>
                     </td>
                 </tr>

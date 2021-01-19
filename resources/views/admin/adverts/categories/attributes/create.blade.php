@@ -1,4 +1,4 @@
-@php($pageTitle = 'Добавление атрибута')
+@php($pageTitle = 'Создание атрибута категории')
 @extends('layouts.app')
 
 @section('content')
@@ -7,7 +7,7 @@
         @csrf
 
         <div class="form-group">
-            <label for="name" class="col-form-label">Name</label>
+            <label for="name" class="col-form-label">Наименование</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"
@@ -19,18 +19,18 @@
         </div>
 
         <div class="form-group">
-            <label for="sort" class="col-form-label">Sort</label>
+            <label for="sort" class="col-form-label">Сортировка</label>
             <input id="sort"
                    class="form-control {{ $errors->has('sort') ? 'is-invalid' : '' }}"
                    name="sort"
-                   value="{{ old('sort') }}"
+                   value="{{ old('sort') ? old('sort') : 0}}"
                    required>
             @if($errors->has('sort'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('sort') }}</strong></span>
             @endif
         </div>
         <div class="form-group">
-            <label for="type" class="col-form-label">Type</label>
+            <label for="type" class="col-form-label">Тип атрибута</label>
             <select id="type"
                    class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}"
                    name="type">
@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group">
-            <label for="variants" class="col-form-label">Variants</label>
+            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную, то нужно оставить пустое поле).</label>
             <textarea id="variants"
                    class="form-control {{ $errors->has('variants') ? 'is-invalid' : '' }}"
                    name="variants">{{ old('variants') }}</textarea>
@@ -59,7 +59,7 @@
                    value="0">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox", name="required" {{ old('required') ? ' checked' : '' }}> Required
+                    <input type="checkbox", name="required" {{ old('required') ? ' checked' : '' }}> Обязательный атрибут.
                 </label>
             </div>
             @if($errors->has('required'))
@@ -68,7 +68,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 @endsection

@@ -23,7 +23,7 @@
                 <td>{{ $region->name }}</td>
             </tr>
             <tr>
-                <th>Слаг</th>
+                <th>ЧПУ</th>
                 <td>{{ $region->slug }}</td>
             </tr>
             @if($region->parent)
