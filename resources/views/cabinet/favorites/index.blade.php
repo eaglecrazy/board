@@ -9,7 +9,7 @@
             <th>Наименование</th>
             <th>Регион</th>
             <th>Категория</th>
-            <th>Изменено</th>
+            <th>Добавлено</th>
             <th></th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
                     @endif
                 </td>
                 <td>{{ $advert->category->name }}</td>
-                <td>{{ $advert->updated_at }}</td>
+                <td>{{ dtFormat($advert->updated_at) }}</td>
                 <td>
                     <form method="POST" action="{{ route('cabinet.favorites.remove', $advert) }}" class="mr-1">
                         @csrf

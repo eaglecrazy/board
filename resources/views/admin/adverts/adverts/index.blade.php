@@ -5,7 +5,7 @@
 @section('content')
     @include('admin.adverts._nav')
     <div class="card mb-3">
-        <div class="card-header">Filter</div>
+        <div class="card-header">Фильтрация</div>
         <div class="card-body">
             <form action="?" method="GET">
                 <div class="row">
@@ -17,35 +17,36 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label for="name" class="col-form-label">Title</label>
-                            <input id="name" class="form-control" name="name" value="{{ request('name') }}">
+                            <label for="title" class="col-form-label">Название</label>
+                            <input id="title" class="form-control" name="title" value="{{ request('title') }}">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="user" class="col-form-label">User</label>
+                            <label for="user" class="col-form-label">Пользователь</label>
                             <input id="user" class="form-control" name="user" value="{{ request('user') }}">
                         </div>
                     </div>
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label for="region" class="col-form-label">Region</label>
+                            <label for="region" class="col-form-label">Регион</label>
                             <input id="region" class="form-control" name="region" value="{{ request('region') }}">
                         </div>
                     </div>
                     <div class="col-sm-1">
                         <div class="form-group">
-                            <label for="category" class="col-form-label">Category</label>
+                            <label for="category" class="col-form-label">Категория</label>
                             <input id="category" class="form-control" name="category" value="{{ request('category') }}">
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="status" class="col-form-label">Status</label>
+                            <label for="status" class="col-form-label">Статус</label>
                             <select id="status" class="form-control" name="status">
                                 <option value=""></option>
                                 @foreach ($statuses as $value => $label)
-                                    <option value="{{ $value }}"{{ $value === request('status') ? ' selected' : '' }}>{{ $label }}</option>
+                                    <option
+                                        value="{{ $value }}"{{ $value === request('status') ? ' selected' : '' }}>{{ $label }}</option>
                                 @endforeach;
                             </select>
                         </div>
@@ -53,8 +54,8 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="col-form-label">&nbsp;</label><br/>
-                            <button type="submit" class="btn btn-primary">Search</button>
-                            <a href="?" class="btn btn-outline-secondary">Clear</a>
+                            <button type="submit" class="btn btn-primary">Поиск</button>
+                            <a href="?" class="btn btn-outline-secondary">Сброс</a>
                         </div>
                     </div>
                 </div>
@@ -66,12 +67,12 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Updated</th>
-            <th>Title</th>
-            <th>User</th>
-            <th>Region</th>
-            <th>Category</th>
-            <th>Status</th>
+            <th>Обновлено</th>
+            <th>Название</th>
+            <th>Пользователь</th>
+            <th>Регион</th>
+            <th>Категория</th>
+            <th>Статус</th>
         </tr>
         </thead>
         <tbody>
@@ -79,24 +80,24 @@
         @foreach ($adverts as $advert)
             <tr>
                 <td>{{ $advert->id }}</td>
-                <td>{{ $advert->updated_at }}</td>
+                <td>{{ dtFormat($advert->updated_at) }}</td>
                 <td><a href="{{ route('adverts.show', $advert) }}" target="_blank">{{ $advert->title }}</a></td>
-                <td>{{ $advert->user->id }} - {{ $advert->user->name }}</td>
+                <td>{{ $advert->user->name }}</td>
                 <td>
                     @if ($advert->region)
-                        {{ $advert->region->id }} - {{ $advert->region->name }}
+                        {{ $advert->region->name }}
                     @endif
                 </td>
-                <td>{{ $advert->category->id }} - {{ $advert->category->name }}</td>
+                <td>{{ $advert->category->name }}</td>
                 <td>
                     @if ($advert->isDraft())
-                        <span class="badge badge-secondary">Draft</span>
+                        <span class="badge badge-secondary">Черновик</span>
                     @elseif ($advert->isModeration())
-                        <span class="badge badge-primary">Moderation</span>
+                        <span class="badge badge-primary">На модерации</span>
                     @elseif ($advert->isActive())
-                        <span class="badge badge-primary">Active</span>
+                        <span class="badge badge-primary">Активно</span>
                     @elseif ($advert->isClosed())
-                        <span class="badge badge-secondary">Closed</span>
+                        <span class="badge badge-secondary">Закрыто</span>
                     @endif
                 </td>
             </tr>

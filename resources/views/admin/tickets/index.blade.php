@@ -60,8 +60,8 @@
         @foreach ($tickets as $ticket)
             <tr>
                 <td>{{ $ticket->id }}</td>
-                <td>{{ $ticket->created_at }}</td>
-                <td>{{ $ticket->updated_at }}</td>
+                <td>{{ dtFormat($ticket->created_at) }}</td>
+                <td>{{ dtFormat($ticket->updated_at) }}</td>
                 <td><a href="{{ route('admin.tickets.show', $ticket) }}" target="_blank">{{ $ticket->subject }}</a></td>
                 <td>{{ $ticket->user->id }} - {{ $ticket->user->name }}</td>
                 <td>

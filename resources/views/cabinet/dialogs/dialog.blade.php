@@ -15,19 +15,19 @@
             @if($messages->hasMessages())
                 @foreach($messages->oldMessages as $message)
                     @if($message->user_id === Auth::id())
-                        <div class="message p-2 text-primary">{{ $message->created_at->format('Y.m.d - H:i') }}
+                        <div class="message p-2 text-primary">{{ dtFormat($message->created_at) }}
                             <br>Вы: {{ $message->message }}
                         </div>
                     @else
                         <div
-                            class="message other-user-message p-2 text-danger">{{ $message->created_at->format('Y.m.d - H:i') }}
+                            class="message other-user-message p-2 text-danger">{{ dtFormat($message->created_at) }}
                             <br>{{ $otherUser->name }}: {{ $message->message }}
                         </div>
                     @endif
                 @endforeach
                 @foreach($messages->newMessages as $message)
                     <div
-                        class="message other-user-message p-2 text-danger">{{ $message->created_at->format('Y.m.d - H:i') }}
+                        class="message other-user-message p-2 text-danger">{{ dtFormat($message->created_at) }}
                         <span class="font-weight-bold">новое сообщение</span><br>{{ $otherUser->name }}
                         : {{ $message->message }}
                     </div>

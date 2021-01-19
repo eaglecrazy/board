@@ -21,7 +21,7 @@
                     <a href="{{ route('adverts.show', $advert) }}">{{ $advert->title }}</a>
                 </td>
                 <td>
-                    {{ $dialog->updated_at->format('Y.m.d - H:i') }}
+                    {{ dtFormat($dialog->updated_at) }}
                 </td>
                 <td>{{ $dialog->user_id === Auth::id() ? $dialog->user_new_messages : $dialog->client_new_messages }}</td>
                 <td>{{ $dialog->getLastMessageShort() }}</td>

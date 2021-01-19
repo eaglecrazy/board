@@ -5,6 +5,7 @@ use App\Entity\Page;
 use App\Entity\Region;
 use App\Http\Router\AdvertsPath;
 use App\Http\Router\PagePath;
+use Carbon\Carbon;
 
 
 if(!function_exists('adPath')){
@@ -22,5 +23,18 @@ if(!function_exists('pagePath')){
         return app()
             ->make(PagePath::class)
             ->withPage($page);
+    }
+}
+
+
+if(!function_exists('dtFormat')){
+    function dtFormat(Carbon $dt){
+        return $dt->format('Y.m.d - H:i');
+    }
+}
+
+if(!function_exists('dFormat')){
+    function dFormat(Carbon $d){
+        return $d->format('d.m.Y');
     }
 }

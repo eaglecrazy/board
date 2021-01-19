@@ -19,8 +19,8 @@
 
         @foreach ($tickets as $ticket)
             <tr>
-                <td>{{ $ticket->created_at }}</td>
-                <td>{{ $ticket->updated_at }}</td>
+                <td>{{ dtFormat($ticket->created_at) }}</td>
+                <td>{{ dtFormat($ticket->updated_at) }}</td>
                 <td><a href="{{ route('cabinet.tickets.show', $ticket) }}" target="_blank">{{ $ticket->subject }}</a></td>
                 <td>
                     @if ($ticket->isOpen())

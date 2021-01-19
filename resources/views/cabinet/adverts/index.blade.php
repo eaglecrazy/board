@@ -20,7 +20,7 @@
                             <input id="region" class="form-control" name="region" minlength="3" maxlength="255" value="{{ request('region') }}">
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label for="category" class="col-form-label">Категория</label>
                             <input id="category" class="form-control" name="category" minlength="3" maxlength="255"  value="{{ request('category') }}">
@@ -73,7 +73,7 @@
                     @if ($advert->isDraft())
                         <span class="badge badge-secondary">Черновик</span>
                     @elseif ($advert->isModeration())
-                        <span class="badge badge-primary">Модерация</span>
+                        <span class="badge badge-primary">На модерации</span>
                     @elseif ($advert->isActive())
                         <span class="badge badge-primary">Активно</span>
                     @elseif ($advert->isClosed())

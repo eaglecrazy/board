@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Entity\Adverts\Advert\Advert;
 use App\Entity\Adverts\Advert\Photo;
+use App\Entity\Adverts\Category;
+use App\Entity\Region;
 use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adverts\AttributesRequest;
@@ -19,36 +21,49 @@ class AdminAdvertController extends Controller
 {
     private $advertService;
 
-    public function __construct(AdvertService $service){
+    public function __construct(AdvertService $service)
+    {
         $this->advertService = $service;
         $this->middleware('can:manage-adverts');
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
+
+
         $query = Advert::orderByDesc('updated_at');
 
-        if(!empty($value = $request->get('id'))){
+        if (!empty($value = $request->get('id'))) {
             $query->where('id', $value);
         }
 
-        if(!empty($value = $request->get('title'))){
+        if (!empty($value = $request->get('title'))) {
             $query->where('title', 'like', '%' . $value . '%');
         }
 
-        if(!empty($value = $request->get('user'))){
-            $query->where('user_id', $value);
+        if (!empty($value = $request->get('user'))) {
+            $users_ids = User::where('name', 'like', '%' . $value . '%')
+                ->orWhere(
+                    function ($query) use ($value) {
+                        $query->where('last_name', 'like', '%' . $value . '%');
+                    })
+                ->get()
+                ->pluck('id');
+            $query->whereIn('user_id', $users_ids);
         }
 
-        if(!empty($value = $request->get('region'))){
-            $query->where('region_id', $value);
+        if (!empty($value = $request->get('region'))) {
+            $region_ids = Region::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('region_id', $region_ids);
         }
 
-        if(!empty($value = $request->get('category'))){
-            $query->where('category_id', $value);
+        if (!empty($value = $request->get('category'))) {
+            $categories_ids = Category::where('name', 'like', '%' . $value . '%')->get()->pluck('id');
+            $query->whereIn('category_id', $categories_ids);
         }
 
-        if(!empty($value = $request->get('status'))){
-            $query->where('status_id', $value);
+        if (!empty($value = $request->get('status'))) {
+            $query->where('status', $value);
         }
 
         $adverts = $query->paginate(20);
@@ -75,7 +90,8 @@ class AdminAdvertController extends Controller
             ->with('success', 'Объявление удалено.');
     }
 
-    public function destroyPhoto(Advert $advert, Photo $photo){
+    public function destroyPhoto(Advert $advert, Photo $photo)
+    {
         try {
             $this->advertService->removePhoto($photo);
         } catch (DomainException $e) {
@@ -124,7 +140,7 @@ class AdminAdvertController extends Controller
         return view('adverts.edit.advert', compact('advert', 'editUser'));
     }
 
-    public function updateAdvert (AdvertContentEditRequest $request, Advert $advert)
+    public function updateAdvert(AdvertContentEditRequest $request, Advert $advert)
     {
         try {
             $this->advertService->edit($advert, $request);
@@ -134,7 +150,7 @@ class AdminAdvertController extends Controller
         return back()->with('success', 'Объявление успешно отредактировано.');
     }
 
-    public function updateAttrubutes (AttributesRequest $request, Advert $advert)
+    public function updateAttrubutes(AttributesRequest $request, Advert $advert)
     {
         try {
             $this->advertService->editAttributes($advert, $request);

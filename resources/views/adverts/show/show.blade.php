@@ -31,9 +31,9 @@
             <p class="float-right" style="font-size: 36px;">{{ $advert->price }} руб.</p>
             <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
             <p>
-                <span class="font-weight-bold">Дата создания:</span> {{ $advert->created_at }}. &nbsp;
+                <span class="font-weight-bold">Дата создания:</span> {{ dFormat($advert->created_at) }}. &nbsp;
                 @if ($advert->expires_at)
-                    <span class="font-weight-bold">Активно до:</span> {{ $advert->expires_at }}.
+                    <span class="font-weight-bold">Активно до:</span> {{ dFormat($advert->expires_at) }}.
                 @endif
             </p>
 

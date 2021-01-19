@@ -24,11 +24,11 @@
                 </tr>
                 <tr>
                     <th>Создана</th>
-                    <td>{{ $ticket->created_at }}</td>
+                    <td>{{ dtFormat($ticket->created_at) }}</td>
                 </tr>
                 <tr>
                     <th>Обновлена</th>
-                    <td>{{ $ticket->updated_at }}</td>
+                    <td>{{ dtFormat($ticket->updated_at) }}</td>
                 </tr>
                 <tr>
                     <th>Статус</th>
@@ -57,7 +57,7 @@
                 <tbody>
                 @foreach ($ticket->statuses()->orderBy('id')->with('user')->get() as $status)
                     <tr>
-                        <td>{{ $status->created_at }}</td>
+                        <td>{{ dtFormat($status->created_at) }}</td>
                         <td>{{ $status->user->name }}</td>
                         <td>
                             @if ($status->isOpen())
@@ -87,7 +87,7 @@
     @foreach ($ticket->messages()->orderBy('id')->with('user')->get() as $message)
         <div class="card mb-3">
             <div class="card-header">
-                {{ $message->created_at }} от {{ $message->user->name }}
+                {{ dtFormat($message->created_at) }} от {{ $message->user->name }}
             </div>
             <div class="card-body">
                 {!! nl2br(e($message->message)) !!}
