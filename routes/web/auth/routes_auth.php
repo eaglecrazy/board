@@ -12,6 +12,9 @@ Route::post('/login/phone', 'Auth\LoginController@verify');
 Route::get('/login/{network}', 'Auth\SocialNetworkController@redirect')->name('login.social-network');
 Route::get('/login/{network}/callback', 'Auth\SocialNetworkController@callback');
 
+$this->get('logout', 'Auth\LoginController@logout')->name('logout');
+
+
 //почему то этого роута не было в вендоре
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 

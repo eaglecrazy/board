@@ -16,4 +16,11 @@
             </div>
         </li>
     @endif
+    @can('admin-panel')
+        <a class="nav-link" href="{{ route('admin.home') }}">Админка</a>
+    @endcan
+    @auth()
+        <a class="nav-link" href="{{ route('cabinet.home') }}">Личный кабинет</a>
+        <a class="nav-link" href="{{ route('logout') }}">Выйти</a>
+    @endauth
 </ul>
