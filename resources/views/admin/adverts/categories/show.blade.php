@@ -7,13 +7,13 @@
         <h2>Категория "{{ $category->name }}"</h2>
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.categories.edit', $category) }}" class="btn btn-primary mr-1">Редактировать</a>
-            @if($category->parent_id !== null)
-            <form method="POST" action="{{ route('admin.adverts.categories.destroy', $category) }}" class="mr-1">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger">Удалить</button>
-            </form>
-            @endif
+{{--            @if($category->parent_id !== null)--}}
+                <form method="POST" action="{{ route('admin.adverts.categories.destroy', $category) }}" class="mr-1">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">Удалить</button>
+                </form>
+{{--            @endif--}}
         </div>
         <table class="table table-bordered table-striped">
             <tbody>

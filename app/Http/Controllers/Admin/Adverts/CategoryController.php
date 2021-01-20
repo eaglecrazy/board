@@ -84,7 +84,7 @@ class CategoryController extends Controller
         $parentId = $category->parent_id;
         //категорию верхнего уровня удалить нельзя
         if ($parentId === null) {
-            return back()->with('error', 'Нельзя удалить корневую категорию.');
+            return back()->with('error', 'Нельзя удалить корневую категорию. Для удаления сделайте категорию дочерней в редактировании.');
         }
         $categoryIds = array_merge($category->getDescendantsIds(), [$category->id]);
         $category->delete();
