@@ -28,11 +28,13 @@ class AdvertController extends Controller
 
     public function path(SearchRequest $request, AdvertsPath $path)
     {
-//        dd($request->get('page'));
         $currentRegion = $path->region;
         $currentCategory = $path->category;
 
+//        dd($currentRegion);
+
         $searchResult = $this->searchService->search($currentCategory, $currentRegion, $request, 20, $request->get('page', 1));
+
 
         /** @var LengthAwarePaginator $adverts */
         $adverts = $searchResult->adverts;
@@ -62,6 +64,7 @@ class AdvertController extends Controller
             'path',
             'searchAttributes',
             'childernRegions', 'childernCategories',
+            'currentRegion', 'currentCategory',
             'regionsCounts', 'categoriesCounts'));
     }
 

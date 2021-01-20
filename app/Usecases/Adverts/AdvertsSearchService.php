@@ -30,7 +30,6 @@ class AdvertsSearchService
         // получаем из реквеста только заполненные поля
         $values = $this->getAttributesArray($request);
 
-
         $query = [
             'index' => 'adverts',
             'type' => 'advert',
@@ -93,13 +92,14 @@ class AdvertsSearchService
 
 //        dd($categoryRegion);
 
-        //если есть текст, то ищем в названиях и контенте, названия более релевантны (вес 3)
+        //если есть текст, то ищем в названиях и контенте, названия более релевантны (вес 100)
         $text = [];
         if (!empty($request['text'])) {
             $text = [[
                 'multi_match' => [
                     'query' => $request['text'],
-                    'fields' => ['title^3', 'content']
+//                    'fields' => ['title^3']
+                    'fields' => ['title^100', 'content^1']
                 ]
             ]];
         }

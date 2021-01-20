@@ -56,7 +56,6 @@ class AdvertIndexer
                             'attribute' => $value->attribute_id,
                             'value_string' => (string)$value->value,
                             'value_int' => (int)$value->value
-
                         ];
                     }, $advert->attributesValues()->getModels()),
                 ],

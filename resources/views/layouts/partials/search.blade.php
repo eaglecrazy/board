@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <form action="{{ $searchRoute }}" method="GET">
+                <form action="{{ route('adverts.index', adPath(isset($currentRegion) ? $currentRegion : null, isset($currentCategory) ? $currentCategory : null)) }}" method="GET">
                     <div class="row">
                         <div class="col-md-11">
                             <div class="form-group">
@@ -20,7 +20,6 @@
                     @if (isset($searchAttributes))
                         <div class="row">
                             @foreach ($searchAttributes as $attribute)
-{{--                                @dump($attribute)--}}
                             @if ($attribute->isSelect() || $attribute->isNumber())
                                     <div class="col-md-4">
                                         <div class="form-group">

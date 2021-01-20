@@ -1,13 +1,5 @@
-{{--
-Вывод всех объявлений (или объявлений по региону или категории)
-127.0.0.1:8080/adverts
---}}
 @php($pageTitle = 'Фотобарахолка №1')
 @extends('layouts.app')
-
-@section('search')
-    @include('layouts.partials.search', ['searchRoute' => '?'])
-@endsection
 
 @section('content')
     @if ($childernRegions)

@@ -73,7 +73,7 @@
         </div>
     </nav>
     @section('search')
-        @include('layouts.partials.search', ['searchRoute' => route('adverts.index')])
+        @include('layouts.partials.search')
     @show
 </header>
 <main class="app-content py-3">
