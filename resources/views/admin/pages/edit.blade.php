@@ -9,7 +9,7 @@
         @method('PUT')
 
         <div class="form-group">
-            <label for="title" class="col-form-label">Title</label>
+            <label for="title" class="col-form-label">Название</label>
             <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title"
                    value="{{ old('title', $page->title) }}" required>
             @if ($errors->has('title'))
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            <label for="menu_title" class="col-form-label">Title</label>
+            <label for="menu_title" class="col-form-label">Название в меню</label>
             <input id="menu_title" class="form-control{{ $errors->has('menu_title') ? ' is-invalid' : '' }}"
                    name="menu_title" value="{{ old('menu_title', $page->menu_title) }}">
             @if ($errors->has('menu_title'))
@@ -27,16 +27,18 @@
         </div>
 
         <div class="form-group">
-            <label for="parent" class="col-form-label">Parent</label>
+            <label for="parent" class="col-form-label">Родительская страница</label>
             <select id="parent" class="form-control{{ $errors->has('parent') ? ' is-invalid' : '' }}" name="parent">
                 <option value=""></option>
                 @foreach ($parents as $parent)
-                    <option
-                        value="{{ $parent->id }}"{{ $parent->id == old('parent', $page->parent_id) ? ' selected' : '' }}>
-                        @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
-                        {{ $parent->title }}
-                    </option>
-                @endforeach;
+                    @if($parent->id !== $page->id)
+                        <option
+                            value="{{ $parent->id }}"{{ $parent->id == old('parent', $page->parent_id) ? ' selected' : '' }}>
+                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                            {{ $parent->title }}
+                        </option>
+                    @endif
+                @endforeach
             </select>
             @if ($errors->has('parent'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('parent') }}</strong></span>
@@ -45,7 +47,9 @@
 
         <div class="form-group">
             <label for="content" class="col-form-label">Контент</label>
-            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote" data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10" required>{{ old('content', $page->content) }}</textarea>
+            <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }} summernote"
+                      data-image-url="{{ route('admin.ajax.upload.image') }}" name="content" rows="10"
+                      required>{{ old('content', $page->content) }}</textarea>
             @if ($errors->has('content'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>
             @endif
@@ -53,14 +57,15 @@
 
         <div class="form-group">
             <label for="description" class="col-form-label">Описание</label>
-            <textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" rows="3">{{ old('description', $page->description) }}</textarea>
+            <textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                      name="description" rows="3">{{ old('description', $page->description) }}</textarea>
             @if ($errors->has('description'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('description') }}</strong></span>
             @endif
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 @endsection

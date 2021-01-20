@@ -14,7 +14,7 @@ class PageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => ['required','string','max:255','unique:pages,title,' . $this->page->id],
             'menu_title' => 'required|string|max:255',
             'parent' => 'nullable|integer|exists:pages,id',
             'content' => 'nullable|string',

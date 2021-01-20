@@ -11,12 +11,13 @@ class UploadController extends Controller
     public function image(Request $request): string
     {
         $this->validate($request, [
-            'file' => 'required|image|mimes:jpg,jpeg,png',
+            'file' => 'required|mimes:jpg,jpeg,png',
         ]);
 
         $file = $request->file('file');
         $path = $file->store('images', 'public');
 
-        return Storage::disk('public')->url($path);
+        return asset('storage/') . '/' .  $path;
+//        return Storage::disk('public')->url($path);
     }
 }

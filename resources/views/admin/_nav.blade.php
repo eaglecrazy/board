@@ -31,6 +31,6 @@
 
     @can('manage-tickets')
         <li class="nav-item"><a href="{{ route('admin.tickets.index') }}"
-                                class="nav-link{{ $page === 'pages' ? ' active' : '' }}">Заявки</a></li>
+                                class="nav-link{{ $page === 'tickets' ? ' active' : '' }}">Заявки</a></li>
     @endcan
 </ul>

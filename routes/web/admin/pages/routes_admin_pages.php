@@ -2,7 +2,11 @@
 //---------
 // Admin.Pages
 //---------
+
+
+
 Route::resource('pages', 'PageController');
+Route::post('/ajax/upload/image', 'UploadController@image')->name('ajax.upload.image');
 
 Route::group([
     'prefix' => 'pages/{page}',

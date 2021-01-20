@@ -6,6 +6,7 @@ use App\Entity\Page;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Pages\PageRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -53,7 +54,6 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $page): RedirectResponse
     {
-        //todo При изменинии любой страницы нужно удалять кэш, так как адреса могли измениться
         $page->update([
             'title' => $request['title'],
             'slug' => Str::slug($request['title']),
@@ -62,7 +62,9 @@ class PageController extends Controller
             'content' => $request['content'],
             'description' => $request['description'],
         ]);
-        return redirect()->route('admin.pages.show', $page);
+        //При изменинии любой страницы нужно удалять кэш, так как адреса могли измениться
+        Cache::tags(Page::class)->flush();
+        return redirect()->route('admin.pages.show', $page)->with('success', 'Страница успешно обновлена');
     }
 
     public function first(Page $page): RedirectResponse
@@ -96,6 +98,6 @@ class PageController extends Controller
     public function destroy(Page $page): RedirectResponse
     {
         $page->delete();
-        return redirect()->route('admin.pages.index');
+        return redirect()->route('admin.pages.index')->with('success', 'Страница удалена');
     }
 }
