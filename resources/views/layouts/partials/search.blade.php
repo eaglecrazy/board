@@ -35,7 +35,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-
+                                            {{--можно выбрать диапазон значений, от и до--}}
                                             @elseif ($attribute->isNumber())
                                                 <div class="row">
                                                     <div class="col-md-6">

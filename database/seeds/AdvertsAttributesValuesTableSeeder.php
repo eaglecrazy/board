@@ -66,12 +66,23 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
                     'attribute_id' => $attribute->id,
                     'value' => $attribute->variants[rand(0, 3)],
                 ];
-            }
-            if ($attribute->name === 'Бренд') {
+            } elseif ($attribute->name === 'Бренд') {
                 $result[] = [
                     'advert_id' => $advertId,
                     'attribute_id' => $attribute->id,
                     'value' => $advertBrand,
+                ];
+            } elseif ($attribute->name === 'Гарантия') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
+                ];
+            } elseif ($attribute->name === 'Наличие родной упаковки') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
                 ];
             }
         }
@@ -112,6 +123,18 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
                     'attribute_id' => $attribute->id,
                     'value' => $attribute->variants[rand(0, 1)],
                 ];
+            } elseif ($attribute->name === 'Гарантия') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
+                ];
+            } elseif ($attribute->name === 'Наличие родной упаковки') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
+                ];
             }
         }
         return $result;
@@ -132,6 +155,18 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
                     'advert_id' => $advertId,
                     'attribute_id' => $attribute->id,
                     'value' => $advertBrand,
+                ];
+            } elseif ($attribute->name === 'Гарантия') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
+                ];
+            } elseif ($attribute->name === 'Наличие родной упаковки') {
+                $result[] = [
+                    'advert_id' => $advertId,
+                    'attribute_id' => $attribute->id,
+                    'value' => rand(0, 1) ? 'on' : 0,
                 ];
             }
         }

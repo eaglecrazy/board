@@ -35,6 +35,33 @@ class AdvertAttributesTableSeeder extends Seeder
             'sort' => 1,
             'required' => true
         ]);
+
+        Attribute::create([
+            'name' => 'Гарантия',
+            'type' => 'bool',
+            'category_id' => $cameraId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
+
+        Attribute::create([
+            'name' => 'Гарантия',
+            'type' => 'bool',
+            'category_id' => $cameraId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
+
+        Attribute::create([
+            'name' => 'Наличие родной упаковки',
+            'type' => 'bool',
+            'category_id' => $cameraId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
     }
 
     private function makeLenses()
@@ -84,6 +111,24 @@ class AdvertAttributesTableSeeder extends Seeder
             'sort' => 1,
             'required' => false
         ]);
+
+        Attribute::create([
+            'name' => 'Гарантия',
+            'type' => 'bool',
+            'category_id' => $lensId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
+
+        Attribute::create([
+            'name' => 'Наличие родной упаковки',
+            'type' => 'bool',
+            'category_id' => $lensId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
     }
 
     private function makeFlashes()
@@ -104,6 +149,24 @@ class AdvertAttributesTableSeeder extends Seeder
             'type' => 'string',
             'category_id' => $flashId,
             'variants' => ["Canon", "Nikon", "Sony", "Yongnuo"],
+            'sort' => 1,
+            'required' => true
+        ]);
+
+        Attribute::create([
+            'name' => 'Гарантия',
+            'type' => 'bool',
+            'category_id' => $flashId,
+            'variants' => [""],
+            'sort' => 1,
+            'required' => true
+        ]);
+
+        Attribute::create([
+            'name' => 'Наличие родной упаковки',
+            'type' => 'bool',
+            'category_id' => $flashId,
+            'variants' => [""],
             'sort' => 1,
             'required' => true
         ]);
