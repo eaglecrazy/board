@@ -6,6 +6,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+//        этот сидер лучше запускать консольной командой seed:regions
+//        это нужно сделать перед остальным сидингом
 //        $this->call(RegionsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(AdvertCategoriesTableSeeder::class);
@@ -15,5 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(AdvertPhotosTableSeeder::class);
         $this->call(BannersTableSeeder::class);
         $this->call(AdvertDialogsTableSeeder::class);
+        $this->call(AdvertDialogMessagesTableSeeder::class);
+        $this->call(TicketTicketsTableSeeder::class);
+        $this->call(TicketStatusesTableSeeder::class);
+        $this->call(TicketsMessagesTableSeeder::class);
     }
 }

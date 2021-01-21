@@ -19,6 +19,5 @@ class AdvertTableSeeder extends Seeder
         echo 'Performing: search:make' . PHP_EOL;
         Artisan::call('search:make');
         echo 'Done!' . PHP_EOL;
-
     }
 }
