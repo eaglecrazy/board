@@ -40,7 +40,7 @@ class AdvertService
             //создавать атрибуты можно только после сохранения объявления
             foreach ($category->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
-                if (!empty($value)) {
+                if (!empty($value || $attribute->isBool())) {
                     $advert->attributesValues()->create([
                         'attribute_id' => $attribute->id,
                         'value' => $value
@@ -189,7 +189,7 @@ class AdvertService
             $advert->attributesValues()->delete();
             foreach ($advert->category->allAttributes() as $attribute) {
                 $value = $request['attributes'][$attribute->id] ?? null;
-                if (!empty($value)) {
+                if (!empty($value || $attribute->isBool())) {
                     $advert->attributesValues()->create([
                         'attribute_id' => $attribute->id,
                         'value' => $value

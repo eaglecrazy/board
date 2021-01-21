@@ -4,6 +4,7 @@ namespace App\Entity\Adverts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Validation\Rule;
 
 /**
  * App\Entity\Adverts\Attribute
@@ -33,6 +34,7 @@ class Attribute extends Model
     public const TYPE_STRING = 'string';
     public const TYPE_INTEGER = 'integer';
     public const TYPE_FLOAT = 'float';
+    public const TYPE_BOOL = 'bool';
 
     protected $table = 'advert_attributes';
 
@@ -45,10 +47,16 @@ class Attribute extends Model
     public static function typesList(): array
     {
         return [
-            self::TYPE_STRING => 'string',
-            self::TYPE_INTEGER => 'integer',
-            self::TYPE_FLOAT => 'float',
+            self::TYPE_STRING => 'строковый',
+            self::TYPE_INTEGER => 'целые числа',
+            self::TYPE_FLOAT => 'дробные числа',
+            self::TYPE_BOOL => 'да/нет',
         ];
+    }
+
+    public function isBool(): bool
+    {
+        return $this->type === self::TYPE_BOOL;
     }
 
     public function isString(): bool
@@ -79,5 +87,29 @@ class Attribute extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function getValidationRules(): array
+    {
+        $rules = [
+            $this->required ? 'required' : 'nullable',
+        ];
+        if ($this->isInteger()) {
+            $rules[] = 'integer';
+        } elseif ($this->isFloat()) {
+            $rules[] = 'numeric';
+        } elseif ($this->isBool()) {
+            $rules[] = 'nullable';
+            $rules[] = 'string';
+            $rules[] = 'max:3';
+        } else {
+            $rules[] = 'string';
+            $rules[] = 'max:255';
+            $rules[] = 'min:2';
+        }
+        if ($this->isSelect()) {
+            $rules[] = Rule::in($this->variants);
+        }
+        return $rules;
     }
 }

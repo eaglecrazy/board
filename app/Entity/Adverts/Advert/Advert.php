@@ -88,11 +88,18 @@ class Advert extends Model
         'expires_at' => 'datetime',
     ];
 
-    public function getAdvertAttributeValue($attributeId)
+    public function getAdvertAttributeValue($attribute)
     {
         $result = null;
         foreach ($this->attributesValues as $value) {
-            if ($value->attribute_id === $attributeId) {
+            if ($value->attribute_id === $attribute->id) {
+                if ($attribute->isBool()) {
+                    if ($value->value === 'on') {
+                        return 'да';
+                    } else {
+                        return 'нет';
+                    }
+                }
                 return $value->value;
             }
         }
@@ -137,7 +144,7 @@ class Advert extends Model
     public static function scopeFavoredByUser(Builder $query, User $user): Builder
     {
         return $query->whereHas('favorites', function (Builder $query) use ($user) {
-           $query->where('user_id', $user->id);
+            $query->where('user_id', $user->id);
         });
     }
 
@@ -284,13 +291,13 @@ class Advert extends Model
 
     public function getOrCreateDialogWith(int $clientId): Dialog
     {
-        if($clientId === $this->user_id){
+        if ($clientId === $this->user_id) {
             throw new DomainException('Нельзя отправить сообщение себе.');
         }
         /** @var Dialog $dialog */
         $dialog = $this->dialogs()->firstOrCreate([
-            'user_id'=>$this->user_id,
-            'client_id'=> $clientId,
+            'user_id' => $this->user_id,
+            'client_id' => $clientId,
         ]);
         return $dialog;
     }
@@ -299,21 +306,21 @@ class Advert extends Model
     {
         /** @var Dialog $dialog */
         $dialog = $this->dialogs()->where([
-            'user_id'=>$this->user_id,
-            'client_id'=> $clientId,
+            'user_id' => $this->user_id,
+            'client_id' => $clientId,
         ])->first();
-        if(!$dialog){
+        if (!$dialog) {
             throw new DomainException('Диалог не найден.');
         }
         return $dialog;
     }
 
-    private function readClientMessages(int $clientId):void
+    private function readClientMessages(int $clientId): void
     {
         $this->getDialogWith($clientId)->readByClient();
     }
 
-    private function readOwnerMessages(int $clientId):void
+    private function readOwnerMessages(int $clientId): void
     {
         $this->getDialogWith($clientId)->readByOwner();
     }
@@ -322,7 +329,8 @@ class Advert extends Model
 //    Фото
 //    --------------------
 
-    public function getPhotosLinks(): array {
+    public function getPhotosLinks(): array
+    {
         return array_column($this->photos()->get()->toArray(), 'file');
     }
 

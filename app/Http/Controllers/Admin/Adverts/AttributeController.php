@@ -22,13 +22,20 @@ class AttributeController extends Controller
 
     public function store(AttributeRequest $request, Category $category)
     {
-        $category->attributes()->create([
+        $data = [
             'name' => $request['name'],
             'type' => $request['type'],
             'required' => (bool)$request['required'],
-            'variants' => array_map('trim', preg_split('#[\r\n]+#', $request['variants'])),
             'sort' => $request['sort'],
-        ]);
+        ];
+
+        if($data['type'] !== Attribute::TYPE_BOOL){
+            $data['variants'] = array_map('trim', preg_split('#[\r\n]+#', $request['variants']));
+        } else {
+            $data['variants'] = [''];
+        }
+
+        $category->attributes()->create($data);
 
         return redirect()->route('admin.adverts.categories.show', compact('category'))->with('success', 'Атрибут создан.');
     }
@@ -45,13 +52,23 @@ class AttributeController extends Controller
 
     public function update(AttributeRequest $request, Category $category, Attribute $attribute)
     {
-        $category->attributes()->findOrFail($attribute->id)->update([
+        $data = [
             'name' => $request['name'],
             'type' => $request['type'],
             'required' => (bool)$request['required'],
-            'variants' => array_map('trim', preg_split('#[\r\n]+#', $request['variants'])),
             'sort' => $request['sort'],
-        ]);
+        ];
+
+        if($data['type'] !== Attribute::TYPE_BOOL){
+            $data['variants'] = array_map('trim', preg_split('#[\r\n]+#', $request['variants']));
+        } else {
+            $data['variants'] = [''];
+        }
+
+        $category->attributes()->findOrFail($attribute->id)->update($data);
+
+
+
 
         return redirect()->route('admin.adverts.categories.show', compact('category'));
 

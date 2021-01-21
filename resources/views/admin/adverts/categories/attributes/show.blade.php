@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th>Тип атрибута</th>
-            <td>{{ $attribute->type }}</td>
+            <td>{{ $attribute::typesList()[$attribute->type] }}</td>
         </tr>
         <tr>
             <th>Обязательный атрибут</th>

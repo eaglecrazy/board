@@ -1,4 +1,5 @@
-<form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update.attributes', $advert) : route('cabinet.adverts.update.attrubutes', $advert) }}">
+<form method="POST"
+      action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.update.attributes', $advert) : route('cabinet.adverts.update.attrubutes', $advert) }}">
     @csrf
     @method('PUT')
     <div class="card mb-3">
@@ -14,7 +15,7 @@
                             <option value=""></option>
                             @foreach ($attribute->variants as $variant)
                                 <option
-                                    value="{{ $variant }}"{{ $variant == old('attributes.' . $attribute->id) || $variant == $advert->getAdvertAttributeValue($attribute->id) ? ' selected' : '' }}>
+                                    value="{{ $variant }}"{{ $variant == old('attributes.' . $attribute->id) || $variant == $advert->getAdvertAttributeValue($attribute) ? ' selected' : '' }}>
                                     {{ $variant }}
                                 </option>
                             @endforeach
@@ -23,12 +24,19 @@
                         <input id="attribute_{{ $attribute->id }}" type="number"
                                class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
                                name="attributes[{{ $attribute->id }}]"
-                               value="{{ old('attributes.' . $attribute->id ?? $advert->getAdvertAttributeValue($attribute->id)) }}">
-                    @else
+                               value="{{ old('attributes.' . $attribute->id ?? $advert->getAdvertAttributeValue($attribute)) }}">
+                    @elseif ($attribute->isString())
                         <input id="attribute_{{ $attribute->id }}" type="text"
                                class="form-control{{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
                                name="attributes[{{ $attribute->id }}]"
-                               value="{{ old('attributes.' . $attribute->id) ?? $advert->getAdvertAttributeValue($attribute->id) }}">
+                               value="{{ old('attributes.' . $attribute->id) ?? $advert->getAdvertAttributeValue($attribute) }}">
+                    @else
+                        <input type="hidden"
+                               name="attributes[{{ $attribute->id }}]"
+                               value="0">
+                        <div class="checkbox d-inline">
+                            <input id="attribute_{{ $attribute->id }}", type="checkbox", {{($advert->getAdvertAttributeValue($attribute) === 'да' ? 'checked' : '')}} , name="attributes[{{ $attribute->id }}]" {{ old('attributes.' . $attribute->id) ?? ($advert->getAdvertAttributeValue($attribute) === 'да' ? 'on' : 'off'), ($advert->getAdvertAttributeValue($attribute) === 'да' ? 'on' : 'off') }}>
+                        </div>
                     @endif
 
                     @if ($errors->has('attributes.' . $attribute->id))

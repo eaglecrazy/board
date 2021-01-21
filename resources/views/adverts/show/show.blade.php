@@ -71,7 +71,7 @@
                 @foreach ($advert->category->allAttributes() as $attribute)
                     <tr>
                         <th>{{ $attribute->name }}</th>
-                        <td>{{ $advert->getAdvertAttributeValue($attribute->id) }}</td>
+                        <td>{{ $advert->getAdvertAttributeValue($attribute) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

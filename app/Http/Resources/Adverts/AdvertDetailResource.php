@@ -31,7 +31,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property AttributeValue[] $values
  * @property Photo[]|Collection $photos
  *
- * @method  mixed getAdvertAttributeValue($id)
+ * @method  mixed getAdvertAttributeValue($attribute)
  */
 class AdvertDetailResource extends JsonResource
 {
@@ -65,7 +65,7 @@ class AdvertDetailResource extends JsonResource
             'values' => array_map(function (Attribute $attribute) {
                 return [
                     'name' => $attribute->name,
-                    'value' => $this->getAdvertAttributeValue($attribute->id),
+                    'value' => $this->getAdvertAttributeValue($attribute),
                 ];
             }, $this->category->allAttributes()),
             'photos' => array_map(function (Photo $photo) {return $photo->file;}, $this->photos->toArray())

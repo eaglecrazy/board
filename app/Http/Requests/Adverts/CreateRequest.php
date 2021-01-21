@@ -25,22 +25,7 @@ class CreateRequest extends FormRequest
         $items = [];
 
         foreach ($this->category->allAttributes() as $attribute) {
-            $rules = [
-                $attribute->required ? 'required' : 'nullable',
-            ];
-            if ($attribute->isInteger()) {
-                $rules[] = 'integer';
-            } elseif ($attribute->isFloat()) {
-                $rules[] = 'numeric';
-            } else {
-                $rules[] = 'string';
-                $rules[] = 'max:255';
-                $rules[] = 'min:2';
-            }
-            if ($attribute->isSelect()) {
-                $rules[] = Rule::in($attribute->variants);
-            }
-            $items['attributes.' . $attribute->id] = $rules;
+            $items['attributes.' . $attribute->id] = $attribute->getValidationRules();
         }
 
         return array_merge([

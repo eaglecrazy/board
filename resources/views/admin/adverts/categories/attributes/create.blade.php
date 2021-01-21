@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group">
-            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную, то нужно оставить пустое поле).</label>
+            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную или атрибут типа "да/нет", то нужно оставить пустое поле).</label>
             <textarea id="variants"
                    class="form-control {{ $errors->has('variants') ? 'is-invalid' : '' }}"
                    name="variants">{{ old('variants') }}</textarea>

@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную, то нужно оставить пустое поле).</label>
+            <label for="variants" class="col-form-label">Возможные варианты ввода (если нужно вводить значение вручную или атрибут типа "да/нет", то нужно оставить пустое поле).</label>
             <textarea id="variants" type="text" class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
                       name="variants">{{ old('variants', implode("\n", $attribute->variants)) }}</textarea>
             @if ($errors->has('variants'))
