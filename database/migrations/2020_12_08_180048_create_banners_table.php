@@ -16,7 +16,7 @@ class CreateBannersTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('region_id')->nullable();
             $table->string('url');
-            $table->integer('views')->nullable();
+            $table->integer('views')->nullable()->default(0);
             $table->integer('limit');
             $table->integer('clicks')->nullable();
             $table->integer('cost')->nullable();

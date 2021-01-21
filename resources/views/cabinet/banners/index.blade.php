@@ -27,7 +27,7 @@
                     @endif
                 </td>
                 <td>{{ $banner->category->name }}</td>
-                <td>{{ $banner->published_at }}</td>
+                <td>{{ isset($banner->published_at) ? dtFormat($banner->published_at) : '' }}</td>
                 <td>
                     @include('cabinet.banners._banners_bages')
                 </td>

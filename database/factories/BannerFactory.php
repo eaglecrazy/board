@@ -4,6 +4,7 @@ use App\Entity\Banner\Banner;
 use App\Entity\Adverts\Category;
 use App\Entity\Region;
 use Faker\Generator as Faker;
+use Illuminate\Support\Carbon;
 
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
@@ -50,6 +51,11 @@ $factory->define(Banner::class, function (Faker $faker) {
         $rejectReason = $faker->text(50);
     }
 
+    $publishedAt = null;
+    if($status == Banner::STATUS_ACTIVE){
+        $publishedAt = Carbon::now();
+    }
+
     return [
         'name' => $name,
         'status' =>$status,
@@ -60,6 +66,8 @@ $factory->define(Banner::class, function (Faker $faker) {
         'format' => $format,
         'file' => $file,
         'reject_reason' => $rejectReason,
+        'published_at' => $publishedAt,
+        'views' => 0,
     ];
 });
 

@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <th>Дата публикации</th>
-            <td>{{ $banner->published_at }}</td>
+            <td>{{ isset($banner->published_at) ? dtFormat($banner->published_at) : '' }}</td>
         </tr>
         </tbody>
     </table>
