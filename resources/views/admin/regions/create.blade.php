@@ -22,6 +22,18 @@
                 <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
             @endif
         </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox", name="important" {{ old('important') ? ' checked' : '' }}> "Важный" регион.
+                </label>
+            </div>
+            @if($errors->has('important'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('important') }}</strong></span>
+            @endif
+        </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>

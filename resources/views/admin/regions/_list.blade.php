@@ -4,6 +4,7 @@
         <th>ID</th>
         <th>Наименование</th>
         <th>ЧПУ</th>
+        <th>Важный регион</th>
     </tr>
     </thead>
     <tbody>
@@ -12,6 +13,8 @@
             <td>{{ $region->id }}</td>
             <td><a href="{{ route('admin.regions.show', $region) }}">{{ $region->name }}</a></td>
             <td>{{ $region->slug }}</td>
+            <td>{!! $region->important ? '&#10004;' : '' !!}</td>
+
         </tr>
     @endforeach
     </tbody>

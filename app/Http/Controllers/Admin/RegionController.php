@@ -39,6 +39,7 @@ class RegionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|min:3|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
+            'important' => 'nullable|string|max:3',
             'parent' => 'nullable|exists:regions,id',
         ]);
 
@@ -46,6 +47,7 @@ class RegionController extends Controller
             'name' => $name = $request['name'],
             'slug' => Str::slug($name),
             'parent_id' => $request['parent'],
+            'important' => (bool)$request['important'],
         ]);
         return redirect()->route('admin.regions.show', $region)->with('success', 'Регион создан.');
     }
@@ -64,12 +66,15 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $this->validate($request, [
-            'name' => 'required|string|min:3|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
+//            'name' => 'required|string|min:3|max:255|unique:regions,name,NULL,id,parent_id,' . ($request['parent'] ?: 'NULL'),
+            'name' => 'required|string|min:3|max:255|unique:regions,name,' . $region->id . ',id,parent_id,' .$region->parent_id,
+            'important' => 'nullable|string|max:3',
         ]);
 
         $region->update([
             'name' => $name = $request['name'],
-            'slug' => Str::slug($name)
+            'slug' => Str::slug($name),
+            'important' => (bool)$request['important'],
         ]);
         return redirect()->route('admin.regions.show', compact('region'))->with('success', 'Регион успешно отредактирован.');
     }
