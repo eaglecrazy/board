@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdvertsAttributesValuesTableSeeder::class);
         $this->call(AdvertPhotosTableSeeder::class);
         $this->call(BannersTableSeeder::class);
+        $this->call(AdvertDialogsTableSeeder::class);
     }
 }
