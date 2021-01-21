@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs mb-3">
+<ul class="nav nav-tabs">
 {{--    <li class="nav-item"><a class="nav-link{{ $page === 'home' ? ' active' : '' }}" href="{{ route('cabinet.home') }}">Кабинет</a></li>--}}
     <li class="nav-item"><a class="nav-link{{ $page === 'adverts' ? ' active' : '' }}" href="{{ route('cabinet.adverts.index') }}">Мои объявления</a></li>
     @php($newMessages = \App\Usecases\Adverts\Dialogs\DialogService::newMessagesCount())

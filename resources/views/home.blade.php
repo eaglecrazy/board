@@ -6,13 +6,22 @@
 @section('content')
 
     @can('admin-panel')
-        <h2>Панель администратора</h2>
-        @include('admin._nav', ['page' => ''])
+        <div class="card card-default mb-2">
+            <div class="card-header h4">Панель модератора</div>
+            @include('admin._nav', ['page' => ''])
+        </div>
     @endcan
 
+
+
+
+
+
     @auth
-        <h2>Панель пользователя</h2>
-        @include('cabinet._nav', ['page' => ''])
+        <div class="card card-default mb-2">
+            <div class="card-header h4">Панель пользователя</div>
+            @include('cabinet._nav', ['page' => ''])
+        </div>
     @endauth
     <a class="page-link h2" href="{{ route('adverts.index') }}">Все объявления</a>
     <div id="accordion">
@@ -49,7 +58,8 @@
                                 <ul class="list-unstyled">
                                     @foreach ($chunk as $current)
                                         <li>
-                                            <a class="text-dark" href="{{ route('adverts.index',  adPath($current, null)) }}">{{ $current->name }}</a>
+                                            <a class="text-dark"
+                                               href="{{ route('adverts.index',  adPath($current, null)) }}">{{ $current->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
