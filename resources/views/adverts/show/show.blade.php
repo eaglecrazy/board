@@ -42,8 +42,7 @@
                     <div class="row">
                         <div class="col-10">
                             <div class="main-photo-wrap">
-                                <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"
-                                     height="410"/>
+                                <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"/>
                             </div>
                         </div>
                         @if(count($photos) > 1)

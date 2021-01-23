@@ -14016,7 +14016,8 @@ body {
 }
 
 .main-photo {
-  height: 410px;
+  max-height: 410px;
+  max-width: 100%;
 }
 
 .second-photo {
