@@ -41,7 +41,7 @@
 
                     @if ($errors->has('attributes.' . $attribute->id))
                         <span
-                            class="invalid-feedback"><strong>{{ $errors->first('attributes.' . $attribute->id) }}</strong></span>
+                            class="invalid-feedback"><strong>{{ errorOutput($errors->first('attributes.' . $attribute->id)) }}</strong></span>
                     @endif
                 </div>
             @endforeach

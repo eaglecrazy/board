@@ -57,7 +57,7 @@
             </div>
         </div>
     @endif
-
+    @if($adverts->count())
     <div class="row">
         <div class="col-md-9">
             <div class="adverts-list">
@@ -93,5 +93,8 @@
                  data-region="{{ $path->region ? $path->region->id : '' }}" data-url="{{ route('banner.get') }}"></div>
         </div>
     </div>
+    @else
+        <h3>Объявлений не найдено.</h3>
+    @endif
 
 @endsection

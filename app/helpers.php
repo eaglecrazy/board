@@ -6,6 +6,9 @@ use App\Entity\Region;
 use App\Http\Router\AdvertsPath;
 use App\Http\Router\PagePath;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Entity\Adverts\Attribute;
+
 
 
 if(!function_exists('adPath')){
@@ -36,5 +39,18 @@ if(!function_exists('dtFormat')){
 if(!function_exists('dFormat')){
     function dFormat(Carbon $d){
         return $d->format('d.m.Y');
+    }
+}
+
+
+if(!function_exists('errorOutput')){
+    function errorOutput($error){
+        if(starts_with($error,'Поле attributes.')){
+            $error = Str::replaceFirst('Поле attributes.', '', $error);
+            $error = Str::replaceFirst(' обязательно для заполнения.', '', $error);
+            $name = Attribute::whereId($error)->first()->name;
+            return 'Поле ' . $name . ' обязательно для заполнения.';
+        }
+        return $error;
     }
 }
