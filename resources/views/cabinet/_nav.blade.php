@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs">
+{{--    <li class="nav-item"><a class="nav-link{{ $page === 'home' ? ' active' : '' }}" href="{{ route('cabinet.home') }}">Кабинет</a></li>--}}
+    <li class="nav-item"><a class="nav-link{{ $page === 'adverts' ? ' active' : '' }}" href="{{ route('cabinet.adverts.index') }}">Мои объявления</a></li>
+    @php($newMessages = \App\Usecases\Adverts\Dialogs\DialogService::newMessagesCount())
+    <li class="nav-item"><a class="nav-link{{ $page === 'dialogs' ? ' active' : '' }}" href="{{ route('cabinet.dialogs.index') }}">Сообщения{{ $newMessages ? ' (' .$newMessages . ')' : '' }}</a></li>
+    <li class="nav-item"><a class="nav-link{{ $page === 'favorites' ? ' active' : '' }}" href="{{ route('cabinet.favorites.index') }}">Избранное</a></li>
+    <li class="nav-item"><a class="nav-link{{ $page === 'banners' ? ' active' : '' }}" href="{{ route('cabinet.banners.index') }}">Баннеры</a></li>
+    <li class="nav-item"><a class="nav-link{{ $page === 'profile' ? ' active' : '' }}" href="{{ route('cabinet.profile.home') }}">Профиль</a></li>
+    <li class="nav-item"><a class="nav-link{{ $page === 'tickets' ? ' active' : '' }}" href="{{ route('cabinet.tickets.index') }}">Техническая поддержка</a></li>
+</ul>

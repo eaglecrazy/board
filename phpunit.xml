@@ -29,5 +29,7 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
+        <server name="SMS_DRIVER" value="array"/>
+<!--        <server name="PHP_IDE_CONFIG" value="serverName=docker_server"/>-->
     </php>
 </phpunit>

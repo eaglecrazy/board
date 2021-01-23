@@ -1,8 +1,98 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome.scss';
+@import "~summernote/dist/summernote-bs4.css";
+
+.navbar {
+    background-color: #0c64a2;
+    padding: 0.35rem 1rem;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
+}
+
+.table th, .table td {
+    padding: 0.55rem 0.75rem;
+}
+
+
+.adverts-list {
+    .advert {
+        margin: 20px 0;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+}
+
+.search-bar {
+    background: #e9ecef;
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
+
+.main-photo-wrap {
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.second-photo-wrap {
+    background: #f6f6f6;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.main-photo {
+    max-height: 410px;
+    max-width: 100%;
+}
+
+.second-photo {
+    height: 100px;
+    transition: all 0.3s ease-out;
+}
+
+.second-photo:hover {
+    outline: 4px solid #ddd;
+    cursor: pointer;
+    transform: scale(1.06);
+}
+
+.advert-photo {
+    height: 180px;
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.message{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.other-user-message{
+    padding-left: 80px !important;
+    background-color: rgba(0, 0, 0, 0.03);
+}

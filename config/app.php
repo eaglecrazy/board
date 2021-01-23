@@ -80,7 +80,8 @@ return [
     |
     */
 
-    'locale' => 'en',
+//    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +94,8 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+//    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +176,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\SmsServiceProvider::class,
+        App\Providers\CacheServiceProvider::class,
+        App\Providers\SearchServiceProvider::class,
+        App\Providers\ComposeServiceProvider::class,
+        App\Providers\ValidationServiceProvider::class,
+
 
     ],
 

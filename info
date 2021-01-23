@@ -1,4 +1,16 @@
+3-32
+
+
+RUN pecl install xdebug-2.9.8 && docker-php-ext-enable xdebug
+
+
+https://127.0.0.1:8080/adverts - не выводить черновики, проверить вывод дочерних категорий и регионов
+
+
 sudo chmod 777 storage -R
+терминал от рута sudo -s
+
+
 ----------------------
 Первоначалальная настройка
 ----------------------
@@ -12,11 +24,6 @@ storage
 laravel plugin
 ide helper
 debugbar
-
-php artisan make auth
-миграции
-4-22 изменить редиректы
-
 
 
 
@@ -46,6 +53,8 @@ php artisan ide-helper:meta - PhpStorm Meta file
 ----------------------
 COMPOSER
 ----------------------
+-   все команды: https://phpprofi.ru/blogs/post/52
+
 -   запуск без ограничения памяти
     php -d memory_limit=-1 /usr/local/bin/composer require --dev barryvdh/laravel-ide-helper
 -   убрать dev пакеты (или установить только пакеты для продакшена)
@@ -79,6 +88,31 @@ composer require barryvdh/laravel-debugbar --dev
 
 
 
+----------------------
+BREADCRUMBS
+----------------------
+https://github.com/davejamesmiller/laravel-breadcrumbs
+
+
+
+----------------------
+Nested Set
+(компонент для получения данных из деревьев
+подойдёт для категорий)
+----------------------
+composer require kalnoy/nestedset
+
+
+
+
+
+----------------------
+Flash уведомления
+----------------------
+РАЗОБРАТЬСЯ КАК РАБОТАЕТ
+https://github.com/laracasts/flash
+composer require laracasts/flash
+
 
 ----------------------
 GIT
@@ -98,7 +132,7 @@ git show <коммит>
 Комментируем коммит прямо из командной строки
 git commit -m "commit comment"
 
-Откат к старому коммиту:
+ОТКАТ К СТАРОМУ КОММИТУ
 Найдите конкретный коммит, к которому вы хотите вернуть все изменения:
 $ git log --oneline
 Откатите все изменения к старому коммиту:
@@ -110,8 +144,10 @@ git commit -m "Revert commit: d217bb6"
 Сделав rollback локально, вы можете откатить изменения в удаленном репозитории, сделав push нового коммита, который уже содержит необходимые изменения:
 $ git push
 
-
-
+УБРАТЬ ИЗ ОТСЛЕЖИВАНИЯ
+git rm -rf --cached .
+git add .
+git commit -m "fix gitignore"
 
 
 
@@ -119,8 +155,89 @@ $ git push
 ----------------------
 Docker
 ----------------------
-статья про настройку отладчика в phpstorm
+Видео про настройку отладчика в phpstorm (оно точно работает с версией 2.9.1 !!!)
+https://www.youtube.com/watch?v=9MhHQJjMulk&feature=emb_logo&ab_channel=PrettyCode
+Статья про настройку отладчика в phpstorm
 https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
+
+Запуск скрипта из контейнера:
+sudo docker exec app_php-cli_1 php artisan migrate
+
+Подключение к контейнеру
+# docker ps
+# docker exec -i -t 6ee6223a3ce3 bash
+
+Список контейнеров:
+sudo docker container ls
+
+Работающие контейнеры:
+docker ps
+
+Узнать IP Docker:
+sudo ifconfig docker0
+----------------------
+Linux
+----------------------
+вывод файла: cat php.ini
+
+копирование файла "$ cp опции файл-источник файл-приемник"
+cp -R /home/vagrant/code/board/es/elasticsearch /usr/bin/
+
+поиск файла: find / -name mcrypt.so -print (можно искать *.so)
+
+создать папку
+mkdir -p ./x/y
+
+список расширений php -m
+
+https://losst.ru/avtozagruzka-linux
+
+----------------------
+Elastic Search
+----------------------
+Инструкция: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/deb.html
+https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
+
+скачать в текущую папку:
+curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gz
+
+установить
+в текущую папку: tar -xvf elasticsearch-6.2.4.tar.gz
+в другую папку: tar -xvf elasticsearch-6.2.4.tar.gz -C /usr/bin/elasticsearch
+
+установить права
+sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
+
+запустить
+/usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
+
+/home/vagrant/code/board/es/elasticsearch/bin/elasticsearch
+/home/vagrant/code/board/es/elasticsearch/bin/elasticsearch -d
+
+
+Проверка рабоcтоспособности: curl http://127.0.0.1:9201
+Поиск: curl http://127.0.0.1:9201/app/_search?pretty=true
+
+
+
+----------------------
+Подключение к удалённой БД
+----------------------
+mysql -uroot -psecret -h127.0.0.1 -P33061
+
+mysql -u {username} -p {password} \
+    -h {remote server ip or name} -P {port} \
+    -D {DB name}
+
+
+
+
+----------------------
+Отправка запросов из кода
+----------------------
+https://github.com/guzzle/guzzle
+guzzlehttp/guzzle
+
 
 
 
@@ -142,3 +259,26 @@ ls /opt/
 
 ОБНОВЛЕНИЕ АВТОЛОАДА
 /opt/php72/bin/php /usr/local/bin/composer dump-autoload
+
+
+
+----------------------
+FTP на хостинге
+----------------------
+статус
+sudo service vsftpd status
+
+автозагрузка
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+
+рестарт
+sudo service vsftpd restart
+
+стоп
+sudo service vsftpd stop
+
+настройка
+sudo nano /etc/vsftpd.conf
+
+
