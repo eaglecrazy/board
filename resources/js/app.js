@@ -102,6 +102,10 @@ $(document).on('click', '.second-photo', function ($e) {
     main.attr('src', src);
 });
 
+require('./maskedinput.min');
+$(function(){
+    $("#phone").mask("+7(999)999-99-99");
+});
 
 //начальное заполнение
 // let root = $('.region-select');

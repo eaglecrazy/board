@@ -16,7 +16,7 @@ class ProfileEditReruest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255|regex:/^\d+$/s',
+            'phone' => 'required|string|max:255|regex:/\+7\(\d\d\d\)\d\d\d-\d\d-\d\d/',
         ];
     }
 }

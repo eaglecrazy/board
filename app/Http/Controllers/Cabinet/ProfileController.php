@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends Controller
 {
-    private ProfileService $editService;
+    private $editService;
 
     public function __construct(ProfileService $service)
     {
