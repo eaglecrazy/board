@@ -38,7 +38,7 @@ class ManageController extends Controller
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
-        return back()->with('success', 'Объявление передано на модерацию.');
+        return back();
     }
 
     public function close(Advert $advert)

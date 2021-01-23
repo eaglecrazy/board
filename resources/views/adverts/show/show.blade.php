@@ -4,7 +4,7 @@
 @section('content')
     @if ($advert->isDraft())
         <div class="alert alert-danger">
-            Статус объявления: черновик.
+            Статус объявления: черновик. Для отображения в поиске объявление должно пройти модерацию. Нажмите кнопку "Опубликовать".
         </div>
         @if ($advert->reject_reason)
             <div class="alert alert-danger">
@@ -14,6 +14,10 @@
     @elseif($advert->isClosed())
         <div class="alert alert-danger">
             Статус объявления: закрыто.
+        </div>
+    @elseif($advert->isModeration())
+        <div class="alert alert-info">
+            Объявление на модерации.
         </div>
     @endif
 

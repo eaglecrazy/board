@@ -4,7 +4,7 @@
 @section('content')
     @include('cabinet._nav', ['page' => 'profile'])
 
-    <div class="mb-3">
+    <div class="py-3">
         <a href="{{ route('cabinet.profile.edit') }}" class="btn btn-primary">Редактировать</a>
     </div>
 

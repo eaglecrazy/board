@@ -289,9 +289,9 @@ class User extends Authenticatable
         return $this->phone_auth;
     }
 
-    public function hasFilledProfile(): bool
+    public function notFilledPhone(): bool
     {
-        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
+        return empty($this->phone);
     }
 
 
