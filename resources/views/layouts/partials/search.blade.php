@@ -60,12 +60,10 @@
                     @endif
                 </form>
             </div>
-            @auth
             <div class="col-md-3" style="text-align: right">
                 <p><a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success"><span
                             class="fa fa-plus"></span>   Добавить объявление</a></p>
             </div>
-            @endauth
         </div>
     </div>
 </div>

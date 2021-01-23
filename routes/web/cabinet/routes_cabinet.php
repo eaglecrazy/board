@@ -2,6 +2,8 @@
 //---------
 // Cabinet
 //---------
+use App\Http\Middleware\Authenticate;
+
 Route::group([
     'prefix' => 'cabinet',
     'as' => 'cabinet.',

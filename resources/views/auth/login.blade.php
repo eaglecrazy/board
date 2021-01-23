@@ -73,6 +73,10 @@
         </div>
 
         <div class="col-md-4">
+
+            <div class="card mb-2">
+                <a href="{{ route('register') }}" class="m-2 btn btn-primary">Зарегистрироваться</a>
+            </div>
             <div class="card">
                 <div class="card-header">Войти через:</div>
                 <div class="card-body">
