@@ -268,7 +268,9 @@ ls /opt/
 ОБНОВЛЕНИЕ АВТОЛОАДА
 /opt/php72/bin/php /usr/local/bin/composer dump-autoload
 
-
+/usr/bin/php7.4  -d memory_limit=512M composer require doctrine/dbal
+/etc/php/7.4/cli/php.ini
+php -m
 
 ----------------------
 FTP на хостинге
