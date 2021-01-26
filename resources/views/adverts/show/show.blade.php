@@ -140,10 +140,12 @@
             @endif
         </div>
         <div class="col-md-3">
-            <div class="bitem mb-3 mt-5" data-format="240x400"
-                 data-category="{{ $advert->category ? $advert->category->id : '' }}"
-                 data-region="{{ $advert->region ? $advert->region->id : '' }}"
-                 data-url="{{ route('banner.get') }}"></div>
+            @if($advert->isActive())
+                <div class="bitem mb-3 mt-5" data-format="240x400"
+                     data-category="{{ $advert->category ? $advert->category->id : '' }}"
+                     data-region="{{ $advert->region ? $advert->region->id : '' }}"
+                     data-url="{{ route('banner.get') }}"></div>
+            @endif
         </div>
     </div>
 @endsection
