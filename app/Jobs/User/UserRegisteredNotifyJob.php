@@ -15,6 +15,8 @@ class UserRegisteredNotifyJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $user;
+    public $tries = 2;
+    public $timeout = 10;
 
     public function __construct(User $user)
     {
