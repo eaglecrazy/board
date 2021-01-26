@@ -43,7 +43,7 @@ $factory->define(Banner::class, function (Faker $faker) {
     $limit = rand(1,5) * 100;
     $format = '240x400';
 
-    $files = removePublic(Storage::allFiles('./public/banners/test'));
+    $files = removePublic(Storage::allFiles('./public/bitems/test'));
     $file = $files[rand(0, count($files)-1)];
 
     $rejectReason = '';

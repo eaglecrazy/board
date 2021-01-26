@@ -46,7 +46,7 @@ $factory->define(Advert::class, function (Faker $faker) {
         $expires = null;
     }
     $GLOBALS['advert_seeder']--;
-    if ($GLOBALS['advert_seeder'] % 1000 === 0) {
+    if ($GLOBALS['advert_seeder'] % 100 === 0) {
         echo ($GLOBALS['advert_seeder']) . ' adverts left.' . PHP_EOL;
     }
 
