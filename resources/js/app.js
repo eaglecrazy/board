@@ -35,9 +35,11 @@ $('.bitem').each(function () {
             }
         })
         .then(function (response) {
+            alert('данные получены');
             block.html(response.data);
         })
         .catch(function (error) {
+            alert('ошибка получения данных');
             console.error(error);
         });
 });
