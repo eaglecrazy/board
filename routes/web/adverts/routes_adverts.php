@@ -3,7 +3,7 @@
 // Adverts
 //-------
 Route::group([
-    'prefix' => 'adverts',
+    'prefix' => 'items',
     'as' => 'adverts.',
     'namespace' => 'Adverts',
 ], function () {
