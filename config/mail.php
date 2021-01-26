@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'smart-smart-smart@mail.ru'),
-        'name' => env('MAIL_FROM_NAME', 'PhotoSale'),
+        'name' => env('MAIL_FROM_NAME', 'Fotoprokat'),
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
