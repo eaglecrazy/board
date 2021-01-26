@@ -31,7 +31,7 @@ class AdvertPhotosTableSeeder extends Seeder
         $data = [];
 
         foreach ($adverts as $advert) {
-            if ($count-- % 1000 === 0) {
+            if ($count-- % 100 === 0) {
                 echo $count + 1 . ' adverts of ' . $countall . ' left.' . PHP_EOL;
             }
 
