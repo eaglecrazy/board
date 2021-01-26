@@ -19,7 +19,7 @@ $(document).on('click', '.phone-button', function () {
     });
 });
 
-$('.banner').each(function () {
+$('.bitem').each(function () {
     let block = $(this);
     let url = block.data('url');
     let format = block.data('format');
