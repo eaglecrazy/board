@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mail.ru'),
+    'host' => env('MAIL_HOST', 'smtp.rambler.ru'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'smart-smart-smart@mail.ru'),
+        'address' => env('MAIL_FROM_ADDRESS', 'eaglezzzzz@rambler.ru'),
         'name' => env('MAIL_FROM_NAME', 'Fotoprokat'),
     ],
 
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'smart-smart-smart@mail.ru'),
+    'username' => env('MAIL_USERNAME', 'eaglezzzzz@rambler.ru'),
 
-    'password' => env('MAIL_PASSWORD', 'y3{-n*r"|\Trc(%(}(&:ZPa8<'),
+    'password' => env('MAIL_PASSWORD', 'Fogbtfit542uFdAzsEML'),
 
     /*
     |--------------------------------------------------------------------------
