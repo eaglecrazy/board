@@ -21,9 +21,9 @@ class AdvertPhotosTableSeeder extends Seeder
         $lensesCategoryId = Category::where('name', 'Объективы')->first()->id;
         $flashesCategoryId = Category::where('name', 'Вспышки')->first()->id;
 
-        $cameras = $this->removePublic(Storage::allFiles('./public/adverts/test/camera'));
-        $lenses = $this->removePublic(Storage::allFiles('./public/adverts/test/lens'));
-        $flashes = $this->removePublic(Storage::allFiles('./public/adverts/test/flash'));
+        $cameras = $this->removePublic(Storage::allFiles('./public/photos/test/camera'));
+        $lenses = $this->removePublic(Storage::allFiles('./public/photos/test/lens'));
+        $flashes = $this->removePublic(Storage::allFiles('./public/photos/test/flash'));
         $camerasCount = count($cameras)-2;
         $lensesCount = count($lenses)-2;
         $flashesCount = count($flashes)-2;
