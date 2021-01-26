@@ -51,7 +51,7 @@ class BannerService
 
     public function create(User $user, Category $category, ?Region $region, BannerCreateRequest $request): Model
     {
-        $file = $request->file('file')->store('banners', 'public');
+        $file = $request->file('file')->store('bitems', 'public');
 
         $banner = Banner::make([
             'name' => $request['name'],
