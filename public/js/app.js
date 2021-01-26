@@ -47577,7 +47577,7 @@ $(document).on('click', '.phone-button', function () {
     console.error(error);
   });
 });
-$('.banner').each(function () {
+$('.bitem').each(function () {
   var block = $(this);
   var url = block.data('url');
   var format = block.data('format');
