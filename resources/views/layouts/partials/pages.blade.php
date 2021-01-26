@@ -18,6 +18,7 @@
     @endif
     @can('admin-panel')
         <a class="nav-link" href="{{ route('admin.home') }}">Админка</a>
+        <a class="nav-link" href="{{ route('horizon') }}">Horizon</a>
     @endcan
     @auth()
         <a class="nav-link" href="{{ route('cabinet.home') }}">Личный кабинет</a>
