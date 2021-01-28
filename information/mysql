@@ -1,3 +1,15 @@
+Установка
+        sudo apt install mysql-client-core-8.0
+
+        sudo apt-get install mysql-server
+        sudo apt-get install mysql-client
+
+
+управление сервисом
+        sudo -i service mysql start
+        sudo -i service mysql restart
+        sudo -i service mysql status
+
 
 
 конфиг (там указывается есть ли доступ с удалённых хостов)
@@ -5,10 +17,18 @@
         #bind-address           = 127.0.0.1
         bind-address            = 0.0.0.0
 
+создание базы
+        CREATE DATABASE board;
+
 создание юзера
         CREATE USER 'eagle'@'localhost' IDENTIFIED BY 'munoyoo3';
         GRANT ALL PRIVILEGES ON board . * TO 'eagle'@'localhost';
         SHOW GRANTS FOR 'eagle'@'localhost';
+
+        CREATE USER 'eagle'@'185.81.67.98' IDENTIFIED BY 'munoyoo3';
+        GRANT ALL PRIVILEGES ON board . * TO 'eagle'@'185.81.67.98';
+        SHOW GRANTS FOR 'eagle'@'185.81.67.98';
+
 
 
 
