@@ -1,0 +1,16 @@
+NGINX
+
+проверка конфига
+nginx -t
+
+настройка конфига
+sudo nano /etc/nginx/sites-enabled/default
+
+управление сервисом
+sudo -i service nginx start
+sudo -i service nginx restart
+sudo -i service nginx status
+
+переустановка
+sudo apt-get remove --purge nginx nginx-full nginx-common
+sudo apt-get install nginx

@@ -1,0 +1,92 @@
+----------------------
+Первоначалальная настройка
+----------------------
+Директории пометить как excluded:
+storage
+idea
+bootstrap/cache
+storage
+
+Плагины:
+laravel plugin
+ide helper
+debugbar
+
+
+----------------------
+IDE HELPER
+----------------------
+composer require --dev barryvdh/laravel-ide-helper
+
+(этот пункт я не делал)
+в config/app.php добавить
+Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+php artisan ide-helper:generate - PHPDoc generation for Laravel Facades
+php artisan ide-helper:models - PHPDocs for models
+php artisan ide-helper:meta - PhpStorm Meta file
+
+В composer.json нужно добавить, чтобы каждый раз после добавления запускался скрипт
+"scripts": {
+    "post-update-cmd": [
+        "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+        "@php artisan ide-helper:generate",
+        "@php artisan ide-helper:meta"
+    ]
+},
+
+
+----------------------
+RESOURCE CONTROLLER
+----------------------
+Verb	    URI	                    Action	        Route Name
+GET	        /photos	                index	        photos.index
+GET	        /photos/create	        create	        photos.create
+POST	    /photos	                store	        photos.store
+GET	        /photos/{photo}	        show	        photos.show
+GET	        /photos/{photo}/edit	edit	        photos.edit
+PUT/PATCH	/photos/{photo}	        update	        photos.update
+DELETE	    /photos/{photo}	        destroy	        photos.destroy
+
+
+
+----------------------
+DEBUGBAR
+----------------------
+https://github.com/barryvdh/laravel-debugbar
+
+composer require barryvdh/laravel-debugbar --dev
+
+
+
+----------------------
+BREADCRUMBS
+----------------------
+https://github.com/davejamesmiller/laravel-breadcrumbs
+
+
+
+----------------------
+Nested Set
+(компонент для получения данных из деревьев
+подойдёт для категорий)
+----------------------
+composer require kalnoy/nestedset
+
+
+
+
+----------------------
+Flash уведомления
+----------------------
+РАЗОБРАТЬСЯ КАК РАБОТАЕТ
+https://github.com/laracasts/flash
+composer require laracasts/flash
+
+
+
+----------------------
+Отправка запросов из кода
+----------------------
+https://github.com/guzzle/guzzle
+guzzlehttp/guzzle

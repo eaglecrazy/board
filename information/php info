@@ -1,0 +1,11 @@
+PHP
+
+установка
+        sudo apt-get install php7.4-fpm
+
+
+ini
+        /etc/php/7.4/cli/php.ini
+
+установленные расширения
+        php -m

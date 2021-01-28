@@ -1,0 +1,25 @@
+----------------------
+Docker
+----------------------
+Отладка
+        Видео про настройку отладчика в phpstorm (оно точно работает с версией 2.9.1 !!!)
+        https://www.youtube.com/watch?v=9MhHQJjMulk&feature=emb_logo&ab_channel=PrettyCode
+
+        Статья про настройку отладчика в phpstorm
+        https://justcodeit.ru/otladka-php-prilozhenij-v-docker-s-pomoshhyu-phpstorm-i-xdebug/
+
+Запуск скрипта из контейнера:
+        sudo docker exec app_php-cli_1 php artisan migrate
+
+Подключение к контейнеру
+        # docker ps
+        # docker exec -i -t 6ee6223a3ce3 bash
+
+Список контейнеров:
+        sudo docker container ls
+
+Работающие контейнеры:
+        docker ps
+
+Узнать IP Docker:
+        sudo ifconfig docker0

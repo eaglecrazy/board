@@ -1,0 +1,20 @@
+
+
+конфиг (там указывается есть ли доступ с удалённых хостов)
+        sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+        #bind-address           = 127.0.0.1
+        bind-address            = 0.0.0.0
+
+создание юзера
+        CREATE USER 'eagle'@'localhost' IDENTIFIED BY 'munoyoo3';
+        GRANT ALL PRIVILEGES ON board . * TO 'eagle'@'localhost';
+        SHOW GRANTS FOR 'eagle'@'localhost';
+
+
+
+подключение к удалённой БД
+        mysql -uroot -psecret -h127.0.0.1 -P33061
+
+        mysql -u {username} -p {password} \
+            -h {remote server ip or name} -P {port} \
+            -D {DB name}

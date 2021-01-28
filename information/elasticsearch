@@ -1,0 +1,47 @@
+----------------------
+Elastic Search
+----------------------
+Инструкция по установке 6.2
+        https://www.elastic.co/guide/en/elasticsearch/reference/6.2/deb.html
+        https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
+
+        скачать в текущую папку:
+        curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gz
+
+        установить
+        в текущую папку: tar -xvf elasticsearch-6.2.4.tar.gz
+        в другую папку: tar -xvf elasticsearch-6.2.4.tar.gz -C /usr/bin/elasticsearch
+
+        установить права
+        sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
+
+
+запуск
+        /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
+        /home/vagrant/code/board/es/elasticsearch/bin/elasticsearch
+        /home/vagrant/code/board/es/elasticsearch/bin/elasticsearch -d
+
+
+проверка рабоcтоспособности:
+        curl http://127.0.0.1:9201
+
+поиск:
+        curl http://127.0.0.1:9201/app/_search?pretty=true
+
+размер памяти
+	sudo sysctl -w vm.max_map_count=262144
+
+
+
+
+
+
+запуск
+sudo -i service elasticsearch start
+/usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
+
+статус
+sudo -i service elasticsearch status
+
+опции (настройка количества памяти)
+./usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options

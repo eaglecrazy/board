@@ -1,0 +1,23 @@
+----------------------
+COMPOSER
+----------------------
+-   все команды: https://phpprofi.ru/blogs/post/52
+
+
+запуск без ограничения памяти
+        php -d memory_limit=-1 /usr/local/bin/composer require --dev barryvdh/laravel-ide-helper
+        /path/to/php/bin/php -d memory_limit=-1 /usr/local/bin/composer update
+
+запуск с ограничением памяти
+        /usr/bin/php7.4  -d memory_limit=512M composer require doctrine/dbal
+        /path/to/php/bin/php -d memory_limit=1024M /usr/local/bin/composer update
+
+убрать dev пакеты (или установить только пакеты для продакшена)
+        composer install --no-dev
+
+
+обновление автолоада
+        composer dump-autoload
+        /path/to/php/bin/php /usr/local/bin/composer dump-autoload
+
+

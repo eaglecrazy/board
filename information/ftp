@@ -1,0 +1,18 @@
+----------------------
+FTP на хостинге
+----------------------
+статус
+sudo service vsftpd status
+
+автозагрузка
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+
+рестарт
+sudo service vsftpd restart
+
+стоп
+sudo service vsftpd stop
+
+настройка
+sudo nano /etc/vsftpd.conf
