@@ -21,7 +21,7 @@ class BannerIndexer
     {
         $this->client->deleteByQuery([
             'index' => 'banners',
-            'type' => 'banner',
+            'type' => 'banners',
             'body' => ['query' => ['match_all' => new \stdClass()]],
         ]);
     }
