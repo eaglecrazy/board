@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketStatusesTableSeeder::class);
         $this->call(TicketsMessagesTableSeeder::class);
         $this->call(AdvertFavoritesTableSeeder::class);
+        echo 'Performing: search:make' . PHP_EOL;
+        Artisan::call('search:make');
+        echo 'Done!' . PHP_EOL;
     }
 }

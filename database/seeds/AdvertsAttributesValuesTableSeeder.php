@@ -49,8 +49,8 @@ class AdvertsAttributesValuesTableSeeder extends Seeder
         echo 'Adverts attributes values seeding is end' . PHP_EOL;
         echo 'Inserting data to DB' . PHP_EOL;
         AttributeValue::insert($data);
-        echo 'Performing: search:make' . PHP_EOL;
-        Artisan::call('search:make');
+//        echo 'Performing: search:make' . PHP_EOL;
+//        Artisan::call('search:make');
         echo 'Done!' . PHP_EOL;
 
     }

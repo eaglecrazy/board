@@ -16,8 +16,8 @@ class AdvertTableSeeder extends Seeder
         $GLOBALS['advert_seeder'] = $num;
         factory(Advert::class, $num)->create();
         echo 'Adverts seeding is end' . PHP_EOL;
-        echo 'Performing: search:make' . PHP_EOL;
-        Artisan::call('search:make');
-        echo 'Done!' . PHP_EOL;
+//        echo 'Performing: search:make' . PHP_EOL;
+//        Artisan::call('search:make');
+//        echo 'Done!' . PHP_EOL;
     }
 }

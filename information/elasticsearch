@@ -29,10 +29,10 @@ Elastic Search
 
 
 проверка рабоcтоспособности:
-        curl http://127.0.0.1:9201
+        curl http://127.0.0.1:9200
 
 поиск:
-        curl http://127.0.0.1:9201/app/_search?pretty=true
+        curl http://127.0.0.1:9200/app/_search?pretty=true
 
 размер памяти
 	sudo sysctl -w vm.max_map_count=262144

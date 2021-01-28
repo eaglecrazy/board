@@ -29,8 +29,8 @@ class BannersTableSeeder extends Seeder
             }
             $banners[$i]->save();
         }
-        echo 'Performing: search:make' . PHP_EOL;
-        Artisan::call('search:make');
+//        echo 'Performing: search:make' . PHP_EOL;
+//        Artisan::call('search:make');
         echo 'Done!' . PHP_EOL;
     }
 
