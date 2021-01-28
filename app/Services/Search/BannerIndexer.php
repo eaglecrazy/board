@@ -19,11 +19,11 @@ class BannerIndexer
 
     public function clear(): void
     {
-        $this->client->deleteByQuery([
-            'index' => 'banners',
-            'type' => 'banners',
-            'body' => ['query' => ['match_all' => new \stdClass()]],
-        ]);
+//        $this->client->deleteByQuery([
+//            'index' => 'banners',
+//            'type' => 'banner',
+//            'body' => ['query' => ['match_all' => new \stdClass()]],
+//        ]);
     }
 
     public function index(Banner $banner): void
