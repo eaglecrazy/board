@@ -67,6 +67,8 @@ Linux
     useradd eagle
     useradd -m eagle
 
+    useradd -d /var/www ftp-user
+
     добавить права SUDO
     usermod -a -G sudo eagle
 
