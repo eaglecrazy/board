@@ -3,9 +3,9 @@
 calendar
 Core
 ctype
-curl
+curl - sudo apt-get install php-curl
 date
-dom
+dom - sudo apt install php-xml
 exif
 FFI
 fileinfo
@@ -17,8 +17,8 @@ iconv
 json
 libxml
 mbstring
-mysqli
-mysqlnd
+mysqli :  sudo apt install php-mysql
+mysqlnd :  sudo apt install php-mysql
 openssl
 pcntl
 pcre

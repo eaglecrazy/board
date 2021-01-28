@@ -52,6 +52,11 @@ Linux
 посмотреть открытые порты
         sudo netstat -tulpn
 
+сменить хозяина папки
+        chown пользователь опции /путь/к/файлу
+        sudo chown eagle board -R
+
+
 создать папку
         mkdir -p ./x/y
 
