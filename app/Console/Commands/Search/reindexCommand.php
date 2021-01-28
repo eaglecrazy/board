@@ -20,7 +20,7 @@ class reindexCommand extends Command
     {
         parent::__construct();
         $this->advertsIndexer = $adverts;
-//        $this->bannersIndexer = $banners;
+        $this->bannersIndexer = $banners;
     }
 
     public function handle(): bool
@@ -31,11 +31,11 @@ class reindexCommand extends Command
             $this->advertsIndexer->index($advert);
         }
 
-        $this->bannersIndexer->clear();
-
-        foreach (Banner::active()->orderBy('id')->cursor() as $banner) {
-            $this->bannersIndexer->index($banner);
-        }
+//        $this->bannersIndexer->clear();
+//
+//        foreach (Banner::active()->orderBy('id')->cursor() as $banner) {
+//            $this->bannersIndexer->index($banner);
+//        }
 
         return true;
     }
