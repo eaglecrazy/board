@@ -1,7 +1,17 @@
 ----------------------
 COMPOSER
 ----------------------
--   все команды: https://phpprofi.ru/blogs/post/52
+установка глобально
+        sudo apt install curl php-cli php-mbstring git unzip
+        sudo apt install composer
+        composer --version
+
+обновление
+
+
+
+все команды:
+        https://phpprofi.ru/blogs/post/52
 
 
 запуск без ограничения памяти
