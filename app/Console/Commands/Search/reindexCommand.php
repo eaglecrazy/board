@@ -20,7 +20,7 @@ class reindexCommand extends Command
     {
         parent::__construct();
         $this->advertsIndexer = $adverts;
-        $this->bannersIndexer = $banners;
+//        $this->bannersIndexer = $banners;
     }
 
     public function handle(): bool
