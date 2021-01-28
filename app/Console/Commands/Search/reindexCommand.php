@@ -31,8 +31,8 @@ class reindexCommand extends Command
             $this->advertsIndexer->index($advert);
         }
 
-//        $this->bannersIndexer->clear();
-//
+        $this->bannersIndexer->clear();
+
 //        foreach (Banner::active()->orderBy('id')->cursor() as $banner) {
 //            $this->bannersIndexer->index($banner);
 //        }
