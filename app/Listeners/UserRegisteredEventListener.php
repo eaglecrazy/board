@@ -8,6 +8,7 @@ class UserRegisteredEventListener
 {
     public function handle($event)
     {
+        dd(route('register.verify', '$this->user->verify_token'));
         UserRegisteredNotifyJob::dispatch($event->user);
     }
 }
