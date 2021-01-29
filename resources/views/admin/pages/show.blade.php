@@ -3,7 +3,7 @@
 
 @section('content')
     @include('admin.pages._nav')
-    <div class="d-flex flex-row mb-3">
+    <div class="d-flex flex-row my-3">
         <a href="{{route('page', pagePath($page))}}" class="btn btn-success mr-1" target="_blank">Открыть</a>
         <a href="{{ route('admin.pages.edit', $page) }}" class="btn btn-primary mr-1">Редактировать</a>
         <form method="POST" action="{{ route('admin.pages.destroy', $page) }}" class="mr-1">

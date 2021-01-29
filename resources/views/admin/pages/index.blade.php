@@ -4,7 +4,7 @@
 @section('content')
     @include('admin.pages._nav')
 
-    <p><a href="{{ route('admin.pages.create') }}" class="btn btn-success">Создать страницу</a></p>
+    <p><a href="{{ route('admin.pages.create') }}" class="btn btn-success mt-3">Создать страницу</a></p>
 
     <table class="table table-bordered table-striped">
         <thead>

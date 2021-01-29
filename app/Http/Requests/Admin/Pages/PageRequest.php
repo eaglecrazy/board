@@ -13,12 +13,18 @@ class PageRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'title' => ['required','string','max:255','unique:pages,title,' . $this->page->id],
+        $data = [
             'menu_title' => 'required|string|max:255',
             'parent' => 'nullable|integer|exists:pages,id',
             'content' => 'nullable|string',
             'description' => 'nullable|string',
         ];
+        if(isset($this->page->id)){
+            $data['title'] = ['required','string','max:255','unique:pages,title,' . $this->page->id];
+        } else {
+            $data['title'] = ['required','string','max:255','unique:pages,title'];
+        }
+
+        return $data;
     }
 }

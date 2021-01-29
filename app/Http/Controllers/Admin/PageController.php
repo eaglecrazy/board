@@ -64,7 +64,7 @@ class PageController extends Controller
         ]);
         //При изменинии любой страницы нужно удалять кэш, так как адреса могли измениться
         Cache::tags(Page::class)->flush();
-        return redirect()->route('admin.pages.show', $page)->with('success', 'Страница успешно обновлена');
+        return redirect()->route('admin.pages.show', $page)->with('success', 'Страница успешно обновлена.');
     }
 
     public function first(Page $page): RedirectResponse
@@ -98,6 +98,6 @@ class PageController extends Controller
     public function destroy(Page $page): RedirectResponse
     {
         $page->delete();
-        return redirect()->route('admin.pages.index')->with('success', 'Страница удалена');
+        return redirect()->route('admin.pages.index')->with('success', 'Страница удалена.');
     }
 }
