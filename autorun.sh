@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 echo Board autorun start
-exec /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
-echo Elasticsearch started
 php artisan horizon &
+exec /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
 echo Board autorun end
