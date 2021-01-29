@@ -23,6 +23,8 @@ class UserRegisteredNotifyJob implements ShouldQueue
 
     public function handle()
     {
+        //почему то в уведомлении route('register.verify', $this->user->verify_token) генерирует вместо домена localhost.
+        //поэтому передаём урл отсюда
         $url = route('register.verify', $this->user->verify_token);
         dd($url);
         $this->user->notify(new EmailVerificationNotification($this->user, $url));
