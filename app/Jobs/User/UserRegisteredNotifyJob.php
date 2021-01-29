@@ -23,6 +23,8 @@ class UserRegisteredNotifyJob implements ShouldQueue
 
     public function handle()
     {
-        $this->user->notify(new EmailVerificationNotification($this->user));
+        $url = route('register.verify', $this->user->verify_token);
+        dd($url);
+        $this->user->notify(new EmailVerificationNotification($this->user, $url));
     }
 }
