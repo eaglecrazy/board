@@ -45,9 +45,8 @@ class RegisterController extends Controller
 
         try {
             $this->service->verify($user->id);
-            Auth::login();
-            return redirect()->intended()->with('success', 'Ваш email подтверждён.');
-//            return redirect()->route('login')->with('success', 'Ваш email подтверждён. Вы можете войти на сайт.');
+            Auth::login($user);
+            return redirect()->route('home')->with('success', 'Ваш email подтверждён. Вы вошли на сайт.');
         } catch (\DomainException $e){
             return redirect()->route('login')->with('error', $e->getMessage());
         }
