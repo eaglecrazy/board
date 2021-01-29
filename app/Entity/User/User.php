@@ -130,7 +130,7 @@ class User extends Authenticatable
     public function addToFavorites($advertId): void
     {
         if ($this->hasInFavorites($advertId)) {
-            throw new DomainException('This advert is alerady added to favorites.');
+            throw new DomainException('Объявление уже находится в избранном.');
         }
         $this->favorites()->attach($advertId);
     }
@@ -193,7 +193,7 @@ class User extends Authenticatable
     public function verify(): void
     {
         if (!$this->isWait()) {
-            throw new DomainException('User is already verified.');
+            throw new DomainException('Пользоваьель уже верифицирован.');
         }
         $this->update([
             'status' => self::STATUS_ACTIVE,
@@ -211,7 +211,7 @@ class User extends Authenticatable
             throw new \InvalidArgumentException('Undefined role "' . $role . '"');
         }
         if ($this->role === $role) {
-            throw new DomainException('Role is already assigned');
+            throw new DomainException('Роль уже назначена');
         }
         $this->update(['role' => $role]);
     }
@@ -250,7 +250,7 @@ class User extends Authenticatable
     {
         //если нет телефона
         if (empty($this->phone)) {
-            throw new DomainException('Phone number is empty.');
+            throw new DomainException('Не введён номер телефона.');
         }
         //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
         //то есть токен отправили и получить другой ещё нельзя
