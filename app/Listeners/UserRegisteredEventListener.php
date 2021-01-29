@@ -12,6 +12,8 @@ class UserRegisteredEventListener
         //route('register.verify', $this->user->verify_token) генерирует вместо домена localhost.
         //поэтому передаём урл отсюда
         $url = route('register.verify', $event->user->verify_token);
+        dd($url);
+
         UserRegisteredNotifyJob::dispatch($event->user, $url);
     }
 }
