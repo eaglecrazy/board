@@ -255,7 +255,7 @@ class User extends Authenticatable
         //если уже есть токен, и есть время когда он закончится и оно больше чем сейчас
         //то есть токен отправили и получить другой ещё нельзя
         if (!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
-            throw new DomainException('Token is already requested. The new token will be available in ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' seconds.');
+            throw new DomainException('Код уже выслан. Новый можно запросить через ' . Carbon::now()->diffInSeconds($this->phone_verify_token_expire) . ' секунд.');
         }
 
         $this->phone_verified = false;

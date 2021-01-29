@@ -92,7 +92,7 @@ class PhoneTest extends TestCase
 
         $user->requestPhoneVerification($now = Carbon::now());
 
-        $this->expectExceptionMessage('Token is already requested.');
+        $this->expectExceptionMessage('Код уже выслан.');
         $user->requestPhoneVerification($now->copy()->addSeconds(15));
     }
 
