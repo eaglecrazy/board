@@ -13,10 +13,12 @@ class EmailVerificationNotification extends Notification
     use Queueable, SerializesModels;
 
     private $user;
+    private $url;
 
-    public function __construct(User $user)
+    public function __construct(User $user, string $url)
     {
         $this->user = $user;
+        $this->url = $url;
     }
 
 
@@ -28,14 +30,12 @@ class EmailVerificationNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $url = route('register.verify', $this->user->verify_token);
-        echo $url . PHP_EOL;
         return (new MailMessage)
             ->subject('Регистрация пройдена!')
             ->greeting('Здравствуйте, ' . $this->user->name)
             ->greeting('Здравствуйте!')
             ->line('Регистрация на Фотобарахолке №1 пройдена. Для подтверждения почты нажимте на кнопку ниже.')
-            ->action('Подтвердить почту', $url)
+            ->action('Подтвердить почту', $this->url)
             ->line('Спасибо за использование нашего сайта!');
     }
 }
