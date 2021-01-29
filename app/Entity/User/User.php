@@ -15,9 +15,10 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
+use Mail;
 
 
 /**
