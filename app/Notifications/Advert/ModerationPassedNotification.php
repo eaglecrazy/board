@@ -32,8 +32,8 @@ class ModerationPassedNotification extends Notification
             ->subject('Объявление ' . $this->advert->title . ' прошло модерацию.')
             ->greeting('Привет!')
             ->line('Объявление ' . $this->advert->title . ' прошло модерацию и теперь видно всем пользователям.')
-//            ->action('View Advert', route('adverts.show', $this->advert))
-            ->action('Посмотреть объявление', 'http://board.xyz/adverts/show/' . $this->advert->id)
+            ->action('View Advert', route('adverts.show', $this->advert))
+//            ->action('Посмотреть объявление', 'http://board.xyz/adverts/show/' . $this->advert->id)
             ->line('Спасибо за использование нашего сайта!');
     }
 
