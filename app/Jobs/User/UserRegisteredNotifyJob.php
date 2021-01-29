@@ -15,18 +15,16 @@ class UserRegisteredNotifyJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $user;
+    private $url;
 
-    public function __construct(User $user)
+    public function __construct(User $user, string $url)
     {
         $this->user = $user;
+        $this->url = $url;
     }
 
     public function handle()
     {
-        //почему то в уведомлении route('register.verify', $this->user->verify_token) генерирует вместо домена localhost.
-        //поэтому передаём урл отсюда
-        $url = route('register.verify', $this->user->verify_token);
-        dd($url);
-        $this->user->notify(new EmailVerificationNotification($this->user, $url));
+        $this->user->notify(new EmailVerificationNotification($this->user, $this->url));
     }
 }
