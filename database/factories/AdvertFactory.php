@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 $factory->define(Advert::class, function (Faker $faker) {
     do {
         $user = User::All()->random();
-    }while(!($user->isActive() && $user->isPhoneVerified()));
+    } while (!($user->isActive() && $user->isPhoneVerified()));
     $userId = $user->id;
     $category = Category::All()->random();
     $lens = false;
@@ -47,7 +47,11 @@ $factory->define(Advert::class, function (Faker $faker) {
     }
     $GLOBALS['advert_seeder']--;
     if ($GLOBALS['advert_seeder'] % 100 === 0) {
-        echo ($GLOBALS['advert_seeder']) . ' adverts left.' . PHP_EOL;
+        if ($GLOBALS['advert_seeder'] === 0) {
+            echo 'Inserting data to DB' . PHP_EOL;
+        } else {
+            echo ($GLOBALS['advert_seeder']) . ' adverts left.' . PHP_EOL;
+        }
     }
 
     return [
