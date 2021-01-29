@@ -28,7 +28,6 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        dd(route('register.verify', 'vetify-token'));
         $this->service->register($request);
         return redirect()->route('login')
             ->with('success', 'Подтвердите свою почту кликнув на ссылку в письме, которое мы отправили на указанный email.');
