@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'eagle',
             'last_name' => 'falcon',
-            'email' => 'eaglecrazy@mail.ru',
+            'email' => 'eaglezzzzz@rambler.ru',
             'phone' => '79046495737',
             'phone_verified' => true,
             'phone_verify_token' => null,
