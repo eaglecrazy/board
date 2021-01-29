@@ -8,6 +8,7 @@ class AdvertModerationPassedListener
 {
     public function handle($event)
     {
-        ModerationPassedNotifyJob::dispatch($event->advert);
+        $url = route('adverts.show', $event->advert);
+        ModerationPassedNotifyJob::dispatch($event->advert, $url);
     }
 }

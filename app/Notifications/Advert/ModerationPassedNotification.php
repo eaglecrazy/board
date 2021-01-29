@@ -15,10 +15,13 @@ class ModerationPassedNotification extends Notification
     use Queueable, SerializesModels;
 
     private $advert;
+    private $url;
 
-    public function __construct(Advert $advert)
+
+    public function __construct(Advert $advert, $url)
     {
         $this->advert = $advert;
+        $this->url = $url;
     }
 
     public function via($notifiable): array
@@ -32,8 +35,7 @@ class ModerationPassedNotification extends Notification
             ->subject('Объявление ' . $this->advert->title . ' прошло модерацию.')
             ->greeting('Привет!')
             ->line('Объявление ' . $this->advert->title . ' прошло модерацию и теперь видно всем пользователям.')
-            ->action('View Advert', route('adverts.show', $this->advert))
-//            ->action('Посмотреть объявление', 'http://board.xyz/adverts/show/' . $this->advert->id)
+            ->action('Посмотреть объявление', $this->url)
             ->line('Спасибо за использование нашего сайта!');
     }
 

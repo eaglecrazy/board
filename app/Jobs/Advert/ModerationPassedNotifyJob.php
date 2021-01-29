@@ -15,15 +15,17 @@ class ModerationPassedNotifyJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $advert;
+    private $url;
 
-    public function __construct(Advert $advert)
+    public function __construct(Advert $advert, string $url)
     {
         $this->advert = $advert;
+        $this->url = $url;
     }
 
 
     public function handle()
     {
-        $this->advert->user->notify(new ModerationPassedNotification($this->advert));
+        $this->advert->user->notify(new ModerationPassedNotification($this->advert, $this->url));
     }
 }
