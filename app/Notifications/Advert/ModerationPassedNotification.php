@@ -39,6 +39,6 @@ class ModerationPassedNotification extends Notification
 
     public function toSms($notifiable): string
     {
-        return 'Your advert successfully passed a moderation.';
+        return 'Объявление ' . $this->advert->title . ' прошло модерацию и теперь видно всем пользователям.';
     }
 }

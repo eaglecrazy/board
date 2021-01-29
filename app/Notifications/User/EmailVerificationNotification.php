@@ -34,7 +34,7 @@ class EmailVerificationNotification extends Notification
             ->greeting('Здравствуйте!')
             ->line('Регистрация на Фотобарахолке №1 пройдена. Для подтверждения почты нажимте на кнопку ниже.')
 //            ->action('Подтвердить почту', 'http://board.xyz/verify/' . $this->user->verify_token)
-            ->action('Подтвердить почту', route('register.verify') . '/' . $this->user->verify_token)
+            ->action('Подтвердить почту', route('register.verify', $this->user->verify_token))
             ->line('Спасибо за использование нашего сайта!');
     }
 }
