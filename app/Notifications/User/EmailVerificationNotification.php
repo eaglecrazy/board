@@ -28,6 +28,8 @@ class EmailVerificationNotification extends Notification
 
     public function toMail($notifiable)
     {
+        dd(route('register.verify', $this->user->verify_token));
+
         return (new MailMessage)
             ->subject('Регистрация пройдена!')
             ->greeting('Здравствуйте, ' . $this->user->name)
