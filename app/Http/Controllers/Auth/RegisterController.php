@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Usecases\Auth\RegisterService;
+use Illuminate\Support\Facades\Auth;
 
 
 class RegisterController extends Controller
@@ -44,7 +45,9 @@ class RegisterController extends Controller
 
         try {
             $this->service->verify($user->id);
-            return redirect()->route('login')->with('success', 'Ваш email подтверждён. Вы можете войти на сайт.');
+            Auth::login();
+            return redirect()->intended()->with('success', 'Ваш email подтверждён.');
+//            return redirect()->route('login')->with('success', 'Ваш email подтверждён. Вы можете войти на сайт.');
         } catch (\DomainException $e){
             return redirect()->route('login')->with('error', $e->getMessage());
         }
