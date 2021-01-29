@@ -1,0 +1,8 @@
+Изменения в Vendor
+
+Чтобы была правильная ссылка на изменение пароля в письме сброса пароля нужно изменить:
+    Файл:	...\board\vendor\laravel\framework\src\Illuminate\Auth\Notifications\ResetPassword.php
+    Вместо строки
+        ->action(Lang::getFromJson('Reset Password'), url(config('app.url').route('password.reset', $this->token, false)))
+    Поставить строку
+        ->action(Lang::getFromJson('Reset Password'), route('password.reset', $this->token))
