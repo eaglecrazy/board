@@ -48,11 +48,12 @@
                                         class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
                                 @endif
                             </div>
-                            {{-- Кнопка определения местоположения, работает только если есть https --}}
-                            {{--                            <div class="col-md-1">--}}
-                            {{--                            <span class="btn btn-primary btn-block location-button" data-target="#address"><span--}}
-                            {{--                                    class="fa fa-location-arrow"></span></span>--}}
-                            {{--                            </div>--}}
+                            {{--                             Кнопка определения местоположения, работает только если есть https --}}
+                            <div class="col-md-1">
+                                <span class="btn btn-primary btn-block location-button"
+                                      data-target="#address"><span
+                                        class="fa fa-location-arrow"></span></span>
+                            </div>
                         </div>
                     </div>
                 @endif
@@ -77,7 +78,8 @@
 
         <div class="card mb-3">
             <div class="card-header h3">Фотографии</div>
-            <label for="files" class="col-form-label ml-3">Нужно загрузить от 1 до 4 фотографий. Максимальный размер 1Мб.</label>
+            <label for="files" class="col-form-label ml-3">Нужно загрузить от 1 до 4 фотографий. Максимальный размер
+                1Мб.</label>
             <input id="files" type="file"
                    class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}"
                    name="files[]"
