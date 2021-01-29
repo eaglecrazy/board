@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Фотобарахолка №1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+//    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://photo.eagle-projects.ru'),
 
     'asset_url' => env('ASSET_URL', null),
 
