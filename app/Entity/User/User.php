@@ -15,6 +15,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
@@ -352,5 +353,15 @@ class User extends Authenticatable
     //------------------
     public function findForPassport($email){
         return self::where('email', $email)->where('status', self::STATUS_ACTIVE)->first();
+    }
+
+
+
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::send('emails.reset_password', ['user' => $this], function ($m) {
+            $m->from('hello@app.com', 'Your Application');
+            $m->to($this->email, $this->name)->subject('Your Password Reset!');
+        });
     }
 }
