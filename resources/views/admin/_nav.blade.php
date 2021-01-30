@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs mb-3">
     @can('manage-adverts')
         <li class="nav-item"><a href="{{ route('admin.adverts.adverts.index') }}"
                                 class="nav-link{{ $page === 'adverts' ? ' active' : '' }}">Объявления</a></li>

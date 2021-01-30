@@ -3,13 +3,13 @@
 
 @section('content')
     @include('admin.users._nav')
-    <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary mr-1">Редактировать</a>
+    <div class="d-flex flex-wrap mb-3">
+        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary m-1">Редактировать</a>
         @if($user->isWait())
-            <a href="{{ route('admin.users.verify', $user) }}" class="btn btn-success mr-1">Верифицировать</a>
+            <a href="{{ route('admin.users.verify', $user) }}" class="btn btn-success m-1">Верифицировать</a>
         @endif
 
-        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="mr-1">
+        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="m-1">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger">Удалить</button>
