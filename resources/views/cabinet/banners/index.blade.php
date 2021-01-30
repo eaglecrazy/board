@@ -5,8 +5,8 @@
     @include('cabinet._nav', ['page' => 'banners'])
 
     <p><a href="{{ route('cabinet.banners.create') }}" class="btn btn-success">Добавить баннер</a></p>
-
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
         <thead>
         <tr>
             <th>Название</th>
@@ -36,6 +36,7 @@
 
         </tbody>
     </table>
+    </div>
 
         {{ $banners->links() }}
 @endsection

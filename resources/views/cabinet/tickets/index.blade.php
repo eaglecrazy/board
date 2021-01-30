@@ -5,8 +5,8 @@
     @include('cabinet._nav', ['page' => 'tickets'])
 
     <p><a href="{{ route('cabinet.tickets.create') }}" class="btn btn-success">Добавить заявку</a></p>
-
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
         <thead>
         <tr>
             <th>Создана</th>
@@ -36,6 +36,7 @@
 
         </tbody>
     </table>
+    </div>
 
     {{ $tickets->links() }}
 @endsection

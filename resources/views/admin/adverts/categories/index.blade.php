@@ -6,8 +6,8 @@
     <div class="d-flex flex-row mb-3">
         <a href="{{ route('admin.adverts.categories.create') }}" class="btn btn-success mr-1">Создать категорию</a>
     </div>
-
-    <table class="table table-bordered table-striped">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Наименование</th>
@@ -59,4 +59,5 @@
         @endforeach
         </tbody>
     </table>
+    </div>
 @endsection

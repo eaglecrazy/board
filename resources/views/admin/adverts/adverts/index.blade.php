@@ -62,8 +62,8 @@
             </form>
         </div>
     </div>
-
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
         <thead>
         <tr>
             <th>ID</th>
@@ -105,6 +105,6 @@
 
         </tbody>
     </table>
-
+    </div>
     {{ $adverts->links() }}
 @endsection

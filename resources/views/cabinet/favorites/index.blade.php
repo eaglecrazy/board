@@ -3,7 +3,8 @@
 
 @section('content')
     @include('cabinet._nav', ['page' => 'favorites'])
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
         <thead>
         <tr>
             <th>Наименование</th>
@@ -37,6 +38,6 @@
 
         </tbody>
     </table>
-
+    </div>
     {{ $adverts->links() }}
 @endsection

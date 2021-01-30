@@ -5,8 +5,8 @@
     @include('admin.pages._nav')
 
     <p><a href="{{ route('admin.pages.create') }}" class="btn btn-success mt-3">Создать страницу</a></p>
-
-    <table class="table table-bordered table-striped">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Название</th>
@@ -53,4 +53,5 @@
 
         </tbody>
     </table>
+    </div>
 @endsection
