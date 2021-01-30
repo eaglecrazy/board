@@ -124,5 +124,6 @@ sudo chmod -R ug+rwx storage bootstrap/cache
 Чтобы решить эту проблему, добавьте своего пользователя в группу пользователей веб-сервера:
 
 sudo usermod -a -G www-data eagle
-sudo usermod -a -G www-data ftp-user
+sudo usermod -a -G www-data elasticsearch
+sudo usermod -a -G www-data ftp-user elasticsearch
 Все сделано.

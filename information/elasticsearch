@@ -65,3 +65,11 @@ sudo -i service elasticsearch status
 
 опции (настройка количества памяти)
 ./usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options
+
+
+
+/etc/elasticsearch/elasticsearch.yml
+
+
+
+action.auto_create_index: +*

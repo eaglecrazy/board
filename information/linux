@@ -103,6 +103,10 @@ Linux
 список пользователей
     cat /etc/passwd
 
+список пользователей в группе
+    sudo apt install members
+    members опции имя_группы
+    members --all www-data
 
 терминал от рута
         sudo -s
