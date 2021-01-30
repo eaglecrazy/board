@@ -106,6 +106,7 @@ sudo chown -R www-data:www-data /var/www/board
 sudo find /var/www/board -type f -exec chmod 644 {} \;
 sudo find /var/www/board -type d -exec chmod 755 {} \;
 
+sudo chmod +x autorun -R
 
 Для правильной работы Laravel необходимо предоставить разрешения на чтение и запись веб-серверу для хранилища,
 кэша и любых других каталогов.
@@ -123,5 +124,6 @@ sudo chmod -R ug+rwx storage bootstrap/cache
 Чтобы решить эту проблему, добавьте своего пользователя в группу пользователей веб-сервера:
 
 sudo usermod -a -G www-data eagle
-sudo usermod -a -G www-data ftp-user
+sudo usermod -a -G www-data elasticsearch
+sudo usermod -a -G www-data ftp-user elasticsearch
 Все сделано.

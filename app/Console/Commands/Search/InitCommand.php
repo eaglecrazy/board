@@ -22,7 +22,7 @@ class InitCommand extends Command
     public function handle(): bool
     {
         $this->initAdverts();
-//        $this->initBanners();
+        $this->initBanners();
         return true;
     }
 

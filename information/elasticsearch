@@ -1,3 +1,4 @@
+https://stackoverflow.com/questions/41804863/error-index-not-found-exception
 ----------------------
 Elastic Search
 ----------------------
@@ -19,6 +20,11 @@ Elastic Search
 
         установить права
         sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
+
+
+вывод индексов
+        curl -XGET localhost:9200/_cat/indices/
+
 
 
 запуск
@@ -51,11 +57,19 @@ Elastic Search
 
 
 запуск
-sudo -i service elasticsearch start
-/usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
+        sudo -i service elasticsearch start
+        /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
 
 статус
 sudo -i service elasticsearch status
 
 опции (настройка количества памяти)
 ./usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options
+
+
+
+/etc/elasticsearch/elasticsearch.yml
+
+
+
+action.auto_create_index: +*
