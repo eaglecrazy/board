@@ -3,7 +3,7 @@
     @if(count($advert->photos))
         <label for="files" class="col-form-label ml-3">В одном объявлении может быть от 1 до 4 фотографий. Максимальный
             размер фото 1Мб.</label>
-        <div class="d-flex p-3">
+        <div class="d-flex p-3 d-flex flex-wrap">
             @foreach($advert->photos as $photo)
                 <form method="POST" action="{{ $editUser === 'admin' ? route('admin.adverts.adverts.destroy.photo', [$advert, $photo]) : route('cabinet.adverts.destroy.photo', [$advert, $photo]) }}"
                       class="mr-2">

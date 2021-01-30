@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="address" class="col-form-label">Адрес</label>
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-11  my-2">
                                 <input id="address" type="text"
                                        class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
                                        name="address"
@@ -49,7 +49,7 @@
                                 @endif
                             </div>
                             {{--                             Кнопка определения местоположения, работает только если есть https --}}
-                            <div class="col-md-1">
+                            <div class="col-md-1 my-2">
                                 <span class="btn btn-primary btn-block location-button"
                                       data-target="#address"><span
                                         class="fa fa-location-arrow"></span></span>
