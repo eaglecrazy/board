@@ -4,7 +4,8 @@
 @section('content')
     @if ($advert->isDraft())
         <div class="alert alert-danger">
-            Статус объявления: черновик. Для отображения в поиске объявление должно пройти модерацию. Нажмите кнопку "Опубликовать".
+            Статус объявления: черновик. Для отображения в поиске объявление должно пройти модерацию. Нажмите кнопку
+            "Опубликовать".
         </div>
         @if ($advert->reject_reason)
             <div class="alert alert-danger">
@@ -30,38 +31,31 @@
     @endcan
 
     <div class="row">
-        <div class="col-md-9">
-
-            <p class="float-right" style="font-size: 36px;">{{ $advert->price }} руб.</p>
-            <h1 style="margin-bottom: 10px">{{ $advert->title  }}</h1>
-            <p>
-                <span class="font-weight-bold">Дата создания:</span> {{ dFormat($advert->created_at) }}. &nbsp;
-                @if ($advert->expires_at)
-                    <span class="font-weight-bold">Активно до:</span> {{ dFormat($advert->expires_at) }}.
-                @endif
-            </p>
+        <div class="col-md-9 d-flex flex-column">
+            <div class="d-flex flex-wrap justify-content-between">
+                <h1 class="h1 mr-2">{{ $advert->title  }}</h1>
+                <p class="h1">{{ $advert->price }} руб.</p>
+            </div>
+            <p class="mb-1"><span class="font-weight-bold">Дата создания: </span> {{ dFormat($advert->created_at) }}</p>
+            @if ($advert->expires_at)
+                <span class="mb-1"><span class="font-weight-bold">Активно до: </span>{{ dFormat($advert->expires_at) }}</span>
+            @endif
 
             @if(!empty($photos))
-                <div style="margin-bottom: 20px">
-                    <div class="row">
-                        <div class="col-10">
-                            <div class="main-photo-wrap">
-                                <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"/>
-                            </div>
-                        </div>
-                        @if(count($photos) > 1)
-                            <div class="col-2">
-                                @foreach($photos as $photoLink)
-                                    <div class="second-photo-wrap">
-                                        <img class="second-photo"
-                                             src="{{ asset('storage/') . '/' .  $photoLink}}"
-                                             height="100"/>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
+                <div class="main-photo-wrap mb-3">
+                    <img class="main-photo" src="{{ asset('storage/') . '/' .  $photos[0]}}"/>
                 </div>
+                @if(count($photos) > 1)
+                    <div class="d-flex flex-wrap">
+                        @foreach($photos as $photoLink)
+                            <div class="second-photo-wrap mb-3 mr-3">
+                                <img class="second-photo"
+                                     src="{{ asset('storage/') . '/' .  $photoLink}}"
+                                     height="100"/>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             @endif
 
             {{--            e вызывает внутри себя экранирование через html special chars--}}
@@ -96,7 +90,8 @@
                         class="number">Показать телефон</span></span>
                 @auth
                     @if($user->id !== $advert->user_id)
-                        <a href="{{ route('cabinet.dialogs.dialog', $advert) }}" class="btn btn-success mr-2"><span class="fa fa-envelope"></span> Написать сообщение</a>
+                        <a href="{{ route('cabinet.dialogs.dialog', $advert) }}" class="btn btn-success mr-2"><span
+                                class="fa fa-envelope"></span> Написать сообщение</a>
                     @endif
 
                     @if ($user && $user->hasInFavorites($advert->id))
@@ -119,9 +114,8 @@
             @if($similar->count())
                 <div class="h3">Похожие объявления</div>
                 <div class="row">
-
                     @foreach($similar as $similar_item)
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-6 col-md-4 mb-3">
                             <div class="card">
                                 <img class="card-img-top"
                                      src="{{ asset('storage/') . '/' .  $similarPhotos[$similar_item->id] }}">
@@ -141,7 +135,7 @@
         </div>
         <div class="col-md-3">
             @if($advert->isActive())
-                <div class="bitem mb-3 mt-5" data-format="240x400"
+                <div class="bitem mb-3" data-format="240x400"
                      data-category="{{ $advert->category ? $advert->category->id : '' }}"
                      data-region="{{ $advert->region ? $advert->region->id : '' }}"
                      data-url="{{ route('banner.get') }}"></div>

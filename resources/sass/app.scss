@@ -62,6 +62,8 @@ body {
     background: #f6f6f6;
     margin-bottom: 10px;
     text-align: center;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease-out;
 }
 
 .main-photo {
@@ -71,11 +73,10 @@ body {
 
 .second-photo {
     height: 100px;
-    transition: all 0.3s ease-out;
+
 }
 
-.second-photo:hover {
-    outline: 4px solid #ddd;
+.second-photo-wrap:hover {
     cursor: pointer;
     transform: scale(1.06);
 }
