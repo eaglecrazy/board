@@ -5,6 +5,31 @@ Linux
 автозагрузка
         https://losst.ru/avtozagruzka-linux
 
+        сделать скрипт и в первой строке написать:
+            #!/usr/bin/bash
+        сделать его исполняемым
+            sudo chmod +x horizon.sh
+        создать файл:
+            sudo nano /etc/systemd/system/horizon.service
+        в этот файл внести:
+            --------------------------------------------------------------
+            [Unit]
+            Description=Horizon autorun
+            After=multi-user.target
+            [Service]
+            Type=forking
+            User=www-data
+            ExecStart=/var/www/board/autorun/horizon.sh
+            [Install]
+            WantedBy=multi-user.target
+            --------------------------------------------------------------
+            sudo systemctl daemon-reload
+            sudo systemctl enable horizon
+            sudo systemctl start horizon
+            sudo systemctl status horizon
+        проверка сервиса
+        		sudo systemd-analyze verify /etc/systemd/system/horizon.service
+
 вывод файла:
         cat php.ini
 
