@@ -62,10 +62,10 @@
         <div class="col-md-9">
             <div class="adverts-list">
                 @foreach ($adverts as $advert)
-                    <div class="advert">
+                    <div class="advert mt-3">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="advert-photo">
+                                <div class="advert-photo mb-3">
                                     <img src="{{ asset('storage/') . '/' .  $photos[$advert->id] }}" height="180">
                                 </div>
                             </div>
