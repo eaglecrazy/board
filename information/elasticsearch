@@ -3,30 +3,43 @@ https://stackoverflow.com/questions/41804863/error-index-not-found-exception
 Elastic Search
 ----------------------
 
+DEB
+    установка
+            https://www.elastic.co/guide/en/elasticsearch/reference/6.2/deb.html
+            установить java
+                    sudo apt install openjdk-8-jre
+                    java -version
+            скачать
+                    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.deb
+            установить
+                    sudo dpkg -i elasticsearch-6.2.4.deb
+    запуск
+            sudo -i service elasticsearch start
+    статус
+            sudo -i service elasticsearch status
 
-Инструкция по установке 6.2
-        sudo apt install openjdk-8-jre
-        java -version
 
-        https://www.elastic.co/guide/en/elasticsearch/reference/6.2/deb.html
+
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+
+
+
+АРХИВ
+
+установка
         https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_installation.html
-
+        установить java
+                sudo apt install openjdk-8-jre
+                java -version
         скачать в текущую папку:
-        curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gz
-
-        установить
-        в текущую папку: tar -xvf elasticsearch-6.2.4.tar.gz
-        в другую папку: tar -xvf elasticsearch-6.2.4.tar.gz -C /usr/bin/elasticsearch
-
+                curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gz
+        разархивировать
+                в текущую папку: tar -xvf elasticsearch-6.2.4.tar.gz
+                в другую папку: tar -xvf elasticsearch-6.2.4.tar.gz -C /usr/bin/elasticsearch
         установить права
-        sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
-
-
-вывод индексов
-        curl -XGET localhost:9200/_cat/indices/
-
-
-
+                sudo -s chown ${USER}:${USER} /usr/bin/elasticsearch -R
 запуск
         /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch
         /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
@@ -34,21 +47,42 @@ Elastic Search
         /home/vagrant/code/board/es/elasticsearch/bin/elasticsearch -d
 
 
+
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+
+
+размер памяти
+	sudo sysctl -w vm.max_map_count=262144
+    опции (настройка количества памяти)
+        sudo nano /etc/elasticsearch/jvm.options
+        sudo nano /usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options
+
+
+        -Xms1g
+        -Xmx1g
+        поменять на
+        -Xms256m
+        -Xmx256m
+
+
 проверка рабоcтоспособности:
         curl http://127.0.0.1:9200
+
+
+вывод всех индексов
+        curl -XGET localhost:9200/_cat/indices/
+
+
+удаление индексов
+        curl -XDELETE 'localhost:9200/adverts?pretty'
+        curl -XDELETE 'localhost:9200/banners?pretty'
+
 
 поиск:
         curl http://127.0.0.1:9200/app/_search?pretty=true
 
-размер памяти
-	sudo sysctl -w vm.max_map_count=262144
-
-    /usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options
-	-Xms1g
-    -Xmx1g
-    поменять на
-    -Xms256m
-    -Xmx256m
 
 
 
@@ -56,15 +90,10 @@ Elastic Search
 
 
 
-запуск
-        sudo -i service elasticsearch start
-        /usr/bin/elasticsearch/elasticsearch-6.2.4/bin/elasticsearch -d
 
-статус
-sudo -i service elasticsearch status
 
-опции (настройка количества памяти)
-./usr/bin/elasticsearch/elasticsearch-6.2.4/config/jvm.options
+
+
 
 
 
