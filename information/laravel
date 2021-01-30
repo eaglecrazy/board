@@ -106,7 +106,7 @@ sudo chown -R www-data:www-data /var/www/board
 sudo find /var/www/board -type f -exec chmod 644 {} \;
 sudo find /var/www/board -type d -exec chmod 755 {} \;
 
-sudo chmod +x autorun -R
+sudo chmod +x /var/www/board/autorun -R
 
 Для правильной работы Laravel необходимо предоставить разрешения на чтение и запись веб-серверу для хранилища,
 кэша и любых других каталогов.
@@ -114,9 +114,25 @@ sudo chmod +x autorun -R
 Итак, выполните следующие команды:
 
 cd /var/www/board
-sudo chgrp -R www-data storage bootstrap/cache
-sudo chmod -R ug+rwx storage bootstrap/cache
+sudo chgrp -R www-data /var/www/board/storage /var/www/board/bootstrap/cache
+sudo chmod -R ug+rwx /var/www/board/storage /var/www/board/bootstrap/cache
 Теперь ваше приложение Laravel защищено соответствующими правами.
+
+ИТОГО СКРИПТ:
+echo sudo chown -R www-data:www-data /var/www/board
+sudo chown -R www-data:www-data /var/www/board
+echo sudo find /var/www/board -type f -exec chmod 644 {} \;
+sudo find /var/www/board -type f -exec chmod 644 {} \;
+echo sudo find /var/www/board -type d -exec chmod 755 {} \;
+sudo find /var/www/board -type d -exec chmod 755 {} \;
+echo sudo chmod +x /var/www/board/autorun -R
+sudo chmod +x /var/www/board/autorun -R
+echo sudo chgrp -R www-data /var/www/board/storage /var/www/board/bootstrap/cache
+sudo chgrp -R www-data /var/www/board/storage /var/www/board/bootstrap/cache
+echo sudo chmod -R ug+rwx /var/www/board/storage /var/www/board/bootstrap/cache
+sudo chmod -R ug+rwx /var/www/board/storage /var/www/board/bootstrap/cache
+
+
 
 Но так как все файлы имеют владельца и группу-владельца на веб-сервере,
 вы можете столкнуться с проблемой во время изменений через FTP / sFTP

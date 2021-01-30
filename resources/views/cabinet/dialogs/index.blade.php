@@ -3,7 +3,8 @@
 
 @section('content')
     @include('cabinet._nav', ['page' => 'dialogs'])
-    <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-striped">
         <thead>
         <tr>
             <th>Объявление</th>
@@ -31,5 +32,6 @@
         @endforeach
         </tbody>
     </table>
+    </div>
     {{ $dialogs->links() }}
 @endsection
