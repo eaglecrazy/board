@@ -39,7 +39,7 @@
     </div>
     <div class="card card-default">
         <div class="card-header h4">Написать сообщение</div>
-        <div class="card-body mv0">
+        <div class="card-body">
             <form method="POST" action="{{ route('cabinet.dialogs.write', $dialog) }}">
                 @csrf
                 <div class="form-group">

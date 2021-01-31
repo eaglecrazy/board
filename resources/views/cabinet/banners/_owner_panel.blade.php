@@ -1,6 +1,6 @@
 <div class="card card-default mb-3">
     <div class="card-header h4">Управление баннером</div>
-    <div class="card-body d-flex flex-row mv0">
+    <div class="card-body d-flex flex-row">
         @if ($banner->canBeChanged())
             <a href="{{ route('cabinet.banners.edit', $banner) }}" class="btn btn-primary mr-1">Редактировать</a>
             <a href="{{ route('cabinet.banners.edit_file', $banner) }}" class="btn btn-primary mr-1">Изменить

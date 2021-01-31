@@ -8,31 +8,31 @@
 
     <div class="card card-default mb-2">
         <div class="card-header h4">Панель модератора</div>
-        <div class="card-body d-flex flex-row mv0">
-            <a href="{{ route('admin.tickets.edit', $ticket) }}" class="btn btn-primary mr-1">Редактировать</a>
+        <div class="card-body d-flex flex-wrap p-1">
+            <a href="{{ route('admin.tickets.edit', $ticket) }}" class="btn btn-primary m-1">Редактировать</a>
 
             @if ($ticket->isOpen())
-                <form method="POST" action="{{ route('admin.tickets.approve', $ticket) }}" class="mr-1">
+                <form method="POST" action="{{ route('admin.tickets.approve', $ticket) }}" class="m-1">
                     @csrf
                     <button class="btn btn-success">Принять в обработку</button>
                 </form>
             @endif
 
             @if (!$ticket->isClosed())
-                <form method="POST" action="{{ route('admin.tickets.close', $ticket) }}" class="mr-1">
+                <form method="POST" action="{{ route('admin.tickets.close', $ticket) }}" class="m-1">
                     @csrf
                     <button class="btn btn-success">Закрыть</button>
                 </form>
             @endif
 
             @if ($ticket->isClosed())
-                <form method="POST" action="{{ route('admin.tickets.reopen', $ticket) }}" class="mr-1">
+                <form method="POST" action="{{ route('admin.tickets.reopen', $ticket) }}" class="m-1">
                     @csrf
                     <button class="btn btn-success">Открыть заново</button>
                 </form>
             @endif
 
-            <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" class="mr-1">
+            <form method="POST" action="{{ route('admin.tickets.destroy', $ticket) }}" class="m-1">
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger">Удалить</button>

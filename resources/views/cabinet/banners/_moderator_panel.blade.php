@@ -1,6 +1,6 @@
 <div class="card card-default mb-2">
     <div class="card-header h4">Панель модератора</div>
-    <div class="card-body d-flex flex-row mv0">
+    <div class="card-body d-flex flex-row">
         <a href="{{ route('admin.banners.edit', $banner) }}" class="btn btn-primary mr-1">Редактировать</a>
         @if ($banner->isOnModeration())
             <form method="POST" action="{{ route('admin.banners.moderate', $banner) }}" class="mr-1">
