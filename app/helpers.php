@@ -72,7 +72,6 @@ if (!function_exists('trimPagination')) {
         }
 
 
-
         $keys = array_keys($all);
         $last = last($keys);
 
@@ -105,3 +104,18 @@ if (!function_exists('trimPagination')) {
         return $newPaginator;
     }
 }
+
+if (!function_exists('getCategoryControlColorClass')) {
+    function getCategoryControlColorClass($depth) : string
+    {
+        switch ($depth){
+            case 0 : return 'btn-outline-danger';
+            case 1 : return 'btn-outline-primary';
+            case 2 : return 'btn-outline-info';
+            case 3 : return 'btn-outline-success';
+            case 4 : return 'btn-outline-warning';
+            default : return 'btn-outline-secondary';
+        }
+    }
+}
+
