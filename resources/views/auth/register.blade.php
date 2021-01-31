@@ -52,8 +52,8 @@
                                        required autocomplete="new-password">
 
                                 @if($errors->has('password'))
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
