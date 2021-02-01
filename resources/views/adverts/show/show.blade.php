@@ -86,7 +86,7 @@
 
             <div class="d-flex flex-row mb-4">
                 <span class="btn btn-primary phone-button mr-2"
-                      data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
+                      data-source="{{ route('phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Показать телефон</span></span>
                 @auth
                     @if($user->id !== $advert->user_id)
