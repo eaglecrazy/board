@@ -19,8 +19,8 @@
 
         @foreach($categories as $category)
             <tr>
-                <td>
-                    <a href="{{ route('admin.adverts.categories.show', $category) }}">{!! $category->getFullNameWithParents() !!}</a></td>
+                <td style="{{ getPaddingForCategoriesOutput($category->depth) }}">
+                    <a href="{{ route('admin.adverts.categories.show', $category) }}">{{ $category->name }}</a></td>
                 <td>{{ $category->slug }}</td>
                 <td>
                     @if($category->getSiblings()->count())

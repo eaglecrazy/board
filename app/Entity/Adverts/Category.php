@@ -58,11 +58,6 @@ class Category extends Model
         return $this->parent ? $this->parent->allAttributes() : [];
     }
 
-    public function getFullNameWithParents(): string
-    {
-        return $this->parent ? $this->parent->getFullNameWithParents() . ' -><br>' . $this->name : $this->name;
-    }
-
     public function allAttributes(): array
     {
         $sort = function ($f1, $f2) {

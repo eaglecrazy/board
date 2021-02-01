@@ -119,3 +119,14 @@ if (!function_exists('getCategoryControlColorClass')) {
     }
 }
 
+
+if (!function_exists('getPaddingForCategoriesOutput')) {
+    function getPaddingForCategoriesOutput($depth) : string
+    {
+        if($depth)
+        {
+            return 'padding-left :' . (35 * $depth) . 'px';
+        }
+        return  '';
+    }
+}
