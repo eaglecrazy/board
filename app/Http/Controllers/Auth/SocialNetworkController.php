@@ -28,11 +28,11 @@ class SocialNetworkController extends Controller
         $userData = Socialite::driver($driver)->user();
         try {
             if(Auth::check()){//сюда можно перейти по прямой ссылки
-dd('Auth::check()');
                 $this->authService->attach($driver, $userData);
             } else {
-dd('!!!Auth::check()');
+
                 $user = $this->authService->auth($driver, $userData);
+                dd('!!!');
                 Auth::login($user);
             }
 
