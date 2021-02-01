@@ -151,6 +151,7 @@ class AdvertService
     {
         return Advert::where('region_id', $advert->region ? $advert->region->id : null)
             ->where('category_id', $advert->category->id)
+            ->where('status', 'active')
             ->where('id', '!=', $advert->id)
             ->get()
             ->shuffle()
