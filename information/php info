@@ -5,6 +5,7 @@ PHP
 
 
 ini
+        /etc/php/7.4/fpm/php.ini
         /etc/php/7.4/cli/php.ini
 
 установленные расширения
