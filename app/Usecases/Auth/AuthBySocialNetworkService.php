@@ -22,14 +22,14 @@ class AuthBySocialNetworkService
         if ($user = User::bySocialNetwork($socialNetwork, $socialId)->first()) {
             return $user;
         }
-        dd('!!!');
+
         if ($email && User::where('email', $email)->exists()) {
             throw new DomainException('Пользователь с email привязанным к этому аккаунту уже зарегистрирован.');
         }
 
         $user = User::registerBySocialNetwork($socialNetwork, $socialId);
-
-        event(new Registered($user));
+//тут не нужно событие регистрации, так как нет доверия стороннему сервису и письмо на почту не отправляется
+//        event(new Registered($user));
 
         return $user;
     }
