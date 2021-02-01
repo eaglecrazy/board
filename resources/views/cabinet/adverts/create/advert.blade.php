@@ -15,7 +15,7 @@
                             <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                                    name="title" value="{{ old('title') }}" required>
                             @if ($errors->has('title'))
-                                <span class="invalid-feedback"><strong>{{ $errors->first('title') }}</strong></span>
+                                <span class="invalid-feedback">><strong>{{  $er'title') }}</strong></span>
                             @endif
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                                    class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price"
                                    value="{{ old('price') }}" required>
                             @if ($errors->has('price'))
-                                <span class="invalid-feedback"><strong>{{ $errors->first('price') }}</strong></span>
+                                <span class="invalid-feedback">><strong>{{  $er'price') }}</strong></span>
                             @endif
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                        value="{{ old('address', $region->getAddress()) }}">
                                 @if ($errors->has('address'))
                                     <span
-                                        class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
+                                        class="invalid-feedback">><strong>{{  $er'address') }}</strong></span>
                                 @endif
                             </div>
                             {{--                             Кнопка определения местоположения, работает только если есть https --}}
@@ -63,7 +63,7 @@
                     <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
                               name="content" rows="10" required>{{ old('content') }}</textarea>
                     @if ($errors->has('content'))
-                        <span class="invalid-feedback"><strong>{{ $errors->first('content') }}</strong></span>
+                        <span class="invalid-feedback">><strong>{{  $er'content') }}</strong></span>
                     @endif
                 </div>
             </div>
@@ -85,9 +85,9 @@
                    name="files[]"
                    multiple required>
             @if ($errors->has('files'))
-                <span class="invalid-feedback"><strong>{{ $errors->first('files') }}</strong></span>
+                <span class="invalid-feedback">><strong>{{  $er'files') }}</strong></span>
             @elseif ($errors->has('files.*'))
-                <span class="invalid-feedback"><strong>{{ $errors->first('files.*') }}</strong></span>
+                <span class="invalid-feedback">><strong>{{  $er'files.*') }}</strong></span>
             @endif
 
         </div>

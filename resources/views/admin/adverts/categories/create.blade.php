@@ -7,7 +7,7 @@
         @csrf
 
         <div class="form-group">
-            <label for="name" class="col-form-label">Наименование</label>
+            <label for="name" class="col-form-label">Имя</label>
             <input id="name"
                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                    name="name"

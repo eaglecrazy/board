@@ -28,7 +28,7 @@
             <td>{{ $page->menu_title }}</td>
         </tr>
         <tr>
-            <th>Slug</th>
+            <th>ЧПУ</th>
             <td>{{ $page->slug }}</td>
         </tr>
         <tr>

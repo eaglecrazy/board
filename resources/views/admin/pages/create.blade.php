@@ -8,7 +8,7 @@
         @csrf
 
         <div class="form-group">
-            <label for="title" class="col-form-label">Наименование</label>
+            <label for="title" class="col-form-label">Имя</label>
             <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title"
                    value="{{ old('title') }}" required>
             @if ($errors->has('title'))
