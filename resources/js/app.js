@@ -6,6 +6,11 @@
 
 require('./bootstrap');
 
+$(document).on('click', '#second-search-button', function () {
+    $('#second-search-button').trigger('click');
+});
+
+
 //скрипт открытия телефона в странице просмотра объявления
 //нужно предусмотреть защиту от парсинга телефонных номеров
 //например при помощи csrf токена

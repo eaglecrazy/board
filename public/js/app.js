@@ -47563,10 +47563,13 @@ module.exports = function(module) {
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //скрипт открытия телефона в странице просмотра объявления
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+$(document).on('click', '#second-search-button', function () {
+  $('#second-search-button').trigger('click');
+}); //скрипт открытия телефона в странице просмотра объявления
 //нужно предусмотреть защиту от парсинга телефонных номеров
 //например при помощи csrf токена
-
 
 $(document).on('click', '.phone-button', function () {
   var button = $(this);

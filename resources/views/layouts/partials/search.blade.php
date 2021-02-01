@@ -10,7 +10,7 @@
                                placeholder="Поиск ...">
                     </div>
                     <div class="form-group mr-3">
-                        <button class="btn btn-light border" type="submit"><span class="fa fa-search"></span></button>
+                        <button id="main-search-button" class="btn btn-light border" type="submit"><span class="fa fa-search"></span></button>
                     </div>
                     <div class="mb-3">
                         <a href="{{ route('cabinet.adverts.create.category') }}" class="btn btn-success"><span
@@ -38,7 +38,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            {{--                                                можно выбрать диапазон значений, от и до--}}
+                                            {{--   можно выбрать диапазон значений, от и до--}}
                                         @elseif ($attribute->isNumber())
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -59,6 +59,12 @@
                                 </div>
                             @endif
                         @endforeach
+                            <div class="col-md-3">
+                                <label class="col-form-label invisible">_</label>
+                                <div class="d-flex">
+                                    <button id="second-search-button" class="btn btn-primary flex-grow-1"><span class="fa fa-search"></span> Искать объявления</button>
+                                </div>
+                            </div>
                     </div>
                 </div>
             @endif
