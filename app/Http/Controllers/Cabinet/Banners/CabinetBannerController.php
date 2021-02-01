@@ -36,7 +36,7 @@ class CabinetBannerController extends Controller
     public function checkAccess(Banner $banner)
     {
         if (!Gate::allows('manage-own-banner', $banner)) {
-            abort(403);
+            abort(404);
         }
     }
 
