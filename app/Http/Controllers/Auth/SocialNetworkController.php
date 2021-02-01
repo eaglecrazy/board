@@ -28,15 +28,17 @@ class SocialNetworkController extends Controller
         $userData = Socialite::driver($driver)->user();
         try {
             if(Auth::check()){//сюда можно перейти по прямой ссылки
+dd('Auth::check()');
                 $this->authService->attach($driver, $userData);
             } else {
+dd('!!!Auth::check()');
                 $user = $this->authService->auth($driver, $userData);
                 Auth::login($user);
             }
 
             return redirect()->intended();
         } catch (DomainException $e) {
-            dd('DomainException $e');
+dd('DomainException $e');
             if(Auth::user())
                 return redirect()->home()->with('error', $e->getMessage());
             return redirect()->route('login')->with('error', $e->getMessage());
