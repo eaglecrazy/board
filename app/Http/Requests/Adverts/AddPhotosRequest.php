@@ -16,7 +16,7 @@ class AddPhotosRequest extends FormRequest
     {
         $max = 4 - $request->advert->photos()->count();
         return [
-            'files.*' => 'required|mimes:jpg,jpeg,png|max:1024',
+            'files.*' => 'required|mimes:jpg,jpeg,png|max:4096',
             'files' => 'files_count:' . $max,
         ];
     }
