@@ -26,7 +26,7 @@ class SocialNetworkController extends Controller
     public function callback($driver): RedirectResponse
     {
         $userData = Socialite::driver($driver)->user();
-
+dd('callback');
         try {
             if(Auth::check()){//сюда можно перейти по прямой ссылки
                 $this->authService->attach($driver, $userData);
