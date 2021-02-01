@@ -84,25 +84,25 @@
 
             <p style="margin-bottom: 20px"><span class="font-weight-bold">Продавец:</span> {{ $advert->user->name }}</p>
 
-            <div class="d-flex flex-row mb-4">
-                <span class="btn btn-primary phone-button mr-2"
+            <div class="d-flex flex-wrap mb-4">
+                <span class="btn btn-primary phone-button m-1"
                       data-source="{{ route('phone', $advert) }}"><span class="fa fa-phone"></span> <span
                         class="number">Показать телефон</span></span>
                 @auth
                     @if($user->id !== $advert->user_id)
-                        <a href="{{ route('cabinet.dialogs.dialog', $advert) }}" class="btn btn-success mr-2"><span
+                        <a href="{{ route('cabinet.dialogs.dialog', $advert) }}" class="btn btn-success m-1"><span
                                 class="fa fa-envelope"></span> Написать сообщение</a>
                     @endif
 
                     @if ($user && $user->hasInFavorites($advert->id))
-                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
+                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="m-1">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-secondary"><span class="fa fa-star"></span> Убрать из избранного
                             </button>
                         </form>
                     @else
-                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-2">
+                        <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="m-1">
                             @csrf
                             <button class="btn btn-danger"><span class="fa fa-star"></span> Добавить в избранное
                             </button>
