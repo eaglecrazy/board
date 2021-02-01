@@ -33,7 +33,10 @@ class CreateRequest extends FormRequest
             'content' => 'required|string|min:10',
             'price' => 'required|integer|min:1|max:2147483646',
             'address' => 'string|nullable',
-            'files.*' => 'required|mimes:jpg,jpeg,png|max:4096',
+            'files.0' => 'required|mimes:jpg,jpeg,png|max:4096',
+            'files.1' => 'mimes:jpg,jpeg,png|max:4096',
+            'files.2' => 'mimes:jpg,jpeg,png|max:4096',
+            'files.3' => 'mimes:jpg,jpeg,png|max:4096',
             'files' => 'files_count:4'
         ], $items);
     }

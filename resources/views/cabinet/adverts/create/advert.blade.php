@@ -78,7 +78,7 @@
 
         <div class="card mb-3">
             <div class="card-header h3">Фотографии</div>
-            <label for="files" class="col-form-label ml-3">Нужно загрузить от 1 до 4 фотографий. Максимальный размер
+            <label for="files" class="col-form-label ml-3">Нужно загрузить от 1 до 4 фотографий. Максимальный размер одного фото
                 4Мб.</label>
             <input id="files" type="file"
                    class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}"
