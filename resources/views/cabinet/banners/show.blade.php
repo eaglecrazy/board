@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav', ['page'=>'banners'])
+
     @if ($banner->isDraft() && $banner->reject_reason)
         <div class="alert alert-danger">
             Модерация не пройдена. Причина отклонения: {{ $banner->reject_reason }}
