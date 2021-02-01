@@ -62,7 +62,7 @@
                             <div class="col-md-3">
                                 <label class="col-form-label invisible">_</label>
                                 <div class="d-flex">
-                                    <button id="second-search-button" class="btn btn-primary flex-grow-1"><span class="fa fa-search"></span> Искать объявления</button>
+                                    <button id="second-search-button" class="btn btn-primary flex-grow-1 mb-3"><span class="fa fa-search"></span> Искать объявления</button>
                                 </div>
                             </div>
                     </div>
