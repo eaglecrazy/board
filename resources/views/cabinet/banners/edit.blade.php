@@ -2,8 +2,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet._nav', ['page' => 'banners'])
-
     <form method="POST" action="{{ $editUser === 'admin' ? route('admin.banners.update', $banner) : route('cabinet.banners.edit', $banner) }}">
         @csrf
         @method('PUT')
