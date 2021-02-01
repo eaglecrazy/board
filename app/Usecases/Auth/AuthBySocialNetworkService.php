@@ -15,14 +15,14 @@ class AuthBySocialNetworkService
 {
     public function auth(string $socialNetwork, SocialiteUser $socialNetworkUserData): User
     {
-        dd('!!!');
+
         $socialId = $socialNetworkUserData->getId();
         $email = $socialNetworkUserData->getEmail();
 
         if ($user = User::bySocialNetwork($socialNetwork, $socialId)->first()) {
             return $user;
         }
-
+        dd('!!!');
         if ($email && User::where('email', $email)->exists()) {
             throw new DomainException('Пользователь с email привязанным к этому аккаунту уже зарегистрирован.');
         }
