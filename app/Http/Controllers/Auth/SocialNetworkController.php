@@ -30,15 +30,12 @@ class SocialNetworkController extends Controller
             if(Auth::check()){//сюда можно перейти по прямой ссылки
                 $this->authService->attach($driver, $userData);
             } else {
-
                 $user = $this->authService->auth($driver, $userData);
-                dd('!!!');
                 Auth::login($user);
             }
 
             return redirect()->intended();
         } catch (DomainException $e) {
-dd('DomainException $e');
             if(Auth::user())
                 return redirect()->home()->with('error', $e->getMessage());
             return redirect()->route('login')->with('error', $e->getMessage());

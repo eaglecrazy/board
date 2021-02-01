@@ -15,6 +15,7 @@ class AuthBySocialNetworkService
 {
     public function auth(string $socialNetwork, SocialiteUser $socialNetworkUserData): User
     {
+        dd('!!!');
         $socialId = $socialNetworkUserData->getId();
         $email = $socialNetworkUserData->getEmail();
 
