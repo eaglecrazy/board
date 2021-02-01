@@ -9,7 +9,7 @@ class UsersTableSeeder extends Seeder
     {
         User::where('name', '!=', '')->delete();
 
-        factory(User::class, 30)->create();
+        factory(User::class, 150)->create();
 
         User::create([
             'name' => 'eagle',
