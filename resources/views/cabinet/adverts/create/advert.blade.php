@@ -15,7 +15,7 @@
                             <input id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                                    name="title" value="{{ old('title') }}" required>
                             @if ($errors->has('title'))
-                                <span class="invalid-feedback">><strong>{{  $er'title') }}</strong></span>
+                                <span class="invalid-feedback">><strong>{{  $errors->first('title') }}</strong></span>
                             @endif
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                                    class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price"
                                    value="{{ old('price') }}" required>
                             @if ($errors->has('price'))
-                                <span class="invalid-feedback">><strong>{{  $er'price') }}</strong></span>
+                                <span class="invalid-feedback">><strong>{{  $errors->first('price') }}</strong></span>
                             @endif
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                        value="{{ old('address', $region->getAddress()) }}">
                                 @if ($errors->has('address'))
                                     <span
-                                        class="invalid-feedback">><strong>{{  $er'address') }}</strong></span>
+                                        class="invalid-feedback">><strong>{{  $errors->first('address') }}</strong></span>
                                 @endif
                             </div>
                             {{--                             Кнопка определения местоположения, работает только если есть https --}}
@@ -63,7 +63,7 @@
                     <textarea id="content" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}"
                               name="content" rows="10" required>{{ old('content') }}</textarea>
                     @if ($errors->has('content'))
-                        <span class="invalid-feedback">><strong>{{  $er'content') }}</strong></span>
+                        <span class="invalid-feedback">><strong>{{  $errors->first('content') }}</strong></span>
                     @endif
                 </div>
             </div>
@@ -79,15 +79,15 @@
         <div class="card mb-3">
             <div class="card-header h3">Фотографии</div>
             <label for="files" class="col-form-label ml-3">Нужно загрузить от 1 до 4 фотографий. Максимальный размер
-                4Мб.</label>
+                1Мб.</label>
             <input id="files" type="file"
                    class="form-control h-25 py-3 {{ $errors->has('files.*') | $errors->has('files') ? ' is-invalid' : '' }}"
                    name="files[]"
                    multiple required>
             @if ($errors->has('files'))
-                <span class="invalid-feedback">><strong>{{  $er'files') }}</strong></span>
+                <span class="invalid-feedback">><strong>{{  $errors->first('files') }}</strong></span>
             @elseif ($errors->has('files.*'))
-                <span class="invalid-feedback">><strong>{{  $er'files.*') }}</strong></span>
+                <span class="invalid-feedback">><strong>{{  $errors->first('files.*') }}</strong></span>
             @endif
 
         </div>
